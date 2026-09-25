@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<title>Whistleblower Lab — Research</title>
+<link rel="icon" href="assets/brand/logo-mark.png" />
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; background: #05070A; }
+  * { box-sizing: border-box; }
+  a { color: #00D9FF; text-decoration: none; }
+  a:hover { color: #05070A; background: #00D9FF; }
+  ::selection { background: #39FF88; color: #05070A; }
+  @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+</style>
+</helmet>
+<div style="background: #05070A; color: #39FF88; font-family: 'IBM Plex Mono', ui-monospace, monospace; min-height: 100vh; overflow-x: hidden;">
+
+  <div style="position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 10px 28px; background: #05070A; border-bottom: 1px solid #163D2A; font-size: 12px; letter-spacing: 0.12em;">
+    <div style="display: flex; align-items: center; gap: 14px; color: #7AAE91;">
+      <a href="index.html" style="color: #05070A; background: #39FF88; padding: 5px 8px; font-weight: 400; font-size: 9px; font-family: 'Silkscreen', monospace;">WHISTLEBLOWER</a>
+      <span style="color: #66727D;">│</span>
+      <span>ASIC · FPGA · DV</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <a href="index.html" style="color: #7AAE91;">HOME</a>
+      <span style="color: #D7E0E6;">RESEARCH</span>
+      <a href="projects.html" style="color: #7AAE91;">PROJECTS</a>
+      <a href="people.html" style="color: #7AAE91;">PEOPLE</a>
+      <a href="publications.html" style="color: #7AAE91;">PUBS</a>
+      <a href="news.html" style="color: #7AAE91;">NEWS</a>
+      <a href="join.html" style="color: #7AAE91;">JOIN</a>
+    </div>
+  </div>
+
+  <section data-screen-label="Research header" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
+    <div style="font-size: 12px; letter-spacing: 0.3em; color: #00D9FF; margin-bottom: 18px;">▚▚ 02 / RESEARCH ▞▞</div>
+    <h1 style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin: 0 0 20px; font-size: clamp(32px, 4.6vw, 56px); font-weight: 800; letter-spacing: 0.02em; color: #D7E0E6; line-height: 1.05;">SIX THINGS<br />WE ARE TRYING<br />TO GET GOOD AT</h1>
+    <p style="max-width: 68ch; font-size: 14px; line-height: 1.9; color: #A8B3BD; margin: 0 0 8px;">Areas, not departments. Every member works in at least two of them, and every area has to produce something a stranger can reproduce: a testbench, a report, a bitstream, a writeup.</p>
+  </section>
+
+  <section data-screen-label="Areas" style="max-width: 1520px; margin: 0 auto; padding: 46px 28px 0;">
+    <div style="display: grid; gap: 16px;">
+
+      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>R1 · FUNCTIONAL VERIFICATION</span><span>PRIMARY</span></div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0;">
+          <div style="padding: 22px 20px; border-right: 1px solid #182027;">
+            <p style="margin: 0; font-size: 13.5px; line-height: 1.9; color: #A8B3BD; max-width: 58ch;">Constrained-random and coverage-driven testbenches for blocks nobody has verified before. We care about the boring part: reproducible seeds, coverage that means something, and a signoff document that survives a hostile reader.</p>
+          </div>
+          <div style="padding: 22px 20px; display: grid; gap: 8px; align-content: start; font-size: 12.5px;">
+            <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">TOOLING</div>
+            <div style="color: #D7E0E6;">SystemVerilog · UVM</div>
+            <div style="color: #D7E0E6;">cocotb · Verilator</div>
+            <div style="color: #D7E0E6;">SVA · formal (open flows)</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>R2 · DSP FOR INSTRUMENTATION</span><span>ACTIVE</span></div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0;">
+          <div style="padding: 22px 20px; border-right: 1px solid #182027;">
+            <p style="margin: 0; font-size: 13.5px; line-height: 1.9; color: #A8B3BD; max-width: 58ch;">Transforms and estimators that have to run in real time on a mid-range part: interpolated DFT, CORDIC magnitude and phase, rate-of-change estimation, decimation chains. Fixed point, error budgets written down before the RTL.</p>
+          </div>
+          <div style="padding: 22px 20px; display: grid; gap: 8px; align-content: start; font-size: 12.5px;">
+            <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">SEE ALSO</div>
+            <a href="project-ipdft.html">ipdft_channel_top ▸</a>
+          </div>
+        </div>
+      </div>
+
+      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>R3 · TIMING &amp; PHYSICAL CLOSURE</span><span>ACTIVE</span></div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0;">
+          <div style="padding: 22px 20px; border-right: 1px solid #182027;">
+            <p style="margin: 0; font-size: 13.5px; line-height: 1.9; color: #A8B3BD; max-width: 58ch;">Why the design missed by 180 ps, and what to do about it. Constraint hygiene, clock-domain crossings, retiming, floorplanning on FPGA and on open PDKs. Every closure is written up as a before/after with the actual reports attached.</p>
+          </div>
+          <div style="padding: 22px 20px; display: grid; gap: 8px; align-content: start; font-size: 12.5px;">
+            <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">TOOLING</div>
+            <div style="color: #D7E0E6;">Vivado · OpenSTA</div>
+            <div style="color: #D7E0E6;">OpenROAD · OpenLane</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>R4 · OPEN-SOURCE SILICON</span><span>EXPLORATORY</span></div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0;">
+          <div style="padding: 22px 20px; border-right: 1px solid #182027;">
+            <p style="margin: 0; font-size: 13.5px; line-height: 1.9; color: #A8B3BD; max-width: 58ch;">Sky130 and open flows are the only route to real physical design for a lab with no licence budget. We push small blocks through GDS to learn where the flow lies to you, and publish the failures too.</p>
+          </div>
+          <div style="padding: 22px 20px; display: grid; gap: 8px; align-content: start; font-size: 12.5px;">
+            <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">TARGET</div>
+            <div style="color: #D7E0E6;">SKY130 · 130 nm</div>
+            <div style="color: #7AAE91;">no tapeout yet</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>R5 · BRINGUP &amp; LAB INFRASTRUCTURE</span><span>ONGOING</span></div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0;">
+          <div style="padding: 22px 20px; border-right: 1px solid #182027;">
+            <p style="margin: 0; font-size: 13.5px; line-height: 1.9; color: #A8B3BD; max-width: 58ch;">Two benches, shared boards, one JTAG server, regression running on whatever machine is free. Access is the resource we are actually pooling, so the scripts that manage it are treated as first-class work.</p>
+          </div>
+          <div style="padding: 22px 20px; display: grid; gap: 8px; align-content: start; font-size: 12.5px;">
+            <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">BENCH</div>
+            <div style="color: #D7E0E6;">ARTIX-7 · ZYNQ-7020</div>
+            <div style="color: #D7E0E6;">SCOPE · LOGIC ANALYSER</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>R6 · VERIFICATION PEDAGOGY</span><span>ONGOING</span></div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0;">
+          <div style="padding: 22px 20px; border-right: 1px solid #182027;">
+            <p style="margin: 0; font-size: 13.5px; line-height: 1.9; color: #A8B3BD; max-width: 58ch;">How do you take somebody from a first Verilog module to signing off a block in one term? We keep the curriculum, the exercises and the review checklists in the open, and revise them every intake.</p>
+          </div>
+          <div style="padding: 22px 20px; display: grid; gap: 8px; align-content: start; font-size: 12.5px;">
+            <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">OUTPUT</div>
+            <div style="color: #D7E0E6;">INTAKE CURRICULUM</div>
+            <div style="color: #D7E0E6;">REVIEW CHECKLISTS</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section data-screen-label="CTA" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
+    <div style="border: 1px solid #39FF88; padding: 26px 24px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center;">
+      <div style="font-size: 15px; color: #D7E0E6; letter-spacing: 0.06em;">Want one of these areas to be yours?</div>
+      <a href="join.html" style="border: 1px solid #39FF88; padding: 11px 20px; font-size: 13px; letter-spacing: 0.16em; font-weight: 700;">[ ▸ JOIN THE LAB ]</a>
+    </div>
+  </section>
+
+  <div style="max-width: 1520px; margin: 74px auto 0; padding: 0 28px;">
+    <div style="border-top: 1px solid #163D2A; padding: 26px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; font-size: 12.5px;">
+      <div style="display: grid; gap: 8px; align-content: start;">
+        <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">WHISTLEBLOWER</div>
+        <div style="color: #A8B3BD; line-height: 1.8; max-width: 30ch;">Student-run ASIC / FPGA hardware verification lab.</div>
+      </div>
+      <div style="display: grid; gap: 8px; align-content: start;">
+        <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">CONTACT</div>
+        <div><span style="color: #66727D;">MAIL ▸ </span><a href="mailto:lab@whistleblower.dev">lab@whistleblower.dev</a></div>
+      </div>
+      <div style="display: grid; gap: 8px; align-content: start;">
+        <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">INDEX</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px 14px;">
+          <a href="index.html" style="color: #7AAE91;">HOME</a>
+          <a href="projects.html" style="color: #7AAE91;">PROJECTS</a>
+          <a href="people.html" style="color: #7AAE91;">PEOPLE</a>
+          <a href="publications.html" style="color: #7AAE91;">PUBS</a>
+          <a href="news.html" style="color: #7AAE91;">NEWS</a>
+          <a href="join.html" style="color: #7AAE91;">JOIN</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top: 1px solid #182027; padding: 14px 0 30px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-size: 11px; letter-spacing: 0.14em; color: #66727D;">
+      <span>▓▒░ END OF FILE ░▒▓</span>
+      <span>WHISTLEBLOWER LAB · MMXXVI</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Whistleblower Lab — SENTINEL</title>
+<link rel="icon" href="assets/brand/logo-mark.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; background: #05070A; }
+  * { box-sizing: border-box; }
+  a { color: #00D9FF; text-decoration: none; }
+  a:hover { color: #05070A; background: #00D9FF; }
+  ::selection { background: #FFB000; color: #05070A; }
+  @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+</style>
+</helmet>
+<div style="background: #0B1E36; color: #F2E6C4; font-family: 'IBM Plex Mono', ui-monospace, monospace; min-height: 100vh; overflow-x: hidden; position: relative;">
+
+  <div style="position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 10px 28px; background: #05070A; border-bottom: 1px solid #163D2A; font-size: 12px; letter-spacing: 0.12em;">
+    <div style="display: flex; align-items: center; gap: 14px; color: #7AAE91;">
+      <a href="index.html" style="color: #05070A; background: #39FF88; padding: 5px 8px; font-size: 9px; font-family: 'Silkscreen', monospace;">WHISTLEBLOWER</a>
+      <span style="color: #66727D;">│</span>
+      <span>ASIC · FPGA · DV</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <a href="index.html" style="color: #7AAE91;">HOME</a>
+      <a href="research.html" style="color: #7AAE91;">RESEARCH</a>
+      <a href="projects.html" style="color: #D7E0E6;">PROJECTS</a>
+      <a href="people.html" style="color: #7AAE91;">PEOPLE</a>
+      <a href="publications.html" style="color: #7AAE91;">PUBS</a>
+      <a href="news.html" style="color: #7AAE91;">NEWS</a>
+      <a href="join.html" style="color: #7AAE91;">JOIN</a>
+    </div>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; padding: 9px 28px; background: #10294A; border-bottom: 2px solid #2A5A8E; font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.08em;">
+    <div style="display: flex; gap: 28px; flex-wrap: wrap;">
+      <span><span style="color: #FF3B3B;">1UP</span>&nbsp; SENTINEL</span>
+      <span><span style="color: #FFB000;">HI-SCORE</span>&nbsp; 53 CORES @ 200 MHZ</span>
+      <span><span style="color: #FFB000;">STAGE</span>&nbsp; 02 / 10</span>
+    </div>
+    <div style="display: flex; gap: 20px; align-items: center;">
+      <span>TRL <span style="color: #FFB000;">3</span></span>
+      <sc-if value="{{ blinkHud }}" hint-placeholder-val="{{ true }}"><span style="color: #FF3B3B; animation: blink 1.2s step-end infinite;">HARDWARE GATED</span></sc-if>
+    </div>
+  </div>
+
+  <section data-screen-label="Title screen" style="max-width: 1520px; margin: 0 auto; padding: 36px 28px 0;">
+    <a href="projects.html" style="font-size: 12px; letter-spacing: 0.14em; color: #9FB6CF;">◂ ALL PROJECTS</a>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 44px; align-items: center; margin-top: 22px;">
+      <div style="display: grid; gap: 20px; align-content: start;">
+        <div style="font-family: 'Silkscreen', monospace; font-size: 12px; letter-spacing: 0.2em; color: #FFB000;">PRJ_02 · CASE FILE</div>
+        <h1 style="margin: 0; font-family: 'Silkscreen', monospace; font-weight: 700; font-size: clamp(44px, 7vw, 96px); line-height: 0.95; letter-spacing: 0.02em; color: #F2E6C4; text-shadow: 4px 4px 0 #D23A2B, 8px 8px 0 #05070A;">SENTINEL</h1>
+        <div style="font-size: 14px; letter-spacing: 0.14em; color: #9FB6CF; font-weight: 600;">SOFTWARE-DEFINED AUTONOMOUS MISSION VEHICLE</div>
+        <p style="margin: 0; max-width: 62ch; font-size: 14px; line-height: 1.9; color: #D5DCE4; text-wrap: pretty;">FPGA-native deterministic edge compute for a modular autonomous ground platform. Sensors, fusion, IMM-UKF prediction and vehicle control run on dedicated hardware rather than behind an operating-system scheduler, so the critical path has bounded, scheduler-free latency.</p>
+        <p style="margin: 0; max-width: 62ch; font-size: 14px; line-height: 1.9; color: #9FB6CF; text-wrap: pretty;">The weapon and fire-control chain is one isolated mission payload, not the centerpiece. A formal nav→fire isolation proof enforces the platform↔payload boundary.</p>
+        <div style="border: 2px solid #FF3B3B; background: #05070A; padding: 14px 16px; display: grid; gap: 6px; max-width: 62ch;">
+          <div style="font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF3B3B;">RULE 00 · ABSOLUTE</div>
+          <div style="font-size: 13.5px; line-height: 1.75; color: #F2E6C4;">Human-on-the-loop for weapon release. Navigation is autonomous; fire authority never is.</div>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: center;">
+        <div style="border: 4px solid #F2E6C4; box-shadow: 8px 8px 0 #05070A; background: #2E6BA8; width: 100%; max-width: 400px;">
+          <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: #05070A; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.1em; color: #F2E6C4;"><span>WAVE 02</span><span style="color: #FFB000;">READY</span></div>
+          <img src="assets/cards/sentinel.jpg" alt="SENTINEL — pixel interceptor clearing a wave" style="display: block; width: 100%; height: auto; image-rendering: pixelated;" />
+          <div style="padding: 8px 10px; background: #05070A; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.1em; text-align: center;"><span style="animation: blink 1s step-end infinite;">PRESS START</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Scoreboard" style="max-width: 1520px; margin: 0 auto; padding: 64px 28px 0;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
+      <span style="color: #05070A; background: #FFB000; padding: 6px 9px; font-size: 9px; font-family: 'Silkscreen', monospace;">01</span>
+      <span style="font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #F2E6C4;">SCOREBOARD</span>
+      <span style="flex: 1; height: 2px; background: repeating-linear-gradient(90deg, #2A5A8E 0 8px, transparent 8px 14px);"></span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 14px;">
+      <div style="background: #10294A; border: 2px solid #2A5A8E; padding: 18px 16px; display: grid; gap: 10px; align-content: start;">
+        <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">RTL</div>
+        <div style="font-family: 'Silkscreen', monospace; font-size: 30px; color: #F2E6C4;">~53</div>
+        <div style="font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">cores with measured Vivado OOC STA at 200 MHz. 9/9 board bitstreams built.</div>
+      </div>
+      <div style="background: #10294A; border: 2px solid #2A5A8E; padding: 18px 16px; display: grid; gap: 10px; align-content: start;">
+        <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">SAFETY</div>
+        <div style="font-family: 'Silkscreen', monospace; font-size: 30px; color: #F2E6C4;">∞</div>
+        <div style="font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">ROE fire interlock formally proven unbounded (k-induction, sby + z3).</div>
+      </div>
+      <div style="background: #10294A; border: 2px solid #2A5A8E; padding: 18px 16px; display: grid; gap: 10px; align-content: start;">
+        <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">AUTONOMY</div>
+        <div style="font-family: 'Silkscreen', monospace; font-size: 30px; color: #F2E6C4;">3/3</div>
+        <div style="font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">waypoints on real Nav2 + slam_toolbox, mission BT, obstacle replan.</div>
+      </div>
+      <div style="background: #10294A; border: 2px solid #2A5A8E; padding: 18px 16px; display: grid; gap: 10px; align-content: start;">
+        <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">V&amp;V</div>
+        <div style="font-family: 'Silkscreen', monospace; font-size: 30px; color: #F2E6C4;">10/10</div>
+        <div style="font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">automated gates green, each with a proven fail-path.</div>
+      </div>
+      <div style="background: #10294A; border: 2px solid #2A5A8E; padding: 18px 16px; display: grid; gap: 10px; align-content: start;">
+        <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">TIME SYNC</div>
+        <div style="font-family: 'Silkscreen', monospace; font-size: 30px; color: #F2E6C4;">1.441ns</div>
+        <div style="font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">PTP / IRIG-B, board-measured.</div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Critical path" style="max-width: 1520px; margin: 0 auto; padding: 64px 28px 0;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
+      <span style="color: #05070A; background: #FFB000; padding: 6px 9px; font-size: 9px; font-family: 'Silkscreen', monospace;">02</span>
+      <span style="font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #F2E6C4;">THE CRITICAL PATH</span>
+      <span style="flex: 1; height: 2px; background: repeating-linear-gradient(90deg, #2A5A8E 0 8px, transparent 8px 14px);"></span>
+    </div>
+    <sc-if value="{{ showConventional }}" hint-placeholder-val="{{ true }}">
+      <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; font-size: 12px; letter-spacing: 0.1em; color: #9FB6CF;">
+        <span style="font-family: 'Silkscreen', monospace; font-size: 10px; color: #FF3B3B; min-width: 120px;">CONVENTIONAL</span>
+        <span style="border: 1px dashed #5B7699; padding: 7px 10px;">CPU</span><span>▸</span>
+        <span style="border: 1px dashed #5B7699; padding: 7px 10px;">GPU</span><span>▸</span>
+        <span style="border: 1px dashed #5B7699; padding: 7px 10px;">AI</span><span>▸</span>
+        <span style="border: 1px dashed #5B7699; padding: 7px 10px;">DECISION</span>
+        <span style="color: #FF3B3B;">· variable latency</span>
+      </div>
+    </sc-if>
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 12px; letter-spacing: 0.1em;">
+      <span style="font-family: 'Silkscreen', monospace; font-size: 10px; color: #FFB000; min-width: 120px;">SENTINEL</span>
+      <span style="background: #2E6BA8; border: 2px solid #F2E6C4; padding: 7px 10px; color: #F2E6C4;">SENSORS</span><span style="color: #FFB000;">▶</span>
+      <span style="background: #2E6BA8; border: 2px solid #F2E6C4; padding: 7px 10px; color: #F2E6C4;">FPGA AI</span><span style="color: #FFB000;">▶</span>
+      <span style="background: #2E6BA8; border: 2px solid #F2E6C4; padding: 7px 10px; color: #F2E6C4;">HW FUSION</span><span style="color: #FFB000;">▶</span>
+      <span style="background: #D23A2B; border: 2px solid #F2E6C4; padding: 7px 10px; color: #F2E6C4;">IMM-UKF</span><span style="color: #FFB000;">▶</span>
+      <span style="background: #2E6BA8; border: 2px solid #F2E6C4; padding: 7px 10px; color: #F2E6C4;">MISSION PLAN</span><span style="color: #FFB000;">▶</span>
+      <span style="background: #2E6BA8; border: 2px solid #F2E6C4; padding: 7px 10px; color: #F2E6C4;">VEHICLE CTRL</span><span style="color: #FFB000;">▶</span>
+      <span style="background: #2E6BA8; border: 2px solid #F2E6C4; padding: 7px 10px; color: #F2E6C4;">DRIVE-BY-WIRE</span>
+    </div>
+    <p style="margin: 18px 0 0; max-width: 78ch; font-size: 13px; line-height: 1.85; color: #9FB6CF;">FPGA-deterministic critical path plus a supervisory SoC. Mission planning, operator UX and non-deterministic inference run on the SoC; detect → track → lead → aim runs on fabric.</p>
+  </section>
+
+  <section data-screen-label="Boss fight UKF IMM" style="max-width: 1520px; margin: 0 auto; padding: 64px 28px 0;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
+      <span style="color: #05070A; background: #FFB000; padding: 6px 9px; font-size: 9px; font-family: 'Silkscreen', monospace;">03</span>
+      <span style="font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #F2E6C4;">BOSS FIGHT · UKF + IMM</span>
+      <span style="flex: 1; height: 2px; background: repeating-linear-gradient(90deg, #2A5A8E 0 8px, transparent 8px 14px);"></span>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 16px; margin-bottom: 16px;">
+      <div style="background: #10294A; border: 2px solid #2A5A8E; padding: 20px 18px; display: grid; gap: 12px; align-content: start;">
+        <div style="display: flex; justify-content: space-between; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em;"><span style="color: #FFB000;">sentinel_ukf</span><span style="color: #9FB6CF;">INTERIM · SWAP SLOT</span></div>
+        <p style="margin: 0; font-size: 13px; line-height: 1.8; color: #D5DCE4;">Full UKF predict + update in one entity. 1-D constant-acceleration model, state [p, v, a], H = I, Q16.16 throughout. One shared matmul, time-multiplexed.</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #2A5A8E; border: 1px solid #2A5A8E; font-size: 12px;">
+          <div style="background: #0B1E36; padding: 9px 10px; display: grid; gap: 3px;"><span style="color: #9FB6CF; font-size: 10.5px; letter-spacing: 0.1em;">WNS @ 200 MHz</span><span style="color: #F2E6C4; font-weight: 700;">+0.396 ns</span></div>
+          <div style="background: #0B1E36; padding: 9px 10px; display: grid; gap: 3px;"><span style="color: #9FB6CF; font-size: 10.5px; letter-spacing: 0.1em;">LATENCY / STEP</span><span style="color: #F2E6C4; font-weight: 700;">843 cycles</span></div>
+          <div style="background: #0B1E36; padding: 9px 10px; display: grid; gap: 3px;"><span style="color: #9FB6CF; font-size: 10.5px; letter-spacing: 0.1em;">GHDL vs TWIN</span><span style="color: #F2E6C4; font-weight: 700;">20/20 bit-exact</span></div>
+          <div style="background: #0B1E36; padding: 9px 10px; display: grid; gap: 3px;"><span style="color: #9FB6CF; font-size: 10.5px; letter-spacing: 0.1em;">xsim + GHDL</span><span style="color: #F2E6C4; font-weight: 700;">8/8 adversarial</span></div>
+        </div>
+        <div style="font-size: 11.5px; color: #9FB6CF;">Part xczu7ev-ffvc1156-2-e · OOC · dt = 0.1 s · R = 0.01·I</div>
+      </div>
+      <div style="background: #10294A; border: 2px solid #2A5A8E; padding: 20px 18px; display: grid; gap: 12px; align-content: start;">
+        <div style="display: flex; justify-content: space-between; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em;"><span style="color: #FFB000;">sentinel_imm_tracker</span><span style="color: #9FB6CF;">IMM-FAMILY · 2 MODELS</span></div>
+        <p style="margin: 0; font-size: 13px; line-height: 1.8; color: #D5DCE4;">CV (cruise) and CA (maneuver) fixed-gain filters run on the same stream. The bank picks the model with the smaller EWMA innovation, with hysteresis.</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #2A5A8E; border: 1px solid #2A5A8E; font-size: 12px;">
+          <div style="background: #0B1E36; padding: 9px 10px; display: grid; gap: 3px;"><span style="color: #9FB6CF; font-size: 10.5px; letter-spacing: 0.1em;">xsim + GHDL</span><span style="color: #F2E6C4; font-weight: 700;">300/300 match</span></div>
+          <div style="background: #0B1E36; padding: 9px 10px; display: grid; gap: 3px;"><span style="color: #9FB6CF; font-size: 10.5px; letter-spacing: 0.1em;">GOLDEN TB</span><span style="color: #F2E6C4; font-weight: 700;">222 cyc · 0 miss</span></div>
+          <div style="background: #0B1E36; padding: 9px 10px; display: grid; gap: 3px;"><span style="color: #9FB6CF; font-size: 10.5px; letter-spacing: 0.1em;">CA PICKED IN MANEUVER</span><span style="color: #F2E6C4; font-weight: 700;">100 %</span></div>
+          <div style="background: #0B1E36; padding: 9px 10px; display: grid; gap: 3px;"><span style="color: #9FB6CF; font-size: 10.5px; letter-spacing: 0.1em;">FUNCTIONAL FINDINGS</span><span style="color: #F2E6C4; font-weight: 700;">None</span></div>
+        </div>
+        <div style="font-size: 11.5px; color: #9FB6CF;">Hard switch, not full IMM. Markov mixing + soft blending is the next increment.</div>
+      </div>
+    </div>
+
+    <div style="background: #05070A; border: 2px solid #F2E6C4; margin-bottom: 16px;">
+      <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 8px 14px; border-bottom: 1px solid #2A5A8E; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.1em;"><span style="color: #F2E6C4;">FIG 1 · POSITION RMSE, CLOSED-LOOP · 61 STEPS / 6 S</span><span style="color: #9FB6CF;">LOG SCALE · METRES</span></div>
+      <div style="padding: 18px 14px 12px; display: grid; gap: 16px;">
+        <div style="display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 12px; align-items: center;">
+          <span style="font-family: 'Silkscreen', monospace; font-size: 11px; color: #F2E6C4;">CV</span>
+          <div style="display: grid; gap: 4px;">
+            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 14.6%; height: 14px; background: #D23A2B;"></div><span style="font-size: 11.5px; color: #F2E6C4;">0.054 RTL</span></div>
+            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 9.2%; height: 14px; background: #4A90C8;"></div><span style="font-size: 11.5px; color: #9FB6CF;">0.029 float</span></div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 12px; align-items: center;">
+          <span style="font-family: 'Silkscreen', monospace; font-size: 11px; color: #F2E6C4;">CT 3G</span>
+          <div style="display: grid; gap: 4px;">
+            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 80.7%; height: 14px; background: #D23A2B;"></div><span style="font-size: 11.5px; color: #F2E6C4;">108.0</span></div>
+            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 56%; height: 14px; background: #4A90C8;"></div><span style="font-size: 11.5px; color: #9FB6CF;">6.29</span></div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 12px; align-items: center;">
+          <span style="font-family: 'Silkscreen', monospace; font-size: 11px; color: #FFB000;">CT 6G</span>
+          <div style="display: grid; gap: 4px;">
+            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 86.6%; height: 14px; background: #D23A2B;"></div><span style="font-size: 11.5px; color: #F2E6C4;">214.0</span></div>
+            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 62%; height: 14px; background: #4A90C8;"></div><span style="font-size: 11.5px; color: #9FB6CF;">12.58</span></div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 12px; align-items: center;">
+          <span style="font-family: 'Silkscreen', monospace; font-size: 11px; color: #F2E6C4;">WEAVE</span>
+          <div style="display: grid; gap: 4px;">
+            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 70.3%; height: 14px; background: #D23A2B;"></div><span style="font-size: 11.5px; color: #F2E6C4;">32.8</span></div>
+            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 42.5%; height: 14px; background: #4A90C8;"></div><span style="font-size: 11.5px; color: #9FB6CF;">1.33</span></div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 12px;">
+          <span></span>
+          <div style="display: flex; justify-content: space-between; border-top: 1px solid #2A5A8E; padding-top: 6px; font-size: 10.5px; color: #5B7699;"><span>0.01</span><span>0.1</span><span>1</span><span>10</span><span>100</span><span>1000</span></div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 22px; flex-wrap: wrap; padding: 8px 14px; border-top: 1px solid #2A5A8E; font-size: 11px; letter-spacing: 0.08em; color: #9FB6CF;">
+        <span><span style="color: #D23A2B;">■</span> Interim RTL UKF (Q16.16)</span>
+        <span><span style="color: #4A90C8;">■</span> float64 reference UKF</span>
+        <span>RTL vs bit-exact twin: 0.0000 on every trajectory</span>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 16px; margin-bottom: 16px;">
+      <div style="background: #05070A; border: 2px solid #F2E6C4;">
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 8px 14px; border-bottom: 1px solid #2A5A8E; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.1em;"><span style="color: #F2E6C4;">FIG 2 · det(S) PER STEP · CT 6G</span><span style="color: #9FB6CF;">LOG · RAW Q16.16</span></div>
+        <div style="padding: 18px 14px 14px; display: grid; gap: 10px;">
+          <div style="position: relative; display: grid; gap: 8px;">
+            <div style="position: absolute; top: -6px; bottom: -6px; left: calc(60px + 12px + (100% - 72px) * 0.438); border-left: 2px dashed #FFB000;"></div>
+            <div style="display: grid; grid-template-columns: 60px minmax(0, 1fr); gap: 12px; align-items: center;"><span style="font-size: 11px; color: #9FB6CF;">STEP 0</span><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 88%; height: 14px; background: #4A90C8;"></div><span style="font-size: 11px; color: #F2E6C4;">67539</span></div></div>
+            <div style="display: grid; grid-template-columns: 60px minmax(0, 1fr); gap: 12px; align-items: center;"><span style="font-size: 11px; color: #9FB6CF;">STEP 1</span><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 2%; height: 14px; background: #D23A2B;"></div><span style="font-size: 11px; color: #FF3B3B;">1</span></div></div>
+            <div style="display: grid; grid-template-columns: 60px minmax(0, 1fr); gap: 12px; align-items: center;"><span style="font-size: 11px; color: #9FB6CF;">STEP 2</span><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 2%; height: 14px; background: #D23A2B;"></div><span style="font-size: 11px; color: #FF3B3B;">1</span></div></div>
+            <div style="display: grid; grid-template-columns: 60px minmax(0, 1fr); gap: 12px; align-items: center;"><span style="font-size: 11px; color: #9FB6CF;">STEP 3..60</span><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 2%; height: 14px; background: #D23A2B;"></div><span style="font-size: 11px; color: #FF3B3B;">1 · K = 0</span></div></div>
+          </div>
+          <div style="font-size: 11px; color: #FFB000; letter-spacing: 0.06em;">┆ DET_FLOOR = 256 · below it matinv returns Sinv = 0</div>
+          <p style="margin: 0; font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">After one measurement P converges toward R. det(S) ≈ 0.02³ lands at ~1 LSB, the singular guard trips, and the gain goes to zero. From step 1 the filter dead-reckons: ct_6g velocity freezes at 40.03 m/s while truth swings to 124 m/s.</p>
+        </div>
+      </div>
+      <div style="background: #05070A; border: 2px solid #F2E6C4;">
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 8px 14px; border-bottom: 1px solid #2A5A8E; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.1em;"><span style="color: #F2E6C4;">FIG 3 · ACCEPTANCE GATE · gain_active</span><span style="color: #9FB6CF;">2-SIDED BAND</span></div>
+        <div style="padding: 22px 14px 14px; display: grid; gap: 14px;">
+          <div style="position: relative; height: 34px; background: #10294A; border: 1px solid #2A5A8E;">
+            <div style="position: absolute; top: 0; bottom: 0; left: 2%; width: 96%; background: #1F4A2F;"></div>
+            <div style="position: absolute; top: -8px; bottom: -8px; left: 0.07%; border-left: 3px solid #D23A2B;"></div>
+            <div style="position: absolute; top: -8px; bottom: -8px; left: 44.67%; border-left: 3px solid #39FF88;"></div>
+            <div style="position: absolute; top: -8px; bottom: -8px; left: calc(100% - 3px); border-left: 3px solid #FF3B3B;"></div>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 10.5px; color: #5B7699;"><span>0</span><span>0.02 ── PASS BAND ── 0.98</span><span>1.0</span></div>
+          <div style="display: grid; border-top: 1px solid #2A5A8E;">
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) 70px 64px; gap: 10px; padding: 9px 2px; border-bottom: 1px solid #182027; font-size: 12px;"><span style="color: #F2E6C4;"><span style="color: #39FF88;">▌</span> float64 reference</span><span style="color: #9FB6CF;">0.4467</span><span style="color: #39FF88;">PASS</span></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) 70px 64px; gap: 10px; padding: 9px 2px; border-bottom: 1px solid #182027; font-size: 12px;"><span style="color: #F2E6C4;"><span style="color: #D23A2B;">▌</span> interim RTL UKF</span><span style="color: #9FB6CF;">0.0007</span><span style="color: #FF3B3B;">FAIL</span></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) 70px 64px; gap: 10px; padding: 9px 2px; border-bottom: 1px solid #182027; font-size: 12px;"><span style="color: #F2E6C4;"><span style="color: #FF3B3B;">▌</span> passthrough x⁺ = z</span><span style="color: #9FB6CF;">1.0000</span><span style="color: #FF3B3B;">FAIL</span></div>
+          </div>
+          <p style="margin: 0; font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">The band was one-sided until a mutation test showed a wire scoring 1.0. Accuracy is now gated relative to float64 (1.5× margin, 0.1 m floor).</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 0; border: 2px solid #FF3B3B; background: #05070A;">
+      <div style="padding: 20px 18px; border-right: 1px solid #2A5A8E; display: grid; gap: 10px; align-content: start;">
+        <div style="font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF3B3B;">VERDICT · INTERIM UKF</div>
+        <div style="font-size: 14px; font-weight: 700; color: #F2E6C4; line-height: 1.5;">Not adequate for the fire-control envelope. 214 m RMSE, 336 m peak at 6 g.</div>
+        <div style="font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">CV passes for the wrong reason: the filter coasts on an exact model, it is not filtering. H = I flatters it; a position-only sensor would diverge faster.</div>
+      </div>
+      <div style="padding: 20px 18px; display: grid; gap: 10px; align-content: start;">
+        <div style="font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FFB000;">NEXT LEVEL · IMM-UKF SWAP</div>
+        <div style="display: grid; gap: 8px; font-size: 12.5px; line-height: 1.75; color: #D5DCE4;">
+          <div><span style="color: #FFB000;">▸ </span>Conditioning: wider fraction, square-root / UD covariance, or normalised innovation.</div>
+          <div><span style="color: #FFB000;">▸ </span>Expressiveness: turning models in the IMM bank to close the 12.6 m single-model residual.</div>
+          <div><span style="color: #FFB000;">▸ </span>Range: det(S) overflows Q16.16 once P_ii exceeds ~32 (adversarial finding F1).</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Character select" style="max-width: 1520px; margin: 0 auto; padding: 64px 28px 0;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
+      <span style="color: #05070A; background: #FFB000; padding: 6px 9px; font-size: 9px; font-family: 'Silkscreen', monospace;">04</span>
+      <span style="font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #F2E6C4;">SELECT A SUBSYSTEM</span>
+      <span style="flex: 1; height: 2px; background: repeating-linear-gradient(90deg, #2A5A8E 0 8px, transparent 8px 14px);"></span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px;">
+      <div style="background: #10294A; border: 2px solid #2A5A8E; display: flex; flex-direction: column;" style-hover="border-color: #FFB000;">
+        <div style="aspect-ratio: 1 / 1; background: #FFFFFF; overflow: hidden;"><img src="assets/projects/sentinel/drone-target.jpg" alt="Pixel drone" style="display: block; width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated;" /></div>
+        <div style="padding: 16px; display: grid; gap: 8px;">
+          <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">P1 · TARGET</div>
+          <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #F2E6C4;">PHYSICAL PLATFORM</div>
+          <p style="margin: 0; font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">Mixed, progressive targets: a Stage-1 pendulum first, then a C-UAS drone tracked on the move.</p>
+        </div>
+      </div>
+      <div style="background: #10294A; border: 2px solid #2A5A8E; display: flex; flex-direction: column;" style-hover="border-color: #FFB000;">
+        <div style="aspect-ratio: 1 / 1; background: #2E6BA8; overflow: hidden;"><img src="assets/projects/sentinel/digital-twin.jpg" alt="Pixel sky battle — the twinned world" style="display: block; width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated;" /></div>
+        <div style="padding: 16px; display: grid; gap: 8px;">
+          <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">P2 · WORLD</div>
+          <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #F2E6C4;">3-TIER DIGITAL TWIN</div>
+          <p style="margin: 0; font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">Tier A cocotb↔GHDL HIL, Tier B MATLAB/Simulink physics, Tier C ROS 2 / Gazebo. Enriched physics twin cross-validated.</p>
+        </div>
+      </div>
+      <div style="background: #10294A; border: 2px solid #2A5A8E; display: flex; flex-direction: column;" style-hover="border-color: #FFB000;">
+        <div style="aspect-ratio: 1 / 1; background: #6B6F7C; overflow: hidden; display: flex; align-items: center;"><img src="assets/projects/sentinel/effector-payload.jpg" alt="Pixel effector loadout" style="display: block; width: 100%; height: auto; image-rendering: pixelated;" /></div>
+        <div style="padding: 16px; display: grid; gap: 8px;">
+          <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">P3 · PAYLOAD</div>
+          <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #F2E6C4;">ISOLATED EFFECTOR</div>
+          <p style="margin: 0; font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">Laser designator first, ballistic later. Aim / ROE / interlock chain only; no terminal-effect modelling.</p>
+        </div>
+      </div>
+      <div style="background: #10294A; border: 2px solid #2A5A8E; display: flex; flex-direction: column;" style-hover="border-color: #FFB000;">
+        <div style="aspect-ratio: 1 / 1; background: #6B6F7C; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr;">
+          <img src="assets/projects/sentinel/agent-a.jpg" alt="Pixel agent A" style="display: block; width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated;" />
+          <img src="assets/projects/sentinel/agent-b.jpg" alt="Pixel agent B" style="display: block; width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated;" />
+        </div>
+        <div style="padding: 16px; display: grid; gap: 8px;">
+          <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">P4 · VERSUS</div>
+          <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #F2E6C4;">ADVERSARIAL AGENTS</div>
+          <p style="margin: 0; font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">Pursuit and protection agents trained in the twin, each adapting to the other's strategy before transfer to HIL.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Level map" style="max-width: 1520px; margin: 0 auto; padding: 64px 28px 0;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
+      <span style="color: #05070A; background: #FFB000; padding: 6px 9px; font-size: 9px; font-family: 'Silkscreen', monospace;">05</span>
+      <span style="font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #F2E6C4;">LEVEL MAP · 9 MILESTONES</span>
+      <span style="flex: 1; height: 2px; background: repeating-linear-gradient(90deg, #2A5A8E 0 8px, transparent 8px 14px);"></span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 10px;">
+      <sc-for list="{{ milestones }}" as="m" hint-placeholder-count="9">
+        <div style="background: {{ m.bg }}; border: 2px solid {{ m.border }}; padding: 14px 12px; display: grid; gap: 8px; align-content: start; min-height: 120px;">
+          <div style="display: flex; justify-content: space-between; font-family: 'Silkscreen', monospace; font-size: 11px; color: {{ m.accent }};"><span>M{{ m.n }}</span><span>{{ m.tag }}</span></div>
+          <div style="font-size: 12.5px; font-weight: 700; letter-spacing: 0.04em; color: #F2E6C4; line-height: 1.4;">{{ m.name }}</div>
+          <div style="font-size: 11.5px; line-height: 1.6; color: #9FB6CF;">{{ m.note }}</div>
+        </div>
+      </sc-for>
+    </div>
+    <p style="margin: 16px 0 0; max-width: 78ch; font-size: 13px; line-height: 1.85; color: #9FB6CF;">Physical bench (M5) → rolling chassis (M6) → closed-loop autonomy on the real UGV (M7) are locked until the board lands. Bring-up runbook and bitstreams are staged.</p>
+  </section>
+
+  <section data-screen-label="Rules" style="max-width: 1520px; margin: 0 auto; padding: 64px 28px 0;">
+    <div style="border: 2px solid #F2E6C4; background: #05070A; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));">
+      <div style="padding: 24px 22px; border-right: 1px solid #2A5A8E; display: grid; gap: 12px; align-content: start;">
+        <div style="font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FFB000;">HOUSE RULES · HONEST CLAIMS</div>
+        <div style="display: grid; gap: 10px; font-size: 13px; line-height: 1.8; color: #D5DCE4;">
+          <div><span style="color: #FFB000;">▸ </span>No "pure FPGA end-to-end" claim. FPGA critical path + supervisory SoC.</div>
+          <div><span style="color: #FFB000;">▸ </span>Vendor perf/W figures are reported, not proven. The claim is bounded latency.</div>
+          <div><span style="color: #FFB000;">▸ </span>Per-core timing MET ≠ system-integration MET. Integration TRL is low.</div>
+        </div>
+      </div>
+      <div style="padding: 24px 22px; display: grid; gap: 12px; align-content: start; font-size: 13px;">
+        <div style="font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FFB000;">ARTEFACTS</div>
+        <div><span style="color: #9FB6CF;">REPO ▸ </span><a href="https://github.com/Upaasak/sentinel-ev">Upaasak/sentinel-ev</a> <span style="color: #5B7699;">(private)</span></div>
+        <div><span style="color: #9FB6CF;">RTL ▸ </span><span style="color: #D5DCE4;">EV/05_Experiments/rtl · VHDL-2008</span></div>
+        <div><span style="color: #9FB6CF;">RISKS ▸ </span><span style="color: #D5DCE4;">EV/10_Program_Execution/Risk-Register.md</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div style="max-width: 1520px; margin: 64px auto 0; padding: 0 28px;">
+    <div style="border-top: 2px solid #2A5A8E; padding: 18px 0 30px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.1em; color: #9FB6CF;">
+      <a href="projects.html" style="color: #FFB000;">CONTINUE? ▸ ALL PROJECTS</a>
+      <span>WHISTLEBLOWER LAB · MMXXVI</span>
+    </div>
+  </div>
+
+  <sc-if value="{{ scanlines }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; pointer-events: none; z-index: 60; background: repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0 1px, transparent 1px 3px);"></div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;blinkHud&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Arcade&quot;},&quot;scanlines&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Arcade&quot;},&quot;showConventional&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const done = { tag: 'CLEAR', bg: '#10294A', border: '#FFB000', accent: '#FFB000' };
+    const live = { tag: 'PLAY', bg: '#10294A', border: '#2A5A8E', accent: '#F2E6C4' };
+    const lock = { tag: 'LOCKED', bg: '#081627', border: '#FF3B3B', accent: '#FF3B3B' };
+    const ms = [
+      ['Requirements freeze', '34 REQs · 22 core-MET', live],
+      ['Physical architecture', 'Diagram + DL-002 split', live],
+      ['Interface control docs', '16 boundaries, hazards pinned', live],
+      ['Safety & supervision', '15 guarantees · 6 proven', done],
+      ['Bench integration', 'Virtual now · board-gated', lock],
+      ['Rolling chassis', 'Gazebo twin now · car later', lock],
+      ['Closed-loop autonomy', 'Full loop in sim', lock],
+      ['System test report', 'Evidence exists · matrix open', live],
+      ['Executive presentation', 'Material needs refresh', live]
+    ].map((m, i) => Object.assign({ n: i + 1, name: m[0], note: m[1] }, m[2]));
+    return {
+      milestones: ms,
+      blinkHud: this.props.blinkHud ?? true,
+      showConventional: this.props.showConventional ?? true,
+      scanlines: this.props.scanlines ?? false
+    };
+  }
+}
+</script>
+</body>
+</html>

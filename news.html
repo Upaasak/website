@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<title>Whistleblower Lab — News</title>
+<link rel="icon" href="assets/brand/logo-mark.png" />
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; background: #05070A; }
+  * { box-sizing: border-box; }
+  a { color: #00D9FF; text-decoration: none; }
+  a:hover { color: #05070A; background: #00D9FF; }
+  ::selection { background: #39FF88; color: #05070A; }
+  @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+</style>
+</helmet>
+<div style="background: #05070A; color: #39FF88; font-family: 'IBM Plex Mono', ui-monospace, monospace; min-height: 100vh; overflow-x: hidden;">
+
+  <div style="position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 10px 28px; background: #05070A; border-bottom: 1px solid #163D2A; font-size: 12px; letter-spacing: 0.12em;">
+    <div style="display: flex; align-items: center; gap: 14px; color: #7AAE91;">
+      <a href="index.html" style="color: #05070A; background: #39FF88; padding: 5px 8px; font-weight: 400; font-size: 9px; font-family: 'Silkscreen', monospace;">WHISTLEBLOWER</a>
+      <span style="color: #66727D;">│</span>
+      <span>ASIC · FPGA · DV</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <a href="index.html" style="color: #7AAE91;">HOME</a>
+      <a href="research.html" style="color: #7AAE91;">RESEARCH</a>
+      <a href="projects.html" style="color: #7AAE91;">PROJECTS</a>
+      <a href="people.html" style="color: #7AAE91;">PEOPLE</a>
+      <a href="publications.html" style="color: #7AAE91;">PUBS</a>
+      <span style="color: #D7E0E6;">NEWS</span>
+      <a href="join.html" style="color: #7AAE91;">JOIN</a>
+    </div>
+  </div>
+
+  <section data-screen-label="News header" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
+    <div style="font-size: 12px; letter-spacing: 0.3em; color: #00D9FF; margin-bottom: 18px;">▚▚ 06 / NEWS ▞▞</div>
+    <h1 style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin: 0 0 20px; font-size: clamp(32px, 4.6vw, 56px); font-weight: 800; letter-spacing: 0.02em; color: #D7E0E6; line-height: 1.05;">LAB LOG</h1>
+    <p style="max-width: 68ch; font-size: 14px; line-height: 1.9; color: #A8B3BD; margin: 0;">Newest first. Closures, failures, intakes and hardware. If it changed what the lab can do, it goes in the log.</p>
+    <div style="margin-top: 22px; border: 1px dashed #ffb000; padding: 12px 14px; font-size: 12px; letter-spacing: 0.1em; color: #ffb000;">SAMPLE ENTRIES — send the real log and these get replaced.</div>
+  </section>
+
+  <section data-screen-label="Log" style="max-width: 1520px; margin: 0 auto; padding: 40px 28px 0;">
+    <div style="display: grid; gap: 14px;">
+
+      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>2026-08-14</span><span>TIMING</span></div>
+        <div style="padding: 20px 18px; display: grid; gap: 11px;">
+          <div style="font-size: 16px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.04em;">ipdft_channel_top closes timing at 148 MHz on Artix-7</div>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.9; color: #A8B3BD; max-width: 76ch;">Retiming the CORDIC output stage and moving the window multiplier to a DSP48 bought 620 ps of slack. Utilisation went up two points, which we will take. Reports are in the repository.</p>
+          <a href="project-ipdft.html" style="font-size: 12.5px; letter-spacing: 0.12em;">CASE FILE ▸</a>
+        </div>
+      </div>
+
+      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>2026-07-30</span><span>BENCH</span></div>
+        <div style="padding: 20px 18px; display: grid; gap: 11px;">
+          <div style="font-size: 16px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.04em;">Second bench online — shared JTAG and scope access</div>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.9; color: #A8B3BD; max-width: 76ch;">A donated Zynq-7020 board, a scope and a logic analyser now sit behind a booking script, so bringup no longer blocks on one person being in the room.</p>
+        </div>
+      </div>
+
+      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>2026-07-02</span><span>INTAKE</span></div>
+        <div style="padding: 20px 18px; display: grid; gap: 11px;">
+          <div style="font-size: 16px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.04em;">Autumn intake open: three verification slots, two RTL slots</div>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.9; color: #A8B3BD; max-width: 76ch;">Applications by mail with a CV and one paragraph on a block you would like to verify. No prior tapeout, no coursework requirement, no interview panel.</p>
+          <a href="join.html" style="font-size: 12.5px; letter-spacing: 0.12em;">HOW TO APPLY ▸</a>
+        </div>
+      </div>
+
+      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: #182027; color: #ffb000; font-size: 11.5px; letter-spacing: 0.14em;"><span>2026-06-11</span><span>DEFECT</span></div>
+        <div style="padding: 20px 18px; display: grid; gap: 11px;">
+          <div style="font-size: 16px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.04em;">DEF-014 opened: ROCOF overshoot on a 2 Hz/s step
+</div>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.9; color: #A8B3BD; max-width: 76ch;">Found by the golden-model comparison, not by a human reading waveforms, which is the whole argument for keeping the python model in the regression. Still open, still unassigned.</p>
+        </div>
+      </div>
+
+      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>2026-05-20</span><span>LAB</span></div>
+        <div style="padding: 20px 18px; display: grid; gap: 11px;">
+          <div style="font-size: 16px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.04em;">Whistleblower starts with seven members and one board</div>
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.9; color: #A8B3BD; max-width: 76ch;">Founded to pool the things a single student cannot get alone: a licence, a board, a reviewer. First block claimed the same week.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div style="max-width: 1520px; margin: 74px auto 0; padding: 0 28px;">
+    <div style="border-top: 1px solid #163D2A; padding: 26px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; font-size: 12.5px;">
+      <div style="display: grid; gap: 8px; align-content: start;">
+        <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">WHISTLEBLOWER</div>
+        <div style="color: #A8B3BD; line-height: 1.8; max-width: 30ch;">Student-run ASIC / FPGA hardware verification lab.</div>
+      </div>
+      <div style="display: grid; gap: 8px; align-content: start;">
+        <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">CONTACT</div>
+        <div><span style="color: #66727D;">MAIL ▸ </span><a href="mailto:lab@whistleblower.dev">lab@whistleblower.dev</a></div>
+      </div>
+      <div style="display: grid; gap: 8px; align-content: start;">
+        <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">INDEX</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px 14px;">
+          <a href="index.html" style="color: #7AAE91;">HOME</a>
+          <a href="research.html" style="color: #7AAE91;">RESEARCH</a>
+          <a href="projects.html" style="color: #7AAE91;">PROJECTS</a>
+          <a href="people.html" style="color: #7AAE91;">PEOPLE</a>
+          <a href="publications.html" style="color: #7AAE91;">PUBS</a>
+          <a href="join.html" style="color: #7AAE91;">JOIN</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top: 1px solid #182027; padding: 14px 0 30px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-size: 11px; letter-spacing: 0.14em; color: #66727D;">
+      <span>▓▒░ END OF FILE ░▒▓</span>
+      <span>WHISTLEBLOWER LAB · MMXXVI</span>
+    </div>
+  </div>
+
+</div></x-dc>
+</body>
+</html>

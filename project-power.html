@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Whistleblower Lab — Power System Protocols</title>
+<link rel="icon" href="assets/brand/logo-mark.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Lora:ital,wght@0,400;0,600;1,400&family=Shadows+Into+Light&family=Silkscreen&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; background: #FFFFFF; }
+  * { box-sizing: border-box; }
+  a { color: #2F7FA8; text-decoration: underline; text-decoration-style: wavy; text-underline-offset: 4px; }
+  a:hover { color: #333333; background: #FFD54F; }
+  ::selection { background: #FFD54F; color: #333333; }
+</style>
+</helmet>
+<div style="position: relative; background: #FFFFFF; color: #333333; font-family: 'Lora', Georgia, serif; min-height: 100vh; overflow-x: hidden;">
+  <sc-if value="{{ brush }}" hint-placeholder-val="{{ true }}">
+    <div style="position: absolute; top: 260px; left: -120px; width: 420px; height: 260px; background: radial-gradient(ellipse, rgba(135,206,235,0.35), transparent 70%); transform: rotate(-12deg); pointer-events: none;"></div>
+    <div style="position: absolute; top: 1300px; right: -140px; width: 460px; height: 280px; background: radial-gradient(ellipse, rgba(129,199,132,0.3), transparent 70%); transform: rotate(8deg); pointer-events: none;"></div>
+    <div style="position: absolute; top: 2600px; left: -100px; width: 400px; height: 240px; background: radial-gradient(ellipse, rgba(229,115,115,0.25), transparent 70%); pointer-events: none;"></div>
+  </sc-if>
+
+  <div style="position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 10px 28px; background: #05070A; border-bottom: 1px solid #163D2A; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em;">
+    <div style="display: flex; align-items: center; gap: 14px; color: #7AAE91;">
+      <a href="index.html" style="color: #05070A; background: #39FF88; padding: 5px 8px; font-size: 9px; font-family: 'Silkscreen', monospace; text-decoration: none;">WHISTLEBLOWER</a>
+      <span style="color: #66727D;">│</span>
+      <span>ASIC · FPGA · DV</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <a href="index.html" style="color: #7AAE91; text-decoration: none;">HOME</a>
+      <a href="research.html" style="color: #7AAE91; text-decoration: none;">RESEARCH</a>
+      <a href="projects.html" style="color: #D7E0E6; text-decoration: none;">PROJECTS</a>
+      <a href="people.html" style="color: #7AAE91; text-decoration: none;">PEOPLE</a>
+      <a href="publications.html" style="color: #7AAE91; text-decoration: none;">PUBS</a>
+      <a href="news.html" style="color: #7AAE91; text-decoration: none;">NEWS</a>
+      <a href="join.html" style="color: #7AAE91; text-decoration: none;">JOIN</a>
+    </div>
+  </div>
+
+  <main style="position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; padding: 32px 28px 0;">
+    <a href="projects.html" style="font-family: 'Shadows Into Light', cursive; font-size: 20px;">← back to all the projects</a>
+
+    <header data-screen-label="Header" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 36px; align-items: center; padding: 26px 0 0;">
+      <div style="display: grid; gap: 16px;">
+        <div style="font-family: 'Shadows Into Light', cursive; font-size: 22px; color: #E57373; transform: rotate(-2deg); transform-origin: left;">prj_06 · case file</div>
+        <h1 style="margin: 0; font-family: 'Patrick Hand', cursive; font-weight: 400; font-size: clamp(44px, 6.5vw, 82px); line-height: 0.98; color: #333333; text-shadow: 2px 2px 0 #87CEEB;">Power System Protocols</h1>
+        <p style="margin: 0; max-width: 54ch; font-size: 17px; line-height: 1.75; text-wrap: pretty;">Two messengers for the grid. An IEEE C37.118.1 phasor measurement unit that reports six channels at 50 frames a second, and an IEEE 2664-2024 (STTP) publisher that carries the same measurements over TCP with no processor anywhere in the datapath.</p>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; font-family: 'Patrick Hand', cursive; font-size: 18px;">
+          <span style="background: rgba(135,206,235,0.45); padding: 3px 12px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;">C37.118.1-2011</span>
+          <span style="background: rgba(129,199,132,0.45); padding: 3px 12px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;">IEEE 2664 STTP</span>
+          <span style="background: rgba(255,213,79,0.55); padding: 3px 12px; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;">ZCU106 xczu7ev</span>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: center;">
+        <div style="width: min(100%, 400px); border: 2.5px solid #333333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; padding: 12px; background: #FFFFFF; transform: rotate(1.5deg); box-shadow: 6px 7px 0 rgba(255,213,79,0.8);">
+          <img src="assets/cards/power.jpg" alt="A pigeon messenger in a red cap carrying a satchel" style="display: block; width: 100%; height: auto; border-radius: 200px 12px 180px 12px / 12px 180px 12px 200px;" />
+        </div>
+      </div>
+    </header>
+
+    <section data-screen-label="About" style="padding-top: 64px;">
+      <div style="position: relative; border: 2px solid #333333; border-radius: 12px 225px 15px 255px / 255px 15px 225px 15px; padding: 30px 32px; background: #FFFFFF; background-image: linear-gradient(transparent 31px, rgba(135,206,235,0.28) 32px); background-size: 100% 32px;">
+        <div style="position: absolute; top: -16px; left: 28px; background: #FFFFFF; padding: 0 10px; font-family: 'Patrick Hand', cursive; font-size: 24px;">About this sketchbook</div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 28px;">
+          <p style="margin: 0; font-size: 16.5px; line-height: 2; text-wrap: pretty;">A PMU samples the grid's voltages and currents, turns each cycle into a phasor (magnitude, angle, frequency, rate of change) and stamps it with GPS time. The PMU is the pigeon: it writes the letter. The protocol is how the letter travels.</p>
+          <p style="margin: 0; font-size: 16.5px; line-height: 2; text-wrap: pretty;">C37.118 is the classic fixed-frame carrier. STTP is the newer one: it compresses the measurements with TSSC and negotiates a subscription over TCP. Both are built here on the same ZCU106 board.</p>
+        </div>
+        <div style="margin-top: 16px; font-family: 'Shadows Into Light', cursive; font-size: 19px; color: #E57373;">note to self: the IpDFT front-end has its own case file → <a href="project-ipdft.html">iDFT channel page</a></div>
+      </div>
+    </section>
+
+    <section data-screen-label="Folio C37" style="padding-top: 72px; display: grid; gap: 26px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 30px; align-items: center;">
+        <div style="display: grid; gap: 14px;">
+          <div style="font-family: 'Shadows Into Light', cursive; font-size: 20px; color: #2F7FA8;">folio one · the fast courier</div>
+          <h2 style="margin: 0; font-family: 'Patrick Hand', cursive; font-weight: 400; font-size: 44px; line-height: 1; border-bottom: 4px solid #87CEEB; padding-bottom: 6px; justify-self: start;">IEEE C37.118.1 PMU</h2>
+          <p style="margin: 0; font-size: 16.5px; line-height: 1.8;">A 6-channel, 3-phase PMU in VHDL on the PL fabric. Signal processing runs in hardware; C37.118 framing, config frames and UDP to the PDC run on the ARM PS.</p>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; text-align: center;">
+            <div style="border: 2px solid #87CEEB; border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px; padding: 12px 6px;"><div style="font-family: 'Patrick Hand', cursive; font-size: 32px;">96/96</div><div style="font-size: 13px;">M + P class tests</div></div>
+            <div style="border: 2px solid #87CEEB; border-radius: 225px 15px 255px 15px / 15px 255px 15px 225px; padding: 12px 6px;"><div style="font-family: 'Patrick Hand', cursive; font-size: 32px;">0.07%</div><div style="font-size: 13px;">best TVE, clean 50 Hz</div></div>
+            <div style="border: 2px solid #87CEEB; border-radius: 15px 255px 15px 225px / 225px 15px 255px 15px; padding: 12px 6px;"><div style="font-family: 'Patrick Hand', cursive; font-size: 32px;">&lt; 1 ms</div><div style="font-size: 13px;">ADC to phasor</div></div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: center;"><img src="assets/projects/power/duck-c37.jpg" alt="A duck in a red helmet flying fast" style="display: block; width: min(100%, 380px); height: auto;" /></div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 26px; align-items: start;">
+        <div style="border: 1.5px solid #9A9A9A; border-radius: 4px 14px 6px 12px; padding: 18px; display: grid; gap: 12px;">
+          <div style="font-family: 'Patrick Hand', cursive; font-size: 22px;">Fig 1 · the 76-byte data frame</div>
+          <div style="display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 3px;">
+            <sc-for list="{{ frame }}" as="f" hint-placeholder-count="30">
+              <div style="grid-column: span {{ f.span }}; background: {{ f.bg }}; border: 1.5px solid #333333; border-radius: 3px 8px 4px 7px; padding: 6px 2px; text-align: center; font-family: 'Patrick Hand', cursive; font-size: 13px; line-height: 1.1; min-height: 38px; display: grid; place-items: center; overflow: hidden;">{{ f.label }}</div>
+            </sc-for>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-family: 'Shadows Into Light', cursive; font-size: 16px; color: #666666;"><span>byte 0</span><span>16 bytes per row</span><span>byte 75</span></div>
+          <div style="display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px;">
+            <span><span style="display: inline-block; width: 12px; height: 12px; background: rgba(135,206,235,0.6); border: 1px solid #333;"></span> header</span>
+            <span><span style="display: inline-block; width: 12px; height: 12px; background: rgba(255,213,79,0.6); border: 1px solid #333;"></span> magnitude Q16.15</span>
+            <span><span style="display: inline-block; width: 12px; height: 12px; background: rgba(229,115,115,0.45); border: 1px solid #333;"></span> phase Q2.13</span>
+            <span><span style="display: inline-block; width: 12px; height: 12px; background: rgba(129,199,132,0.55); border: 1px solid #333;"></span> freq / ROCOF Q16.16</span>
+          </div>
+          <div style="font-family: 'Shadows Into Light', cursive; font-size: 17px; color: #555555;">SYNC 0xAA · FRAMESIZE 0x004C · STAT 0xC010 · CRC-CCITT over bytes 0–71</div>
+        </div>
+        <div style="display: grid; gap: 14px;">
+          <div style="font-family: 'Patrick Hand', cursive; font-size: 22px;">The PL pipeline</div>
+          <sc-for list="{{ pipe }}" as="p" hint-placeholder-count="7">
+            <div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; align-items: start;">
+              <span style="font-family: 'Patrick Hand', cursive; font-size: 22px; width: 30px; height: 30px; display: grid; place-items: center; border: 2px solid #87CEEB; border-radius: 50% 45% 55% 48%;">{{ p.n }}</span>
+              <div style="font-size: 15px; line-height: 1.6;"><b style="font-weight: 600;">{{ p.name }}</b> — {{ p.note }}</div>
+            </div>
+          </sc-for>
+          <div style="font-family: 'Shadows Into Light', cursive; font-size: 18px; color: #2F7FA8;">post-synth: 11,153 LUT (4.84%) · 57 DSP · 6 BRAM @ 100 MHz</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 26px; align-items: start;">
+        <figure style="margin: 0; border: 1.5px solid #9A9A9A; border-radius: 6px 12px 4px 14px; padding: 18px; display: grid; gap: 12px;">
+          <div style="font-family: 'Patrick Hand', cursive; font-size: 22px;">Fig 2 · worst TVE by test category</div>
+          <div style="position: relative; display: grid; gap: 8px;">
+            <div style="position: absolute; top: -4px; bottom: -4px; left: calc(130px + 10px + (100% - 140px) * 0.8333); border-left: 2px dashed #E57373;"></div>
+            <sc-for list="{{ tve }}" as="t" hint-placeholder-count="7">
+              <div style="display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 10px; align-items: center;">
+                <span style="font-size: 13.5px; text-align: right;">{{ t.name }}</span>
+                <div style="display: flex; align-items: center; gap: 6px;"><div style="width: {{ t.w }}; height: 14px; background: {{ t.bg }}; border: 1.5px solid #333333; border-radius: 2px 7px 3px 6px;"></div><span style="font-family: 'Patrick Hand', cursive; font-size: 16px;">{{ t.v }}</span></div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="font-family: 'Shadows Into Light', cursive; font-size: 17px; color: #E57373;">┆ dashed = IEEE 1% TVE limit. The README lists P-class harmonic max at 1.03% while reporting it as a pass.</div>
+        </figure>
+        <figure style="margin: 0; border: 1.5px solid #9A9A9A; border-radius: 12px 4px 14px 6px; padding: 14px; display: grid; gap: 8px;">
+          <img src="assets/projects/power/c37-results-graph.png" alt="Compliance results graph from the c37 repository" style="display: block; width: 100%; height: auto;" />
+          <figcaption style="font-family: 'Shadows Into Light', cursive; font-size: 17px; color: #555555;">from the repo: results_graph.png, all 96 tests</figcaption>
+        </figure>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 22px;">
+        <figure style="margin: 0; border: 1.5px solid #9A9A9A; border-radius: 4px 12px 6px 10px; padding: 12px; display: grid; gap: 8px;"><img src="assets/projects/power/c37-hann-window.png" alt="Hann window analysis plots" style="display: block; width: 100%; height: auto;" /><figcaption style="font-family: 'Shadows Into Light', cursive; font-size: 17px; color: #555555;">Hann window: −32 dB sidelobes vs −13 dB rectangular</figcaption></figure>
+        <figure style="margin: 0; border: 1.5px solid #9A9A9A; border-radius: 10px 4px 12px 6px; padding: 12px; display: grid; gap: 8px;"><img src="assets/projects/power/c37-freq-damping.png" alt="Frequency damping filter analysis plots" style="display: block; width: 100%; height: auto;" /><figcaption style="font-family: 'Shadows Into Light', cursive; font-size: 17px; color: #555555;">frequency damping filter, α = 0.1 / 0.3 / 0.5</figcaption></figure>
+        <figure style="margin: 0; border: 1.5px solid #9A9A9A; border-radius: 6px 10px 4px 12px; padding: 12px; display: grid; gap: 8px;"><img src="assets/projects/power/c37-waveform.png" alt="Vivado xsim waveform of one PMU measurement cycle" style="display: block; width: 100%; height: auto;" /><figcaption style="font-family: 'Shadows Into Light', cursive; font-size: 17px; color: #555555;">xsim waveform, 1-cycle measurement, 2 ms</figcaption></figure>
+      </div>
+    </section>
+
+    <section data-screen-label="Folio STTP" style="padding-top: 80px; display: grid; gap: 26px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 30px; align-items: center;">
+        <div style="display: flex; justify-content: center;"><img src="assets/projects/power/balloon-bird-sttp.jpg" alt="A blue bird carried by a red balloon among clouds" style="display: block; width: min(100%, 380px); height: auto; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;" /></div>
+        <div style="display: grid; gap: 14px;">
+          <div style="font-family: 'Shadows Into Light', cursive; font-size: 20px; color: #3E8E48;">folio two · the light traveller</div>
+          <h2 style="margin: 0; font-family: 'Patrick Hand', cursive; font-weight: 400; font-size: 44px; line-height: 1; border-bottom: 4px solid #81C784; padding-bottom: 6px; justify-self: start;">IEEE 2664 · STTP</h2>
+          <p style="margin: 0; font-size: 16.5px; line-height: 1.8;">A C37.118-class PMU and an STTP publisher entirely in programmable logic. No processor, no operating system, no software in the datapath: analog in one end, TCP/IP synchrophasor frames out the other. A stock, unmodified GPA cppapi subscriber decodes the stream.</p>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; text-align: center;">
+            <div style="border: 2px solid #81C784; border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px; padding: 12px 6px;"><div style="font-family: 'Patrick Hand', cursive; font-size: 32px;">14/14</div><div style="font-size: 13px;">protocol compliance</div></div>
+            <div style="border: 2px solid #81C784; border-radius: 225px 15px 255px 15px / 15px 255px 15px 225px; padding: 12px 6px;"><div style="font-family: 'Patrick Hand', cursive; font-size: 32px;">532 µs</div><div style="font-size: 13px;">STTP handshake</div></div>
+            <div style="border: 2px solid #81C784; border-radius: 15px 255px 15px 225px / 225px 15px 255px 15px; padding: 12px 6px;"><div style="font-family: 'Patrick Hand', cursive; font-size: 32px;">19.999</div><div style="font-size: 13px;">ms median frame</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 26px; align-items: start;">
+        <div style="border: 1.5px solid #9A9A9A; border-radius: 4px 14px 6px 12px; padding: 18px; display: grid; gap: 10px;">
+          <div style="font-family: 'Patrick Hand', cursive; font-size: 22px;">Fig 3 · inside the fabric, two clocks</div>
+          <div style="border: 2px dashed #87CEEB; border-radius: 10px; padding: 12px; display: grid; gap: 6px;">
+            <div style="font-family: 'Shadows Into Light', cursive; font-size: 17px; color: #2F7FA8;">100 MHz · SI570 → MMCM · WNS +0.201 ns</div>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-family: 'Patrick Hand', cursive; font-size: 15px;">
+              <span style="border: 1.5px solid #333; border-radius: 4px 9px 5px 8px; padding: 3px 8px;">ads8588_master</span>→<span style="border: 1.5px solid #333; border-radius: 4px 9px 5px 8px; padding: 3px 8px;">sample_buffer 1500</span>→<span style="border: 1.5px solid #333; border-radius: 4px 9px 5px 8px; padding: 3px 8px;">dft_5bin + Hann</span>→<span style="border: 1.5px solid #333; border-radius: 4px 9px 5px 8px; padding: 3px 8px;">cordic ×20</span>→<span style="border: 1.5px solid #333; border-radius: 4px 9px 5px 8px; padding: 3px 8px;">ipdft_estimator</span>→<span style="border: 1.5px solid #333; border-radius: 4px 9px 5px 8px; padding: 3px 8px;">calibration</span>→<span style="border: 1.5px solid #333; border-radius: 4px 9px 5px 8px; padding: 3px 8px;">sttp engine</span>→<span style="border: 1.5px solid #333; border-radius: 4px 9px 5px 8px; padding: 3px 8px; background: rgba(129,199,132,0.4);">TSSC ×9</span>
+            </div>
+          </div>
+          <div style="text-align: center; font-family: 'Patrick Hand', cursive; font-size: 16px; background: rgba(255,213,79,0.5); border: 1.5px solid #333; border-radius: 12px 4px 12px 4px; padding: 4px; justify-self: center;">sttp_pkt_cdc_fifo · gray-coded</div>
+          <div style="border: 2px dashed #81C784; border-radius: 10px; padding: 12px; display: grid; gap: 6px;">
+            <div style="font-family: 'Shadows Into Light', cursive; font-size: 17px; color: #3E8E48;">125 MHz · GT-derived · WNS +0.033 ns over 229,141 endpoints</div>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-family: 'Patrick Hand', cursive; font-size: 15px;">
+              <span style="border: 1.5px solid #333; border-radius: 4px 9px 5px 8px; padding: 3px 8px;">sttp_tcp_adapter</span>→<span style="border: 1.5px solid #333; border-radius: 4px 9px 5px 8px; padding: 3px 8px;">toe_tcp_engine</span>→<span style="border: 1.5px solid #333; border-radius: 4px 9px 5px 8px; padding: 3px 8px;">eth_ip_core</span>→<span style="border: 1.5px solid #333; border-radius: 4px 9px 5px 8px; padding: 3px 8px;">PCS/PMA</span>→<span style="font-family: 'Shadows Into Light', cursive; font-size: 17px;">TCP :8080</span>
+            </div>
+          </div>
+          <div style="font-family: 'Shadows Into Light', cursive; font-size: 17px; color: #555555;">PS8 = 0 in the routed report. No black boxes.</div>
+        </div>
+        <div style="border: 1.5px solid #9A9A9A; border-radius: 12px 6px 14px 4px; padding: 18px; display: grid; gap: 10px;">
+          <div style="font-family: 'Patrick Hand', cursive; font-size: 22px;">Fig 4 · the session, as captured</div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; font-family: 'Patrick Hand', cursive; font-size: 17px; text-align: center; border-bottom: 2px solid #333; padding-bottom: 4px;"><span>stock subscriber</span><span>ZCU106, pure PL</span></div>
+          <sc-for list="{{ session }}" as="s" hint-placeholder-count="9">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; align-items: center; font-size: 13.5px;">
+              <div style="grid-column: {{ s.col }}; text-align: center; border-bottom: 2px solid {{ s.color }}; padding: 3px 4px; position: relative;">{{ s.label }} <span style="font-family: 'Patrick Hand', cursive; color: {{ s.color }};">{{ s.arrow }}</span></div>
+            </div>
+          </sc-for>
+          <div style="font-family: 'Shadows Into Light', cursive; font-size: 17px; color: #555555;">TCP up at 173 µs · handshake done at 532 µs · then one 0x82 DataPacket every 20 ms</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 26px; align-items: start;">
+        <figure style="margin: 0; border: 1.5px solid #9A9A9A; border-radius: 6px 12px 4px 14px; padding: 18px; display: grid; gap: 12px;">
+          <div style="font-family: 'Patrick Hand', cursive; font-size: 22px;">Fig 5 · TSSC compression ratio</div>
+          <sc-for list="{{ tssc }}" as="t" hint-placeholder-count="3">
+            <div style="display: grid; gap: 4px;">
+              <div style="display: flex; justify-content: space-between; font-size: 14px;"><span>{{ t.name }}</span><b style="font-family: 'Patrick Hand', cursive; font-size: 18px; font-weight: 400;">{{ t.v }}</b></div>
+              <div style="height: 16px; border: 1.5px solid #333; border-radius: 3px 8px 4px 7px;"><div style="width: {{ t.w }}; height: 100%; background: {{ t.bg }};"></div></div>
+            </div>
+          </sc-for>
+          <div style="font-family: 'Shadows Into Light', cursive; font-size: 17px; color: #555555;">vs a 36 B/measurement baseline (an engineering estimate, not a spec constant). Software compresses more because its data barely changes.</div>
+        </figure>
+        <div style="border: 1.5px solid #9A9A9A; border-radius: 14px 4px 12px 6px; padding: 18px; display: grid; gap: 10px; align-content: start;">
+          <div style="font-family: 'Patrick Hand', cursive; font-size: 22px;">Measured on the bench</div>
+          <div style="display: grid; font-size: 15px;">
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 8px 0; border-bottom: 1.5px dashed #BDBDBD;"><span>A/B vs reference C++</span><b style="font-weight: 600;">4/5 identical</b></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 8px 0; border-bottom: 1.5px dashed #BDBDBD;"><span>Endurance, 300.0 s</span><b style="font-weight: 600;">15,064 segments, 0 RST</b></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 8px 0; border-bottom: 1.5px dashed #BDBDBD;"><span>Voltage at 60 V applied</span><b style="font-weight: 600;">60.01 / 60.01 / 59.98</b></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 8px 0; border-bottom: 1.5px dashed #BDBDBD;"><span>Current at 1 A applied</span><b style="font-weight: 600;">0.998 / 1.000 / 0.999</b></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 8px 0; border-bottom: 1.5px dashed #BDBDBD;"><span>Measurements per frame</span><b style="font-weight: 600;">14, IDs 100–113</b></div>
+          </div>
+          <div style="font-family: 'Shadows Into Light', cursive; font-size: 17px; color: #E57373;">careful: angles are published in radians under VPHA/IPHA, which usually mean degrees — off by 57.3×.</div>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Security" style="padding-top: 80px; display: grid; gap: 26px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 30px; align-items: center;">
+        <div style="display: grid; gap: 14px;">
+          <div style="font-family: 'Shadows Into Light', cursive; font-size: 20px; color: #E57373;">folio three · who else is reading the mail</div>
+          <h2 style="margin: 0; font-family: 'Patrick Hand', cursive; font-weight: 400; font-size: 44px; line-height: 1; border-bottom: 4px solid #E57373; padding-bottom: 6px; justify-self: start;">Security</h2>
+          <p style="margin: 0; font-size: 16.5px; line-height: 1.8;">Grid telemetry drives protection decisions, so a forged or delayed phasor is a physical risk. What these two designs defend against, and what they leave open, is written down in the repos rather than implied.</p>
+        </div>
+        <div style="display: flex; justify-content: center;"><img src="assets/projects/power/security-burglar.jpg" alt="A burglar with bolt cutters inside a red prohibition sign" style="display: block; width: min(100%, 340px); height: auto; border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;" /></div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 18px;">
+        <sc-for list="{{ sec }}" as="s" hint-placeholder-count="8">
+          <div style="border: 2px solid {{ s.border }}; border-radius: {{ s.radius }}; padding: 16px; display: grid; gap: 8px; align-content: start; background: {{ s.bg }};">
+            <div style="display: flex; justify-content: space-between; gap: 8px; align-items: baseline;"><span style="font-family: 'Patrick Hand', cursive; font-size: 21px;">{{ s.title }}</span><span style="font-family: 'Shadows Into Light', cursive; font-size: 16px; color: {{ s.tagc }}; white-space: nowrap;">{{ s.tag }}</span></div>
+            <p style="margin: 0; font-size: 14.5px; line-height: 1.65;">{{ s.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="border: 2px solid #333333; border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px; padding: 22px 26px; display: grid; gap: 10px; background: rgba(255,213,79,0.25);">
+        <div style="font-family: 'Patrick Hand', cursive; font-size: 24px;">Where the lock comes from</div>
+        <p style="margin: 0; font-size: 16px; line-height: 1.75;">Confidentiality and authentication are not in either design today. The lab's post-quantum work signs and encrypts IEC 61850 GOOSE/SV frames with ML-KEM and ML-DSA, and is the intended route for protected substation traffic. See the <a href="project-pqc.html">Post-Quantum Post Office</a>.</p>
+      </div>
+    </section>
+
+    <section data-screen-label="Links" style="padding-top: 60px;">
+      <div style="border-top: 2px solid #333333; border-radius: 0 0 0 0; padding-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 22px; font-size: 15px;">
+        <div style="display: grid; gap: 6px;"><div style="font-family: 'Patrick Hand', cursive; font-size: 20px;">C37.118 repo</div><a href="https://github.com/WidthMissMatch/c37">WidthMissMatch/c37</a><span style="font-family: 'Shadows Into Light', cursive; font-size: 16px; color: #555;">96-test CSV in reports/</span></div>
+        <div style="display: grid; gap: 6px;"><div style="font-family: 'Patrick Hand', cursive; font-size: 20px;">STTP repo</div><a href="https://github.com/Upaasak/sb-proj-sttp-pmu-adc-delivery">sb-proj-sttp-pmu-adc-delivery</a><span style="font-family: 'Shadows Into Light', cursive; font-size: 16px; color: #555;">private · evidence in conformance/</span></div>
+        <div style="display: grid; gap: 6px;"><div style="font-family: 'Patrick Hand', cursive; font-size: 20px;">Signal sources</div><span>Omicron CMC · RTDS · live grid via VT/CT, into an ADS8588 at 15 kHz</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer style="position: relative; z-index: 1; max-width: 1180px; margin: 56px auto 0; padding: 16px 28px 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-top: 1.5px dashed #9A9A9A; font-family: 'Shadows Into Light', cursive; font-size: 18px; color: #555555;">
+    <span style="display: flex; align-items: center; gap: 10px;"><img src="assets/cards/power.jpg" alt="" style="width: 34px; height: 34px; object-fit: cover; border-radius: 50%; border: 1.5px solid #333;" /><a href="projects.html">fly back to all projects</a></span>
+    <span>Whistleblower Lab · MMXXVI</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;brushAccents&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Sketchbook&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const H = 'rgba(135,206,235,0.6)', M = 'rgba(255,213,79,0.6)', P = 'rgba(229,115,115,0.45)', F = 'rgba(129,199,132,0.55)', R = '#F2F2F2';
+    const frame = [
+      ['SYNC', 1, H], ['VER', 1, H], ['FRAMESIZE', 2, H], ['IDCODE', 2, H], ['SOC', 4, H], ['FRACSEC', 2, H], ['STAT', 2, H], ['RSV', 2, R]
+    ];
+    for (let c = 1; c <= 6; c++) frame.push(['MAG ' + c, 4, M], ['pad', 2, R], ['PH ' + c, 2, P]);
+    frame.push(['FREQ', 4, F], ['ROCOF', 4, F], ['CRC', 2, '#FFFFFF'], ['RSV', 2, R]);
+    const pipe = [
+      ['Circular buffer', '512 samples per channel, 6 channels'],
+      ['Resampler', 'variable ADC rate to exactly 256 samples per cycle'],
+      ['Hann window', '256-point, −32 dB sidelobes'],
+      ['256-point DFT', 'fundamental phasor, Q16.16 accumulator'],
+      ['CORDIC', '18 iterations, < 0.001° phase error'],
+      ['Taylor estimator', 'frequency + ROCOF, < 0.025 Hz over 45–55 Hz'],
+      ['TVE + CRC-CCITT', 'real-time TVE, C37.118 checksum']
+    ].map((p, i) => ({ n: i + 1, name: p[0], note: p[1] }));
+    const tve = [
+      ['M · clean', 0.15, '#87CEEB'], ['M · noisy', 0.58, '#87CEEB'], ['M · harmonic', 1.00, '#87CEEB'],
+      ['P · clean', 0.15, '#B5DDF0'], ['P · noisy', 0.78, '#B5DDF0'], ['P · harmonic', 1.03, '#E57373'], ['P · transient', 0.55, '#B5DDF0']
+    ].map(t => ({ name: t[0], v: t[1].toFixed(2) + '%', w: (t[1] / 1.2 * 100).toFixed(1) + '%', bg: t[2] }));
+    const L = { col: '1', color: '#2F7FA8', arrow: '→' }, Rr = { col: '2', color: '#3E8E48', arrow: '←' };
+    const session = [
+      ['TCP SYN', L], ['SYN/ACK', Rr], ['0x06 DefineOperationalModes', L], ['0x80 Succeeded', Rr], ['0x02 Subscribe', L],
+      ['0x83 SignalIndexCache 350 B', Rr], ['0x80 Succeeded', Rr], ['0x86 DataStartTime', Rr], ['0x82 DataPacket, every 20 ms', Rr]
+    ].map(s => Object.assign({ label: s[0] }, s[1]));
+    const tssc = [
+      ['FPGA, live 50 Hz signal', 15.9, '#81C784'], ['FPGA, reconnect capture', 15.8, '#81C784'], ['Software loopback, near-constant data', 50.2, '#D0D0D0']
+    ].map(t => ({ name: t[0], v: t[1] + '×', w: (t[1] / 55 * 100).toFixed(1) + '%', bg: t[2] }));
+    const good = { border: '#81C784', bg: 'rgba(129,199,132,0.10)', tagc: '#3E8E48', tag: 'holds' };
+    const open = { border: '#E57373', bg: 'rgba(229,115,115,0.08)', tagc: '#C94A4A', tag: 'open' };
+    const part = { border: '#FFD54F', bg: 'rgba(255,213,79,0.12)', tagc: '#9A7A00', tag: 'partial' };
+    const radii = ['255px 15px 225px 15px / 15px 225px 15px 255px', '15px 225px 15px 255px / 255px 15px 225px 15px', '225px 15px 255px 15px / 15px 255px 15px 225px', '15px 255px 15px 225px / 225px 15px 255px 15px'];
+    const sec = [
+      ['No software to exploit', 'STTP path: PS8 = 0, no MicroBlaze, no OS, no lwIP. The attack surface of a kernel and its libraries does not exist.', good],
+      ['Deterministic timing', 'Frames come from a fabric counter at 19.999 ms median. Nothing in the datapath can be starved or scheduled late.', good],
+      ['Source provenance', 'SHA-256 recorded for all 80 RTL sources, but 11 of 75 build entries were read from a /tmp path that no longer exists.', part],
+      ['CRC is not a signature', 'C37.118 frames carry CRC-CCITT. It catches corruption on the wire, not an attacker who recomputes it.', part],
+      ['No TLS', 'All STTP traffic is cleartext over TCP, verified across all three source trees the build reads.', open],
+      ['No access filtering', 'The connection string is ignored; all 14 points are served to any subscriber regardless of what it asks for.', open],
+      ['Session can be taken', 'One subscriber at a time. A second client or a capture tool can steal the session; a stale one blocks reconnect for ~60 s.', open],
+      ['Time source', 'The GPS / IRIG-B link passes 9/9 in simulation but was not connected during conformance; DataStartTime was free-running.', part],
+      ['C37 path uses the PS', 'The C37.118 design frames packets and runs UDP on Linux on the ARM, so it inherits that software surface.', part]
+    ].map((s, i) => Object.assign({ title: s[0], body: s[1], radius: radii[i % 4] }, s[2]));
+    return { frame: frame.map(f => ({ label: f[0], span: f[1], bg: f[2] })), pipe, tve, session, tssc, sec, brush: this.props.brushAccents ?? true };
+  }
+}
+</script>
+</body>
+</html>

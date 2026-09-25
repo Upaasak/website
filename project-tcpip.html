@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Whistleblower Lab — TCP/IP in FPGA</title>
+<link rel="icon" href="assets/brand/logo-mark.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Roboto:wght@400;500;700&family=VT323&family=Silkscreen&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; background: #1A1A1A; }
+  * { box-sizing: border-box; }
+  a { color: #00BFFF; text-decoration: none; }
+  a:hover { color: #000000; background: #00BFFF; }
+  ::selection { background: #00FF7F; color: #000000; }
+  @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+</style>
+</helmet>
+<div style="position: relative; background: #1A1A1A; color: #FFFFFF; font-family: 'Roboto', system-ui, sans-serif; min-height: 100vh; overflow-x: hidden;">
+  <sc-if value="{{ grid }}" hint-placeholder-val="{{ true }}">
+    <div style="position: absolute; inset: 0; pointer-events: none; z-index: 0; background-image: linear-gradient(rgba(0,255,127,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,127,0.05) 1px, transparent 1px), radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1.2px); background-size: 32px 32px, 32px 32px, 6px 6px;"></div>
+  </sc-if>
+
+  <div style="position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 10px 28px; background: #05070A; border-bottom: 1px solid #163D2A; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em;">
+    <div style="display: flex; align-items: center; gap: 14px; color: #7AAE91;">
+      <a href="index.html" style="color: #05070A; background: #39FF88; padding: 5px 8px; font-size: 9px; font-family: 'Silkscreen', monospace;">WHISTLEBLOWER</a>
+      <span style="color: #66727D;">│</span>
+      <span>ASIC · FPGA · DV</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <a href="index.html" style="color: #7AAE91;">HOME</a>
+      <a href="research.html" style="color: #7AAE91;">RESEARCH</a>
+      <a href="projects.html" style="color: #D7E0E6;">PROJECTS</a>
+      <a href="people.html" style="color: #7AAE91;">PEOPLE</a>
+      <a href="publications.html" style="color: #7AAE91;">PUBS</a>
+      <a href="news.html" style="color: #7AAE91;">NEWS</a>
+      <a href="join.html" style="color: #7AAE91;">JOIN</a>
+    </div>
+  </div>
+
+  <header data-screen-label="Banner" style="position: relative; z-index: 1; background: #000000; border-bottom: 1px solid #00FF7F;">
+    <img src="assets/cards/tcpip.png" alt="Two dithered hands meeting through a PROJECT.EXE window under the letters TCP/IP" style="display: block; width: 100%; max-width: 1400px; margin: 0 auto; height: auto;" />
+    <div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 60px 28px 26px; background: linear-gradient(to top, #000000 30%, rgba(0,0,0,0));">
+      <div style="max-width: 1240px; margin: 0 auto; display: grid; gap: 10px;">
+        <div style="font-family: 'VT323', monospace; font-size: 22px; color: #00FF7F;">PRJ_03 // CASE FILE</div>
+        <h1 style="margin: 0; font-family: 'Share Tech Mono', monospace; font-weight: 400; font-size: clamp(30px, 5vw, 64px); line-height: 1.02; color: #FFFFFF; letter-spacing: 0.02em;">PURE-RTL TCP OFFLOAD ENGINE</h1>
+        <div style="font-family: 'Share Tech Mono', monospace; font-size: 15px; color: #00BFFF; letter-spacing: 0.1em;">ZCU106 / SFP0 · NO PROCESSOR IN THE DATAPATH</div>
+      </div>
+    </div>
+  </header>
+
+  <main style="position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 0 28px;">
+    <div style="padding-top: 26px;"><a href="projects.html" style="font-family: 'VT323', monospace; font-size: 20px;">&lt; cd ../projects</a></div>
+
+    <section data-screen-label="Terminal intro" style="padding-top: 22px;">
+      <div style="border: 1px solid #5A5A5A; border-radius: 10px; overflow: hidden; background: #0A0A0A;">
+        <div style="display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: #242424; border-bottom: 1px solid #5A5A5A;">
+          <span style="width: 11px; height: 11px; border-radius: 50%; background: #FF5F56;"></span>
+          <span style="width: 11px; height: 11px; border-radius: 50%; background: #FFBD2E;"></span>
+          <span style="width: 11px; height: 11px; border-radius: 50%; background: #00FF7F;"></span>
+          <span style="margin-left: 10px; font-family: 'VT323', monospace; font-size: 18px; color: #BDBDBD;">toe@zcu106: ~/pl-tcp-stack</span>
+        </div>
+        <div style="padding: 22px 22px 24px; display: grid; gap: 16px;">
+          <div style="font-family: 'VT323', monospace; font-size: 21px; color: #00FF7F;">$ cat README.md | head</div>
+          <p style="margin: 0; max-width: 78ch; font-size: 16px; line-height: 1.75; color: #E6E6E6; text-wrap: pretty;">A TCP/IP stack implemented entirely in FPGA fabric. MAC, ARP, IPv4, the RFC 9293 state machine, retransmission, RTO estimation, congestion control and reassembly are all RTL.</p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 1px; background: #333333; border: 1px solid #333333;">
+            <div style="background: #0A0A0A; padding: 14px 16px; display: grid; gap: 4px;"><span style="font-family: 'VT323', monospace; font-size: 18px; color: #9E9E9E;">SUSTAINED GOODPUT</span><span style="font-family: 'Share Tech Mono', monospace; font-size: 28px; color: #00FF7F;">930.33 Mbps</span><span style="font-size: 13px; color: #BDBDBD;">96% of the 964.33 Mbps MSS-1460 ceiling</span></div>
+            <div style="background: #0A0A0A; padding: 14px 16px; display: grid; gap: 4px;"><span style="font-family: 'VT323', monospace; font-size: 18px; color: #9E9E9E;">RETRANSMISSIONS</span><span style="font-family: 'Share Tech Mono', monospace; font-size: 28px; color: #00FF7F;">0</span><span style="font-size: 13px; color: #BDBDBD;">of 2,398,934 segments, tshark</span></div>
+            <div style="background: #0A0A0A; padding: 14px 16px; display: grid; gap: 4px;"><span style="font-family: 'VT323', monospace; font-size: 18px; color: #9E9E9E;">TIMING</span><span style="font-family: 'Share Tech Mono', monospace; font-size: 28px; color: #00FF7F;">+1.823 ns</span><span style="font-size: 13px; color: #BDBDBD;">WNS at 125 MHz</span></div>
+            <div style="background: #0A0A0A; padding: 14px 16px; display: grid; gap: 4px;"><span style="font-family: 'VT323', monospace; font-size: 18px; color: #9E9E9E;">SERVER MODE</span><span style="font-family: 'Share Tech Mono', monospace; font-size: 28px; color: #00FF7F;">40 / 40</span><span style="font-size: 13px; color: #BDBDBD;">inbound connections, handshake 0.4 ms</span></div>
+          </div>
+          <div style="font-family: 'VT323', monospace; font-size: 20px; color: #00FF7F;">$ <span style="animation: blink 1s step-end infinite;">█</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Stack" style="padding-top: 72px; display: grid; gap: 22px;">
+      <h2 style="margin: 0; font-family: 'Share Tech Mono', monospace; font-weight: 400; font-size: 26px; color: #FFFFFF;"><span style="color: #00FF7F;">01 //</span> THE STACK</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 28px; align-items: start;">
+        <pre style="margin: 0; padding: 20px; background: #000000; border: 1px solid #00FF7F; font-family: 'VT323', monospace; font-size: 20px; line-height: 1.25; color: #00FF7F; overflow-x: auto; overflow-y: hidden; white-space: pre;">   application (echo | counter)
+               │
+       toe_tcp_engine     RFC 9293 FSM, cwnd,
+               │          retransmit, reassembly
+       toe_ip_bridge      header + RFC 1071 csum,
+               │          double-buffered
+         eth_ip_core      IPv4 + ARP + MAC
+               │
+     gig_ethernet_pcs_pma  SGMII
+               │
+      GTH Quad 225 ch2 ──▶ SFP0 cage</pre>
+        <div style="display: grid; gap: 18px;">
+          <div style="display: grid; gap: 8px;"><div style="font-family: 'Share Tech Mono', monospace; font-size: 16px; color: #00BFFF;">TX PATH</div><p style="margin: 0; font-size: 15.5px; line-height: 1.75; color: #E6E6E6;">The application writes into toe_send_buffer. On a flush the engine asks toe_segmenter for a segment bounded by cwnd, the peer window and free retransmission-table space. The bridge builds the header and computes the checksum while it reads, over a doubled buffer so segment N+1 is prepared while N is on the wire.</p></div>
+          <div style="display: grid; gap: 8px;"><div style="font-family: 'Share Tech Mono', monospace; font-size: 16px; color: #00BFFF;">RX PATH</div><p style="margin: 0; font-size: 15.5px; line-height: 1.75; color: #E6E6E6;">The bridge parses inbound TCP, verifies the checksum and offers it to the engine. A one-deep skid buffer latches it the cycle it is offered, whatever the FSM state. Pure ACKs drain even while the FSM waits on a TX segment.</p></div>
+          <div style="font-family: 'VT323', monospace; font-size: 19px; color: #9E9E9E;">rtl/ 23 VHDL modules · rtl/eth/ 28 Verilog files · tb/ 49 testbenches · vectors/ 25 golden files</div>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Handshake" style="padding-top: 72px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 28px; align-items: center;">
+        <figure style="margin: 0; display: grid; gap: 8px;">
+          <img src="assets/projects/tcpip/handshake.jpg" alt="Halftone hand shaking a wireframe hand" style="display: block; width: 100%; height: auto; border: 1px solid #333333;" />
+          <figcaption style="font-family: 'VT323', monospace; font-size: 19px; color: #9E9E9E;">// SYN → SYN-ACK → ACK. Flesh meets fabric.</figcaption>
+        </figure>
+        <div style="display: grid; gap: 18px;">
+          <h2 style="margin: 0; font-family: 'Share Tech Mono', monospace; font-weight: 400; font-size: 26px;"><span style="color: #00FF7F;">02 //</span> TWO MACS ON THE WIRE</h2>
+          <pre style="margin: 0; padding: 16px; background: #000000; border: 1px solid #333333; font-family: 'VT323', monospace; font-size: 18px; line-height: 1.3; color: #FFFFFF; overflow-x: auto; white-space: pre;"><span style="color: #00FF7F;">00:0a:35:00:01:02</span> &gt; <span style="color: #00BFFF;">bc:e9:2f:a1:8e:f6</span>, IPv4, length 1514
+192.168.50.60.63676 &gt; 192.168.50.10.8081:
+  Flags [P.], seq 1460:2920, length 1460</pre>
+          <p style="margin: 0; font-size: 15.5px; line-height: 1.75; color: #E6E6E6;">00:0a:35 is the Xilinx OUI; bc:e9:2f is the host NIC. Two distinct MACs, not loopback. Taking the host link down mid-transfer halted the stream at once, and every source in build_toe.tcl greps clean for zynq_ultra_ps_e, processing_system and PS8.</p>
+          <p style="margin: 0; font-size: 15.5px; line-height: 1.75; color: #E6E6E6;">Passive open now works too: 40 of 40 sequential inbound connections accepted.</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Progression" style="padding-top: 72px; display: grid; gap: 22px;">
+      <h2 style="margin: 0; font-family: 'Share Tech Mono', monospace; font-weight: 400; font-size: 26px;"><span style="color: #00FF7F;">03 //</span> 0.02 → 930 Mbps</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 28px; align-items: start;">
+        <div style="display: grid; gap: 22px;">
+          <figure style="margin: 0; border: 1px solid #333333; background: #0A0A0A; padding: 18px 16px 12px; display: grid; gap: 12px;">
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-family: 'VT323', monospace; font-size: 19px;"><span style="color: #FFFFFF;">FIG 1 · THROUGHPUT BY STAGE</span><span style="color: #9E9E9E; white-space: nowrap;">Mbps, linear</span></div>
+            <div style="position: relative; display: grid; gap: 10px;">
+              <div style="position: absolute; top: -4px; bottom: -4px; left: calc(150px + 10px + (100% - 160px) * 1); border-left: 1px dashed #00BFFF;"></div>
+              <sc-for list="{{ stages }}" as="s" hint-placeholder-count="5">
+                <div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 10px; align-items: center;">
+                  <span style="font-family: 'VT323', monospace; font-size: 18px; color: #BDBDBD; text-align: right; line-height: 1.1;">{{ s.name }}</span>
+                  <div style="display: flex; align-items: center; gap: 8px;"><div style="width: {{ s.w }}; min-width: 2px; height: 14px; background: {{ s.c }};"></div><span style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: {{ s.c }}; white-space: nowrap;">{{ s.v }}</span></div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="font-family: 'VT323', monospace; font-size: 17px; color: #00BFFF;">┆ 964.33 Mbps MSS-1460 goodput ceiling · ~47,000× from first run</div>
+          </figure>
+          <figure style="margin: 0; border: 1px solid #333333; background: #0A0A0A; padding: 18px 16px 12px; display: grid; gap: 12px;">
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-family: 'VT323', monospace; font-size: 19px;"><span style="color: #FFFFFF;">FIG 2 · CLOCKS PER SEGMENT</span><span style="color: #9E9E9E; white-space: nowrap;">line rate = 1480</span></div>
+            <div style="position: relative; display: grid; gap: 10px;">
+              <div style="position: absolute; top: -4px; bottom: -4px; left: calc(150px + 10px + (100% - 160px) * 0.4); border-left: 1px dashed #00BFFF;"></div>
+              <div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 10px; align-items: center;"><span style="font-family: 'VT323', monospace; font-size: 18px; color: #BDBDBD; text-align: right;">baseline</span><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 100%; height: 14px; background: #5A5A5A;"></div><span style="font-family: 'Share Tech Mono', monospace; font-size: 13px;">3701</span></div></div>
+              <div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 10px; align-items: center;"><span style="font-family: 'VT323', monospace; font-size: 18px; color: #BDBDBD; text-align: right;">inline csum</span><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 79.8%; height: 14px; background: #8A8A8A;"></div><span style="font-family: 'Share Tech Mono', monospace; font-size: 13px;">2955</span></div></div>
+              <div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 10px; align-items: center;"><span style="font-family: 'VT323', monospace; font-size: 18px; color: #BDBDBD; text-align: right;">double buffer</span><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 40%; height: 14px; background: #00FF7F;"></div><span style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #00FF7F;">1479</span></div></div>
+            </div>
+          </figure>
+        </div>
+        <div style="display: grid; gap: 16px;">
+          <div style="font-family: 'Share Tech Mono', monospace; font-size: 16px; color: #00BFFF;">THE THREE CHANGES</div>
+          <div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px;"><span style="font-family: 'VT323', monospace; font-size: 26px; color: #00FF7F; line-height: 1;">1</span><p style="margin: 0; font-size: 15.5px; line-height: 1.7; color: #E6E6E6;"><b>Inline checksum.</b> Start the checksum at accept time and feed it words as bytes arrive, overlapping the ~740-clock walk with the 1460-clock read.</p></div>
+          <div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px;"><span style="font-family: 'VT323', monospace; font-size: 26px; color: #00FF7F; line-height: 1;">2</span><p style="margin: 0; font-size: 15.5px; line-height: 1.7; color: #E6E6E6;"><b>Double buffering.</b> Fill and send in separate processes over twice the buffer. One clock under line rate.</p></div>
+          <div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px;"><span style="font-family: 'VT323', monospace; font-size: 26px; color: #00FF7F; line-height: 1;">3</span><p style="margin: 0; font-size: 15.5px; line-height: 1.7; color: #E6E6E6;"><b>D21 RX starvation fix.</b> Skid buffer, un-gated RX branch, in-freeze pure-ACK drain. Without it, step 2 reached 569 Mbps and killed the connection at 70–130 MB, every run.</p></div>
+          <div style="border: 1px solid #333333; background: #0A0A0A; padding: 14px 16px; font-family: 'VT323', monospace; font-size: 18px; line-height: 1.4; color: #BDBDBD;">Identify a variant by md5, never by filename. A bitstream believed to be step 2 was once step 2b; only the WNS gave it away.</div>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Integrity" style="padding-top: 72px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 28px; align-items: center;">
+        <figure style="margin: 0; display: grid; gap: 8px; max-width: 420px;">
+          <img src="assets/projects/tcpip/ant-streams.png" alt="Two columns of ants, blue and red, marching in parallel" style="display: block; width: 100%; height: auto;" />
+          <figcaption style="font-family: 'VT323', monospace; font-size: 19px; color: #9E9E9E;">// two streams, in order, none lost. One stray is the retransmit that never happened.</figcaption>
+        </figure>
+        <div style="display: grid; gap: 18px;">
+          <h2 style="margin: 0; font-family: 'Share Tech Mono', monospace; font-weight: 400; font-size: 26px;"><span style="color: #00FF7F;">04 //</span> WHAT THE CAPTURE PROVES</h2>
+          <div style="display: grid; border-top: 1px solid #333333;">
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; padding: 12px 0; border-bottom: 1px solid #333333;"><span style="color: #E6E6E6;">Sustained throughput, 3.489 GB over 30 active s</span><span style="font-family: 'Share Tech Mono', monospace; color: #00FF7F; white-space: nowrap;">930.33 Mbps</span></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; padding: 12px 0; border-bottom: 1px solid #333333;"><span style="color: #E6E6E6;">Retransmissions</span><span style="font-family: 'Share Tech Mono', monospace; color: #00FF7F; white-space: nowrap;">0 / 2,398,934</span></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; padding: 12px 0; border-bottom: 1px solid #333333;"><span style="color: #E6E6E6;">Endurance, counter_soak.py 300</span><span style="font-family: 'Share Tech Mono', monospace; color: #00FF7F; white-space: nowrap;">300 s, no stall</span></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; padding: 12px 0; border-bottom: 1px solid #333333;"><span style="color: #E6E6E6;">Data integrity (script only, no capture)</span><span style="font-family: 'Share Tech Mono', monospace; color: #BDBDBD; white-space: nowrap;">0 in 8.77 B words</span></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; padding: 12px 0; border-bottom: 1px solid #333333;"><span style="color: #9E9E9E; text-decoration: line-through;">935.84 Mbps, 5-min soak</span><span style="font-family: 'VT323', monospace; font-size: 18px; color: #FF5F56; white-space: nowrap;">NO CAPTURE</span></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; padding: 12px 0; border-bottom: 1px solid #333333;"><span style="color: #9E9E9E; text-decoration: line-through;">944.31 Mbps, 60 s peak</span><span style="font-family: 'VT323', monospace; font-size: 18px; color: #FF5F56; white-space: nowrap;">ABOVE CEILING</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Caveats" style="padding-top: 72px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 28px; align-items: start;">
+        <div style="display: grid; gap: 16px;">
+          <h2 style="margin: 0; font-family: 'Share Tech Mono', monospace; font-weight: 400; font-size: 26px;"><span style="color: #00FF7F;">05 //</span> WHAT THIS IS NOT</h2>
+          <pre style="margin: 0; padding: 18px; background: #000000; border: 1px solid #333333; font-family: 'VT323', monospace; font-size: 19px; line-height: 1.35; color: #BDBDBD; overflow-x: auto; white-space: pre;"><span style="color: #00FF7F;">$ grep -r feature rtl/</span>
+SACK (RFC 2018) ........ <span style="color: #FF5F56;">none</span>
+window scale (RFC 7323)  <span style="color: #FF5F56;">none</span>  64 KB cap
+timestamps / PAWS ...... <span style="color: #FF5F56;">none</span>
+Nagle (RFC 896) ........ <span style="color: #FF5F56;">none</span>
+delayed ACK ............ <span style="color: #FF5F56;">none</span>
+keepalive .............. timer slot, no policy
+IP fragmentation ....... <span style="color: #FF5F56;">none</span></pre>
+        </div>
+        <div style="display: grid; gap: 14px; padding-top: 4px;">
+          <p style="margin: 0; font-size: 15.5px; line-height: 1.75; color: #E6E6E6;">Single connection: no session table. RFC compliance measured on the wire is 10 PASS / 2 FAIL. Regression runs 46 pass / 2 fail / 1, both failures pre-existing on baseline RTL.</p>
+          <p style="margin: 0; font-size: 15.5px; line-height: 1.75; color: #E6E6E6;">WIN_LIMIT is a deployment constant at 8192; raising it to 32768 changed nothing, because the board is the sender. Bouncing the host NIC can drop the SGMII carrier; budget one reflash after any link interruption.</p>
+          <div style="border: 1px solid #00BFFF; padding: 16px; display: grid; gap: 10px;">
+            <div style="font-family: 'Share Tech Mono', monospace; font-size: 15px; color: #00BFFF;">NEXT // pl-tcp-stack-10g</div>
+            <p style="margin: 0; font-size: 15px; line-height: 1.7; color: #E6E6E6;">A 64-bit datapath on 10GBASE-R. Phase 2 of 5: tree and 10G substrate in progress, nothing widened yet. The 1G design closes at +0.225 ns over 237,022 endpoints at 8.000 ns; 156.25 MHz native means finding 1.6 ns.</p>
+            <div style="font-family: 'VT323', monospace; font-size: 18px; color: #9E9E9E;">no hardware for this programme · reference model 63 pass / 1 fail</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Touch" style="padding-top: 72px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 28px; align-items: center; border-top: 1px solid #333333; padding-top: 36px;">
+        <img src="assets/projects/tcpip/wireframe-touch.jpg" alt="Wireframe hand reaching out of a monitor to touch a human finger" style="display: block; width: 100%; max-width: 420px; height: auto;" />
+        <div style="display: grid; gap: 14px;">
+          <div style="font-family: 'VT323', monospace; font-size: 24px; line-height: 1.35; color: #00FF7F;">"Every build: TOE_COUNTER=1 TOE_ILA=1 vivado -mode batch -source build_toe.tcl"</div>
+          <div style="display: grid; gap: 6px; font-size: 15px;">
+            <div><span style="color: #9E9E9E;">REPO ▸ </span><a href="https://github.com/Upaasak/pl-tcp-stack">Upaasak/pl-tcp-stack</a> <span style="color: #9E9E9E;">(private)</span></div>
+            <div><span style="color: #9E9E9E;">10G ▸ </span><a href="https://github.com/Upaasak/pl-tcp-stack-10g">Upaasak/pl-tcp-stack-10g</a> <span style="color: #9E9E9E;">(private)</span></div>
+            <div><span style="color: #9E9E9E;">HW ▸ </span><span style="color: #E6E6E6;">ZCU106 xczu7ev · SFP0 · GTH Quad 225 ch2 · Vivado 2025.1</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer style="position: relative; z-index: 1; max-width: 1240px; margin: 64px auto 0; padding: 18px 28px 32px; border-top: 1px solid #00FF7F; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-family: 'VT323', monospace; font-size: 20px; color: #9E9E9E;">
+    <span style="white-space: nowrap;"><span style="color: #00FF7F;">lab@whistleblower:~$</span> <a href="projects.html">cd ../projects</a></span>
+    <span>exit 0 · MMXXVI</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;gridOverlay&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Background&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const max = 964.33;
+    const stages = [
+      ['counter v1', 0.02], ['counter v2', 38.75], ['D20 + C11', 389.61],
+      ['inline checksum', 486.58], ['double buf + D21', 930.33]
+    ].map((s, i, a) => ({
+      name: s[0], v: s[1] + ' Mbps',
+      w: (s[1] / max * 100).toFixed(1) + '%',
+      c: i === a.length - 1 ? '#00FF7F' : '#8A8A8A'
+    }));
+    return { stages, grid: this.props.gridOverlay ?? true };
+  }
+}
+</script>
+</body>
+</html>

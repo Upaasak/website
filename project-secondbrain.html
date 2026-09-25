@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Whistleblower Lab — The Mastermind</title>
+<link rel="icon" href="assets/brand/logo-mark.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Roboto+Condensed:wght@400;500;700&family=Permanent+Marker&family=Silkscreen&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; background: #0D0D0D; }
+  * { box-sizing: border-box; }
+  a { color: #00E5FF; text-decoration: none; }
+  a:hover { color: #0D0D0D; background: #39FF14; }
+  ::selection { background: #FF00FF; color: #FFFFFF; }
+</style>
+</helmet>
+<div style="position: relative; background: #0D0D0D; color: #E8E8E8; font-family: 'Roboto Condensed', system-ui, sans-serif; min-height: 100vh; overflow-x: hidden;">
+  <sc-if value="{{ halftone }}" hint-placeholder-val="{{ true }}">
+    <div style="position: absolute; inset: 0; pointer-events: none; z-index: 0; background-image: radial-gradient(rgba(255,255,255,0.07) 1.1px, transparent 1.4px); background-size: 7px 7px;"></div>
+  </sc-if>
+
+  <div style="position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 10px 28px; background: #05070A; border-bottom: 1px solid #163D2A; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em;">
+    <div style="display: flex; align-items: center; gap: 14px; color: #7AAE91;">
+      <a href="index.html" style="color: #05070A; background: #39FF88; padding: 5px 8px; font-size: 9px; font-family: 'Silkscreen', monospace;">WHISTLEBLOWER</a>
+      <span style="color: #66727D;">│</span>
+      <span>ASIC · FPGA · DV</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <a href="index.html" style="color: #7AAE91;">HOME</a>
+      <a href="research.html" style="color: #7AAE91;">RESEARCH</a>
+      <a href="projects.html" style="color: #D7E0E6;">PROJECTS</a>
+      <a href="people.html" style="color: #7AAE91;">PEOPLE</a>
+      <a href="publications.html" style="color: #7AAE91;">PUBS</a>
+      <a href="news.html" style="color: #7AAE91;">NEWS</a>
+      <a href="join.html" style="color: #7AAE91;">JOIN</a>
+    </div>
+  </div>
+
+  <main style="position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 28px 24px 0; display: grid; gap: 22px;">
+    <a href="projects.html" style="font-family: 'Permanent Marker', cursive; font-size: 17px; justify-self: start;">← back to the issue index</a>
+
+    <section data-screen-label="Cover" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 22px;">
+      <div style="border: 5px solid #FFFFFF; border-radius: 3px 10px 4px 8px; background: #1A1A40; padding: 28px 26px; display: grid; gap: 18px; align-content: center; transform: rotate(-0.6deg);">
+        <div style="font-family: 'Bangers', cursive; font-size: 22px; letter-spacing: 0.08em; color: #FFE600;">ISSUE #08 · PRJ_08</div>
+        <h1 style="margin: 0; font-family: 'Bangers', cursive; font-weight: 400; font-size: clamp(58px, 8vw, 112px); line-height: 0.88; letter-spacing: 0.02em; color: #FFFFFF; text-shadow: 5px 5px 0 #FF00FF, 10px 10px 0 #000000;">THE MASTERMIND</h1>
+        <div style="font-family: 'Bangers', cursive; font-size: 30px; letter-spacing: 0.05em; color: #39FF14;">SECOND BRAIN · THE HUB OF ALL THINGS</div>
+        <p style="margin: 0; max-width: 52ch; font-size: 17.5px; line-height: 1.65; color: #E8E8E8;">Every other <span style="color: #00E5FF;">sb-proj-*</span> repository is a code satellite: the RTL, tests and bitstreams of one project. This one holds no code. It holds the <span style="color: #FFE600;">knowledge</span>: every project's status, every reusable module, every hard-won bug fix, every architecture decision, each linking out to the code it describes.</p>
+        <div style="position: relative; justify-self: start; background: #FFFFFF; color: #0D0D0D; border: 3px solid #000000; border-radius: 26px; padding: 14px 20px; font-family: 'Permanent Marker', cursive; font-size: 20px; line-height: 1.3; max-width: 30ch;">
+          It is the hub. The code repos are the spokes.
+          <div style="position: absolute; left: 34px; bottom: -18px; width: 0; height: 0; border-left: 14px solid transparent; border-right: 6px solid transparent; border-top: 18px solid #000000;"></div>
+          <div style="position: absolute; left: 37px; bottom: -12px; width: 0; height: 0; border-left: 10px solid transparent; border-right: 4px solid transparent; border-top: 13px solid #FFFFFF;"></div>
+        </div>
+      </div>
+      <div style="border: 5px solid #FFFFFF; border-radius: 8px 3px 10px 4px; overflow: hidden; background: #000000; transform: rotate(0.5deg);">
+        <img src="assets/projects/secondbrain/chained-brain.jpg" alt="Comic cover: a chained figure whose brain is lifted out by two hands" style="display: block; width: 100%; height: 100%; object-fit: cover;" />
+      </div>
+    </section>
+
+    <section data-screen-label="Constellation" style="border: 5px solid #FFFFFF; border-radius: 4px 9px 3px 11px; background: #0A0A1E; overflow: hidden;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding: 12px 18px; border-bottom: 4px solid #FFFFFF; background: #FFE600; color: #0D0D0D;">
+        <span style="font-family: 'Bangers', cursive; font-size: 30px; letter-spacing: 0.04em;">PANEL 1 · THE CONSTELLATION</span>
+        <span style="font-family: 'Permanent Marker', cursive; font-size: 16px;">repo-graph.yaml · generated 2026-07-23</span>
+      </div>
+      <div style="position: relative;">
+        <canvas ref="{{ netRef }}" style="display: block; width: 100%; height: 520px;"></canvas>
+        <div style="position: absolute; left: 16px; bottom: 14px; display: flex; gap: 14px; flex-wrap: wrap; font-family: 'Permanent Marker', cursive; font-size: 14px;">
+          <span style="color: #FF00FF;">● control plane</span>
+          <span style="color: #FFE600;">● index stores</span>
+          <span style="color: #39FF14;">● CI green</span>
+          <span style="color: #9A9AB0;">● no CI runs</span>
+        </div>
+      </div>
+      <div style="padding: 14px 18px; border-top: 4px solid #FFFFFF; font-size: 16px; line-height: 1.6;">One manifest knows every repo in the org: 1 control plane, 2 index stores, 22 satellites, each with its branch, release and head SHA. Pulses travel the links it records.</div>
+    </section>
+
+    <section data-screen-label="Records" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 16px;">
+      <sc-for list="{{ records }}" as="r" hint-placeholder-count="5">
+        <div style="border: 5px solid #FFFFFF; border-radius: {{ r.radius }}; background: #1A1A40; padding: 18px 16px; display: grid; gap: 8px; align-content: start; transform: rotate({{ r.rot }});" style-hover="box-shadow: 0 0 0 3px #39FF14, 0 0 24px #39FF14;">
+          <div style="font-family: 'Bangers', cursive; font-size: 58px; line-height: 0.9; color: {{ r.color }}; text-shadow: 3px 3px 0 #000000;">{{ r.n }}</div>
+          <div style="font-family: 'Bangers', cursive; font-size: 24px; letter-spacing: 0.04em; color: #FFFFFF;">{{ r.name }}</div>
+          <div style="font-size: 15px; line-height: 1.5; color: #D0D0D8;">{{ r.body }}</div>
+        </div>
+      </sc-for>
+    </section>
+
+    <section data-screen-label="Errors" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 22px;">
+      <div style="border: 5px solid #FFFFFF; border-radius: 10px 4px 8px 3px; overflow: hidden; background: #000000; min-height: 420px;">
+        <img src="assets/projects/secondbrain/eyes-city.jpg" alt="Stippled drawing of a face staring up at a sky full of floating eyes above a city of blocks" style="display: block; width: 100%; height: 100%; object-fit: cover;" />
+      </div>
+      <div style="border: 5px solid #FFFFFF; border-radius: 3px 8px 4px 10px; background: #1A1A40; padding: 24px 22px; display: grid; gap: 16px; align-content: start;">
+        <div style="font-family: 'Bangers', cursive; font-size: 40px; line-height: 1; color: #FF00FF; text-shadow: 3px 3px 0 #000;">PANEL 2 · IT REMEMBERS EVERY MISTAKE</div>
+        <p style="margin: 0; font-size: 17px; line-height: 1.65;">The largest folder is <span style="color: #FFE600;">errors/</span>: 137 recorded GHDL and Vivado failure patterns, each with the symptom, the fix and how it was found. This isn't a portfolio; it's an engineering memory whose biggest asset is the catalogue of mistakes already made.</p>
+        <div style="display: grid; gap: 6px;">
+          <sc-for list="{{ errors }}" as="e" hint-placeholder-count="8">
+            <div style="display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 8px; align-items: baseline; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #CFCFE0; padding: 5px 0; border-bottom: 1px dashed #3A3A70;"><span style="color: #39FF14;">◉</span><span style="word-break: break-word;">{{ e }}</span></div>
+          </sc-for>
+        </div>
+        <div style="font-family: 'Permanent Marker', cursive; font-size: 16px; color: #00E5FF;">…and 129 more. Debugging becomes a lookup.</div>
+      </div>
+    </section>
+
+    <section data-screen-label="Record anatomy" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 22px;">
+      <div style="border: 5px solid #FFFFFF; border-radius: 4px 10px 3px 8px; background: #0A0A1E; padding: 22px; display: grid; gap: 14px; align-content: start;">
+        <div style="font-family: 'Bangers', cursive; font-size: 34px; color: #00E5FF; text-shadow: 3px 3px 0 #000;">PANEL 3 · ANATOMY OF A PROJECT RECORD</div>
+        <pre style="margin: 0; padding: 16px; background: #000000; border: 3px solid #39FF14; border-radius: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; line-height: 1.65; color: #E8E8E8; overflow-x: auto; white-space: pre;"><span style="color: #9A9AB0;">---  # frontmatter, projects/*.md</span>
+<span style="color: #FF00FF;">satellite</span>:  <span style="color: #00E5FF;">code repo URL</span>
+<span style="color: #FF00FF;">commit</span>:     <span style="color: #00E5FF;">exact SHA it was written against</span>
+<span style="color: #FF00FF;">maturity</span>:   Prototype
+<span style="color: #FF00FF;">status</span>:     paused | active
+<span style="color: #FF00FF;">tools</span>:      [...]
+<span style="color: #FF00FF;">metrics</span>:
+  - value: ...
+    <span style="color: #39FF14;">provenance</span>: simulated | synthesized | measured
+<span style="color: #9A9AB0;">---</span></pre>
+        <div style="font-family: 'Permanent Marker', cursive; font-size: 15px; color: #9A9AB0;">shape as described in EXPLAINER.md, not a copied record</div>
+      </div>
+      <div style="display: grid; gap: 18px; align-content: start;">
+        <div style="position: relative; background: #FFFFFF; color: #0D0D0D; border: 4px solid #000000; border-radius: 30px; padding: 20px 22px; box-shadow: 6px 6px 0 #FF00FF;">
+          <div style="font-family: 'Bangers', cursive; font-size: 30px; letter-spacing: 0.03em;">PROVENANCE &gt; OPINION</div>
+          <p style="margin: 6px 0 0; font-size: 16px; line-height: 1.6;">The hub doesn't just say "3 scenarios passing". It says how that was established. Honesty about where a number came from is a schema field, not a habit.</p>
+        </div>
+        <div style="position: relative; background: #FFFFFF; color: #0D0D0D; border: 4px solid #000000; border-radius: 30px; padding: 20px 22px; box-shadow: 6px 6px 0 #00E5FF;">
+          <div style="font-family: 'Bangers', cursive; font-size: 30px; letter-spacing: 0.03em;">PINNED TO A COMMIT</div>
+          <p style="margin: 6px 0 0; font-size: 16px; line-height: 1.6;">Each record names its code repo and the exact commit, so knowledge and code can be diffed instead of silently drifting apart.</p>
+        </div>
+        <div style="border: 5px solid #FFFFFF; border-radius: 8px 3px 10px 4px; background: #1A1A40; padding: 18px; display: grid; gap: 8px;">
+          <div style="font-family: 'Bangers', cursive; font-size: 26px; color: #FFE600;">THE DECISIONS</div>
+          <sc-for list="{{ adrs }}" as="a" hint-placeholder-count="5">
+            <div style="display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 10px; font-size: 15px;"><span style="font-family: 'Bangers', cursive; font-size: 19px; color: #FF00FF;">{{ a.id }}</span><span>{{ a.name }}</span></div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Resurrection" style="border: 5px solid #FFFFFF; border-radius: 3px 11px 4px 9px; background: #1A1A40; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));">
+      <div style="padding: 24px 22px; border-right: 4px solid #FFFFFF; display: grid; gap: 12px; align-content: start;">
+        <div style="font-family: 'Bangers', cursive; font-size: 36px; color: #39FF14; text-shadow: 3px 3px 0 #000;">PANEL 4 · REBUILD FROM NOTHING</div>
+        <p style="margin: 0; font-size: 16.5px; line-height: 1.65;">RESUME-ON-NEW-DEVICE.md and bootstrap.sh bring the vault, retrieval engine, tools and multi-GB corpus back on an empty computer: about 30 minutes hands-on plus an unattended download.</p>
+        <div style="font-family: 'Permanent Marker', cursive; font-size: 18px; color: #FFE600;">ADR-006: restore data, don't regenerate it.</div>
+      </div>
+      <div style="padding: 24px 22px; display: grid; gap: 10px; align-content: start;">
+        <div style="font-family: 'Bangers', cursive; font-size: 30px; color: #FF00FF;">WHAT THE MASTERMIND CAN'T DO</div>
+        <div style="display: grid; gap: 8px; font-size: 15.5px; line-height: 1.55;">
+          <div><span style="color: #FF00FF;">✕ </span>No code, nothing to simulate. Verified only by being well-formed.</div>
+          <div><span style="color: #FF00FF;">✕ </span>Generated from the vault; hand edits are overwritten on the next export.</div>
+          <div><span style="color: #FF00FF;">✕ </span>Links need private-org access to resolve.</div>
+          <div><span style="color: #FF00FF;">✕ </span>repo-graph.yaml is a dated snapshot, not a live view.</div>
+          <div><span style="color: #FF00FF;">✕ </span>OKF v0.1 is an early schema, a partial projection of the full vault.</div>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Links" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding: 8px 4px 0; font-size: 15px;">
+      <span><span style="font-family: 'Bangers', cursive; font-size: 20px; color: #FFE600;">HUB ▸ </span><a href="https://github.com/Upaasak/second-brain">Upaasak/second-brain</a> <span style="color: #9A9AB0;">(private)</span></span>
+      <span><span style="font-family: 'Bangers', cursive; font-size: 20px; color: #FFE600;">INDEX ▸ </span><span>sb-index-db · sb-index-corpus-01</span></span>
+    </section>
+  </main>
+
+  <footer style="position: relative; z-index: 1; max-width: 1240px; margin: 40px auto 0; padding: 16px 24px 30px; border-top: 4px solid #FFFFFF; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-family: 'Bangers', cursive; font-size: 22px; letter-spacing: 0.04em;">
+    <a href="projects.html">TO BE CONTINUED ▸ ALL PROJECTS</a>
+    <span style="color: #9A9AB0;">WHISTLEBLOWER LAB · MMXXVI</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;pulseSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.2,&quot;max&quot;:3,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Constellation&quot;},&quot;halftone&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Print&quot;}}">
+class Component extends DCLogic {
+  netRef = React.createRef();
+  sats = [
+    ['Encryption_Algos', 0], ['MIM_UART', 1], ['hft-tick-to-trade', 1], ['ad7606-adc-capture', 1], ['c1-anomaly-detector', 1],
+    ['chaosengine-gpu', 1], ['ctu-canfd-96-node', 1], ['ethernet-mac-pl', 1], ['fd-qnn-zcu106-kit', 1], ['fpga-adas-ids', 1],
+    ['gps-synchrophasor', 1], ['hls4ml-sweeps', 1], ['jetson-swarm', 1], ['kociemba-solver', 1], ['meghalaya-systolic-qnn', 1],
+    ['particle-life-fpga', 0], ['ptp-irigb-timesync', 1], ['qrng', 1], ['rv32im-soft-core', 1], ['sttp-pmu-adc', 1],
+    ['toe-10g-fpga', 1], ['zedboard-demos-suite', 1]
+  ];
+
+  componentDidMount() {
+    this.pulses = [];
+    this.onResize = () => this.size();
+    window.addEventListener('resize', this.onResize);
+    const go = () => { this.size(); this.loop(); };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(go).catch(go); else go();
+  }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); window.removeEventListener('resize', this.onResize); }
+
+  size() {
+    const cv = this.netRef.current; if (!cv) return;
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    this.w = cv.clientWidth; this.h = cv.clientHeight;
+    cv.width = this.w * dpr; cv.height = this.h * dpr;
+    cv.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  loop() {
+    const tick = (now) => { this.draw(now / 1000); this.raf = requestAnimationFrame(tick); };
+    cancelAnimationFrame(this.raf);
+    this.raf = requestAnimationFrame(tick);
+  }
+
+  draw(t) {
+    const cv = this.netRef.current; if (!cv) return;
+    const ctx = cv.getContext('2d'), w = this.w, h = this.h, cx = w / 2, cy = h / 2;
+    const spd = this.props.pulseSpeed ?? 1;
+    ctx.clearRect(0, 0, w, h);
+    const R = Math.min(w * 0.42, h * 0.40), n = this.sats.length;
+    const pts = this.sats.map((s, i) => {
+      const a = (i / n) * Math.PI * 2 + t * 0.04 * spd;
+      const r = R * (0.82 + 0.18 * Math.sin(i * 1.7));
+      return { x: cx + Math.cos(a) * r * 1.35, y: cy + Math.sin(a) * r, name: s[0], green: s[1] };
+    });
+    const stores = [0, 1].map(k => ({ x: cx + (k ? 1 : -1) * R * 0.45, y: cy + R * 0.42, name: k ? 'sb-index-db' : 'sb-index-corpus-01' }));
+
+    ctx.lineWidth = 1;
+    pts.concat(stores).forEach(p => {
+      ctx.strokeStyle = 'rgba(255,255,255,0.14)';
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(p.x, p.y); ctx.stroke();
+    });
+
+    if (Math.random() < 0.18 * spd) {
+      const all = pts.concat(stores), k = Math.floor(Math.random() * all.length);
+      this.pulses.push({ k, t0: t, out: Math.random() < 0.5 });
+    }
+    const all = pts.concat(stores);
+    this.pulses = this.pulses.filter(p => t - p.t0 < 1.4 / spd);
+    this.pulses.forEach(p => {
+      const e = all[p.k]; if (!e) return;
+      let f = (t - p.t0) * spd / 1.4; if (!p.out) f = 1 - f;
+      const x = cx + (e.x - cx) * f, y = cy + (e.y - cy) * f;
+      ctx.fillStyle = p.out ? '#39FF14' : '#FF00FF';
+      ctx.shadowColor = ctx.fillStyle; ctx.shadowBlur = 12;
+      ctx.beginPath(); ctx.arc(x, y, 3.2, 0, Math.PI * 2); ctx.fill();
+      ctx.shadowBlur = 0;
+    });
+
+    ctx.font = '13px "Roboto Condensed", sans-serif';
+    ctx.textAlign = 'center';
+    pts.forEach(p => {
+      ctx.fillStyle = p.green ? '#39FF14' : '#9A9AB0';
+      ctx.beginPath(); ctx.arc(p.x, p.y, 5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#E8E8E8';
+      ctx.fillText(p.name, p.x, p.y - 10);
+    });
+    stores.forEach(p => {
+      ctx.fillStyle = '#FFE600';
+      ctx.fillRect(p.x - 6, p.y - 6, 12, 12);
+      ctx.fillStyle = '#FFE600';
+      ctx.fillText(p.name, p.x, p.y + 22);
+    });
+
+    const pulse = 1 + 0.06 * Math.sin(t * 3 * spd);
+    const g = ctx.createRadialGradient(cx, cy, 4, cx, cy, 70 * pulse);
+    g.addColorStop(0, 'rgba(255,0,255,0.85)'); g.addColorStop(0.5, 'rgba(255,0,255,0.25)'); g.addColorStop(1, 'rgba(255,0,255,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, 70 * pulse, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#FFFFFF'; ctx.strokeStyle = '#000000'; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(cx, cy, 30 * pulse, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    ctx.fillStyle = '#0D0D0D'; ctx.font = '20px Bangers, cursive';
+    ctx.fillText('HUB', cx, cy + 7);
+    ctx.fillStyle = '#FF00FF'; ctx.font = '15px Bangers, cursive';
+    ctx.fillText('second-brain', cx, cy + 52 * pulse);
+  }
+
+  renderVals() {
+    const radii = ['4px 10px 3px 8px', '9px 3px 11px 4px', '3px 8px 5px 10px', '10px 4px 8px 3px', '5px 11px 4px 7px'];
+    const rots = ['-0.8deg', '0.6deg', '-0.4deg', '0.9deg', '-0.6deg'];
+    const records = [
+      ['68', 'PROJECTS', 'Status, maturity, tools, metrics, and a link to the code satellite.', '#00E5FF'],
+      ['111', 'MODULES', 'Reusable VHDL entities: ports, status, dependencies.', '#FFE600'],
+      ['137', 'ERRORS', 'GHDL / Vivado failure patterns: symptom, fix, diagnosis.', '#FF00FF'],
+      ['6', 'DECISIONS', 'Architecture Decision Records, dated and reasoned.', '#39FF14'],
+      ['36', 'REFERENCES', 'Tool docs, external references, SOPs.', '#FFFFFF']
+    ].map((r, i) => ({ n: r[0], name: r[1], body: r[2], color: r[3], radius: radii[i], rot: rots[i] }));
+    const errors = [
+      'array-reset-defeats-bram-inference',
+      'combinational-divider-on-critical-path-collapses-fmax',
+      'behavioral-mem-model-uninitialized-shared-state-hangs',
+      'c37-118-2-2024-format-word-bits-3-1-swapped',
+      'c37-118-2-2024-freq-float-sends-deviation-not-actual',
+      'c37-118-2-2024-leap-byte-wrong-value',
+      'altera-mf-altsyncram-ghdl-substitution',
+      'baremetal-xpar-instance-name-and-sdt-dma-lookup'
+    ];
+    const adrs = [
+      ['ADR-001', 'Vault structure'], ['ADR-002', 'PS / PL crypto boundary'], ['ADR-003', 'Agents directory consolidation'],
+      ['ADR-005', 'Cloud offload of submodule storage'], ['ADR-006', 'Full reproducible cloud mirror']
+    ].map(a => ({ id: a[0], name: a[1] }));
+    return { netRef: this.netRef, records, errors, adrs, halftone: this.props.halftone ?? true };
+  }
+}
+</script>
+</body>
+</html>

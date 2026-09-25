@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<title>Whistleblower Lab — iDFT Case File</title>
+<link rel="icon" href="assets/brand/logo-mark.png" />
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; background: #05070A; }
+  * { box-sizing: border-box; }
+  a { color: #00D9FF; text-decoration: none; }
+  a:hover { color: #05070A; background: #00D9FF; }
+  ::selection { background: #39FF88; color: #05070A; }
+  @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+</style>
+</helmet>
+<div style="background: #05070A; color: #39FF88; font-family: 'IBM Plex Mono', ui-monospace, monospace; min-height: 100vh; overflow-x: hidden;">
+
+  <div style="position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 10px 28px; background: #05070A; border-bottom: 1px solid #163D2A; font-size: 12px; letter-spacing: 0.12em;">
+    <div style="display: flex; align-items: center; gap: 14px; color: #7AAE91;">
+      <a href="index.html" style="color: #05070A; background: #39FF88; padding: 5px 8px; font-weight: 400; font-size: 9px; font-family: 'Silkscreen', monospace;">WHISTLEBLOWER</a>
+      <span style="color: #66727D;">│</span>
+      <span>ASIC · FPGA · DV</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <a href="index.html" style="color: #7AAE91;">HOME</a>
+      <a href="research.html" style="color: #7AAE91;">RESEARCH</a>
+      <a href="projects.html" style="color: #D7E0E6;">PROJECTS</a>
+      <a href="people.html" style="color: #7AAE91;">PEOPLE</a>
+      <a href="publications.html" style="color: #7AAE91;">PUBS</a>
+      <a href="news.html" style="color: #7AAE91;">NEWS</a>
+      <a href="join.html" style="color: #7AAE91;">JOIN</a>
+    </div>
+  </div>
+
+  <section data-screen-label="Case header" style="max-width: 1520px; margin: 0 auto; padding: 40px 28px 0;">
+    <a href="projects.html" style="font-size: 12px; letter-spacing: 0.14em; color: #7AAE91;">◂ ALL PROJECTS</a>
+    <div style="display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); gap: 44px; align-items: end; margin-top: 22px;">
+      <div>
+        <div style="font-size: 12px; letter-spacing: 0.3em; color: #00D9FF; margin-bottom: 16px;">▚▚ PRJ_06 · CASE FILE ▞▞</div>
+        <h1 style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin: 0 0 12px; font-size: clamp(30px, 4.4vw, 54px); font-weight: 800; letter-spacing: 0.01em; color: #D7E0E6; line-height: 1.06;">POWER SYSTEM PROTOCOLS</h1>
+        <div style="font-size: 12.5px; letter-spacing: 0.16em; color: #7AAE91; margin-bottom: 18px;">TOP MODULE ▸ ipdft_channel_top</div>
+        <p style="max-width: 62ch; font-size: 14px; line-height: 1.9; color: #A8B3BD; margin: 0 0 14px;">A six-channel interpolated-DFT front end for grid instrumentation. Each channel windows its input, runs a sliding DFT bin, extracts magnitude and phase with a CORDIC, and differentiates frequency to get ROCOF. One clock domain, fixed point throughout, no vendor IP.</p>
+        <p style="max-width: 62ch; font-size: 14px; line-height: 1.9; color: #7AAE91; margin: 0;">It exists because a commercial PMU front end costs more than the lab's annual budget, and because it is a good excuse to learn where a fixed-point error budget goes wrong.</p>
+      </div>
+      <div style="border: 1px solid #163D2A; font-size: 12px;">
+        <div style="background: #39FF88; color: #05070A; padding: 5px 12px; font-weight: 800; letter-spacing: 0.16em; display: flex; justify-content: space-between;"><span>BUILD.STATUS</span><span>░▒▓</span></div>
+        <div style="padding: 16px 14px; display: grid; gap: 11px;">
+          <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #7AAE91;">TARGET</span><span style="color: #D7E0E6;">XC7A100T-1</span></div>
+          <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #7AAE91;">LANGUAGE</span><span style="color: #D7E0E6;">VERILOG-2005</span></div>
+          <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #7AAE91;">CHANNELS</span><span style="color: #D7E0E6;">6</span></div>
+          <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #7AAE91;">FMAX</span><span style="color: #D7E0E6;">148 MHz</span></div>
+          <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #7AAE91;">WNS</span><span style="color: #D7E0E6;">+0.62 ns</span></div>
+          <div style="height: 1px; background: #66727D;"></div>
+          <div style="color: #D7E0E6; display: flex; align-items: center; gap: 9px; font-size: 13px;"><span style="animation: blink 1.1s step-end infinite; color: #39FF88;">█</span>IN VERIFICATION</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Schematic" style="max-width: 1520px; margin: 0 auto; padding: 44px 28px 0;">
+    <div style="border: 1px solid #163D2A;">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 7px 14px; border-bottom: 1px solid #163D2A; font-size: 11.5px; letter-spacing: 0.14em; color: #7AAE91;">
+        <span style="color: #D7E0E6;">FIG 1 ── ipdft_channel_top · RTL ELABORATED</span>
+        <span>6 CHANNELS · CORDIC MAG/PHASE · ROCOF</span>
+      </div>
+      <div style="position: relative; padding: 14px 10px; overflow: hidden;">
+        <canvas ref="{{ schemRef }}" style="display: block; width: 100%; height: auto;"></canvas>
+      </div>
+      <div style="display: flex; gap: 22px; flex-wrap: wrap; padding: 7px 14px; border-top: 1px solid #163D2A; font-size: 11px; letter-spacing: 0.12em; color: #66727D;">
+        <span>█ ACTIVE EDGE</span>
+        <span>─ DATA PATH</span>
+        <span>▶ SINK</span>
+        <span style="color: #7AAE91;">SIGNALS PULSING @ CLK</span>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Datapath" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 24px;">
+      <span style="color: #05070A; background: #39FF88; padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: 'Silkscreen', monospace;">01</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">DATAPATH</span>
+      <span style="flex: 1; color: #11626F; overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+      <div style="border: 1px solid #163D2A; padding: 20px 18px; display: grid; gap: 11px; align-content: start;">
+        <div style="font-size: 11px; letter-spacing: 0.18em; color: #66727D;">STAGE 1</div>
+        <div style="font-size: 14.5px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.06em;">WINDOW</div>
+        <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">Hann coefficients in a single BRAM, shared across channels by time multiplexing. Q1.15 in, Q2.30 out, truncation error bounded at 2⁻¹⁴.</p>
+      </div>
+      <div style="border: 1px solid #163D2A; padding: 20px 18px; display: grid; gap: 11px; align-content: start;">
+        <div style="font-size: 11px; letter-spacing: 0.18em; color: #66727D;">STAGE 2</div>
+        <div style="font-size: 14.5px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.06em;">SLIDING DFT BIN</div>
+        <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">Recursive bin update with leakage damping, five bins per channel. Guard bits sized from the worst-case input rather than from optimism.</p>
+      </div>
+      <div style="border: 1px solid #163D2A; padding: 20px 18px; display: grid; gap: 11px; align-content: start;">
+        <div style="font-size: 11px; letter-spacing: 0.18em; color: #66727D;">STAGE 3</div>
+        <div style="font-size: 14.5px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.06em;">CORDIC MAG / PHASE</div>
+        <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">16-iteration vectoring CORDIC, one shared engine, arctan table in ROM. Gain compensated at the output, not per iteration.</p>
+      </div>
+      <div style="border: 1px solid #163D2A; padding: 20px 18px; display: grid; gap: 11px; align-content: start;">
+        <div style="font-size: 11px; letter-spacing: 0.18em; color: #66727D;">STAGE 4</div>
+        <div style="font-size: 14.5px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.06em;">IPDFT CORRECTION</div>
+        <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">Three-point interpolation over neighbouring bins to recover off-bin frequency, then a differentiator for ROCOF with a configurable window.</p>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Verification" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 24px;">
+      <span style="color: #05070A; background: #39FF88; padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: 'Silkscreen', monospace;">02</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">VERIFICATION</span>
+      <span style="flex: 1; color: #11626F; overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
+    </div>
+    <div style="display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 40px;">
+      <div style="display: grid; gap: 0; border-top: 1px solid #182027; align-content: start;">
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr) 120px 96px; gap: 16px; align-items: baseline; padding: 13px 4px; border-bottom: 1px solid #182027; font-size: 13px;"><span style="color: #D7E0E6;">Directed sine sweep, 45–65 Hz</span><span style="color: #7AAE91; font-size: 12px;">cocotb</span><span style="color: #39FF88;">PASS</span></div>
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr) 120px 96px; gap: 16px; align-items: baseline; padding: 13px 4px; border-bottom: 1px solid #182027; font-size: 13px;"><span style="color: #D7E0E6;">Off-bin frequency, 0.01 Hz steps</span><span style="color: #7AAE91; font-size: 12px;">cocotb</span><span style="color: #39FF88;">PASS</span></div>
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr) 120px 96px; gap: 16px; align-items: baseline; padding: 13px 4px; border-bottom: 1px solid #182027; font-size: 13px;"><span style="color: #D7E0E6;">Harmonic + noise, constrained random</span><span style="color: #7AAE91; font-size: 12px;">SV / UVM</span><span style="color: #39FF88;">PASS</span></div>
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr) 120px 96px; gap: 16px; align-items: baseline; padding: 13px 4px; border-bottom: 1px solid #182027; font-size: 13px;"><span style="color: #D7E0E6;">Saturation and overflow assertions</span><span style="color: #7AAE91; font-size: 12px;">SVA</span><span style="color: #39FF88;">PASS</span></div>
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr) 120px 96px; gap: 16px; align-items: baseline; padding: 13px 4px; border-bottom: 1px solid #182027; font-size: 13px;"><span style="color: #D7E0E6;">ROCOF step response vs. golden model</span><span style="color: #7AAE91; font-size: 12px;">python</span><span style="color: #ffb000;">2 FAILS</span></div>
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr) 120px 96px; gap: 16px; align-items: baseline; padding: 13px 4px; border-bottom: 1px solid #182027; font-size: 13px;"><span style="color: #D7E0E6;">Channel-to-channel isolation</span><span style="color: #7AAE91; font-size: 12px;">SV / UVM</span><span style="color: #66727D;">OPEN</span></div>
+      </div>
+      <div style="display: grid; gap: 14px; align-content: start;">
+        <div style="border: 1px solid #163D2A; padding: 18px 16px; display: grid; gap: 10px; font-size: 12.5px;">
+          <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">COVERAGE</div>
+          <div style="display: flex; justify-content: space-between;"><span style="color: #7AAE91;">STATEMENT</span><span style="color: #D7E0E6;">99.1 %</span></div>
+          <div style="display: flex; justify-content: space-between;"><span style="color: #7AAE91;">BRANCH</span><span style="color: #D7E0E6;">97.4 %</span></div>
+          <div style="display: flex; justify-content: space-between;"><span style="color: #7AAE91;">FUNCTIONAL</span><span style="color: #D7E0E6;">96.4 %</span></div>
+          <div style="color: #39FF88; font-size: 13px; letter-spacing: -0.02em;">███████████████░░░░░</div>
+        </div>
+        <div style="border: 1px solid #ffb000; padding: 18px 16px; display: grid; gap: 9px; font-size: 12.5px;">
+          <div style="color: #ffb000; letter-spacing: 0.16em; font-size: 11px;">OPEN DEFECT · DEF-014</div>
+          <div style="color: #D7E0E6; line-height: 1.8;">ROCOF overshoots by 4.2 % on a 2 Hz/s step when the differentiator window is 4 samples. Suspected guard-bit truncation in stage 4.</div>
+          <div style="color: #7AAE91;">OWNER ▸ unassigned</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Signoff" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
+    <div style="border: 1px solid #39FF88; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+      <div style="padding: 26px 24px; border-right: 1px solid #182027;">
+        <div style="font-size: 12px; letter-spacing: 0.18em; color: #66727D; margin-bottom: 14px;">WHAT IS LEFT</div>
+        <div style="display: grid; gap: 10px; font-size: 13.5px; color: #A8B3BD; line-height: 1.8;">
+          <div><span style="color: #39FF88;">▸ </span>Close DEF-014 and re-run the ROCOF suite.</div>
+          <div><span style="color: #39FF88;">▸ </span>Channel isolation testbench, currently unwritten.</div>
+          <div><span style="color: #39FF88;">▸ </span>Bench capture against a signal generator, not just simulation.</div>
+        </div>
+      </div>
+      <div style="padding: 26px 24px; display: grid; gap: 12px; align-content: start; font-size: 13px;">
+        <div style="font-size: 12px; letter-spacing: 0.18em; color: #66727D;">ARTEFACTS</div>
+        <div><span style="color: #66727D;">SCHEM ▸ </span><span style="color: #A8B3BD;">schematic.pdf — not yet uploaded</span></div>
+        <div><span style="color: #66727D;">REPO ▸ </span><a href="join.html">github.com/whistleblower-lab/ipdft</a></div>
+        <div style="color: #7AAE91; line-height: 1.8; padding-top: 6px;">Reports, seeds and constraint files ship with the repository. Ask if you want the raw waveforms.</div>
+      </div>
+    </div>
+  </section>
+
+  <div style="max-width: 1520px; margin: 74px auto 0; padding: 0 28px;">
+    <div style="border-top: 1px solid #163D2A; padding: 26px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; font-size: 12.5px;">
+      <div style="display: grid; gap: 8px; align-content: start;">
+        <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">WHISTLEBLOWER</div>
+        <div style="color: #A8B3BD; line-height: 1.8; max-width: 30ch;">Student-run ASIC / FPGA hardware verification lab.</div>
+      </div>
+      <div style="display: grid; gap: 8px; align-content: start;">
+        <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">CONTACT</div>
+        <div><span style="color: #66727D;">MAIL ▸ </span><a href="mailto:lab@whistleblower.dev">lab@whistleblower.dev</a></div>
+      </div>
+      <div style="display: grid; gap: 8px; align-content: start;">
+        <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">INDEX</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px 14px;">
+          <a href="index.html" style="color: #7AAE91;">HOME</a>
+          <a href="research.html" style="color: #7AAE91;">RESEARCH</a>
+          <a href="projects.html" style="color: #7AAE91;">PROJECTS</a>
+          <a href="people.html" style="color: #7AAE91;">PEOPLE</a>
+          <a href="news.html" style="color: #7AAE91;">NEWS</a>
+          <a href="join.html" style="color: #7AAE91;">JOIN</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top: 1px solid #182027; padding: 14px 0 30px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-size: 11px; letter-spacing: 0.14em; color: #66727D;">
+      <span>▓▒░ END OF FILE ░▒▓</span>
+      <span>WHISTLEBLOWER LAB · MMXXVI</span>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;pulseSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.2,&quot;max&quot;:3,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Schematic&quot;},&quot;schematicPalette&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;green&quot;,&quot;amber&quot;,&quot;mono&quot;],&quot;default&quot;:&quot;green&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Schematic&quot;}}">
+class Component extends DCLogic {
+  schemRef = React.createRef();
+  pals = {
+    green: { bg: '#05070A', dim: '#17532a', mid: '#7AAE91', hot: '#39FF88', hi: '#D7E0E6' },
+    amber: { bg: '#0d0a05', dim: '#5a3d17', mid: '#b87f00', hot: '#ffb000', hi: '#fff6e6' },
+    mono:  { bg: '#0a0a0a', dim: '#3a3a3a', mid: '#8f8f8f', hot: '#ffffff', hi: '#ffffff' }
+  };
+
+  componentDidMount() {
+    this.build();
+    const go = () => { this.sizeSchem(); this.loop(); };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(go).catch(go); else go();
+    this.onResize = () => this.sizeSchem();
+    window.addEventListener('resize', this.onResize);
+  }
+  componentWillUnmount() {
+    cancelAnimationFrame(this.raf);
+    window.removeEventListener('resize', this.onResize);
+  }
+
+  pal() { return this.pals[this.props.schematicPalette] || this.pals.green; }
+
+  put(x, y, ch, c) {
+    if (x < 0 || y < 0 || x >= this.cols || y >= this.rows) return;
+    this.cells.set(y * 1000 + x, { x: x, y: y, ch: ch, c: c });
+  }
+  text(x, y, s, c) { for (let i = 0; i < s.length; i++) this.put(x + i, y, s[i], c); }
+  textR(xEnd, y, s, c) { this.text(xEnd - s.length + 1, y, s, c); }
+
+  box(x, y, w, h, title, sub, extra) {
+    const inner = w - 2;
+    this.put(x, y, '┌', 1); this.put(x + w - 1, y, '┐', 1);
+    this.put(x, y + h - 1, '└', 1); this.put(x + w - 1, y + h - 1, '┘', 1);
+    for (let i = 1; i < w - 1; i++) { this.put(x + i, y, '─', 1); this.put(x + i, y + h - 1, '─', 1); }
+    for (let j = 1; j < h - 1; j++) { this.put(x, y + j, '│', 1); this.put(x + w - 1, y + j, '│', 1); }
+    this.text(x + 2, y + 1, title.slice(0, inner - 2), 3);
+    this.text(x + 2, y + 2, sub.slice(0, inner - 2), 0);
+    (extra || []).forEach((ln, k) => this.text(x + 2, y + 4 + k, ln.slice(0, inner - 2), 1));
+  }
+
+  wire(pts, speed, delay) {
+    const cells = [];
+    const step = (a, b) => (b > a ? 1 : b < a ? -1 : 0);
+    for (let i = 0; i < pts.length - 1; i++) {
+      const a = pts[i], b = pts[i + 1];
+      const dx = step(a[0], b[0]), dy = step(a[1], b[1]);
+      let x = a[0], y = a[1];
+      while (x !== b[0] || y !== b[1]) { cells.push([x, y, dx, dy]); x += dx; y += dy; }
+      if (i === pts.length - 2) cells.push([b[0], b[1], dx, dy]);
+    }
+    const bit = (dx, dy) => (dy === -1 ? 1 : dy === 1 ? 2 : dx === -1 ? 4 : 8);
+    const out = [];
+    for (let i = 0; i < cells.length; i++) {
+      const c = cells[i], last = i === cells.length - 1;
+      const pv = cells[i - 1], nx = cells[i + 1];
+      let mask = pv ? bit(pv[0] - c[0], pv[1] - c[1]) : bit(-c[2], -c[3]);
+      if (nx) mask |= bit(nx[0] - c[0], nx[1] - c[1]);
+      const k = c[1] * 1000 + c[0];
+      if (last) {
+        const ax = pv ? c[0] - pv[0] : c[2], ay = pv ? c[1] - pv[1] : c[3];
+        const ch = ax === 1 ? '▶' : ax === -1 ? '◀' : ay === 1 ? '▼' : '▲';
+        this.conn.delete(k);
+        this.put(c[0], c[1], ch, 2);
+      } else {
+        mask |= (this.conn.get(k) || 0);
+        this.conn.set(k, mask);
+        this.put(c[0], c[1], this.junction(mask), 1);
+      }
+      out.push({ x: c[0], y: c[1] });
+    }
+    this.wires.push({ cells: out, speed: speed, delay: delay || 0 });
+  }
+
+  junction(m) {
+    const T = { 1: '│', 2: '│', 3: '│', 4: '─', 8: '─', 12: '─', 5: '┘', 9: '└', 6: '┐',
+                10: '┌', 7: '┤', 11: '├', 13: '┴', 14: '┬', 15: '┼' };
+    return T[m] || '─';
+  }
+
+  build() {
+    this.cols = 116; this.rows = 41;
+    this.cells = new Map(); this.wires = []; this.conn = new Map();
+
+    this.text(0, 1, 'g_channels[0].u_ch', 0);
+    this.text(0, 2, 'ipdft_channel_top', 3);
+
+    this.box(22, 7, 20, 8, 'WINDOW_MUL', 'RTL_MULT', ['I0[15:0]', 'I1[15:0]  ×', 'O[31:0]']);
+    this.box(48, 4, 22, 10, 'DFT_BIN[4:0]', 'RTL_REG_ASYNC', ['C  CE  CLR', 'D → Q', 'bin_mag  [31:0]', 'bin_phase[15:0]']);
+    this.box(48, 20, 22, 9, 'CORDIC_ATAN', 'RTL_ROM', ['OA[2:0]', 'cordic_bin_i', '>>> ARSHIFT']);
+    this.box(76, 8, 20, 10, 'IPDFT_CORR', 'RTL_ADD', ['I0[10:0]  +', 'I1[9:0]', 'O[11:0]', 'hann_comp']);
+    this.box(76, 26, 20, 7, 'ROCOF_DIFF', 'RTL_ARSHIFT', ['I0[47:0]', 'O[47:0]']);
+    this.box(22, 33, 20, 7, 'CTRL_SEQ', 'RTL_FSM', ['bin_sel[3:0]', 'mag_valid']);
+
+    const li = [[10, 'sample_in[15:0]'], [12, 'sample_valid']];
+    li.forEach(p => { this.textR(15, p[0], p[1], 0); this.wire([[16, p[0]], [21, p[0]]], 9, p[0]); });
+    [[35, 'clk'], [36, 'rst_n'], [37, 'enable']].forEach(p => { this.textR(15, p[0], p[1], 0); this.wire([[16, p[0]], [21, p[0]]], 11, p[0] * 2); });
+
+    this.wire([[42, 10], [45, 10], [45, 7], [47, 7]], 7, 0);
+    this.wire([[42, 12], [45, 12], [45, 23], [47, 23]], 7, 14);
+    this.wire([[70, 7], [73, 7], [73, 11], [75, 11]], 6, 6);
+    this.wire([[70, 23], [73, 23], [73, 15], [75, 15]], 6, 20);
+    this.wire([[70, 25], [99, 25]], 5, 30);
+    this.wire([[96, 11], [99, 11]], 8, 3);
+    this.wire([[96, 13], [99, 13]], 8, 9);
+    this.wire([[85, 17], [85, 20], [74, 20], [74, 29], [75, 29]], 6, 26);
+    this.wire([[96, 29], [99, 29]], 8, 34);
+
+    this.textR(115, 11, 'mag_out[31:0]', 3);
+    this.textR(115, 13, 'freq_out[31:0]', 3);
+    this.textR(115, 25, 'phase_out[15:0]', 3);
+    this.textR(115, 29, 'rocof_out[31:0]', 3);
+
+    this.wire([[42, 36], [99, 36]], 14, 0);
+    this.put(85, 17, '┬', 1);
+    this.put(41, 36, '├', 1);
+    [[32, 14], [58, 13], [56, 28], [88, 17], [85, 32]].forEach(p => {
+      this.put(p[0], p[1], '▲', 2);
+      this.text(p[0] - 1, p[1] + 1, 'clk', 0);
+    });
+    this.wire([[96, 15], [99, 15]], 8, 16);
+    this.textR(115, 15, 'mag_valid', 0);
+    this.text(44, 38, 'clk_net · rst_n · enable · bin_sel[3:0]', 0);
+    this.textR(115, 36, 'g_channels[1:5]', 0);
+  }
+
+  sizeSchem() {
+    const cv = this.schemRef.current; if (!cv) return;
+    const cw = 9, chh = 19, dpr = Math.min(2, window.devicePixelRatio || 1);
+    cv.width = this.cols * cw * dpr; cv.height = this.rows * chh * dpr;
+    const ctx = cv.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    this.cw = cw; this.chh = chh;
+    this.drawSchem(0);
+  }
+
+  drawSchem(t) {
+    const cv = this.schemRef.current; if (!cv) return;
+    const ctx = cv.getContext('2d'), P = this.pal(), cw = this.cw, ch = this.chh;
+    const cols = [P.dim, P.mid, P.hot, P.hi];
+    ctx.fillStyle = P.bg;
+    ctx.fillRect(0, 0, this.cols * cw, this.rows * ch);
+    ctx.font = '15px "JetBrains Mono", ui-monospace, monospace';
+    ctx.textBaseline = 'alphabetic';
+    const buckets = [[], [], [], []];
+    this.cells.forEach(c => buckets[c.c].push(c));
+    buckets.forEach((b, i) => {
+      ctx.fillStyle = cols[i];
+      b.forEach(c => ctx.fillText(c.ch, c.x * cw, c.y * ch + 14));
+    });
+    const sp = this.props.pulseSpeed == null ? 1 : this.props.pulseSpeed;
+    this.wires.forEach(w => {
+      const len = w.cells.length, span = len + 26;
+      const head = Math.floor((t * w.speed * sp + w.delay) % span);
+      for (let k = 0; k < 5; k++) {
+        const i = head - k; if (i < 0 || i >= len) continue;
+        const c = w.cells[i];
+        const gc = this.cells.get(c.y * 1000 + c.x);
+        const gch = gc ? gc.ch : '─';
+        ctx.fillStyle = P.bg;
+        ctx.fillRect(c.x * cw, c.y * ch + 3, cw, ch - 3);
+        ctx.fillStyle = k === 0 ? P.hi : k < 3 ? P.hot : P.mid;
+        if (k === 0) { ctx.shadowColor = P.hot; ctx.shadowBlur = 9; }
+        ctx.fillText(gch, c.x * cw, c.y * ch + 14);
+        ctx.shadowBlur = 0;
+      }
+    });
+  }
+
+  loop() {
+    const tick = () => {
+      this.drawSchem(performance.now() / 90);
+      this.raf = requestAnimationFrame(tick);
+    };
+    cancelAnimationFrame(this.raf);
+    tick();
+  }
+
+  renderVals() { return { schemRef: this.schemRef }; }
+}
+</script>
+</body>
+</html>

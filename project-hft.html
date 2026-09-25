@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Whistleblower Lab — HFT Tick-to-Trade</title>
+<link rel="icon" href="assets/brand/logo-mark.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;500;700&family=Share+Tech+Mono&family=Silkscreen&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; background: #0D0D0D; }
+  * { box-sizing: border-box; }
+  a { color: #00BFFF; text-decoration: none; }
+  a:hover { color: #000000; background: #00FF7F; }
+  ::selection { background: #00FF7F; color: #000000; }
+  @keyframes tick { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+  @keyframes blinkhft { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0.2 } }
+</style>
+</helmet>
+<div style="position: relative; background: linear-gradient(180deg, #0D0D0D 0%, #111814 55%, #0D0D0D 100%); color: #FFFFFF; font-family: 'Roboto', system-ui, sans-serif; min-height: 100vh; overflow-x: hidden;">
+  <sc-if value="{{ circuit }}" hint-placeholder-val="{{ true }}">
+    <div style="position: absolute; inset: 0; pointer-events: none; z-index: 0; background-image: linear-gradient(rgba(0,255,127,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(0,191,255,0.045) 1px, transparent 1px), linear-gradient(rgba(0,255,127,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,127,0.02) 1px, transparent 1px); background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;"></div>
+  </sc-if>
+
+  <div style="position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 10px 28px; background: #05070A; border-bottom: 1px solid #163D2A; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em;">
+    <div style="display: flex; align-items: center; gap: 14px; color: #7AAE91;">
+      <a href="index.html" style="color: #05070A; background: #39FF88; padding: 5px 8px; font-size: 9px; font-family: 'Silkscreen', monospace;">WHISTLEBLOWER</a>
+      <span style="color: #66727D;">│</span>
+      <span>ASIC · FPGA · DV</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <a href="index.html" style="color: #7AAE91;">HOME</a>
+      <a href="research.html" style="color: #7AAE91;">RESEARCH</a>
+      <a href="projects.html" style="color: #D7E0E6;">PROJECTS</a>
+      <a href="people.html" style="color: #7AAE91;">PEOPLE</a>
+      <a href="publications.html" style="color: #7AAE91;">PUBS</a>
+      <a href="news.html" style="color: #7AAE91;">NEWS</a>
+      <a href="join.html" style="color: #7AAE91;">JOIN</a>
+    </div>
+  </div>
+
+  <div style="position: relative; z-index: 2; background: #000000; border-bottom: 1px solid #00FF7F; overflow: hidden; height: 34px; display: flex; align-items: center;">{{ ticker }}</div>
+
+  <main style="position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 28px;">
+    <div style="padding-top: 24px;"><a href="projects.html" style="font-family: 'Share Tech Mono', monospace; font-size: 14px;">&lt; ALL PROJECTS</a></div>
+
+    <section data-screen-label="Hero" style="padding-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 40px; align-items: center;">
+      <div style="display: grid; gap: 18px;">
+        <div style="font-family: 'Share Tech Mono', monospace; font-size: 14px; letter-spacing: 0.2em; color: #00FF7F;">PRJ_10 · CASE FILE · ZCU106</div>
+        <h1 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: clamp(64px, 9vw, 132px); line-height: 0.86; letter-spacing: 0.01em;">TICK <span style="color: #00FF7F;">→</span> TRADE</h1>
+        <div style="font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 0.06em; color: #00BFFF;">A 100%-FABRIC HFT PIPELINE</div>
+        <p style="margin: 0; max-width: 58ch; font-size: 16.5px; line-height: 1.75; color: #E0E0E0; text-wrap: pretty;">When an exchange sends a price update, whoever answers first gets the trade. This pipeline makes the whole decision in an FPGA: an ITCH market message comes in one side and a finished OUCH order leaves the other, a fixed handful of clock cycles later. PS is control-plane only.</p>
+        <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: #2A2A2A; border: 1px solid #2A2A2A;">
+          <div style="background: #111111; padding: 14px 12px; display: grid; gap: 2px;"><span style="font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: #00FF7F; line-height: 1;">78</span><span style="font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #A0A0A0;">CYC TICK-TO-TRADE</span></div>
+          <div style="background: #111111; padding: 14px 12px; display: grid; gap: 2px;"><span style="font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: #00FF7F; line-height: 1;">≈6</span><span style="font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #A0A0A0;">CYC OF COMPUTE</span></div>
+          <div style="background: #111111; padding: 14px 12px; display: grid; gap: 2px;"><span style="font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: #00BFFF; line-height: 1;">12/13</span><span style="font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #A0A0A0;">DEMOS MEET TIMING</span></div>
+        </div>
+      </div>
+      <figure style="margin: 0; display: grid; gap: 8px;">
+        <div style="border: 2px solid #00FF7F; box-shadow: 0 0 40px rgba(0,255,127,0.18); overflow: hidden;"><img src="assets/projects/hft/eat-the-rich.jpg" alt="Monopoly's Rich Uncle Pennybags holding an EAT THE RICH sign" style="display: block; width: 100%; height: auto;" /></div>
+        <figcaption style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #A0A0A0;">// the market maker earns the spread. The fastest one eats first.</figcaption>
+      </figure>
+    </section>
+
+    <section data-screen-label="Pipeline" style="padding-top: 72px; display: grid; gap: 22px;">
+      <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px; letter-spacing: 0.02em;"><span style="color: #00FF7F;">01</span> THE PIPELINE</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 10px;">
+        <sc-for list="{{ stages }}" as="s" hint-placeholder-count="7">
+          <div style="background: #141414; border: 1px solid {{ s.border }}; padding: 14px 12px; display: grid; gap: 8px; align-content: start;" style-hover="box-shadow: 0 0 0 1px #00FF7F, 0 0 22px rgba(0,255,127,0.35);">
+            <div style="display: flex; justify-content: space-between; font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #A0A0A0;"><span>{{ s.n }}</span><span style="color: #00FF7F;">PASS</span></div>
+            <div style="font-family: 'Share Tech Mono', monospace; font-size: 14.5px; color: {{ s.color }};">{{ s.name }}</div>
+            <div style="font-size: 13px; line-height: 1.5; color: #CFCFCF;">{{ s.role }}</div>
+            <div style="font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #00BFFF;">{{ s.cov }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="font-family: 'Share Tech Mono', monospace; font-size: 13.5px; color: #A0A0A0;">every block bit-exact vs a Python golden model, then mutation-tested so a broken design is proven to fail · GHDL 4.1.0 + Vivado xsim 2025.1</div>
+    </section>
+
+    <section data-screen-label="Latency" style="padding-top: 72px; display: grid; gap: 22px;">
+      <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px;"><span style="color: #00FF7F;">02</span> WHERE THE CYCLES GO</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 26px; align-items: start;">
+        <div style="display: grid; gap: 20px;">
+          <figure style="margin: 0; background: #111111; border: 1px solid #2A2A2A; padding: 18px; display: grid; gap: 14px;">
+            <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-family: 'Share Tech Mono', monospace; font-size: 13px;"><span style="white-space: nowrap;">FIG 1 · 78-CYCLE DECOMPOSITION</span><span style="color: #A0A0A0; white-space: nowrap;">serial ingest</span></div>
+            <div style="display: flex; height: 38px; border: 1px solid #333333;">
+              <div style="width: 92.3%; background: repeating-linear-gradient(90deg, #1E4A6B 0 6px, #173A55 6px 12px); display: flex; align-items: center; padding-left: 10px; font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #FFFFFF;">~72 · 36 BYTES × 2 CYC INGEST</div>
+              <div style="width: 7.7%; background: #00FF7F;"></div>
+            </div>
+            <div style="position: relative; height: 16px; font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #A0A0A0;"><span style="position: absolute; left: 0;">0</span><span style="position: absolute; right: 7.7%; padding-right: 6px; color: #00FF7F; white-space: nowrap;">compute ≈6 ▸</span><span style="position: absolute; right: 0;">78</span></div>
+          </figure>
+          <figure style="margin: 0; background: #111111; border: 1px solid #2A2A2A; padding: 18px; display: grid; gap: 12px;">
+            <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-family: 'Share Tech Mono', monospace; font-size: 13px;"><span style="white-space: nowrap;">FIG 2 · PARSE LATENCY</span><span style="color: #A0A0A0; white-space: nowrap;">serial vs parallel · cycles</span></div>
+            <div style="display: grid; gap: 8px;">
+              <div style="display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 10px; align-items: center;"><span style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #CFCFCF;">itch_parser</span><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 88%; height: 16px; background: #555555;"></div><span style="font-family: 'Share Tech Mono', monospace; font-size: 13px; white-space: nowrap; flex-shrink: 0;">72</span></div></div>
+              <div style="display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 10px; align-items: center;"><span style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #00FF7F;">itch_parser_par</span><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 7.3%; height: 16px; background: #00FF7F; box-shadow: 0 0 12px #00FF7F;"></div><span style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #00FF7F; white-space: nowrap; flex-shrink: 0;">6 · 12×</span></div></div>
+            </div>
+          </figure>
+        </div>
+        <div style="display: grid; gap: 16px;">
+          <div style="overflow-x: auto;">
+            <div style="min-width: 440px; display: grid; font-size: 14px;">
+              <div style="display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr 0.7fr 0.7fr; gap: 8px; padding: 8px 0; border-bottom: 1px solid #00FF7F; font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #A0A0A0;"><span>PARSER</span><span>INGEST</span><span>LATENCY</span><span>FMAX (SYN)</span><span>LUT</span><span>FF</span></div>
+              <div style="display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr 0.7fr 0.7fr; gap: 8px; padding: 10px 0; border-bottom: 1px solid #2A2A2A;"><span style="font-family: 'Share Tech Mono', monospace;">serial</span><span>1 B / 2 cyc</span><span>72 cyc</span><span>~572 MHz</span><span>179</span><span>536</span></div>
+              <div style="display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr 0.7fr 0.7fr; gap: 8px; padding: 10px 0; border-bottom: 1px solid #2A2A2A; color: #00FF7F;"><span style="font-family: 'Share Tech Mono', monospace;">parallel</span><span>8 B / cyc</span><span>6 cyc</span><span>~1168 MHz</span><span>17</span><span>167</span></div>
+            </div>
+          </div>
+          <p style="margin: 0; font-size: 15px; line-height: 1.7; color: #E0E0E0;">The parallel parser takes 8 bytes a cycle, the width of a 10G AXIS bus, and decodes every field of every message type in one cycle by speculating. Smaller, faster, and 12× lower latency. It assumes a 64-bit ingress from a 10G or 25G MAC.</p>
+          <div style="border-left: 3px solid #00BFFF; padding: 4px 0 4px 14px; font-family: 'Share Tech Mono', monospace; font-size: 14px; line-height: 1.6; color: #CFCFCF;">Timed replay with LOBSTER-derived gaps: wire-to-trade median 13 / p99 96 cyc, ≈43 / 320 ns at 300 MHz. latency_ts is last-tick-wins, a lower-bound proxy under bursts.</div>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Timing closure" style="padding-top: 72px; display: grid; gap: 22px;">
+      <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px;"><span style="color: #00FF7F;">03</span> TIMING CLOSURE</h2>
+      <figure style="margin: 0; background: #111111; border: 1px solid #2A2A2A; padding: 20px 18px 14px; display: grid; gap: 12px;">
+        <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-family: 'Share Tech Mono', monospace; font-size: 13px;"><span>FIG 3 · WNS PER DEMO · xczu7ev-ffvc1156-2-e · VIVADO 2025.1</span><span style="color: #A0A0A0; white-space: nowrap;">ns · −0.5 to 3.5</span></div>
+        <div style="position: relative; display: grid; gap: 7px;">
+          <div style="position: absolute; top: -6px; bottom: -6px; left: calc(230px + 12px + (100% - 242px) * 0.125); border-left: 1px solid #FFFFFF;"></div>
+          <sc-for list="{{ timing }}" as="t" hint-placeholder-count="13">
+            <div style="display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 12px; align-items: center;">
+              <span style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: {{ t.label }}; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ t.name }}</span>
+              <div style="position: relative; height: 18px;">
+                <div style="position: absolute; top: 2px; bottom: 2px; left: {{ t.left }}; width: {{ t.width }}; background: {{ t.color }}; box-shadow: 0 0 10px {{ t.glow }};"></div>
+                <span style="position: absolute; top: 0; left: {{ t.tagLeft }}; padding-left: 6px; font-family: 'Share Tech Mono', monospace; font-size: 12.5px; color: {{ t.color }}; white-space: nowrap;">{{ t.wns }}</span>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 12px;"><span></span><div style="position: relative; height: 16px; border-top: 1px solid #333333; font-family: 'Share Tech Mono', monospace; font-size: 11.5px; color: #A0A0A0;"><span style="position: absolute; left: 0; top: 3px;">−0.5</span><span style="position: absolute; left: 12.5%; top: 3px; transform: translateX(-50%);">0</span><span style="position: absolute; left: 37.5%; top: 3px; transform: translateX(-50%);">1</span><span style="position: absolute; left: 62.5%; top: 3px; transform: translateX(-50%);">2</span><span style="position: absolute; left: 87.5%; top: 3px; transform: translateX(-50%);">3</span></div></div>
+      </figure>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 14px;">
+        <div style="background: #111111; border: 1px solid #FF1744; padding: 16px; display: grid; gap: 6px;"><div style="font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #FF1744; animation: blinkhft 1.4s step-end infinite;">▲ VIOLATED</div><div style="font-family: 'Bebas Neue', sans-serif; font-size: 26px;">TOP_IMPL_2P0</div><div style="font-size: 14px; color: #CFCFCF;">Routed. WNS −0.245 ns, TNS −0.525 ns. The aggressive stretch target.</div></div>
+        <div style="background: #111111; border: 1px solid #00FF7F; padding: 16px; display: grid; gap: 6px;"><div style="font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #00FF7F;">● RECOVERED</div><div style="font-family: 'Bebas Neue', sans-serif; font-size: 26px;">TOP_IMPL_3P0</div><div style="font-size: 14px; color: #CFCFCF;">Routed. WNS +0.315 ns, TNS 0. 751 LUT, 688 FF, 0 BRAM, 0 DSP.</div></div>
+        <div style="background: #111111; border: 1px solid #00BFFF; padding: 16px; display: grid; gap: 6px;"><div style="font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #00BFFF;">● BASE</div><div style="font-family: 'Bebas Neue', sans-serif; font-size: 26px;">HFT_TICK_TO_TRADE_TOP</div><div style="font-size: 14px; color: #CFCFCF;">WNS +1.828 ns. Its report is marked Synthesized, not Routed. 688 FF, no BRAM or DSP.</div></div>
+      </div>
+    </section>
+
+    <section data-screen-label="Worked trade" style="padding-top: 72px; display: grid; gap: 22px;">
+      <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px;"><span style="color: #00FF7F;">04</span> ONE TRADE, END TO END</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 10px; font-family: 'Share Tech Mono', monospace;">
+        <div style="background: #111111; border: 1px solid #2A2A2A; padding: 14px; display: grid; gap: 4px;"><span style="font-size: 12px; color: #A0A0A0;">BOOK · BID</span><span style="font-size: 22px; color: #00FF7F;">100000</span></div>
+        <div style="background: #111111; border: 1px solid #2A2A2A; padding: 14px; display: grid; gap: 4px;"><span style="font-size: 12px; color: #A0A0A0;">BOOK · OFFER</span><span style="font-size: 22px; color: #FF1744;">100010</span></div>
+        <div style="background: #111111; border: 1px solid #2A2A2A; padding: 14px; display: grid; gap: 4px;"><span style="font-size: 12px; color: #A0A0A0;">SPREAD</span><span style="font-size: 22px; color: #00BFFF;">10</span></div>
+        <div style="background: #111111; border: 1px solid #2A2A2A; padding: 14px; display: grid; gap: 4px;"><span style="font-size: 12px; color: #A0A0A0;">INTENT</span><span style="font-size: 22px;">BUY 100 @ 100001</span></div>
+        <div style="background: #111111; border: 1px solid #00FF7F; padding: 14px; display: grid; gap: 4px;"><span style="font-size: 12px; color: #A0A0A0;">RISK</span><span style="font-size: 22px; color: #00FF7F;">PASS</span></div>
+      </div>
+      <div style="background: #000000; border: 1px solid #00FF7F; padding: 18px; display: grid; gap: 12px;">
+        <div style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #A0A0A0;">OUCH-LITE FRAME · 16 BYTES · BIT-EXACT</div>
+        <div style="display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 4px;">
+          <sc-for list="{{ ouch }}" as="b" hint-placeholder-count="16">
+            <div style="display: grid; gap: 3px; text-align: center;">
+              <div style="font-family: 'Share Tech Mono', monospace; font-size: clamp(11px, 1.4vw, 17px); padding: 8px 0; border: 1px solid {{ b.c }}; color: {{ b.c }}; background: #0A0A0A;">{{ b.hex }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap; font-family: 'Share Tech Mono', monospace; font-size: 12px;">
+          <span style="color: #00FF7F;">■ 4F 42 · 'O' 'B'</span>
+          <span style="color: #00BFFF;">■ 00 01 86 A1 · price 100001</span>
+          <span style="color: #FFFFFF;">■ 00 00 00 64 · qty 100</span>
+          <span style="color: #A0A0A0;">■ 00 00 00 01</span>
+          <span style="color: #FF1744;">■ 0D 0A · CR LF</span>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 14px;">
+        <div style="background: #111111; border: 1px solid #2A2A2A; padding: 16px; display: grid; gap: 6px;"><div style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #00BFFF;">MOLDUDP64 INGRESS</div><div style="font-size: 14px; line-height: 1.6; color: #CFCFCF;">400 real AAPL packets, 0 gaps, 199 OUCH out, BBO bit-exact vs golden. GHDL and xsim.</div></div>
+        <div style="background: #111111; border: 1px solid #2A2A2A; padding: 16px; display: grid; gap: 6px;"><div style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #00BFFF;">SOUPBINTCP OVER TOE</div><div style="font-size: 14px; line-height: 1.6; color: #CFCFCF;">SYN / SYN-ACK / ACK, then the order leaves as a TCP data segment, seq 1001, PSH|ACK. Payload bit-exact.</div></div>
+        <div style="background: #111111; border: 1px solid #2A2A2A; padding: 16px; display: grid; gap: 6px;"><div style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #00FF7F;">CLOSED LOOP</div><div style="font-size: 14px; line-height: 1.6; color: #CFCFCF;">The exchange sends a fill back over the same session; fill_rx decodes it. net_position = +100.</div></div>
+      </div>
+    </section>
+
+    <section data-screen-label="Payoff" style="padding-top: 72px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 30px; align-items: center; border: 1px solid #00FF7F; background: #07120C; padding: 26px;">
+        <figure style="margin: 0; display: grid; gap: 8px; justify-items: center;">
+          <img src="assets/cards/hft.jpg" alt="Cartoon man in sunglasses hugging stacks of cash" style="display: block; width: min(100%, 380px); height: auto; border: 2px solid #00FF7F; box-shadow: 0 0 36px rgba(0,255,127,0.22);" />
+          <figcaption style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #00FF7F;">// net_position = +100</figcaption>
+        </figure>
+        <div style="display: grid; gap: 14px;">
+          <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px; color: #00FF7F;">THE PAYOFF</h2>
+          <p style="margin: 0; font-size: 15.5px; line-height: 1.7; color: #E0E0E0;">Order out, fill in, inventory updated, all over one established TCP session. The loop closes in simulation: market data, decision, SoupBinTCP egress through the TOE, execution report back through fill_rx.</p>
+          <div style="font-family: 'Share Tech Mono', monospace; font-size: 14px; line-height: 1.6; color: #CFCFCF; border-left: 3px solid #00FF7F; padding-left: 14px;">Simulated, not traded. No exchange, no colocation, no money moved.</div>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Risk" style="padding-top: 72px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 30px; align-items: center; border: 1px solid #FF1744; background: #120709; padding: 26px;">
+        <figure style="margin: 0; display: grid; gap: 8px; justify-items: center;">
+          <img src="assets/projects/hft/broke.jpg" alt="Monopoly man with empty hands above the word BROKE?" style="display: block; width: min(100%, 260px); height: auto; filter: grayscale(1) contrast(1.1);" />
+          <figcaption style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #FF1744;">// what the risk gate exists to prevent</figcaption>
+        </figure>
+        <div style="display: grid; gap: 14px;">
+          <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px; color: #FF1744;">05 RISK &amp; HONEST SCOPE</h2>
+          <p style="margin: 0; font-size: 15.5px; line-height: 1.7; color: #E0E0E0;">risk_gate is a hardware interlock. An order that breaks position or size limits is blocked in the circuit, not logged by software downstream.</p>
+          <div style="display: grid; gap: 8px; font-size: 14.5px; line-height: 1.55; color: #E0E0E0;">
+            <div><span style="color: #FF1744; font-family: 'Share Tech Mono', monospace;">▲ </span>No exchange feed or colocation. Latency is sim datapath cycles, not live wire-to-trade.</div>
+            <div><span style="color: #FF1744; font-family: 'Share Tech Mono', monospace;">▲ </span>No hardware run recorded on the ZCU106; silicon is the target.</div>
+            <div><span style="color: #FF1744; font-family: 'Share Tech Mono', monospace;">▲ </span>bbo_book is single-level: no depth, no order-id matching.</div>
+            <div><span style="color: #FF1744; font-family: 'Share Tech Mono', monospace;">▲ </span>strategy_mm emits one buy quote when spread ≥ threshold; sell side and inventory band are future work.</div>
+            <div><span style="color: #FF1744; font-family: 'Share Tech Mono', monospace;">▲ </span>OUCH-lite fixed 16-byte layout, not venue-exact.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-screen-label="Artefacts" style="padding-top: 48px;">
+      <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; border-top: 1px solid #2A2A2A; padding-top: 18px; font-size: 14.5px;">
+        <span><span style="font-family: 'Share Tech Mono', monospace; color: #A0A0A0;">REPO ▸ </span><a href="https://github.com/Upaasak/hft-tick-to-trade">Upaasak/hft-tick-to-trade</a> <span style="color: #A0A0A0;">· feat/parallel-top · private</span></span>
+        <span style="font-family: 'Share Tech Mono', monospace; color: #A0A0A0;">source commit ba48246b</span>
+      </div>
+    </section>
+  </main>
+
+  <footer style="position: relative; z-index: 1; max-width: 1280px; margin: 40px auto 0; padding: 16px 28px 30px; border-top: 1px solid #00FF7F; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-family: 'Share Tech Mono', monospace; font-size: 14px; color: #A0A0A0;">
+    <a href="projects.html">&lt; BACK TO ALL PROJECTS</a>
+    <span>WHISTLEBLOWER LAB · MMXXVI · MARKET CLOSED</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showTicker&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Market feed&quot;},&quot;tickerSeconds&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:40,&quot;min&quot;:10,&quot;max&quot;:90,&quot;step&quot;:5,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Market feed&quot;},&quot;circuitGrid&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Background&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const items = [
+      ['ITCH', 'ADD BUY @100000', '#00FF7F'], ['ITCH', 'ADD SELL @100010', '#FF1744'], ['BBO', 'SPREAD 10', '#00BFFF'],
+      ['STRAT', 'BUY 100 @100001', '#00FF7F'], ['RISK', 'PASS', '#00FF7F'], ['OUCH', '4F 42 00 01 86 A1 00 00 00 64 00 00 00 01 0D 0A', '#FFFFFF'],
+      ['LAT', '78 CYC', '#00BFFF'], ['PARSE', '6 CYC · 12×', '#00FF7F'], ['WNS', '+1.828 ns', '#00BFFF'], ['IMPL_2P0', '−0.245 ns', '#FF1744'],
+      ['AAPL', '400 PKTS · 0 GAPS', '#FFFFFF'], ['FILL', 'NET POS +100', '#00FF7F']
+    ];
+    const one = items.map((it, i) => React.createElement('span', { key: i, style: { display: 'inline-flex', gap: '8px', padding: '0 22px', borderRight: '1px solid #222' } },
+      React.createElement('span', { style: { color: '#777' } }, it[0]),
+      React.createElement('span', { style: { color: it[2] } }, it[1])));
+    const speed = this.props.tickerSeconds ?? 40;
+    const ticker = (this.props.showTicker ?? true) ? React.createElement('div', {
+      style: { display: 'inline-flex', whiteSpace: 'nowrap', fontFamily: "'Share Tech Mono', monospace", fontSize: '13px', animation: 'tick ' + speed + 's linear infinite' }
+    }, one, one.map((e, i) => React.cloneElement(e, { key: 'b' + i }))) : null;
+
+    const stages = [
+      ['itch_parser', 'fields out of raw ITCH', 'GHDL + xsim · bit-exact'],
+      ['event_normalizer', 'clean internal events', '218 records'],
+      ['bbo_book', 'best bid and offer', '413 records'],
+      ['strategy_mm', 'market-maker quote', '18 records'],
+      ['risk_gate', 'hardware limit interlock', '42 cycles'],
+      ['ouch_encoder', 'OUCH byte frame', '8 frames'],
+      ['latency_ts', 'in-fabric stopwatch', '9 fires']
+    ].map((s, i) => ({ n: '0' + (i + 1), name: s[0], role: s[1], cov: s[2], color: i === 4 ? '#FF1744' : '#FFFFFF', border: i === 4 ? '#5A1A24' : '#2A2A2A' }));
+
+    const raw = [
+      ['bbo_book', 1.972], ['bbo_book_impl_2p0', 0.05], ['event_normalizer', 1.725], ['hft_tick_to_trade_top', 1.828],
+      ['hft_tick_to_trade_top_impl_2p0', -0.245], ['hft_tick_to_trade_top_impl_3p0', 0.315], ['itch_parser', 2.251],
+      ['itch_parser_impl_2p0', 0.302], ['latency_ts', 3.28], ['ouch_encoder', 3.287], ['risk_gate', 2.065],
+      ['selftest', 0.597], ['strategy_mm', 1.725]
+    ];
+    const pct = v => (v / 4 * 100);
+    const timing = raw.map(r => {
+      const v = r[1], neg = v < 0;
+      const left = neg ? 12.5 - pct(-v) : 12.5, width = Math.max(0.4, pct(Math.abs(v)));
+      return {
+        name: r[0], wns: (v > 0 ? '+' : '') + v.toFixed(3),
+        left: left.toFixed(2) + '%', width: width.toFixed(2) + '%',
+        tagLeft: (neg ? 12.5 : 12.5 + width).toFixed(2) + '%',
+        color: neg ? '#FF1744' : (v < 0.4 ? '#00BFFF' : '#00FF7F'),
+        glow: neg ? 'rgba(255,23,68,0.6)' : 'rgba(0,255,127,0.25)',
+        label: neg ? '#FF1744' : '#CFCFCF'
+      };
+    });
+    const hex = ['4F', '42', '00', '01', '86', 'A1', '00', '00', '00', '64', '00', '00', '00', '01', '0D', '0A'];
+    const cols = ['#00FF7F', '#00FF7F', '#00BFFF', '#00BFFF', '#00BFFF', '#00BFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#A0A0A0', '#A0A0A0', '#A0A0A0', '#A0A0A0', '#FF1744', '#FF1744'];
+    const ouch = hex.map((h, i) => ({ hex: h, c: cols[i] }));
+    return { ticker, stages, timing, ouch, circuit: this.props.circuitGrid ?? true };
+  }
+}
+</script>
+</body>
+</html>
