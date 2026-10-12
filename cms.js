@@ -123,8 +123,18 @@
     m.content = text;
   }
 
+  // srcset for a Sanity image, so phones download a small version.
+  function imgSet(url, widths) {
+    if (!url || url.indexOf('cdn.sanity.io') === -1) return undefined;
+    return (widths || [400, 700, 1000]).map(function (w) { return imgUrl(url, w) + ' ' + w + 'w'; }).join(', ');
+  }
+
   window.WB = {
-    load: load, paras: paras, href: href, isExternal: isExternal, img: imgUrl, page: page,
+    load: load, paras: paras, href: href, isExternal: isExternal, img: imgUrl, imgSet: imgSet, page: page,
     setDescription: setDescription, config: CONFIG, query: QUERY,
   };
+
+  // Start fetching straight away, in parallel with the page runtime booting;
+  // pages that call WB.load() later get this same request.
+  if (typeof document !== 'undefined' && typeof fetch === 'function') load();
 })();

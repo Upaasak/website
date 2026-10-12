@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,7 +8,9 @@
 <title>Whistleblower Lab — Projects</title>
 <meta name="description" content="Every block Whistleblower is building or verifying, from spec to signoff, plus the queue of unclaimed blocks.">
 <link rel="preconnect" href="https://7h6avsoz.apicdn.sanity.io" crossorigin="">
-<link rel="icon" href="assets/brand/logo-mark.png" />
+<link rel="icon" href="assets/brand/favicon.png" type="image/png" />
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png" />
+<link rel="preconnect" href="https://cdn.sanity.io" crossorigin="">
 </head>
 <body>
 <x-dc>
@@ -31,6 +33,23 @@
     .wb-nav { padding: 10px 16px !important; row-gap: 10px !important; }
     .wb-nav-links { gap: 6px 14px !important; }
   }
+  /* Round 2: shared layout, legibility and interaction fixes */
+  html, body { overflow-x: clip; }
+  body { overflow-wrap: break-word; }
+  img { max-width: 100%; }
+  img[width][height] { height: auto; }
+  h1, h2, h3 { text-wrap: balance; }
+  p, li { text-wrap: pretty; }
+  :where(a, button, [tabindex]):focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  @media (prefers-reduced-motion: no-preference) {
+    a, [class^="scp"], [class*=" scp"] { transition: color .15s ease, background-color .15s ease, border-color .15s ease, opacity .15s ease; }
+  }
+  @media (max-width: 760px) {
+    p { font-size: 16px !important; }
+  }
+  @media (pointer: coarse) {
+    .wb-nav a, .wb-foot-links a { display: inline-block; padding-block: 10px; }
+  }
 </style>
 </helmet>
 <div style="background: #05070A; color: #39FF88; font-family: 'IBM Plex Mono', ui-monospace, monospace; min-height: 100vh; overflow-x: hidden;">
@@ -38,7 +57,7 @@
   <div class="wb-nav" style="position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 10px 28px; background: #05070A; border-bottom: 1px solid #163D2A; font-size: 12px; letter-spacing: 0.12em;">
     <div style="display: flex; align-items: center; gap: 14px; color: #7AAE91;">
       <a href="index.html" style="color: #05070A; background: #39FF88; padding: 5px 8px; font-weight: 400; font-size: 9px; font-family: 'Silkscreen', monospace;">WHISTLEBLOWER</a>
-      <span style="color: #66727D;">│</span>
+      <span style="color: #77838E;">│</span>
       <span>ASIC · FPGA · DV</span>
     </div>
     <div class="wb-nav-links" style="display: flex; align-items: center; gap: 16px;">
@@ -53,14 +72,14 @@
   </div>
 
   <sc-if value="{{ loading }}">
-    <section data-screen-label="Loading" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0; min-height: 60vh; font-size: 12px; letter-spacing: 0.2em; color: #7AAE91;">
+    <section data-screen-label="Loading" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0; min-height: 100vh; font-size: 12px; letter-spacing: 0.2em; color: #7AAE91;">
       <div>▚▚ 03 / PROJECTS ▞▞</div>
       <div style="margin-top: 22px;">&gt; FETCHING PROJECTS <span class="cms-cursor" style="color: #39FF88;">▌</span></div>
     </section>
   </sc-if>
 
   <sc-if value="{{ failed }}">
-    <section data-screen-label="Error" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0; min-height: 60vh;">
+    <section data-screen-label="Error" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0; min-height: 100vh;">
       <div style="border: 1px dashed #ffb000; padding: 14px 16px; font-size: 12.5px; letter-spacing: 0.1em; line-height: 1.8; color: #ffb000;">ERR · PROJECTS UNAVAILABLE — the content service did not answer. <a href="projects.html">[ ▸ RETRY ]</a></div>
     </section>
   </sc-if>
@@ -79,7 +98,7 @@
       <span style="color: #05070A; background: #39FF88; padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: 'Silkscreen', monospace;">A</span>
       <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">PROJECTS</span>
       <span style="flex: 1; color: #11626F; overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
-      <span style="font-size: 12px; color: #66727D;">{{ countLabel }}</span>
+      <span style="font-size: 12px; color: #77838E;">{{ countLabel }}</span>
     </div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 18px;">
 
@@ -88,7 +107,7 @@
         <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>{{ p.code }}</span><span style="color: {{ p.stageColor }};">{{ p.stage }}</span></div>
         <div style="position: relative; height: 300px; background: #05070A; overflow: hidden;">
           <sc-if value="{{ p.image }}">
-            <img sc-camel-src="{{ p.image }}" alt="{{ p.imageAlt }}" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: contain;" />
+            <img sc-camel-src="{{ p.image }}" sc-camel-src-set="{{ p.srcset }}" sizes="(max-width: 700px) 100vw, 33vw" alt="{{ p.imageAlt }}" loading="{{ p.loading }}" fetchpriority="{{ p.priority }}" decoding="async" style="display: block; width: 100%; height: 100%; object-fit: contain;" />
           </sc-if>
           <div style="position: absolute; inset: 0; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5,7,10,0.97) 0%, rgba(5,7,10,0.92) 55%, rgba(5,7,10,0.72) 100%); opacity: 0; transition: opacity 200ms;" style-hover="opacity: 1;">
             <div style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: #D7E0E6; line-height: 1.3;">{{ p.title }}</div>
@@ -98,7 +117,7 @@
               <a href="{{ p.caseFileHref }}" style="font-size: 11.5px; letter-spacing: 0.12em; align-self: start;">[ ▸ OPEN CASE FILE ]</a>
             </sc-if>
             <sc-if value="{{ !p.caseFileHref }}">
-              <div style="font-size: 11.5px; letter-spacing: 0.12em; color: #66727D;">CASE FILE PENDING</div>
+              <div style="font-size: 11.5px; letter-spacing: 0.12em; color: #77838E;">CASE FILE PENDING</div>
             </sc-if>
           </div>
         </div>
@@ -113,7 +132,7 @@
       <span style="color: #05070A; background: #7AAE91; padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: 'Silkscreen', monospace;">B</span>
       <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">{{ queueSlot.heading }}</span>
       <span style="flex: 1; color: #11626F; overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
-      <span style="font-size: 12px; color: #66727D;">{{ queueSlot.kicker }}</span>
+      <span style="font-size: 12px; color: #77838E;">{{ queueSlot.kicker }}</span>
     </div>
     <sc-for list="{{ queueSlot.paras }}" as="x">
       <p style="max-width: 68ch; font-size: 13.5px; line-height: 1.9; color: #7AAE91; margin: 0 0 22px;">{{ x }}</p>
@@ -142,16 +161,16 @@
   <div style="max-width: 1520px; margin: 74px auto 0; padding: 0 28px;">
     <div style="border-top: 1px solid #163D2A; padding: 26px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; font-size: 12.5px;">
       <div style="display: grid; gap: 8px; align-content: start;">
-        <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">WHISTLEBLOWER</div>
+        <div style="color: #77838E; letter-spacing: 0.16em; font-size: 11px;">WHISTLEBLOWER</div>
         <div style="color: #A8B3BD; line-height: 1.8; max-width: 30ch;">{{ site.footerBlurb }}</div>
       </div>
       <div style="display: grid; gap: 8px; align-content: start;">
-        <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">CONTACT</div>
-        <div><span style="color: #66727D;">MAIL ▸ </span><a href="mailto:{{ site.email }}">{{ site.email }}</a></div>
+        <div style="color: #77838E; letter-spacing: 0.16em; font-size: 11px;">CONTACT</div>
+        <div><span style="color: #77838E;">MAIL ▸ </span><a href="mailto:{{ site.email }}">{{ site.email }}</a></div>
       </div>
       <div style="display: grid; gap: 8px; align-content: start;">
-        <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">INDEX</div>
-        <div style="display: flex; flex-wrap: wrap; gap: 6px 14px;">
+        <div style="color: #77838E; letter-spacing: 0.16em; font-size: 11px;">INDEX</div>
+        <div class="wb-foot-links" style="display: flex; flex-wrap: wrap; gap: 6px 14px;">
           <a href="index.html" style="color: #7AAE91;">HOME</a>
           <a href="research.html" style="color: #7AAE91;">RESEARCH</a>
           <a href="people.html" style="color: #7AAE91;">PEOPLE</a>
@@ -161,7 +180,7 @@
         </div>
       </div>
     </div>
-    <div style="border-top: 1px solid #182027; padding: 14px 0 30px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-size: 11px; letter-spacing: 0.14em; color: #66727D;">
+    <div style="border-top: 1px solid #182027; padding: 14px 0 30px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-size: 11px; letter-spacing: 0.14em; color: #77838E;">
       <span>▓▒░ END OF FILE ░▒▓</span>
       <span>WHISTLEBLOWER LAB · MMXXVI</span>
     </div>
@@ -190,10 +209,14 @@ class Component extends DCLogic {
     const cta = page.slot.cta || { links: [] };
     // Hand-built case-file pages are named project-<design>.html
     const DESIGNS = ['hft', 'ipdft', 'power', 'pqc', 'secondbrain', 'sentinel', 'swarm', 'tcpip'];
-    const projects = (d.projects || []).filter((p) => p.listed !== false).map((p) => ({
+    const projects = (d.projects || []).filter((p) => p.listed !== false).map((p, i) => ({
       code: p.code, stage: p.stage,
       stageColor: p.stage === 'SPEC' || p.stage === 'PAUSED' ? '#ffb000' : '#39FF88',
-      image: p.cardImage && WB.img(p.cardImage.url, 900),
+      image: p.cardImage && WB.img(p.cardImage.url, 700),
+      srcset: p.cardImage && WB.imgSet(p.cardImage.url, [400, 700, 1000]),
+      // The first row is on screen at load: fetch it eagerly, the first card at high priority.
+      loading: i < 3 ? 'eager' : 'lazy',
+      priority: i === 0 ? 'high' : 'auto',
       imageAlt: (p.cardImage && p.cardImage.alt) || p.title,
       title: p.title, tags: p.tags, summary: p.summary,
       caseFileHref: p.caseFile === 'live' && DESIGNS.indexOf(p.design) !== -1 ? 'project-' + p.design + '.html' : undefined,
