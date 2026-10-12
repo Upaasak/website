@@ -24,17 +24,24 @@
   ::selection { background: #39FF88; color: #05070A; }
   @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
   .cms-cursor { animation: blink 1s steps(1) infinite; }
+  /* Nav: wrap instead of overflowing on narrow screens */
+  .wb-nav, .wb-nav-links { flex-wrap: wrap; }
+  .wb-nav span, .wb-nav a { white-space: nowrap; }
+  @media (max-width: 760px) {
+    .wb-nav { padding: 10px 16px !important; row-gap: 10px !important; }
+    .wb-nav-links { gap: 6px 14px !important; }
+  }
 </style>
 </helmet>
 <div style="background: #05070A; color: #39FF88; font-family: 'IBM Plex Mono', ui-monospace, monospace; min-height: 100vh; overflow-x: hidden;">
 
-  <div style="position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 10px 28px; background: #05070A; border-bottom: 1px solid #163D2A; font-size: 12px; letter-spacing: 0.12em;">
+  <div class="wb-nav" style="position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 10px 28px; background: #05070A; border-bottom: 1px solid #163D2A; font-size: 12px; letter-spacing: 0.12em;">
     <div style="display: flex; align-items: center; gap: 14px; color: #7AAE91;">
       <a href="index.html" style="color: #05070A; background: #39FF88; padding: 5px 8px; font-weight: 400; font-size: 9px; font-family: 'Silkscreen', monospace;">WHISTLEBLOWER</a>
       <span style="color: #66727D;">│</span>
       <span>ASIC · FPGA · DV</span>
     </div>
-    <div style="display: flex; align-items: center; gap: 16px;">
+    <div class="wb-nav-links" style="display: flex; align-items: center; gap: 16px;">
       <a href="index.html" style="color: #7AAE91;">HOME</a>
       <a href="research.html" style="color: #7AAE91;">RESEARCH</a>
       <a href="projects.html" style="color: #7AAE91;">PROJECTS</a>
@@ -79,7 +86,7 @@
       <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
         <div style="display: flex; justify-content: space-between; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>{{ m.code }}</span><span>{{ m.tag }}</span></div>
         <sc-if value="{{ m.photo }}">
-          <img src="{{ m.photo }}" alt="{{ m.photoAlt }}" loading="lazy" style="display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-bottom: 1px solid #163D2A; filter: grayscale(0.35) contrast(1.05);" />
+          <img sc-camel-src="{{ m.photo }}" alt="{{ m.photoAlt }}" loading="lazy" style="display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-bottom: 1px solid #163D2A; filter: grayscale(0.35) contrast(1.05);" />
         </sc-if>
         <div style="padding: 18px 16px; display: grid; gap: 10px;">
           <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #D7E0E6;">{{ m.name }}</div>

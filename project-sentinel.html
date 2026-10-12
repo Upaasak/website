@@ -20,17 +20,24 @@
   a:hover { color: #05070A; background: #00D9FF; }
   ::selection { background: #FFB000; color: #05070A; }
   @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+  /* Nav: wrap instead of overflowing on narrow screens */
+  .wb-nav, .wb-nav-links { flex-wrap: wrap; }
+  .wb-nav span, .wb-nav a { white-space: nowrap; }
+  @media (max-width: 760px) {
+    .wb-nav { padding: 10px 16px !important; row-gap: 10px !important; }
+    .wb-nav-links { gap: 6px 14px !important; }
+  }
 </style>
 </helmet>
 <div style="background: #0B1E36; color: #F2E6C4; font-family: 'IBM Plex Mono', ui-monospace, monospace; min-height: 100vh; overflow-x: hidden; position: relative;">
 
-  <div style="position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 10px 28px; background: #05070A; border-bottom: 1px solid #163D2A; font-size: 12px; letter-spacing: 0.12em;">
+  <div class="wb-nav" style="position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 10px 28px; background: #05070A; border-bottom: 1px solid #163D2A; font-size: 12px; letter-spacing: 0.12em;">
     <div style="display: flex; align-items: center; gap: 14px; color: #7AAE91;">
       <a href="index.html" style="color: #05070A; background: #39FF88; padding: 5px 8px; font-size: 9px; font-family: 'Silkscreen', monospace;">WHISTLEBLOWER</a>
       <span style="color: #66727D;">│</span>
       <span>ASIC · FPGA · DV</span>
     </div>
-    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+    <div class="wb-nav-links" style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
       <a href="index.html" style="color: #7AAE91;">HOME</a>
       <a href="research.html" style="color: #7AAE91;">RESEARCH</a>
       <a href="projects.html" style="color: #D7E0E6;">PROJECTS</a>

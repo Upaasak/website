@@ -19,6 +19,13 @@
   a { color: #2F7FA8; text-decoration: underline; text-decoration-style: wavy; text-underline-offset: 4px; }
   a:hover { color: #333333; background: #FFD54F; }
   ::selection { background: #FFD54F; color: #333333; }
+  /* Nav: wrap instead of overflowing on narrow screens */
+  .wb-nav, .wb-nav-links { flex-wrap: wrap; }
+  .wb-nav span, .wb-nav a { white-space: nowrap; }
+  @media (max-width: 760px) {
+    .wb-nav { padding: 10px 16px !important; row-gap: 10px !important; }
+    .wb-nav-links { gap: 6px 14px !important; }
+  }
 </style>
 </helmet>
 <div style="position: relative; background: #FFFFFF; color: #333333; font-family: 'Lora', Georgia, serif; min-height: 100vh; overflow-x: hidden;">
@@ -28,13 +35,13 @@
     <div style="position: absolute; top: 2600px; left: -100px; width: 400px; height: 240px; background: radial-gradient(ellipse, rgba(229,115,115,0.25), transparent 70%); pointer-events: none;"></div>
   </sc-if>
 
-  <div style="position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 10px 28px; background: #05070A; border-bottom: 1px solid #163D2A; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em;">
+  <div class="wb-nav" style="position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding: 10px 28px; background: #05070A; border-bottom: 1px solid #163D2A; font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em;">
     <div style="display: flex; align-items: center; gap: 14px; color: #7AAE91;">
       <a href="index.html" style="color: #05070A; background: #39FF88; padding: 5px 8px; font-size: 9px; font-family: 'Silkscreen', monospace; text-decoration: none;">WHISTLEBLOWER</a>
       <span style="color: #66727D;">│</span>
       <span>ASIC · FPGA · DV</span>
     </div>
-    <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+    <div class="wb-nav-links" style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
       <a href="index.html" style="color: #7AAE91; text-decoration: none;">HOME</a>
       <a href="research.html" style="color: #7AAE91; text-decoration: none;">RESEARCH</a>
       <a href="projects.html" style="color: #D7E0E6; text-decoration: none;">PROJECTS</a>
