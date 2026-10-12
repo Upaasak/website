@@ -1,0 +1,7 @@
+# Files Cloudflare must not publish on the website
+studio
+.git
+.gitignore
+.assetsignore
+README.md
+docs

@@ -1,0 +1,1289 @@
+{
+ "areas": [
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "area-r1",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "researchArea",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "code": "R1",
+   "description": "Constrained-random and coverage-driven testbenches for blocks nobody has verified before. We care about the boring part: reproducible seeds, coverage that means something, and a signoff document that survives a hostile reader.",
+   "order": 1,
+   "related": [],
+   "sideItems": [
+    "SystemVerilog · UVM",
+    "cocotb · Verilator",
+    "SVA · formal (open flows)"
+   ],
+   "sideLabel": "TOOLING",
+   "status": "PRIMARY",
+   "title": "FUNCTIONAL VERIFICATION"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "area-r2",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "researchArea",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "code": "R2",
+   "description": "Transforms and estimators that have to run in real time on a mid-range part: interpolated DFT, CORDIC magnitude and phase, rate-of-change estimation, decimation chains. Fixed point, error budgets written down before the RTL.",
+   "order": 2,
+   "related": [
+    {
+     "_key": "k0",
+     "href": "project-ipdft.html",
+     "label": "ipdft_channel_top ▸"
+    }
+   ],
+   "sideItems": [],
+   "sideLabel": "SEE ALSO",
+   "status": "ACTIVE",
+   "title": "DSP FOR INSTRUMENTATION"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "area-r3",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "researchArea",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "code": "R3",
+   "description": "Why the design missed by 180 ps, and what to do about it. Constraint hygiene, clock-domain crossings, retiming, floorplanning on FPGA and on open PDKs. Every closure is written up as a before/after with the actual reports attached.",
+   "order": 3,
+   "related": [],
+   "sideItems": [
+    "Vivado · OpenSTA",
+    "OpenROAD · OpenLane"
+   ],
+   "sideLabel": "TOOLING",
+   "status": "ACTIVE",
+   "title": "TIMING & PHYSICAL CLOSURE"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "area-r4",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "researchArea",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "code": "R4",
+   "description": "Sky130 and open flows are the only route to real physical design for a lab with no licence budget. We push small blocks through GDS to learn where the flow lies to you, and publish the failures too.",
+   "order": 4,
+   "related": [],
+   "sideItems": [
+    "SKY130 · 130 nm",
+    "no tapeout yet"
+   ],
+   "sideLabel": "TARGET",
+   "status": "EXPLORATORY",
+   "title": "OPEN-SOURCE SILICON"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "area-r5",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "researchArea",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "code": "R5",
+   "description": "Two benches, shared boards, one JTAG server, regression running on whatever machine is free. Access is the resource we are actually pooling, so the scripts that manage it are treated as first-class work.",
+   "order": 5,
+   "related": [],
+   "sideItems": [
+    "ARTIX-7 · ZYNQ-7020",
+    "SCOPE · LOGIC ANALYSER"
+   ],
+   "sideLabel": "BENCH",
+   "status": "ONGOING",
+   "title": "BRINGUP & LAB INFRASTRUCTURE"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "area-r6",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "researchArea",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "code": "R6",
+   "description": "How do you take somebody from a first Verilog module to signing off a block in one term? We keep the curriculum, the exercises and the review checklists in the open, and revise them every intake.",
+   "order": 6,
+   "related": [],
+   "sideItems": [
+    "INTAKE CURRICULUM",
+    "REVIEW CHECKLISTS"
+   ],
+   "sideLabel": "OUTPUT",
+   "status": "ONGOING",
+   "title": "VERIFICATION PEDAGOGY"
+  }
+ ],
+ "pages": [
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "page-home",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "pageCopy",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "intro": "A student-run lab for ASIC and FPGA hardware verification. We exist because the tools, the boards and the mentorship are hard to get to alone — so we pool them, run real RTL through real flows, and publish everything we learn.\n\nNo coursework. No spectators. You take a block, you verify it, you sign it off.",
+   "kicker": "ASIC / FPGA HARDWARE VERIFICATION COLLECTIVE",
+   "page": "home",
+   "sections": [
+    {
+     "_key": "k0",
+     "_type": "pageSection",
+     "heading": "INK · FIVE FRAMES",
+     "images": null,
+     "items": [],
+     "key": "hero",
+     "kicker": "MARK ── FIVE STAGES OF STANDING UP",
+     "links": []
+    },
+    {
+     "_key": "k1",
+     "_type": "pageSection",
+     "images": null,
+     "items": [],
+     "key": "cta",
+     "links": [
+      {
+       "_key": "k0",
+       "href": "projects.html",
+       "label": "[ ▸ SEE THE WORK ]"
+      },
+      {
+       "_key": "k1",
+       "href": "join.html",
+       "label": "[ ▸ JOIN THE LAB ]"
+      }
+     ]
+    },
+    {
+     "_key": "k2",
+     "_type": "pageSection",
+     "heading": "+ 6 MORE BLOCKS IN THE QUEUE",
+     "images": null,
+     "items": [],
+     "key": "projects-more",
+     "links": []
+    },
+    {
+     "_key": "k3",
+     "_type": "pageSection",
+     "body": "He stands at the end of the pipeline and nothing gets past him unsigned. Not a block, not a bitstream, not a waiver somebody talked themselves into late on a Friday. If it has not been verified, it does not ship, and the person who wrote it is the one who has to say so out loud.\n\nTiming closure has a price, and it is always paid in something you liked. A stage you were proud of gets retimed. A clever optimisation comes out because it cannot be proven. A constraint file gets read for the fourth time at midnight, and the fourth reading is the one that finds it.\n\nWe keep the plate on the wall because that price is the actual work. Everything else is waiting for a run to finish.",
+     "heading": "THE WARDEN",
+     "images": null,
+     "items": [
+      {
+       "_key": "k0",
+       "label": "subtitle",
+       "value": "PROTECTOR OF THE PIPELINE"
+      },
+      {
+       "_key": "k1",
+       "label": "caption",
+       "value": "ASCII · LUMINANCE RAMP .,:;+*?%S"
+      },
+      {
+       "_key": "k2",
+       "label": "motto",
+       "value": "▚ NO BLOCK SHIPS UNSIGNED"
+      },
+      {
+       "_key": "k3",
+       "label": "motto",
+       "value": "▚ THE PRICE OF TIMING CLOSURE"
+      },
+      {
+       "_key": "k4",
+       "label": "footer-left",
+       "value": "NO BLOCK SHIPS UNSIGNED"
+      },
+      {
+       "_key": "k5",
+       "label": "footer-right",
+       "value": "GUARDIAN OF THE PIPELINE"
+      }
+     ],
+     "key": "warden",
+     "kicker": "PLATE I ── THE WARDEN",
+     "links": []
+    },
+    {
+     "_key": "k4",
+     "_type": "pageSection",
+     "body": "Undergrads and postgrads, any department. Bring a block you want to verify or pick one from the queue. No prior tapeout required — that is the point.",
+     "heading": "JOIN THE LAB",
+     "images": null,
+     "items": [],
+     "key": "join",
+     "kicker": "OPEN POSITIONS",
+     "links": []
+    }
+   ]
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "page-join",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "pageCopy",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "intro": "Undergraduates and postgraduates, any department. You need curiosity and a term of time; you do not need a tapeout, a licence or prior lab experience. That is what the lab is for.\n\nSix slots this intake. One block each, one mentor each, one signoff at the end.",
+   "kicker": "▚▚ 07 / OPEN POSITIONS ▞▞",
+   "page": "join",
+   "sections": [
+    {
+     "_key": "k0",
+     "_type": "pageSection",
+     "body": "Rolling review. Applications close when the slots fill.",
+     "heading": "OPEN",
+     "images": null,
+     "items": [],
+     "key": "intake",
+     "kicker": "NEXT REVIEW: MONDAY",
+     "links": []
+    },
+    {
+     "_key": "k1",
+     "_type": "pageSection",
+     "heading": "HOW TO APPLY",
+     "images": null,
+     "items": [
+      {
+       "_key": "k0",
+       "detail": "Take one from the queue, or bring your own with a paragraph of spec.",
+       "label": "STEP 1",
+       "value": "PICK A BLOCK"
+      },
+      {
+       "_key": "k1",
+       "detail": "CV, the block you want, and one paragraph on why. No cover letter, no forms.",
+       "label": "STEP 2",
+       "value": "MAIL US"
+      },
+      {
+       "_key": "k2",
+       "detail": "Forty minutes with two members. We read code together; nobody quizzes you on trivia.",
+       "label": "STEP 3",
+       "value": "SIT A REVIEW"
+      },
+      {
+       "_key": "k3",
+       "detail": "Repository access, a booking slot, a mentor and the review checklist. Then it is on you.",
+       "label": "STEP 4",
+       "value": "GET BENCH TIME"
+      }
+     ],
+     "key": "steps",
+     "links": []
+    },
+    {
+     "_key": "k2",
+     "_type": "pageSection",
+     "heading": "WHAT YOU GET",
+     "images": null,
+     "items": [
+      {
+       "_key": "k0",
+       "value": "Bench time on Artix-7 and Zynq hardware, booked not begged."
+      },
+      {
+       "_key": "k1",
+       "value": "A reviewer who reads your code line by line."
+      },
+      {
+       "_key": "k2",
+       "value": "Tool access and the scripts that make the flows reproducible."
+      },
+      {
+       "_key": "k3",
+       "value": "A signed-off block with your name on the report."
+      }
+     ],
+     "key": "get",
+     "links": []
+    },
+    {
+     "_key": "k3",
+     "_type": "pageSection",
+     "heading": "WHAT WE EXPECT",
+     "images": null,
+     "items": [
+      {
+       "_key": "k0",
+       "value": "Six to eight hours a week, honestly counted."
+      },
+      {
+       "_key": "k1",
+       "value": "You review somebody else's block as well as your own."
+      },
+      {
+       "_key": "k2",
+       "value": "Failures written up, not quietly deleted."
+      },
+      {
+       "_key": "k3",
+       "value": "Everything in the repository, nothing on your laptop only."
+      }
+     ],
+     "key": "expect",
+     "links": []
+    },
+    {
+     "_key": "k4",
+     "_type": "pageSection",
+     "body": "He stands at the end of the pipeline and nothing gets past him unsigned. Not a block, not a bitstream, not a waiver somebody talked themselves into late on a Friday. If it has not been verified, it does not ship, and the person who wrote it is the one who has to say so out loud.\n\nTiming closure has a price, and it is always paid in something you liked. A stage you were proud of gets retimed. A clever optimisation comes out because it cannot be proven. A constraint file gets read for the fourth time at midnight, and the fourth reading is the one that finds it.",
+     "heading": "THE WARDEN",
+     "images": null,
+     "items": [
+      {
+       "_key": "k0",
+       "label": "subtitle",
+       "value": "PROTECTOR OF THE PIPELINE"
+      },
+      {
+       "_key": "k1",
+       "label": "caption",
+       "value": "ASCII · LUMINANCE RAMP .,:;+*?%S"
+      },
+      {
+       "_key": "k2",
+       "label": "motto",
+       "value": "▚ NO BLOCK SHIPS UNSIGNED"
+      },
+      {
+       "_key": "k3",
+       "label": "motto",
+       "value": "▚ THE PRICE OF TIMING CLOSURE"
+      },
+      {
+       "_key": "k4",
+       "label": "footer-left",
+       "value": "NO BLOCK SHIPS UNSIGNED"
+      },
+      {
+       "_key": "k5",
+       "label": "footer-right",
+       "value": "GUARDIAN OF THE PIPELINE"
+      }
+     ],
+     "key": "warden",
+     "kicker": "PLATE I ── THE WARDEN",
+     "links": []
+    },
+    {
+     "_key": "k5",
+     "_type": "pageSection",
+     "body": "We take collaborators, tool donations and sponsored blocks. A licence seat or a spare board changes what a whole intake can do.",
+     "heading": "NOT A STUDENT?",
+     "images": null,
+     "items": [],
+     "key": "collaborate",
+     "links": [
+      {
+       "_key": "k0",
+       "href": "mailto:lab@whistleblower.dev",
+       "label": "[ ▸ TALK TO US ]"
+      }
+     ]
+    }
+   ],
+   "title": "TAKE A BLOCK.\nSIGN IT OFF."
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "page-news",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "pageCopy",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "intro": "Newest first. Closures, failures, intakes and hardware. If it changed what the lab can do, it goes in the log.",
+   "kicker": "▚▚ 06 / NEWS ▞▞",
+   "page": "news",
+   "sections": [
+    {
+     "_key": "k0",
+     "_type": "pageSection",
+     "body": "SAMPLE ENTRIES — send the real log and these get replaced.",
+     "images": null,
+     "items": [],
+     "key": "notice",
+     "links": []
+    }
+   ],
+   "title": "LAB LOG"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "page-people",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "pageCopy",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "intro": "Seven active members and one advisor. No hierarchy beyond who owns which block: every block has exactly one owner and one reviewer, and the two are never the same person.",
+   "kicker": "▚▚ 04 / PEOPLE ▞▞",
+   "page": "people",
+   "sections": [
+    {
+     "_key": "k0",
+     "_type": "pageSection",
+     "body": "PLACEHOLDER ROSTER — send names, roles and handles and they go straight in.",
+     "images": null,
+     "items": [],
+     "key": "notice",
+     "links": []
+    },
+    {
+     "_key": "k1",
+     "_type": "pageSection",
+     "body": "Alumni still review blocks on request. It is the cheapest mentorship we have.",
+     "heading": "ALUMNI",
+     "images": null,
+     "items": [],
+     "key": "alumni",
+     "links": []
+    }
+   ],
+   "title": "WHO SIGNS OFF"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "page-projects",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "pageCopy",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "intro": "One entry per block, from proposal to signoff. Nothing is listed here until there is RTL and a testbench in the repository — proposals sit in the queue below until somebody owns them.",
+   "kicker": "▚▚ 03 / PROJECTS ▞▞",
+   "page": "projects",
+   "sections": [
+    {
+     "_key": "k0",
+     "_type": "pageSection",
+     "body": "Proposed blocks with a written spec and no owner. Claim one when you join — you get the spec, a mentor and bench time.",
+     "heading": "QUEUE",
+     "images": null,
+     "items": [],
+     "key": "queue",
+     "kicker": "UNCLAIMED",
+     "links": []
+    },
+    {
+     "_key": "k1",
+     "_type": "pageSection",
+     "heading": "Bringing your own block is also allowed.",
+     "images": null,
+     "items": [],
+     "key": "cta",
+     "links": [
+      {
+       "_key": "k0",
+       "href": "join.html",
+       "label": "[ ▸ CLAIM A BLOCK ]"
+      }
+     ]
+    }
+   ],
+   "title": "BLOCKS IN FLIGHT"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "page-publications",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "pageCopy",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "intro": "Our first paper is out. Alongside it we publish every signoff report, constraint file and failed run from the blocks we finish — published as written, not cleaned up afterwards.",
+   "kicker": "▚▚ 05 / PUBLICATIONS ▞▞",
+   "page": "publications",
+   "sections": [
+    {
+     "_key": "k0",
+     "_type": "pageSection",
+     "heading": "LAB REPORTS",
+     "images": null,
+     "items": [],
+     "key": "reports",
+     "links": []
+    },
+    {
+     "_key": "k1",
+     "_type": "pageSection",
+     "heading": "PEER-REVIEWED",
+     "images": null,
+     "items": [],
+     "key": "papers",
+     "links": []
+    },
+    {
+     "_key": "k2",
+     "_type": "pageSection",
+     "heading": "Want the raw reports, seeds or waveforms? Ask.",
+     "images": null,
+     "items": [],
+     "key": "cta",
+     "links": [
+      {
+       "_key": "k0",
+       "href": "mailto:lab@whistleblower.dev",
+       "label": "[ ▸ REQUEST ARTEFACTS ]"
+      }
+     ]
+    }
+   ],
+   "title": "WHAT WE PUBLISH"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "page-research",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "pageCopy",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "intro": "Areas, not departments. Every member works in at least two of them, and every area has to produce something a stranger can reproduce: a testbench, a report, a bitstream, a writeup.",
+   "kicker": "▚▚ 02 / RESEARCH ▞▞",
+   "page": "research",
+   "sections": [
+    {
+     "_key": "k0",
+     "_type": "pageSection",
+     "heading": "Want one of these areas to be yours?",
+     "images": null,
+     "items": [],
+     "key": "cta",
+     "links": [
+      {
+       "_key": "k0",
+       "href": "join.html",
+       "label": "[ ▸ JOIN THE LAB ]"
+      }
+     ]
+    }
+   ],
+   "title": "SIX THINGS\nWE ARE TRYING\nTO GET GOOD AT"
+  }
+ ],
+ "people": [
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "person-1",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "person",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "areas": [
+    "R1",
+    "R6"
+   ],
+   "bio": "Owns the review checklist and the intake curriculum. Reviewer of last resort.",
+   "name": "[ NAME ]",
+   "order": 1,
+   "photo": null,
+   "role": "VERIFICATION LEAD",
+   "status": "member",
+   "tag": "LEAD"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "person-2",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "person",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "areas": [
+    "R2",
+    "R3"
+   ],
+   "bio": "Owner of ipdft_channel_top. Fixed-point error budgets, CORDIC, decimation.",
+   "name": "[ NAME ]",
+   "order": 2,
+   "photo": null,
+   "role": "RTL · DSP",
+   "status": "member",
+   "tag": "RTL"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "person-3",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "person",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "areas": [
+    "R1"
+   ],
+   "bio": "Constrained-random environments and the regression that runs them overnight.",
+   "name": "[ NAME ]",
+   "order": 3,
+   "photo": null,
+   "role": "DV · UVM",
+   "status": "member",
+   "tag": "DV"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "person-4",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "person",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "areas": [
+    "R1",
+    "R3"
+   ],
+   "bio": "Assertions, CDC audits, and the argument about whether formal was worth it.",
+   "name": "[ NAME ]",
+   "order": 4,
+   "photo": null,
+   "role": "DV · FORMAL",
+   "status": "member",
+   "tag": "DV"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "person-5",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "person",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "areas": [
+    "R3",
+    "R4"
+   ],
+   "bio": "OpenLane runs on Sky130, floorplans, and the reports nobody else wants to read.",
+   "name": "[ NAME ]",
+   "order": 5,
+   "photo": null,
+   "role": "PHYSICAL DESIGN",
+   "status": "member",
+   "tag": "PD"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "person-6",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "person",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "areas": [
+    "R5"
+   ],
+   "bio": "Bench scheduling, JTAG server, and every script that keeps the two boards busy.",
+   "name": "[ NAME ]",
+   "order": 6,
+   "photo": null,
+   "role": "TOOLING · INFRA",
+   "status": "member",
+   "tag": "FLOW"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "person-7",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "person",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "areas": [
+    "R2",
+    "R6"
+   ],
+   "bio": "Working through the intake curriculum. Claiming the CIC decimator next term.",
+   "name": "[ NAME ]",
+   "order": 7,
+   "photo": null,
+   "role": "RTL · FIRST TERM",
+   "status": "member",
+   "tag": "INTAKE"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "person-8",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "person",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "areas": [],
+   "bio": "Signs the tool requests, argues with the constraint files, and does not write the RTL.",
+   "name": "[ NAME ]",
+   "order": 8,
+   "photo": null,
+   "role": "ADVISOR",
+   "status": "advisor"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "person-9",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "person",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "alumniNote": "now DV at [ COMPANY ]",
+   "areas": [],
+   "name": "[ NAME ]",
+   "order": 9,
+   "photo": null,
+   "status": "alumni"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "person-10",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "person",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "alumniNote": "MSc, [ INSTITUTION ]",
+   "areas": [],
+   "name": "[ NAME ]",
+   "order": 10,
+   "photo": null,
+   "status": "alumni"
+  }
+ ],
+ "positions": [
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "position-1",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "openPosition",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "filled": false,
+   "order": 1,
+   "role": "DV ENGINEER (SV/UVM)",
+   "slots": "3 SLOTS"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "position-2",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "openPosition",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "filled": false,
+   "order": 2,
+   "role": "RTL DESIGN (DSP)",
+   "slots": "2 SLOTS"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "position-3",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "openPosition",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "filled": false,
+   "order": 3,
+   "role": "FLOW / TOOLING",
+   "slots": "1 SLOT"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "position-4",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "openPosition",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "filled": true,
+   "order": 4,
+   "role": "FACULTY ADVISOR",
+   "slots": "FILLED"
+  }
+ ],
+ "posts": [
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "post-1",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "post",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "body": "Retiming the CORDIC output stage and moving the window multiplier to a DSP48 bought 620 ps of slack. Utilisation went up two points, which we will take. Reports are in the repository.",
+   "date": "2026-08-14",
+   "image": null,
+   "link": {
+    "_type": "link",
+    "href": "project-ipdft.html",
+    "label": "CASE FILE ▸"
+   },
+   "pinned": false,
+   "tag": "TIMING",
+   "title": "ipdft_channel_top closes timing at 148 MHz on Artix-7",
+   "type": "news"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "post-2",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "post",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "body": "A donated Zynq-7020 board, a scope and a logic analyser now sit behind a booking script, so bringup no longer blocks on one person being in the room.",
+   "date": "2026-07-30",
+   "image": null,
+   "pinned": false,
+   "tag": "BENCH",
+   "title": "Second bench online — shared JTAG and scope access",
+   "type": "news"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "post-3",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "post",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "body": "Applications by mail with a CV and one paragraph on a block you would like to verify. No prior tapeout, no coursework requirement, no interview panel.",
+   "date": "2026-07-02",
+   "image": null,
+   "link": {
+    "_type": "link",
+    "href": "join.html",
+    "label": "HOW TO APPLY ▸"
+   },
+   "pinned": false,
+   "tag": "INTAKE",
+   "title": "Autumn intake open: three verification slots, two RTL slots",
+   "type": "announcement"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "post-4",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "post",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "body": "Found by the golden-model comparison, not by a human reading waveforms, which is the whole argument for keeping the python model in the regression. Still open, still unassigned.",
+   "date": "2026-06-11",
+   "image": null,
+   "pinned": false,
+   "tag": "DEFECT",
+   "title": "DEF-014 opened: ROCOF overshoot on a 2 Hz/s step",
+   "type": "news"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "post-5",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "post",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "body": "Founded to pool the things a single student cannot get alone: a licence, a board, a reviewer. First block claimed the same week.",
+   "date": "2026-05-20",
+   "image": null,
+   "pinned": false,
+   "tag": "LAB",
+   "title": "Whistleblower starts with seven members and one board",
+   "type": "news"
+  }
+ ],
+ "projects": [
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "project-neuromorphic",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "project",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "cardImage": {
+    "alt": "NEUROMORPHIC SPIKING NETWORK",
+    "caption": null,
+    "url": "https://cdn.sanity.io/images/7h6avsoz/production/16b069a187f9fcdcd6f47336c955d1cbcaa8b028-695x1024.jpg"
+   },
+   "caseFile": "pending",
+   "code": "PRJ_01",
+   "featured": true,
+   "listed": true,
+   "order": 1,
+   "sections": null,
+   "shortSummary": "LIF neuron array with event-driven routing. Spikes, not tensors.",
+   "slug": "neuromorphic",
+   "stage": "RTL",
+   "summary": "A digital array of leaky integrate-and-fire neurons with event-driven routing between them. Spikes instead of tensors, so there are no multipliers in the datapath and the whole power argument rests on how sparse the traffic really is.",
+   "tags": "RTL · SNN · EVENT-DRIVEN",
+   "title": "NEUROMORPHIC SPIKING NETWORK"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "project-sentinel",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "project",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "cardImage": {
+    "alt": "SENTINEL",
+    "caption": null,
+    "url": "https://cdn.sanity.io/images/7h6avsoz/production/7063bb0c43b80d86d7a7de6ad3ebb3800de1a719-320x477.jpg"
+   },
+   "caseFile": "live",
+   "code": "PRJ_02",
+   "design": "sentinel",
+   "featured": true,
+   "listed": true,
+   "order": 2,
+   "sections": null,
+   "shortSummary": "Spec in progress.",
+   "slug": "sentinel",
+   "stage": "SPEC",
+   "summary": "Software-defined autonomous mission vehicle. FPGA-native deterministic edge compute, formal safety, 3-tier HIL digital twin.",
+   "tags": "SPEC IN PROGRESS",
+   "title": "SENTINEL"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "project-tcpip",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "project",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "cardImage": {
+    "alt": "TCP/IP IN FPGA",
+    "caption": null,
+    "url": "https://cdn.sanity.io/images/7h6avsoz/production/a7dc9f28b54f2d9b621c4c90fa394710465de96b-1748x900.png"
+   },
+   "caseFile": "live",
+   "code": "PRJ_03",
+   "design": "tcpip",
+   "featured": true,
+   "listed": true,
+   "order": 3,
+   "sections": null,
+   "shortSummary": "The whole stack in fabric, no soft core in the data path.",
+   "slug": "tcpip",
+   "stage": "RTL",
+   "summary": "The stack in fabric: MAC interface, ARP, IPv4 and a TCP state machine with retransmission, all in hardware with no soft core in the data path. It either holds line rate on a gigabit PHY or it does not count.",
+   "tags": "RTL · GbE · NO SOFT CORE",
+   "title": "TCP/IP IN FPGA"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "project-systolic",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "project",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "cardImage": {
+    "alt": "SYSTOLIC ARRAY NEURAL NETWORK",
+    "caption": null,
+    "url": "https://cdn.sanity.io/images/7h6avsoz/production/4c53399a8e1ca898f4ec04250945cfc620d33cb4-1308x736.jpg"
+   },
+   "caseFile": "pending",
+   "code": "PRJ_04",
+   "featured": false,
+   "listed": true,
+   "order": 4,
+   "sections": null,
+   "slug": "systolic",
+   "stage": "SPEC",
+   "summary": "A weight-stationary grid of int8 MAC cells with tiled GEMM scheduling and a double-buffered activation store. The interesting engineering is the memory schedule; the multipliers are the easy part.",
+   "tags": "RTL · INT8 · GEMM",
+   "title": "SYSTOLIC ARRAY NEURAL NETWORK"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "project-pqc",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "project",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "cardImage": {
+    "alt": "POST-QUANTUM CRYPTO IN FPGA",
+    "caption": null,
+    "url": "https://cdn.sanity.io/images/7h6avsoz/production/1d71548c3057176a3b1c4d69df9e4878820fd476-640x640.jpg"
+   },
+   "caseFile": "live",
+   "code": "PRJ_05",
+   "design": "pqc",
+   "featured": true,
+   "listed": true,
+   "order": 5,
+   "sections": null,
+   "shortSummary": "Lattice arithmetic and NTT butterflies, constant-time by construction.",
+   "slug": "pqc",
+   "stage": "SPEC",
+   "summary": "Hardware for the algorithms that outlive RSA: lattice arithmetic, NTT butterflies, constant-time control and a sampler that does not leak through timing. The threat model is a machine that does not exist yet, which makes the constant-time argument the whole project.",
+   "tags": "RTL · PQC · LATTICE",
+   "title": "POST-QUANTUM CRYPTO IN FPGA"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "project-power",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "project",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "cardImage": {
+    "alt": "POWER SYSTEM PROTOCOLS",
+    "caption": null,
+    "url": "https://cdn.sanity.io/images/7h6avsoz/production/99c91dfe6154e91d016e272888b716bad0a30cdd-736x727.jpg"
+   },
+   "caseFile": "live",
+   "code": "PRJ_06",
+   "design": "power",
+   "featured": false,
+   "listed": true,
+   "order": 6,
+   "sections": null,
+   "slug": "power",
+   "stage": "IN VERIFICATION",
+   "summary": "Instrumentation for the grid: a six-channel interpolated-DFT front end with CORDIC magnitude and phase and ROCOF differentiation, wrapped in the reporting protocols a substation actually expects. No vendor IP anywhere in the chain.",
+   "tags": "VERILOG · ARTIX-7 · CORDIC · 6 CH",
+   "title": "POWER SYSTEM PROTOCOLS"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "project-secondbrain",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "project",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "cardImage": {
+    "alt": "SECOND BRAIN ALGORITHM",
+    "caption": null,
+    "url": "https://cdn.sanity.io/images/7h6avsoz/production/dee4adf169284067dccbef0f29dac0ccc9775138-726x785.jpg"
+   },
+   "caseFile": "live",
+   "code": "PRJ_07",
+   "design": "secondbrain",
+   "featured": false,
+   "listed": true,
+   "order": 7,
+   "sections": null,
+   "slug": "secondbrain",
+   "stage": "SPEC",
+   "summary": "[ Send me a paragraph on the second brain algorithm and it goes here verbatim. ]",
+   "tags": "SPEC IN PROGRESS",
+   "title": "SECOND BRAIN ALGORITHM"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "project-bitstream-llm",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "project",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "cardImage": {
+    "alt": "BITSTREAM LLM",
+    "caption": null,
+    "url": "https://cdn.sanity.io/images/7h6avsoz/production/c6dcfad0b25a494b701d60769d5329ade248dae2-735x986.jpg"
+   },
+   "caseFile": "pending",
+   "code": "PRJ_08",
+   "featured": false,
+   "listed": true,
+   "order": 8,
+   "sections": null,
+   "slug": "bitstream-llm",
+   "stage": "SPEC",
+   "summary": "[ Send me a paragraph on the bitstream LLM and it goes here verbatim. ]",
+   "tags": "SPEC IN PROGRESS",
+   "title": "BITSTREAM LLM"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "project-swarm",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "project",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "cardImage": {
+    "alt": "DRONE CONTROL",
+    "caption": null,
+    "url": "https://cdn.sanity.io/images/7h6avsoz/production/e3d5ef5be1367bd67c4731d55109be46bfa2994a-536x389.jpg"
+   },
+   "caseFile": "live",
+   "code": "PRJ_09",
+   "design": "swarm",
+   "featured": false,
+   "listed": true,
+   "order": 9,
+   "sections": null,
+   "slug": "swarm",
+   "stage": "SPEC",
+   "summary": "Attitude control in fabric instead of firmware: IMU fusion, a fixed-point rate loop and PWM generation with deterministic latency from sample to actuator. The argument for hardware here is jitter, not throughput.",
+   "tags": "RTL · CONTROL · SENSOR FUSION",
+   "title": "DRONE CONTROL"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "project-hft",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "project",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "cardImage": {
+    "alt": "HFT FPGA ALGORITHMS",
+    "caption": null,
+    "url": "https://cdn.sanity.io/images/7h6avsoz/production/7b87f92ee8f735e4b1733ae15a5b45e6337a5e05-736x736.jpg"
+   },
+   "caseFile": "live",
+   "code": "PRJ_10",
+   "design": "hft",
+   "featured": false,
+   "listed": true,
+   "order": 10,
+   "sections": null,
+   "slug": "hft",
+   "stage": "SPEC",
+   "summary": "Tick-to-trade in hardware: market-data feed parsing on the wire, an order book maintained in fabric and a decision path measured in nanoseconds. Every stage has to justify the cycle it costs.",
+   "tags": "RTL · LOW LATENCY · FEED PARSING",
+   "title": "HFT FPGA ALGORITHMS"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "project-ipdft",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "project",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "cardImage": null,
+   "caseFile": "live",
+   "code": "PRJ_11",
+   "design": "ipdft",
+   "featured": false,
+   "listed": false,
+   "order": 11,
+   "sections": null,
+   "slug": "ipdft",
+   "stage": "IN VERIFICATION",
+   "summary": "Interpolated-DFT channel with CORDIC magnitude and phase. Closes timing at 148 MHz on Artix-7.",
+   "tags": "RTL · DSP · ARTIX-7",
+   "title": "ipdft_channel_top"
+  }
+ ],
+ "publications": [
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "pub-1",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "publication",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "category": "report",
+   "date": "2026-08-01",
+   "kind": "TECH REPORT · PDF",
+   "pdfUrl": null,
+   "title": "ipdft_channel_top — interim verification report, revision C",
+   "url": "project-ipdft.html"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "pub-2",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "publication",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "category": "report",
+   "date": "2026-07-01",
+   "kind": "NOTE · PDF",
+   "pdfUrl": null,
+   "title": "Fixed-point error budget for a sliding-DFT front end",
+   "url": "project-ipdft.html"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "pub-3",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "publication",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "category": "report",
+   "date": "2026-06-01",
+   "kind": "CURRICULUM",
+   "pdfUrl": null,
+   "title": "Intake curriculum: zero to signed-off block in one term",
+   "url": "join.html"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "pub-4",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "publication",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "category": "report",
+   "date": "2026-05-01",
+   "kind": "CHECKLIST",
+   "pdfUrl": null,
+   "title": "Review checklist for RTL and testbench signoff, v2",
+   "url": "research.html"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "pub-5",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "publication",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "category": "paper",
+   "date": "2026-01-01",
+   "kind": "PAPER · RESEARCHGATE",
+   "pdfUrl": null,
+   "title": "Sub-Microsecond Deterministic Neural Network Acceleration for Real-Time Power System Protection Using FPGA Systolic Arrays",
+   "url": "https://www.researchgate.net/publication/413866718_Sub-Microsecond_Deterministic_Neural_Network_Acceleration_for_Real-Time_Power_System_Protection_Using_FPGA_Systolic_Arrays"
+  }
+ ],
+ "queue": [
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "queue-1",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "queueItem",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "description": "Register block generator plus a UVM agent that proves the generated map matches the spec.",
+   "order": 1,
+   "tag": "DV · 1 OWNER",
+   "title": "AXI4-LITE CSR"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "queue-2",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "queueItem",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "description": "Configurable-rate CIC with compensation FIR. Fixed-point error budget written before the RTL.",
+   "order": 2,
+   "tag": "RTL · 1 OWNER",
+   "title": "CIC DECIMATOR"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "queue-3",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "queueItem",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "description": "Assertions and a lint pass that catch the clock-domain crossings our reviews keep missing.",
+   "order": 3,
+   "tag": "DV · 2 OWNERS",
+   "title": "CDC AUDIT KIT"
+  },
+  {
+   "_createdAt": "2026-10-12T18:10:06Z",
+   "_id": "queue-4",
+   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_type": "queueItem",
+   "_updatedAt": "2026-10-12T18:10:06Z",
+   "description": "Small macro pushed through OpenLane to GDS, with the timing and DRC reports published as-is.",
+   "order": 4,
+   "tag": "PD · 1 OWNER",
+   "title": "SKY130 SRAM TILE"
+  }
+ ],
+ "settings": {
+  "_createdAt": "2026-10-12T18:10:06Z",
+  "_id": "siteSettings",
+  "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+  "_type": "siteSettings",
+  "_updatedAt": "2026-10-12T18:10:06Z",
+  "email": "lab@whistleblower.dev",
+  "footerBlurb": "Student-run ASIC / FPGA hardware verification lab.",
+  "github": "https://github.com/whistleblower-lab",
+  "hours": "Wed 18:00 — open bench",
+  "intakeOpen": true,
+  "labName": "WHISTLEBLOWER",
+  "location": "[ BUILDING · ROOM ]",
+  "statusNote": "Open to collaborators, tool donations and sponsored blocks.",
+  "statusPanel": [
+   {
+    "_key": "k0",
+    "label": "FOUNDED",
+    "value": "2026"
+   },
+   {
+    "_key": "k1",
+    "label": "MEMBERS",
+    "value": "7 ACTIVE"
+   },
+   {
+    "_key": "k2",
+    "label": "TARGETS",
+    "value": "ARTIX-7 · ZYNQ · SKY130"
+   },
+   {
+    "_key": "k3",
+    "label": "LANGUAGES",
+    "value": "SV · VHDL · PYTHON"
+   },
+   {
+    "_key": "k4",
+    "label": "BENCHES",
+    "value": "2 · SHARED"
+   }
+  ],
+  "tagline": "ASIC · FPGA · DV",
+  "tracks": [
+   {
+    "_key": "k0",
+    "detail": "Testbenches, coverage closure, assertions. UVM where it earns its keep, cocotb where it doesn't. Every block ships with a signed-off report.",
+    "label": "TRACK A",
+    "value": "VERIFY"
+   },
+   {
+    "_key": "k1",
+    "detail": "RTL for instrumentation and DSP — filters, transforms, CORDIC, control. Synthesised, placed, timed on hardware we can actually put a probe on.",
+    "label": "TRACK B",
+    "value": "BUILD"
+   },
+   {
+    "_key": "k2",
+    "detail": "Licences, boards and flows are expensive. Ours are pooled, documented and open to any member — plus the notes that make them usable.",
+    "label": "TRACK C",
+    "value": "SHARE"
+   }
+  ]
+ }
+}

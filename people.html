@@ -3,8 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./cms.js"></script>
 <script src="./support.js"></script>
 <title>Whistleblower Lab — People</title>
+<meta name="description" content="Members, advisor and alumni of Whistleblower, a student-run ASIC / FPGA hardware verification lab.">
+<link rel="preconnect" href="https://7h6avsoz.apicdn.sanity.io" crossorigin="">
 <link rel="icon" href="assets/brand/logo-mark.png" />
 </head>
 <body>
@@ -20,6 +23,7 @@
   a:hover { color: #05070A; background: #00D9FF; }
   ::selection { background: #39FF88; color: #05070A; }
   @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+  .cms-cursor { animation: blink 1s steps(1) infinite; }
 </style>
 </helmet>
 <div style="background: #05070A; color: #39FF88; font-family: 'IBM Plex Mono', ui-monospace, monospace; min-height: 100vh; overflow-x: hidden;">
@@ -41,119 +45,96 @@
     </div>
   </div>
 
+  <sc-if value="{{ loading }}">
+    <section data-screen-label="Loading" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0; min-height: 60vh; font-size: 12px; letter-spacing: 0.2em; color: #7AAE91;">
+      <div>▚▚ 04 / PEOPLE ▞▞</div>
+      <div style="margin-top: 22px;">&gt; FETCHING ROSTER <span class="cms-cursor" style="color: #39FF88;">▌</span></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ failed }}">
+    <section data-screen-label="Error" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0; min-height: 60vh;">
+      <div style="border: 1px dashed #ffb000; padding: 14px 16px; font-size: 12.5px; letter-spacing: 0.1em; line-height: 1.8; color: #ffb000;">ERR · ROSTER UNAVAILABLE — the content service did not answer. <a href="people.html">[ ▸ RETRY ]</a></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ ready }}">
   <section data-screen-label="People header" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
-    <div style="font-size: 12px; letter-spacing: 0.3em; color: #00D9FF; margin-bottom: 18px;">▚▚ 04 / PEOPLE ▞▞</div>
-    <h1 style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin: 0 0 20px; font-size: clamp(32px, 4.6vw, 56px); font-weight: 800; letter-spacing: 0.02em; color: #D7E0E6; line-height: 1.05;">WHO SIGNS OFF</h1>
-    <p style="max-width: 68ch; font-size: 14px; line-height: 1.9; color: #A8B3BD; margin: 0;">Seven active members and one advisor. No hierarchy beyond who owns which block: every block has exactly one owner and one reviewer, and the two are never the same person.</p>
-    <div style="margin-top: 22px; border: 1px dashed #ffb000; padding: 12px 14px; font-size: 12px; letter-spacing: 0.1em; color: #ffb000;">PLACEHOLDER ROSTER — send names, roles and handles and they go straight in.</div>
+    <div style="font-size: 12px; letter-spacing: 0.3em; color: #00D9FF; margin-bottom: 18px;">{{ page.kicker }}</div>
+    <h1 style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin: 0 0 20px; font-size: clamp(32px, 4.6vw, 56px); font-weight: 800; letter-spacing: 0.02em; color: #D7E0E6; line-height: 1.05; white-space: pre-line;">{{ page.title }}</h1>
+    <sc-for list="{{ page.paras }}" as="p">
+      <p style="max-width: 68ch; font-size: 14px; line-height: 1.9; color: #A8B3BD; margin: 0 0 12px;">{{ p }}</p>
+    </sc-for>
+    <sc-if value="{{ notice }}">
+      <div style="margin-top: 22px; border: 1px dashed #ffb000; padding: 12px 14px; font-size: 12px; letter-spacing: 0.1em; color: #ffb000;">{{ notice }}</div>
+    </sc-if>
   </section>
 
   <section data-screen-label="Roster" style="max-width: 1520px; margin: 0 auto; padding: 40px 28px 0;">
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 16px;">
 
+      <sc-for list="{{ members }}" as="m">
       <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>MBR_01</span><span>LEAD</span></div>
+        <div style="display: flex; justify-content: space-between; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>{{ m.code }}</span><span>{{ m.tag }}</span></div>
+        <sc-if value="{{ m.photo }}">
+          <img src="{{ m.photo }}" alt="{{ m.photoAlt }}" loading="lazy" style="display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-bottom: 1px solid #163D2A; filter: grayscale(0.35) contrast(1.05);" />
+        </sc-if>
         <div style="padding: 18px 16px; display: grid; gap: 10px;">
-          <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #D7E0E6;">[ NAME ]</div>
-          <div style="font-size: 11.5px; letter-spacing: 0.12em; color: #7AAE91;">VERIFICATION LEAD</div>
-          <div style="font-size: 12.5px; line-height: 1.8; color: #A8B3BD;">Owns the review checklist and the intake curriculum. Reviewer of last resort.</div>
-          <div style="font-size: 11.5px; color: #66727D; letter-spacing: 0.1em;">R1 · R6</div>
+          <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #D7E0E6;">{{ m.name }}</div>
+          <div style="font-size: 11.5px; letter-spacing: 0.12em; color: #7AAE91;">{{ m.role }}</div>
+          <div style="font-size: 12.5px; line-height: 1.8; color: #A8B3BD;">{{ m.bio }}</div>
+          <div style="font-size: 11.5px; color: #66727D; letter-spacing: 0.1em;">{{ m.areas }}</div>
+          <sc-if value="{{ m.hasLinks }}">
+            <div style="display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 11.5px; letter-spacing: 0.1em;">
+              <sc-for list="{{ m.links }}" as="l"><a href="{{ l.href }}" target="{{ l.target }}" rel="noopener">{{ l.label }} ▸</a></sc-for>
+            </div>
+          </sc-if>
         </div>
       </div>
+      </sc-for>
 
-      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>MBR_02</span><span>RTL</span></div>
-        <div style="padding: 18px 16px; display: grid; gap: 10px;">
-          <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #D7E0E6;">[ NAME ]</div>
-          <div style="font-size: 11.5px; letter-spacing: 0.12em; color: #7AAE91;">RTL · DSP</div>
-          <div style="font-size: 12.5px; line-height: 1.8; color: #A8B3BD;">Owner of ipdft_channel_top. Fixed-point error budgets, CORDIC, decimation.</div>
-          <div style="font-size: 11.5px; color: #66727D; letter-spacing: 0.1em;">R2 · R3</div>
-        </div>
-      </div>
-
-      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>MBR_03</span><span>DV</span></div>
-        <div style="padding: 18px 16px; display: grid; gap: 10px;">
-          <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #D7E0E6;">[ NAME ]</div>
-          <div style="font-size: 11.5px; letter-spacing: 0.12em; color: #7AAE91;">DV · UVM</div>
-          <div style="font-size: 12.5px; line-height: 1.8; color: #A8B3BD;">Constrained-random environments and the regression that runs them overnight.</div>
-          <div style="font-size: 11.5px; color: #66727D; letter-spacing: 0.1em;">R1</div>
-        </div>
-      </div>
-
-      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>MBR_04</span><span>DV</span></div>
-        <div style="padding: 18px 16px; display: grid; gap: 10px;">
-          <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #D7E0E6;">[ NAME ]</div>
-          <div style="font-size: 11.5px; letter-spacing: 0.12em; color: #7AAE91;">DV · FORMAL</div>
-          <div style="font-size: 12.5px; line-height: 1.8; color: #A8B3BD;">Assertions, CDC audits, and the argument about whether formal was worth it.</div>
-          <div style="font-size: 11.5px; color: #66727D; letter-spacing: 0.1em;">R1 · R3</div>
-        </div>
-      </div>
-
-      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>MBR_05</span><span>PD</span></div>
-        <div style="padding: 18px 16px; display: grid; gap: 10px;">
-          <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #D7E0E6;">[ NAME ]</div>
-          <div style="font-size: 11.5px; letter-spacing: 0.12em; color: #7AAE91;">PHYSICAL DESIGN</div>
-          <div style="font-size: 12.5px; line-height: 1.8; color: #A8B3BD;">OpenLane runs on Sky130, floorplans, and the reports nobody else wants to read.</div>
-          <div style="font-size: 11.5px; color: #66727D; letter-spacing: 0.1em;">R3 · R4</div>
-        </div>
-      </div>
-
-      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>MBR_06</span><span>FLOW</span></div>
-        <div style="padding: 18px 16px; display: grid; gap: 10px;">
-          <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #D7E0E6;">[ NAME ]</div>
-          <div style="font-size: 11.5px; letter-spacing: 0.12em; color: #7AAE91;">TOOLING · INFRA</div>
-          <div style="font-size: 12.5px; line-height: 1.8; color: #A8B3BD;">Bench scheduling, JTAG server, and every script that keeps the two boards busy.</div>
-          <div style="font-size: 11.5px; color: #66727D; letter-spacing: 0.1em;">R5</div>
-        </div>
-      </div>
-
-      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>MBR_07</span><span>INTAKE</span></div>
-        <div style="padding: 18px 16px; display: grid; gap: 10px;">
-          <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #D7E0E6;">[ NAME ]</div>
-          <div style="font-size: 11.5px; letter-spacing: 0.12em; color: #7AAE91;">RTL · FIRST TERM</div>
-          <div style="font-size: 12.5px; line-height: 1.8; color: #A8B3BD;">Working through the intake curriculum. Claiming the CIC decimator next term.</div>
-          <div style="font-size: 11.5px; color: #66727D; letter-spacing: 0.1em;">R2 · R6</div>
-        </div>
-      </div>
-
+      <sc-if value="{{ intakeOpen }}">
       <div style="border: 1px dashed #163D2A; display: grid; align-content: center; justify-items: center; gap: 10px; padding: 26px 16px; min-height: 180px;">
         <div style="font-size: 13px; letter-spacing: 0.16em; color: #7AAE91;">SLOT OPEN</div>
         <a href="join.html" style="font-size: 12.5px; letter-spacing: 0.14em;">[ ▸ APPLY ]</a>
       </div>
+      </sc-if>
 
     </div>
   </section>
 
   <section data-screen-label="Advisor" style="max-width: 1520px; margin: 0 auto; padding: 40px 28px 0;">
     <div style="border: 1px solid #163D2A; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
-      <div style="padding: 24px 22px; border-right: 1px solid #182027;">
-        <div style="font-size: 11px; letter-spacing: 0.18em; color: #66727D; margin-bottom: 12px;">ADVISOR</div>
-        <div style="font-size: 17px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.06em; margin-bottom: 10px;">[ NAME ]</div>
-        <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD; max-width: 52ch;">Signs the tool requests, argues with the constraint files, and does not write the RTL.</p>
+      <div style="padding: 24px 22px; border-right: 1px solid #182027; display: grid; gap: 22px; align-content: start;">
+        <sc-for list="{{ advisors }}" as="a">
+        <div>
+          <div style="font-size: 11px; letter-spacing: 0.18em; color: #66727D; margin-bottom: 12px;">{{ a.role }}</div>
+          <div style="font-size: 17px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.06em; margin-bottom: 10px;">{{ a.name }}</div>
+          <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD; max-width: 52ch;">{{ a.bio }}</p>
+        </div>
+        </sc-for>
       </div>
       <div style="padding: 24px 22px; display: grid; gap: 10px; align-content: start; font-size: 12.5px;">
-        <div style="font-size: 11px; letter-spacing: 0.18em; color: #66727D;">ALUMNI</div>
-        <div style="color: #D7E0E6;">[ NAME ] — now DV at [ COMPANY ]</div>
-        <div style="color: #D7E0E6;">[ NAME ] — MSc, [ INSTITUTION ]</div>
-        <div style="color: #7AAE91; line-height: 1.8; padding-top: 4px;">Alumni still review blocks on request. It is the cheapest mentorship we have.</div>
+        <div style="font-size: 11px; letter-spacing: 0.18em; color: #66727D;">{{ alumniHeading }}</div>
+        <sc-for list="{{ alumni }}" as="x">
+          <div style="color: #D7E0E6;">{{ x }}</div>
+        </sc-for>
+        <div style="color: #7AAE91; line-height: 1.8; padding-top: 4px;">{{ alumniNote }}</div>
       </div>
     </div>
   </section>
+  </sc-if>
+
 
   <div style="max-width: 1520px; margin: 74px auto 0; padding: 0 28px;">
     <div style="border-top: 1px solid #163D2A; padding: 26px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; font-size: 12.5px;">
       <div style="display: grid; gap: 8px; align-content: start;">
         <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">WHISTLEBLOWER</div>
-        <div style="color: #A8B3BD; line-height: 1.8; max-width: 30ch;">Student-run ASIC / FPGA hardware verification lab.</div>
+        <div style="color: #A8B3BD; line-height: 1.8; max-width: 30ch;">{{ site.footerBlurb }}</div>
       </div>
       <div style="display: grid; gap: 8px; align-content: start;">
         <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">CONTACT</div>
-        <div><span style="color: #66727D;">MAIL ▸ </span><a href="mailto:lab@whistleblower.dev">lab@whistleblower.dev</a></div>
+        <div><span style="color: #66727D;">MAIL ▸ </span><a href="mailto:{{ site.email }}">{{ site.email }}</a></div>
       </div>
       <div style="display: grid; gap: 8px; align-content: start;">
         <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">INDEX</div>
@@ -175,5 +156,52 @@
 
 </div>
 </x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { data: null, failed: false };
+
+  componentDidMount() {
+    WB.load().then(
+      (data) => { this.setState({ data }); WB.setDescription(WB.page(data, 'people').seo); },
+      () => this.setState({ failed: true })
+    );
+  }
+
+  renderVals() {
+    const d = this.state.data;
+    const s = (d && d.settings) || {};
+    const site = { footerBlurb: s.footerBlurb || 'Student-run ASIC / FPGA hardware verification lab.', email: s.email || 'lab@whistleblower.dev' };
+    if (!d) return { loading: !this.state.failed, failed: this.state.failed, ready: false, site };
+
+    const page = WB.page(d, 'people');
+    const people = d.people || [];
+    const links = (p) => (p.links || []).map((l) => {
+      const href = WB.href(l.href);
+      return { label: l.label, href, target: WB.isExternal(href) ? '_blank' : undefined };
+    }).filter((l) => l.href);
+
+    const members = people.filter((p) => p.status === 'member').map((p, i) => ({
+      code: 'MBR_' + String(i + 1).padStart(2, '0'),
+      tag: p.tag, name: p.name, role: p.role, bio: p.bio,
+      areas: (p.areas || []).filter(Boolean).join(' · '),
+      photo: p.photo && WB.img(p.photo.url, 640), photoAlt: (p.photo && p.photo.alt) || p.name,
+      links: links(p), hasLinks: links(p).length > 0,
+    }));
+    const advisors = people.filter((p) => p.status === 'advisor').map((p) => ({
+      name: p.name, bio: p.bio, role: p.role || 'ADVISOR',
+    }));
+    const alumni = people.filter((p) => p.status === 'alumni').map((p) => [p.name, p.alumniNote].filter(Boolean).join(' — '));
+    const alumniSlot = page.slot.alumni || {};
+
+    return {
+      loading: false, failed: false, ready: true, site,
+      page, notice: page.slot.notice && page.slot.notice.body,
+      members, advisors, alumni,
+      alumniHeading: alumniSlot.heading || 'ALUMNI', alumniNote: alumniSlot.body,
+      intakeOpen: s.intakeOpen !== false,
+    };
+  }
+}
+</script>
 </body>
 </html>
