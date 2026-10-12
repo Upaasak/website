@@ -42,6 +42,7 @@
   }
   @media (max-width: 760px) {
     p { font-size: 16px !important; }
+    .wb-stack { grid-template-columns: minmax(0, 1fr) !important; gap: 28px !important; }
   }
   @media (pointer: coarse) {
     .wb-nav a, .wb-foot-links a { display: inline-block; padding-block: 10px; }
@@ -69,7 +70,7 @@
 
   <section data-screen-label="Case header" style="max-width: 1520px; margin: 0 auto; padding: 40px 28px 0;">
     <a href="projects.html" style="font-size: 12px; letter-spacing: 0.14em; color: #7AAE91;">◂ ALL PROJECTS</a>
-    <div style="display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); gap: 44px; align-items: end; margin-top: 22px;">
+    <div class="wb-stack" style="display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); gap: 44px; align-items: end; margin-top: 22px;">
       <div>
         <div style="font-size: 12px; letter-spacing: 0.3em; color: #00D9FF; margin-bottom: 16px;">▚▚ PRJ_06 · CASE FILE ▞▞</div>
         <h1 style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin: 0 0 12px; font-size: clamp(30px, 4.4vw, 54px); font-weight: 800; letter-spacing: 0.01em; color: #D7E0E6; line-height: 1.06;">POWER SYSTEM PROTOCOLS</h1>
@@ -146,7 +147,7 @@
       <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">VERIFICATION</span>
       <span style="flex: 1; color: #11626F; overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
     </div>
-    <div style="display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 40px;">
+    <div class="wb-stack" style="display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 40px;">
       <div style="display: grid; gap: 0; border-top: 1px solid #182027; align-content: start;">
         <div style="display: grid; grid-template-columns: minmax(0, 1fr) 120px 96px; gap: 16px; align-items: baseline; padding: 13px 4px; border-bottom: 1px solid #182027; font-size: 13px;"><span style="color: #D7E0E6;">Directed sine sweep, 45–65 Hz</span><span style="color: #7AAE91; font-size: 12px;">cocotb</span><span style="color: #39FF88;">PASS</span></div>
         <div style="display: grid; grid-template-columns: minmax(0, 1fr) 120px 96px; gap: 16px; align-items: baseline; padding: 13px 4px; border-bottom: 1px solid #182027; font-size: 13px;"><span style="color: #D7E0E6;">Off-bin frequency, 0.01 Hz steps</span><span style="color: #7AAE91; font-size: 12px;">cocotb</span><span style="color: #39FF88;">PASS</span></div>
@@ -161,7 +162,7 @@
           <div style="display: flex; justify-content: space-between;"><span style="color: #7AAE91;">STATEMENT</span><span style="color: #D7E0E6;">99.1 %</span></div>
           <div style="display: flex; justify-content: space-between;"><span style="color: #7AAE91;">BRANCH</span><span style="color: #D7E0E6;">97.4 %</span></div>
           <div style="display: flex; justify-content: space-between;"><span style="color: #7AAE91;">FUNCTIONAL</span><span style="color: #D7E0E6;">96.4 %</span></div>
-          <div style="color: #39FF88; font-size: 13px; letter-spacing: -0.02em;">███████████████░░░░░</div>
+          <div style="color: #39FF88; font-size: 13px; letter-spacing: -0.02em; overflow: hidden; white-space: nowrap;">███████████████░░░░░</div>
         </div>
         <div style="border: 1px solid #ffb000; padding: 18px 16px; display: grid; gap: 9px; font-size: 12.5px;">
           <div style="color: #ffb000; letter-spacing: 0.16em; font-size: 11px;">OPEN DEFECT · DEF-014</div>

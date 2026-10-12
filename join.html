@@ -45,6 +45,7 @@
   }
   @media (max-width: 760px) {
     p { font-size: 16px !important; }
+    .wb-stack { grid-template-columns: minmax(0, 1fr) !important; gap: 28px !important; }
   }
   @media (pointer: coarse) {
     .wb-nav a, .wb-foot-links a { display: inline-block; padding-block: 10px; }
@@ -140,7 +141,7 @@
         <span style="color: #D7E0E6;">{{ warden.kicker }}</span>
         <span>{{ warden.caption }}</span>
       </div>
-      <div style="display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);">
+      <div class="wb-stack" style="display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);">
         <div style="display: flex; justify-content: center; align-items: center; min-height: 480px; padding: 20px 16px; border-right: 1px solid #182027; overflow: hidden;">
           <pre ref="{{ artRef }}" style="margin: 0; color: #39FF88; font-family: 'IBM Plex Mono', ui-monospace, monospace; line-height: 0.5; white-space: pre; font-size: 4px;"></pre>
         </div>

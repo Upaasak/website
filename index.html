@@ -47,6 +47,7 @@
   }
   @media (max-width: 760px) {
     p { font-size: 16px !important; }
+    .wb-stack { grid-template-columns: minmax(0, 1fr) !important; gap: 28px !important; }
   }
   @media (pointer: coarse) {
     .wb-nav a, .wb-foot-links a { display: inline-block; padding-block: 10px; }
@@ -85,7 +86,7 @@
   </section>
 
   <section data-screen-label="Intro" style="max-width: 1520px; margin: 0 auto; padding: 44px 28px 0;">
-    <div style="display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr); gap: 48px; align-items: start;">
+    <div class="wb-stack" style="display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr); gap: 48px; align-items: start;">
       <div>
         <canvas ref="{{ titleRef }}" style="display: block; width: 100%; max-width: 720px; height: auto; image-rendering: pixelated;"></canvas>
         <div style="display: flex; align-items: center; gap: 12px; margin: 24px 0 20px; font-size: 15px; letter-spacing: 0.2em; font-weight: 700; color: #D7E0E6;">
@@ -139,7 +140,7 @@
         <span style="color: #D7E0E6;">{{ warden.kicker }}</span>
         <span>{{ warden.caption }}</span>
       </div>
-      <div style="display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);">
+      <div class="wb-stack" style="display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);">
         <div style="display: flex; justify-content: center; align-items: center; min-height: 520px; padding: 20px 16px; border-right: 1px solid #182027; overflow: hidden;">
           <pre ref="{{ artRef }}" style="margin: 0; color: #39FF88; font-family: 'IBM Plex Mono', ui-monospace, monospace; line-height: 0.5; white-space: pre; font-size: 4px;"></pre>
         </div>

@@ -45,6 +45,7 @@
   }
   @media (max-width: 760px) {
     p { font-size: 16px !important; }
+    .wb-rows { grid-template-columns: minmax(0, 1fr) !important; gap: 4px !important; }
   }
   @media (pointer: coarse) {
     .wb-nav a, .wb-foot-links a { display: inline-block; padding-block: 10px; }
@@ -103,7 +104,7 @@
     </div>
     <div style="display: grid; gap: 0; border-top: 1px solid #182027;">
       <sc-for list="{{ reports }}" as="r">
-      <div style="display: grid; grid-template-columns: 92px minmax(0, 1fr) 150px 90px; gap: 18px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid #182027; font-size: 13.5px;">
+      <div class="wb-rows" style="display: grid; grid-template-columns: 92px minmax(0, 1fr) 150px 90px; gap: 18px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid #182027; font-size: 13.5px;">
         <span style="color: #77838E; font-size: 12px;">{{ r.date }}</span>
         <span style="color: #D7E0E6;">{{ r.title }}<sc-if value="{{ r.byline }}"><span style="display: block; margin-top: 4px; color: #77838E; font-size: 12px;">{{ r.byline }}</span></sc-if></span>
         <span style="color: #7AAE91; font-size: 12px;">{{ r.kind }}</span>
@@ -123,7 +124,7 @@
     </div>
     <div style="display: grid; gap: 0; border-top: 1px solid #182027;">
       <sc-for list="{{ papers }}" as="r">
-      <a href="{{ r.href }}" target="{{ r.target }}" rel="noopener" style="display: grid; grid-template-columns: 92px minmax(0, 1fr) 150px 90px; gap: 18px; align-items: baseline; padding: 18px 4px; border-bottom: 1px solid #182027; font-size: 13.5px; color: #D7E0E6;">
+      <a href="{{ r.href }}" target="{{ r.target }}" rel="noopener" class="wb-rows" style="display: grid; grid-template-columns: 92px minmax(0, 1fr) 150px 90px; gap: 18px; align-items: baseline; padding: 18px 4px; border-bottom: 1px solid #182027; font-size: 13.5px; color: #D7E0E6;">
         <span style="color: #77838E; font-size: 12px;">{{ r.date }}</span>
         <span>{{ r.title }}<sc-if value="{{ r.byline }}"><span style="display: block; margin-top: 4px; color: #77838E; font-size: 12px;">{{ r.byline }}</span></sc-if></span>
         <span style="color: #7AAE91; font-size: 12px;">{{ r.kind }}</span>
