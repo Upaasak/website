@@ -3,8 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./cms.js"></script>
 <script src="./support.js"></script>
 <title>Whistleblower Lab — Publications</title>
+<meta name="description" content="Papers, signoff reports, notes and checklists published by Whistleblower, a student-run ASIC / FPGA hardware verification lab.">
+<link rel="preconnect" href="https://7h6avsoz.apicdn.sanity.io" crossorigin="">
 <link rel="icon" href="assets/brand/logo-mark.png" />
 </head>
 <body>
@@ -20,6 +23,7 @@
   a:hover { color: #05070A; background: #00D9FF; }
   ::selection { background: #39FF88; color: #05070A; }
   @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+  .cms-cursor { animation: blink 1s steps(1) infinite; }
 </style>
 </helmet>
 <div style="background: #05070A; color: #39FF88; font-family: 'IBM Plex Mono', ui-monospace, monospace; min-height: 100vh; overflow-x: hidden;">
@@ -41,78 +45,92 @@
     </div>
   </div>
 
+  <sc-if value="{{ loading }}">
+    <section data-screen-label="Loading" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0; min-height: 60vh; font-size: 12px; letter-spacing: 0.2em; color: #7AAE91;">
+      <div>▚▚ 05 / PUBLICATIONS ▞▞</div>
+      <div style="margin-top: 22px;">&gt; FETCHING PUBLICATIONS <span class="cms-cursor" style="color: #39FF88;">▌</span></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ failed }}">
+    <section data-screen-label="Error" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0; min-height: 60vh;">
+      <div style="border: 1px dashed #ffb000; padding: 14px 16px; font-size: 12.5px; letter-spacing: 0.1em; line-height: 1.8; color: #ffb000;">ERR · PUBLICATIONS UNAVAILABLE — the content service did not answer. <a href="publications.html">[ ▸ RETRY ]</a></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ ready }}">
   <section data-screen-label="Pubs header" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
-    <div style="font-size: 12px; letter-spacing: 0.3em; color: #00D9FF; margin-bottom: 18px;">▚▚ 05 / PUBLICATIONS ▞▞</div>
-    <h1 style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin: 0 0 20px; font-size: clamp(32px, 4.6vw, 56px); font-weight: 800; letter-spacing: 0.02em; color: #D7E0E6; line-height: 1.05;">WHAT WE PUBLISH</h1>
-    <p style="max-width: 68ch; font-size: 14px; line-height: 1.9; color: #A8B3BD; margin: 0;">Our first paper is out. Alongside it we publish every signoff report, constraint file and failed run from the blocks we finish — published as written, not cleaned up afterwards.</p>
+    <div style="font-size: 12px; letter-spacing: 0.3em; color: #00D9FF; margin-bottom: 18px;">{{ page.kicker }}</div>
+    <h1 style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin: 0 0 20px; font-size: clamp(32px, 4.6vw, 56px); font-weight: 800; letter-spacing: 0.02em; color: #D7E0E6; line-height: 1.05; white-space: pre-line;">{{ page.title }}</h1>
+    <div style="display: grid; gap: 12px;">
+      <sc-for list="{{ page.paras }}" as="p">
+        <p style="max-width: 68ch; font-size: 14px; line-height: 1.9; color: #A8B3BD; margin: 0;">{{ p }}</p>
+      </sc-for>
+    </div>
   </section>
 
+  <sc-if value="{{ hasReports }}">
   <section data-screen-label="Reports" style="max-width: 1520px; margin: 0 auto; padding: 46px 28px 0;">
     <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
       <span style="color: #05070A; background: #39FF88; padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: 'Silkscreen', monospace;">A</span>
-      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">LAB REPORTS</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">{{ reportsHeading }}</span>
       <span style="flex: 1; color: #11626F; overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
     </div>
     <div style="display: grid; gap: 0; border-top: 1px solid #182027;">
+      <sc-for list="{{ reports }}" as="r">
       <div style="display: grid; grid-template-columns: 92px minmax(0, 1fr) 150px 90px; gap: 18px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid #182027; font-size: 13.5px;">
-        <span style="color: #66727D; font-size: 12px;">2026-08</span>
-        <span style="color: #D7E0E6;">ipdft_channel_top — interim verification report, revision C</span>
-        <span style="color: #7AAE91; font-size: 12px;">TECH REPORT · PDF</span>
-        <a href="project-ipdft.html" style="font-size: 12px;">OPEN ▸</a>
+        <span style="color: #66727D; font-size: 12px;">{{ r.date }}</span>
+        <span style="color: #D7E0E6;">{{ r.title }}<sc-if value="{{ r.byline }}"><span style="display: block; margin-top: 4px; color: #66727D; font-size: 12px;">{{ r.byline }}</span></sc-if></span>
+        <span style="color: #7AAE91; font-size: 12px;">{{ r.kind }}</span>
+        <sc-if value="{{ r.href }}"><a href="{{ r.href }}" target="{{ r.target }}" rel="noopener" style="font-size: 12px;">OPEN ▸</a></sc-if>
       </div>
-      <div style="display: grid; grid-template-columns: 92px minmax(0, 1fr) 150px 90px; gap: 18px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid #182027; font-size: 13.5px;">
-        <span style="color: #66727D; font-size: 12px;">2026-07</span>
-        <span style="color: #D7E0E6;">Fixed-point error budget for a sliding-DFT front end</span>
-        <span style="color: #7AAE91; font-size: 12px;">NOTE · PDF</span>
-        <a href="project-ipdft.html" style="font-size: 12px;">OPEN ▸</a>
-      </div>
-      <div style="display: grid; grid-template-columns: 92px minmax(0, 1fr) 150px 90px; gap: 18px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid #182027; font-size: 13.5px;">
-        <span style="color: #66727D; font-size: 12px;">2026-06</span>
-        <span style="color: #D7E0E6;">Intake curriculum: zero to signed-off block in one term</span>
-        <span style="color: #7AAE91; font-size: 12px;">CURRICULUM</span>
-        <a href="join.html" style="font-size: 12px;">OPEN ▸</a>
-      </div>
-      <div style="display: grid; grid-template-columns: 92px minmax(0, 1fr) 150px 90px; gap: 18px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid #182027; font-size: 13.5px;">
-        <span style="color: #66727D; font-size: 12px;">2026-05</span>
-        <span style="color: #D7E0E6;">Review checklist for RTL and testbench signoff, v2</span>
-        <span style="color: #7AAE91; font-size: 12px;">CHECKLIST</span>
-        <a href="research.html" style="font-size: 12px;">OPEN ▸</a>
-      </div>
+      </sc-for>
     </div>
   </section>
+  </sc-if>
 
+  <sc-if value="{{ hasPapers }}">
   <section data-screen-label="Papers" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
     <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
       <span style="color: #05070A; background: #7AAE91; padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: 'Silkscreen', monospace;">B</span>
-      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">PEER-REVIEWED</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">{{ papersHeading }}</span>
       <span style="flex: 1; color: #11626F; overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
     </div>
     <div style="display: grid; gap: 0; border-top: 1px solid #182027;">
-      <a href="https://www.researchgate.net/publication/413866718_Sub-Microsecond_Deterministic_Neural_Network_Acceleration_for_Real-Time_Power_System_Protection_Using_FPGA_Systolic_Arrays" target="_blank" rel="noopener" style="display: grid; grid-template-columns: 92px minmax(0, 1fr) 150px 90px; gap: 18px; align-items: baseline; padding: 18px 4px; border-bottom: 1px solid #182027; font-size: 13.5px; color: #D7E0E6;">
-        <span style="color: #66727D; font-size: 12px;">2026</span>
-        <span>Sub-Microsecond Deterministic Neural Network Acceleration for Real-Time Power System Protection Using FPGA Systolic Arrays</span>
-        <span style="color: #7AAE91; font-size: 12px;">PAPER · RESEARCHGATE</span>
+      <sc-for list="{{ papers }}" as="r">
+      <a href="{{ r.href }}" target="{{ r.target }}" rel="noopener" style="display: grid; grid-template-columns: 92px minmax(0, 1fr) 150px 90px; gap: 18px; align-items: baseline; padding: 18px 4px; border-bottom: 1px solid #182027; font-size: 13.5px; color: #D7E0E6;">
+        <span style="color: #66727D; font-size: 12px;">{{ r.date }}</span>
+        <span>{{ r.title }}<sc-if value="{{ r.byline }}"><span style="display: block; margin-top: 4px; color: #66727D; font-size: 12px;">{{ r.byline }}</span></sc-if></span>
+        <span style="color: #7AAE91; font-size: 12px;">{{ r.kind }}</span>
         <span style="color: #39FF88; font-size: 12px;">READ ▸</span>
       </a>
+      </sc-for>
     </div>
   </section>
+  </sc-if>
 
+  <sc-if value="{{ cta.heading }}">
   <section data-screen-label="CTA" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
     <div style="border: 1px solid #39FF88; padding: 26px 24px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center;">
-      <div style="font-size: 15px; color: #D7E0E6; letter-spacing: 0.06em;">Want the raw reports, seeds or waveforms? Ask.</div>
-      <a href="mailto:lab@whistleblower.dev" style="border: 1px solid #39FF88; padding: 11px 20px; font-size: 13px; letter-spacing: 0.16em; font-weight: 700;">[ ▸ REQUEST ARTEFACTS ]</a>
+      <div style="font-size: 15px; color: #D7E0E6; letter-spacing: 0.06em;">{{ cta.heading }}</div>
+      <sc-for list="{{ cta.links }}" as="l">
+      <a href="{{ l.href }}" style="border: 1px solid #39FF88; padding: 11px 20px; font-size: 13px; letter-spacing: 0.16em; font-weight: 700;">{{ l.label }}</a>
+      </sc-for>
     </div>
   </section>
+  </sc-if>
+  </sc-if>
+
 
   <div style="max-width: 1520px; margin: 74px auto 0; padding: 0 28px;">
     <div style="border-top: 1px solid #163D2A; padding: 26px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; font-size: 12.5px;">
       <div style="display: grid; gap: 8px; align-content: start;">
         <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">WHISTLEBLOWER</div>
-        <div style="color: #A8B3BD; line-height: 1.8; max-width: 30ch;">Student-run ASIC / FPGA hardware verification lab.</div>
+        <div style="color: #A8B3BD; line-height: 1.8; max-width: 30ch;">{{ site.footerBlurb }}</div>
       </div>
       <div style="display: grid; gap: 8px; align-content: start;">
         <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">CONTACT</div>
-        <div><span style="color: #66727D;">MAIL ▸ </span><a href="mailto:lab@whistleblower.dev">lab@whistleblower.dev</a></div>
+        <div><span style="color: #66727D;">MAIL ▸ </span><a href="mailto:{{ site.email }}">{{ site.email }}</a></div>
       </div>
       <div style="display: grid; gap: 8px; align-content: start;">
         <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">INDEX</div>
@@ -134,5 +152,48 @@
 
 </div>
 </x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { data: null, failed: false };
+
+  componentDidMount() {
+    WB.load().then(
+      (data) => { this.setState({ data }); WB.setDescription(WB.page(data, 'publications').seo); },
+      () => this.setState({ failed: true })
+    );
+  }
+
+  renderVals() {
+    const d = this.state.data;
+    const s = (d && d.settings) || {};
+    const site = { footerBlurb: s.footerBlurb || 'Student-run ASIC / FPGA hardware verification lab.', email: s.email || 'lab@whistleblower.dev' };
+    if (!d) return { loading: !this.state.failed, failed: this.state.failed, ready: false, site };
+
+    const page = WB.page(d, 'publications');
+    // Reports show year-month, papers only the year.
+    const row = (p, dateLen) => {
+      const href = p.pdfUrl || WB.href(p.url);
+      return {
+        date: String(p.date || '').slice(0, dateLen),
+        title: p.title, kind: p.kind,
+        byline: [(p.authors || []).join(', '), p.venue].filter(Boolean).join(' · '),
+        href, target: WB.isExternal(href) ? '_blank' : undefined,
+      };
+    };
+    const pubs = d.publications || [];
+    const reports = pubs.filter((p) => p.category === 'report').map((p) => row(p, 7));
+    const papers = pubs.filter((p) => p.category === 'paper').map((p) => row(p, 4));
+    const cta = page.slot.cta || {};
+
+    return {
+      loading: false, failed: false, ready: true, site, page,
+      reports, papers, hasReports: reports.length > 0, hasPapers: papers.length > 0,
+      reportsHeading: (page.slot.reports && page.slot.reports.heading) || 'LAB REPORTS',
+      papersHeading: (page.slot.papers && page.slot.papers.heading) || 'PEER-REVIEWED',
+      cta: { heading: cta.heading, links: (cta.links || []).filter((l) => l.href) },
+    };
+  }
+}
+</script>
 </body>
 </html>

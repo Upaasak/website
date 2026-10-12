@@ -62,9 +62,11 @@
   <section data-screen-label="People header" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
     <div style="font-size: 12px; letter-spacing: 0.3em; color: #00D9FF; margin-bottom: 18px;">{{ page.kicker }}</div>
     <h1 style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin: 0 0 20px; font-size: clamp(32px, 4.6vw, 56px); font-weight: 800; letter-spacing: 0.02em; color: #D7E0E6; line-height: 1.05; white-space: pre-line;">{{ page.title }}</h1>
-    <sc-for list="{{ page.paras }}" as="p">
-      <p style="max-width: 68ch; font-size: 14px; line-height: 1.9; color: #A8B3BD; margin: 0 0 12px;">{{ p }}</p>
-    </sc-for>
+    <div style="display: grid; gap: 12px;">
+      <sc-for list="{{ page.paras }}" as="p">
+        <p style="max-width: 68ch; font-size: 14px; line-height: 1.9; color: #A8B3BD; margin: 0;">{{ p }}</p>
+      </sc-for>
+    </div>
     <sc-if value="{{ notice }}">
       <div style="margin-top: 22px; border: 1px dashed #ffb000; padding: 12px 14px; font-size: 12px; letter-spacing: 0.1em; color: #ffb000;">{{ notice }}</div>
     </sc-if>

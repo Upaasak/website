@@ -167,7 +167,7 @@ export const researchAreas = [
     description: 'Transforms and estimators that have to run in real time on a mid-range part: interpolated DFT, CORDIC magnitude and phase, rate-of-change estimation, decimation chains. Fixed point, error budgets written down before the RTL.'},
   {code: 'R3', title: 'TIMING & PHYSICAL CLOSURE', status: 'ACTIVE', sideLabel: 'TOOLING', sideItems: ['Vivado · OpenSTA', 'OpenROAD · OpenLane'],
     description: 'Why the design missed by 180 ps, and what to do about it. Constraint hygiene, clock-domain crossings, retiming, floorplanning on FPGA and on open PDKs. Every closure is written up as a before/after with the actual reports attached.'},
-  {code: 'R4', title: 'OPEN-SOURCE SILICON', status: 'EXPLORATORY', sideLabel: 'TARGET', sideItems: ['SKY130 · 130 nm', 'no tapeout yet'],
+  {code: 'R4', title: 'OPEN-SOURCE SILICON', status: 'EXPLORATORY', sideLabel: 'TARGET', sideItems: ['SKY130 · 130 nm', '// no tapeout yet'],
     description: 'Sky130 and open flows are the only route to real physical design for a lab with no licence budget. We push small blocks through GDS to learn where the flow lies to you, and publish the failures too.'},
   {code: 'R5', title: 'BRINGUP & LAB INFRASTRUCTURE', status: 'ONGOING', sideLabel: 'BENCH', sideItems: ['ARTIX-7 · ZYNQ-7020', 'SCOPE · LOGIC ANALYSER'],
     description: 'Two benches, shared boards, one JTAG server, regression running on whatever machine is free. Access is the resource we are actually pooling, so the scripts that manage it are treated as first-class work.'},

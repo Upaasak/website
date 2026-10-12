@@ -3,8 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./cms.js"></script>
 <script src="./support.js"></script>
 <title>Whistleblower Lab — News</title>
+<meta name="description" content="Lab log of Whistleblower, a student-run ASIC / FPGA hardware verification lab: closures, failures, intakes and hardware.">
+<link rel="preconnect" href="https://7h6avsoz.apicdn.sanity.io" crossorigin="">
 <link rel="icon" href="assets/brand/logo-mark.png" />
 </head>
 <body>
@@ -20,6 +23,7 @@
   a:hover { color: #05070A; background: #00D9FF; }
   ::selection { background: #39FF88; color: #05070A; }
   @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+  .cms-cursor { animation: blink 1s steps(1) infinite; }
 </style>
 </helmet>
 <div style="background: #05070A; color: #39FF88; font-family: 'IBM Plex Mono', ui-monospace, monospace; min-height: 100vh; overflow-x: hidden;">
@@ -41,71 +45,69 @@
     </div>
   </div>
 
+  <sc-if value="{{ loading }}">
+    <section data-screen-label="Loading" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0; min-height: 60vh; font-size: 12px; letter-spacing: 0.2em; color: #7AAE91;">
+      <div>▚▚ 06 / NEWS ▞▞</div>
+      <div style="margin-top: 22px;">&gt; FETCHING LOG <span class="cms-cursor" style="color: #39FF88;">▌</span></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ failed }}">
+    <section data-screen-label="Error" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0; min-height: 60vh;">
+      <div style="border: 1px dashed #ffb000; padding: 14px 16px; font-size: 12.5px; letter-spacing: 0.1em; line-height: 1.8; color: #ffb000;">ERR · LOG UNAVAILABLE — the content service did not answer. <a href="news.html">[ ▸ RETRY ]</a></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ ready }}">
   <section data-screen-label="News header" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
-    <div style="font-size: 12px; letter-spacing: 0.3em; color: #00D9FF; margin-bottom: 18px;">▚▚ 06 / NEWS ▞▞</div>
-    <h1 style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin: 0 0 20px; font-size: clamp(32px, 4.6vw, 56px); font-weight: 800; letter-spacing: 0.02em; color: #D7E0E6; line-height: 1.05;">LAB LOG</h1>
-    <p style="max-width: 68ch; font-size: 14px; line-height: 1.9; color: #A8B3BD; margin: 0;">Newest first. Closures, failures, intakes and hardware. If it changed what the lab can do, it goes in the log.</p>
-    <div style="margin-top: 22px; border: 1px dashed #ffb000; padding: 12px 14px; font-size: 12px; letter-spacing: 0.1em; color: #ffb000;">SAMPLE ENTRIES — send the real log and these get replaced.</div>
+    <div style="font-size: 12px; letter-spacing: 0.3em; color: #00D9FF; margin-bottom: 18px;">{{ page.kicker }}</div>
+    <h1 style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin: 0 0 20px; font-size: clamp(32px, 4.6vw, 56px); font-weight: 800; letter-spacing: 0.02em; color: #D7E0E6; line-height: 1.05; white-space: pre-line;">{{ page.title }}</h1>
+    <sc-for list="{{ page.paras }}" as="p">
+      <p style="max-width: 68ch; font-size: 14px; line-height: 1.9; color: #A8B3BD; margin: 0 0 12px;">{{ p }}</p>
+    </sc-for>
+    <sc-if value="{{ notice }}">
+      <div style="margin-top: 22px; border: 1px dashed #ffb000; padding: 12px 14px; font-size: 12px; letter-spacing: 0.1em; color: #ffb000;">{{ notice }}</div>
+    </sc-if>
   </section>
 
   <section data-screen-label="Log" style="max-width: 1520px; margin: 0 auto; padding: 40px 28px 0;">
     <div style="display: grid; gap: 14px;">
 
+      <sc-for list="{{ posts }}" as="n">
       <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>2026-08-14</span><span>TIMING</span></div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: #182027; color: {{ n.headColor }}; font-size: 11.5px; letter-spacing: 0.14em;"><span>{{ n.date }}</span><span>{{ n.tag }}</span></div>
+        <sc-if value="{{ n.image }}">
+          <img src="{{ n.image }}" alt="{{ n.imageAlt }}" loading="lazy" style="display: block; width: 100%; max-height: 420px; object-fit: cover; border-bottom: 1px solid #163D2A;" />
+        </sc-if>
         <div style="padding: 20px 18px; display: grid; gap: 11px;">
-          <div style="font-size: 16px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.04em;">ipdft_channel_top closes timing at 148 MHz on Artix-7</div>
-          <p style="margin: 0; font-size: 13.5px; line-height: 1.9; color: #A8B3BD; max-width: 76ch;">Retiming the CORDIC output stage and moving the window multiplier to a DSP48 bought 620 ps of slack. Utilisation went up two points, which we will take. Reports are in the repository.</p>
-          <a href="project-ipdft.html" style="font-size: 12.5px; letter-spacing: 0.12em;">CASE FILE ▸</a>
+          <div style="font-size: 16px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.04em;">{{ n.title }}</div>
+          <sc-if value="{{ n.eventLine }}">
+            <div style="font-size: 12px; letter-spacing: 0.12em; color: #00D9FF;">{{ n.eventLine }}</div>
+          </sc-if>
+          <sc-for list="{{ n.paras }}" as="p">
+            <p style="margin: 0; font-size: 13.5px; line-height: 1.9; color: #A8B3BD; max-width: 76ch;">{{ p }}</p>
+          </sc-for>
+          <sc-if value="{{ n.link }}">
+            <a href="{{ n.link.href }}" target="{{ n.link.target }}" rel="noopener" style="font-size: 12.5px; letter-spacing: 0.12em;">{{ n.link.label }}</a>
+          </sc-if>
         </div>
       </div>
-
-      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>2026-07-30</span><span>BENCH</span></div>
-        <div style="padding: 20px 18px; display: grid; gap: 11px;">
-          <div style="font-size: 16px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.04em;">Second bench online — shared JTAG and scope access</div>
-          <p style="margin: 0; font-size: 13.5px; line-height: 1.9; color: #A8B3BD; max-width: 76ch;">A donated Zynq-7020 board, a scope and a logic analyser now sit behind a booking script, so bringup no longer blocks on one person being in the room.</p>
-        </div>
-      </div>
-
-      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>2026-07-02</span><span>INTAKE</span></div>
-        <div style="padding: 20px 18px; display: grid; gap: 11px;">
-          <div style="font-size: 16px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.04em;">Autumn intake open: three verification slots, two RTL slots</div>
-          <p style="margin: 0; font-size: 13.5px; line-height: 1.9; color: #A8B3BD; max-width: 76ch;">Applications by mail with a CV and one paragraph on a block you would like to verify. No prior tapeout, no coursework requirement, no interview panel.</p>
-          <a href="join.html" style="font-size: 12.5px; letter-spacing: 0.12em;">HOW TO APPLY ▸</a>
-        </div>
-      </div>
-
-      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: #182027; color: #ffb000; font-size: 11.5px; letter-spacing: 0.14em;"><span>2026-06-11</span><span>DEFECT</span></div>
-        <div style="padding: 20px 18px; display: grid; gap: 11px;">
-          <div style="font-size: 16px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.04em;">DEF-014 opened: ROCOF overshoot on a 2 Hz/s step
-</div>
-          <p style="margin: 0; font-size: 13.5px; line-height: 1.9; color: #A8B3BD; max-width: 76ch;">Found by the golden-model comparison, not by a human reading waveforms, which is the whole argument for keeping the python model in the regression. Still open, still unassigned.</p>
-        </div>
-      </div>
-
-      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 14px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>2026-05-20</span><span>LAB</span></div>
-        <div style="padding: 20px 18px; display: grid; gap: 11px;">
-          <div style="font-size: 16px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.04em;">Whistleblower starts with seven members and one board</div>
-          <p style="margin: 0; font-size: 13.5px; line-height: 1.9; color: #A8B3BD; max-width: 76ch;">Founded to pool the things a single student cannot get alone: a licence, a board, a reviewer. First block claimed the same week.</p>
-        </div>
-      </div>
+      </sc-for>
 
     </div>
   </section>
+  </sc-if>
+
 
   <div style="max-width: 1520px; margin: 74px auto 0; padding: 0 28px;">
     <div style="border-top: 1px solid #163D2A; padding: 26px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; font-size: 12.5px;">
       <div style="display: grid; gap: 8px; align-content: start;">
         <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">WHISTLEBLOWER</div>
-        <div style="color: #A8B3BD; line-height: 1.8; max-width: 30ch;">Student-run ASIC / FPGA hardware verification lab.</div>
+        <div style="color: #A8B3BD; line-height: 1.8; max-width: 30ch;">{{ site.footerBlurb }}</div>
       </div>
       <div style="display: grid; gap: 8px; align-content: start;">
         <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">CONTACT</div>
-        <div><span style="color: #66727D;">MAIL ▸ </span><a href="mailto:lab@whistleblower.dev">lab@whistleblower.dev</a></div>
+        <div><span style="color: #66727D;">MAIL ▸ </span><a href="mailto:{{ site.email }}">{{ site.email }}</a></div>
       </div>
       <div style="display: grid; gap: 8px; align-content: start;">
         <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">INDEX</div>
@@ -126,5 +128,54 @@
   </div>
 
 </div></x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { data: null, failed: false };
+
+  componentDidMount() {
+    WB.load().then(
+      (data) => { this.setState({ data }); WB.setDescription(WB.page(data, 'news').seo); },
+      () => this.setState({ failed: true })
+    );
+  }
+
+  renderVals() {
+    const d = this.state.data;
+    const s = (d && d.settings) || {};
+    const site = { footerBlurb: s.footerBlurb || 'Student-run ASIC / FPGA hardware verification lab.', email: s.email || 'lab@whistleblower.dev' };
+    if (!d) return { loading: !this.state.failed, failed: this.state.failed, ready: false, site };
+
+    const page = WB.page(d, 'news');
+    // Event start as "2026-08-14 18:00" in the visitor's local time.
+    const when = (iso) => {
+      const t = new Date(iso);
+      if (isNaN(t)) return '';
+      const z = (n) => String(n).padStart(2, '0');
+      return t.getFullYear() + '-' + z(t.getMonth() + 1) + '-' + z(t.getDate()) + ' ' + z(t.getHours()) + ':' + z(t.getMinutes());
+    };
+    const posts = (d.posts || []).map((p) => {
+      const href = p.link && WB.href(p.link.href);
+      const typeLabel = p.type === 'event' ? 'EVENT' : p.type === 'announcement' ? 'ANNOUNCEMENT' : '';
+      const tag = p.tag || typeLabel;
+      const eventLine = p.type === 'event'
+        ? [p.eventStart && when(p.eventStart), p.eventLocation].filter(Boolean).join(' · ')
+        : '';
+      return {
+        date: p.date, tag,
+        headColor: tag === 'DEFECT' ? '#ffb000' : '#39FF88',
+        title: p.title, paras: WB.paras(p.body),
+        image: p.image && WB.img(p.image.url, 1200), imageAlt: (p.image && p.image.alt) || p.title,
+        eventLine: eventLine ? '▸ ' + eventLine : '',
+        link: href ? { label: p.link.label, href, target: WB.isExternal(href) ? '_blank' : undefined } : null,
+      };
+    });
+
+    return {
+      loading: false, failed: false, ready: true, site,
+      page, notice: page.slot.notice && page.slot.notice.body, posts,
+    };
+  }
+}
+</script>
 </body>
 </html>

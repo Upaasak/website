@@ -61,16 +61,16 @@
   {
    "_createdAt": "2026-10-12T18:10:06Z",
    "_id": "area-r4",
-   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_rev": "IG4Z2d4uQTGJQB5lvrS0hS",
    "_type": "researchArea",
-   "_updatedAt": "2026-10-12T18:10:06Z",
+   "_updatedAt": "2026-10-12T18:21:30Z",
    "code": "R4",
    "description": "Sky130 and open flows are the only route to real physical design for a lab with no licence budget. We push small blocks through GDS to learn where the flow lies to you, and publish the failures too.",
    "order": 4,
    "related": [],
    "sideItems": [
     "SKY130 · 130 nm",
-    "no tapeout yet"
+    "// no tapeout yet"
    ],
    "sideLabel": "TARGET",
    "status": "EXPLORATORY",

@@ -3,8 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./cms.js"></script>
 <script src="./support.js"></script>
 <title>Whistleblower Lab — Projects</title>
+<meta name="description" content="Every block Whistleblower is building or verifying, from spec to signoff, plus the queue of unclaimed blocks.">
+<link rel="preconnect" href="https://7h6avsoz.apicdn.sanity.io" crossorigin="">
 <link rel="icon" href="assets/brand/logo-mark.png" />
 </head>
 <body>
@@ -20,6 +23,7 @@
   a:hover { color: #05070A; background: #00D9FF; }
   ::selection { background: #39FF88; color: #05070A; }
   @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+  .cms-cursor { animation: blink 1s steps(1) infinite; }
 </style>
 </helmet>
 <div style="background: #05070A; color: #39FF88; font-family: 'IBM Plex Mono', ui-monospace, monospace; min-height: 100vh; overflow-x: hidden;">
@@ -41,10 +45,26 @@
     </div>
   </div>
 
+  <sc-if value="{{ loading }}">
+    <section data-screen-label="Loading" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0; min-height: 60vh; font-size: 12px; letter-spacing: 0.2em; color: #7AAE91;">
+      <div>▚▚ 03 / PROJECTS ▞▞</div>
+      <div style="margin-top: 22px;">&gt; FETCHING PROJECTS <span class="cms-cursor" style="color: #39FF88;">▌</span></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ failed }}">
+    <section data-screen-label="Error" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0; min-height: 60vh;">
+      <div style="border: 1px dashed #ffb000; padding: 14px 16px; font-size: 12.5px; letter-spacing: 0.1em; line-height: 1.8; color: #ffb000;">ERR · PROJECTS UNAVAILABLE — the content service did not answer. <a href="projects.html">[ ▸ RETRY ]</a></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ ready }}">
   <section data-screen-label="Projects header" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
-    <div style="font-size: 12px; letter-spacing: 0.3em; color: #00D9FF; margin-bottom: 18px;">▚▚ 03 / PROJECTS ▞▞</div>
-    <h1 style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin: 0 0 20px; font-size: clamp(32px, 4.6vw, 56px); font-weight: 800; letter-spacing: 0.02em; color: #D7E0E6; line-height: 1.05;">BLOCKS IN FLIGHT</h1>
-    <p style="max-width: 68ch; font-size: 14px; line-height: 1.9; color: #A8B3BD; margin: 0;">One entry per block, from proposal to signoff. Nothing is listed here until there is RTL and a testbench in the repository — proposals sit in the queue below until somebody owns them.</p>
+    <div style="font-size: 12px; letter-spacing: 0.3em; color: #00D9FF; margin-bottom: 18px;">{{ page.kicker }}</div>
+    <h1 style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin: 0 0 20px; font-size: clamp(32px, 4.6vw, 56px); font-weight: 800; letter-spacing: 0.02em; color: #D7E0E6; line-height: 1.05; white-space: pre-line;">{{ page.title }}</h1>
+    <sc-for list="{{ page.paras }}" as="p">
+      <p style="max-width: 68ch; font-size: 14px; line-height: 1.9; color: #A8B3BD; margin: 0;">{{ p }}</p>
+    </sc-for>
   </section>
 
   <section data-screen-label="Active" style="max-width: 1520px; margin: 0 auto; padding: 46px 28px 0;">
@@ -52,190 +72,75 @@
       <span style="color: #05070A; background: #39FF88; padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: 'Silkscreen', monospace;">A</span>
       <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">PROJECTS</span>
       <span style="flex: 1; color: #11626F; overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
-      <span style="font-size: 12px; color: #66727D;">HOVER FOR DETAIL · 10 ENTRIES</span>
+      <span style="font-size: 12px; color: #66727D;">{{ countLabel }}</span>
     </div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 18px;">
 
+      <sc-for list="{{ projects }}" as="p">
       <div style="border: 1px solid #163D2A; display: flex; flex-direction: column;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>PRJ_01</span><span style="color: #39FF88;">RTL</span></div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>{{ p.code }}</span><span style="color: {{ p.stageColor }};">{{ p.stage }}</span></div>
         <div style="position: relative; height: 300px; background: #05070A; overflow: hidden;">
-          <img src="assets/cards/neuromorphic.jpg" alt="NEUROMORPHIC SPIKING NETWORK" style="display: block; width: 100%; height: 100%; object-fit: contain;" />
+          <sc-if value="{{ p.image }}">
+            <img src="{{ p.image }}" alt="{{ p.imageAlt }}" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: contain;" />
+          </sc-if>
           <div style="position: absolute; inset: 0; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5,7,10,0.97) 0%, rgba(5,7,10,0.92) 55%, rgba(5,7,10,0.72) 100%); opacity: 0; transition: opacity 200ms;" style-hover="opacity: 1;">
-            <div style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: #D7E0E6; line-height: 1.3;">NEUROMORPHIC SPIKING NETWORK</div>
-            <div style="font-size: 11px; letter-spacing: 0.14em; color: #7AAE91;">RTL · SNN · EVENT-DRIVEN</div>
-            <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">A digital array of leaky integrate-and-fire neurons with event-driven routing between them. Spikes instead of tensors, so there are no multipliers in the datapath and the whole power argument rests on how sparse the traffic really is.</p>
-            <div style="font-size: 11.5px; letter-spacing: 0.12em; color: #66727D;">CASE FILE PENDING</div>
+            <div style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: #D7E0E6; line-height: 1.3;">{{ p.title }}</div>
+            <div style="font-size: 11px; letter-spacing: 0.14em; color: #7AAE91;">{{ p.tags }}</div>
+            <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">{{ p.summary }}</p>
+            <sc-if value="{{ p.caseFileHref }}">
+              <a href="{{ p.caseFileHref }}" style="font-size: 11.5px; letter-spacing: 0.12em; align-self: start;">[ ▸ OPEN CASE FILE ]</a>
+            </sc-if>
+            <sc-if value="{{ !p.caseFileHref }}">
+              <div style="font-size: 11.5px; letter-spacing: 0.12em; color: #66727D;">CASE FILE PENDING</div>
+            </sc-if>
           </div>
         </div>
       </div>
+      </sc-for>
 
-      <div style="border: 1px solid #163D2A; display: flex; flex-direction: column;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>PRJ_02</span><span style="color: #ffb000;">SPEC</span></div>
-        <div style="position: relative; height: 300px; background: #05070A; overflow: hidden;">
-          <img src="assets/cards/sentinel.jpg" alt="SENTINEL" style="display: block; width: 100%; height: 100%; object-fit: contain;" />
-          <div style="position: absolute; inset: 0; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5,7,10,0.97) 0%, rgba(5,7,10,0.92) 55%, rgba(5,7,10,0.72) 100%); opacity: 0; transition: opacity 200ms;" style-hover="opacity: 1;">
-            <div style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: #D7E0E6; line-height: 1.3;">SENTINEL</div>
-            <div style="font-size: 11px; letter-spacing: 0.14em; color: #7AAE91;">SPEC IN PROGRESS</div>
-            <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">Software-defined autonomous mission vehicle. FPGA-native deterministic edge compute, formal safety, 3-tier HIL digital twin.</p>
-            <a href="project-sentinel.html" style="font-size: 11.5px; letter-spacing: 0.12em; align-self: start;">[ ▸ OPEN CASE FILE ]</a>
-          </div>
-        </div>
-      </div>
-
-      <div style="border: 1px solid #163D2A; display: flex; flex-direction: column;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>PRJ_03</span><span style="color: #39FF88;">RTL</span></div>
-        <div style="position: relative; height: 300px; background: #05070A; overflow: hidden;">
-          <img src="assets/cards/tcpip.png" alt="TCP/IP IN FPGA" style="display: block; width: 100%; height: 100%; object-fit: contain;" />
-          <div style="position: absolute; inset: 0; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5,7,10,0.97) 0%, rgba(5,7,10,0.92) 55%, rgba(5,7,10,0.72) 100%); opacity: 0; transition: opacity 200ms;" style-hover="opacity: 1;">
-            <div style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: #D7E0E6; line-height: 1.3;">TCP/IP IN FPGA</div>
-            <div style="font-size: 11px; letter-spacing: 0.14em; color: #7AAE91;">RTL · GbE · NO SOFT CORE</div>
-            <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">The stack in fabric: MAC interface, ARP, IPv4 and a TCP state machine with retransmission, all in hardware with no soft core in the data path. It either holds line rate on a gigabit PHY or it does not count.</p>
-            <a href="project-tcpip.html" style="font-size: 11.5px; letter-spacing: 0.12em; align-self: start;">[ ▸ OPEN CASE FILE ]</a>
-          </div>
-        </div>
-      </div>
-
-      <div style="border: 1px solid #163D2A; display: flex; flex-direction: column;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>PRJ_04</span><span style="color: #ffb000;">SPEC</span></div>
-        <div style="position: relative; height: 300px; background: #05070A; overflow: hidden;">
-          <img src="assets/cards/systolic.jpg" alt="SYSTOLIC ARRAY NEURAL NETWORK" style="display: block; width: 100%; height: 100%; object-fit: contain;" />
-          <div style="position: absolute; inset: 0; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5,7,10,0.97) 0%, rgba(5,7,10,0.92) 55%, rgba(5,7,10,0.72) 100%); opacity: 0; transition: opacity 200ms;" style-hover="opacity: 1;">
-            <div style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: #D7E0E6; line-height: 1.3;">SYSTOLIC ARRAY NEURAL NETWORK</div>
-            <div style="font-size: 11px; letter-spacing: 0.14em; color: #7AAE91;">RTL · INT8 · GEMM</div>
-            <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">A weight-stationary grid of int8 MAC cells with tiled GEMM scheduling and a double-buffered activation store. The interesting engineering is the memory schedule; the multipliers are the easy part.</p>
-            <div style="font-size: 11.5px; letter-spacing: 0.12em; color: #66727D;">CASE FILE PENDING</div>
-          </div>
-        </div>
-      </div>
-
-      <div style="border: 1px solid #163D2A; display: flex; flex-direction: column;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>PRJ_05</span><span style="color: #ffb000;">SPEC</span></div>
-        <div style="position: relative; height: 300px; background: #05070A; overflow: hidden;">
-          <img src="assets/cards/pqc.jpg" alt="POST-QUANTUM CRYPTO IN FPGA" style="display: block; width: 100%; height: 100%; object-fit: contain;" />
-          <div style="position: absolute; inset: 0; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5,7,10,0.97) 0%, rgba(5,7,10,0.92) 55%, rgba(5,7,10,0.72) 100%); opacity: 0; transition: opacity 200ms;" style-hover="opacity: 1;">
-            <div style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: #D7E0E6; line-height: 1.3;">POST-QUANTUM CRYPTO IN FPGA</div>
-            <div style="font-size: 11px; letter-spacing: 0.14em; color: #7AAE91;">RTL · PQC · LATTICE</div>
-            <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">Hardware for the algorithms that outlive RSA: lattice arithmetic, NTT butterflies, constant-time control and a sampler that does not leak through timing. The threat model is a machine that does not exist yet, which makes the constant-time argument the whole project.</p>
-            <a href="project-pqc.html" style="font-size: 11.5px; letter-spacing: 0.12em; align-self: start;">[ ▸ OPEN CASE FILE ]</a>
-          </div>
-        </div>
-      </div>
-
-      <a href="project-power.html" style="border: 1px solid #163D2A; display: flex; flex-direction: column; color: #39FF88;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>PRJ_06</span><span style="color: #39FF88;">IN VERIFICATION</span></div>
-        <div style="position: relative; height: 300px; background: #05070A; overflow: hidden;">
-          <img src="assets/cards/power.jpg" alt="POWER SYSTEM PROTOCOLS" style="display: block; width: 100%; height: 100%; object-fit: contain;" />
-          <div style="position: absolute; inset: 0; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5,7,10,0.97) 0%, rgba(5,7,10,0.92) 55%, rgba(5,7,10,0.72) 100%); opacity: 0; transition: opacity 200ms;" style-hover="opacity: 1;">
-            <div style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: #D7E0E6; line-height: 1.3;">POWER SYSTEM PROTOCOLS</div>
-            <div style="font-size: 11px; letter-spacing: 0.14em; color: #7AAE91;">VERILOG · ARTIX-7 · CORDIC · 6 CH</div>
-            <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">Instrumentation for the grid: a six-channel interpolated-DFT front end with CORDIC magnitude and phase and ROCOF differentiation, wrapped in the reporting protocols a substation actually expects. No vendor IP anywhere in the chain.</p>
-            <div style="font-size: 11.5px; letter-spacing: 0.12em; color: #39FF88;">OPEN CASE FILE ▸</div>
-          </div>
-        </div>
-      </a>
-
-      <div style="border: 1px solid #163D2A; display: flex; flex-direction: column;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>PRJ_07</span><span style="color: #ffb000;">SPEC</span></div>
-        <div style="position: relative; height: 300px; background: #05070A; overflow: hidden;">
-          <img src="assets/cards/secondbrain.jpg" alt="SECOND BRAIN ALGORITHM" style="display: block; width: 100%; height: 100%; object-fit: contain;" />
-          <div style="position: absolute; inset: 0; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5,7,10,0.97) 0%, rgba(5,7,10,0.92) 55%, rgba(5,7,10,0.72) 100%); opacity: 0; transition: opacity 200ms;" style-hover="opacity: 1;">
-            <div style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: #D7E0E6; line-height: 1.3;">SECOND BRAIN ALGORITHM</div>
-            <div style="font-size: 11px; letter-spacing: 0.14em; color: #7AAE91;">SPEC IN PROGRESS</div>
-            <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">[ Send me a paragraph on the second brain algorithm and it goes here verbatim. ]</p>
-            <a href="project-secondbrain.html" style="font-size: 11.5px; letter-spacing: 0.12em; align-self: start;">[ ▸ OPEN CASE FILE ]</a>
-          </div>
-        </div>
-      </div>
-
-      <div style="border: 1px solid #163D2A; display: flex; flex-direction: column;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>PRJ_08</span><span style="color: #ffb000;">SPEC</span></div>
-        <div style="position: relative; height: 300px; background: #05070A; overflow: hidden;">
-          <img src="assets/cards/bitstream-llm.jpg" alt="BITSTREAM LLM" style="display: block; width: 100%; height: 100%; object-fit: contain;" />
-          <div style="position: absolute; inset: 0; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5,7,10,0.97) 0%, rgba(5,7,10,0.92) 55%, rgba(5,7,10,0.72) 100%); opacity: 0; transition: opacity 200ms;" style-hover="opacity: 1;">
-            <div style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: #D7E0E6; line-height: 1.3;">BITSTREAM LLM</div>
-            <div style="font-size: 11px; letter-spacing: 0.14em; color: #7AAE91;">SPEC IN PROGRESS</div>
-            <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">[ Send me a paragraph on the bitstream LLM and it goes here verbatim. ]</p>
-            <div style="font-size: 11.5px; letter-spacing: 0.12em; color: #66727D;">CASE FILE PENDING</div>
-          </div>
-        </div>
-      </div>
-
-      <div style="border: 1px solid #163D2A; display: flex; flex-direction: column;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>PRJ_09</span><span style="color: #ffb000;">SPEC</span></div>
-        <div style="position: relative; height: 300px; background: #05070A; overflow: hidden;">
-          <img src="assets/cards/drone.jpg" alt="DRONE CONTROL" style="display: block; width: 100%; height: 100%; object-fit: contain;" />
-          <div style="position: absolute; inset: 0; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5,7,10,0.97) 0%, rgba(5,7,10,0.92) 55%, rgba(5,7,10,0.72) 100%); opacity: 0; transition: opacity 200ms;" style-hover="opacity: 1;">
-            <div style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: #D7E0E6; line-height: 1.3;">DRONE CONTROL</div>
-            <div style="font-size: 11px; letter-spacing: 0.14em; color: #7AAE91;">RTL · CONTROL · SENSOR FUSION</div>
-            <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">Attitude control in fabric instead of firmware: IMU fusion, a fixed-point rate loop and PWM generation with deterministic latency from sample to actuator. The argument for hardware here is jitter, not throughput.</p>
-            <a href="project-swarm.html" style="font-size: 11.5px; letter-spacing: 0.12em; align-self: start;">[ ▸ OPEN CASE FILE ]</a>
-          </div>
-        </div>
-      </div>
-
-      <div style="border: 1px solid #163D2A; display: flex; flex-direction: column;" style-hover="border-color: #39FF88;">
-        <div style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>PRJ_10</span><span style="color: #ffb000;">SPEC</span></div>
-        <div style="position: relative; height: 300px; background: #05070A; overflow: hidden;">
-          <img src="assets/cards/hft.jpg" alt="HFT FPGA ALGORITHMS" style="display: block; width: 100%; height: 100%; object-fit: contain;" />
-          <div style="position: absolute; inset: 0; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5,7,10,0.97) 0%, rgba(5,7,10,0.92) 55%, rgba(5,7,10,0.72) 100%); opacity: 0; transition: opacity 200ms;" style-hover="opacity: 1;">
-            <div style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: #D7E0E6; line-height: 1.3;">HFT FPGA ALGORITHMS</div>
-            <div style="font-size: 11px; letter-spacing: 0.14em; color: #7AAE91;">RTL · LOW LATENCY · FEED PARSING</div>
-            <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">Tick-to-trade in hardware: market-data feed parsing on the wire, an order book maintained in fabric and a decision path measured in nanoseconds. Every stage has to justify the cycle it costs.</p>
-            <a href="project-hft.html" style="font-size: 11.5px; letter-spacing: 0.12em; align-self: start;">[ ▸ OPEN CASE FILE ]</a>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
   <section data-screen-label="Queue" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
     <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
       <span style="color: #05070A; background: #7AAE91; padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: 'Silkscreen', monospace;">B</span>
-      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">QUEUE</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">{{ queueSlot.heading }}</span>
       <span style="flex: 1; color: #11626F; overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
-      <span style="font-size: 12px; color: #66727D;">UNCLAIMED</span>
+      <span style="font-size: 12px; color: #66727D;">{{ queueSlot.kicker }}</span>
     </div>
-    <p style="max-width: 68ch; font-size: 13.5px; line-height: 1.9; color: #7AAE91; margin: 0 0 22px;">Proposed blocks with a written spec and no owner. Claim one when you join — you get the spec, a mentor and bench time.</p>
+    <sc-for list="{{ queueSlot.paras }}" as="x">
+      <p style="max-width: 68ch; font-size: 13.5px; line-height: 1.9; color: #7AAE91; margin: 0 0 22px;">{{ x }}</p>
+    </sc-for>
     <div style="display: grid; gap: 0; border-top: 1px solid #182027;">
+      <sc-for list="{{ queue }}" as="q">
       <div style="display: grid; grid-template-columns: 150px minmax(0, 1fr) 130px; gap: 20px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid #182027; font-size: 13.5px;">
-        <span style="color: #D7E0E6; letter-spacing: 0.06em;">AXI4-LITE CSR</span>
-        <span style="color: #A8B3BD;">Register block generator plus a UVM agent that proves the generated map matches the spec.</span>
-        <span style="color: #7AAE91; font-size: 12px;">DV · 1 OWNER</span>
+        <span style="color: #D7E0E6; letter-spacing: 0.06em;">{{ q.title }}</span>
+        <span style="color: #A8B3BD;">{{ q.description }}</span>
+        <span style="color: #7AAE91; font-size: 12px;">{{ q.tag }}</span>
       </div>
-      <div style="display: grid; grid-template-columns: 150px minmax(0, 1fr) 130px; gap: 20px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid #182027; font-size: 13.5px;">
-        <span style="color: #D7E0E6; letter-spacing: 0.06em;">CIC DECIMATOR</span>
-        <span style="color: #A8B3BD;">Configurable-rate CIC with compensation FIR. Fixed-point error budget written before the RTL.</span>
-        <span style="color: #7AAE91; font-size: 12px;">RTL · 1 OWNER</span>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px minmax(0, 1fr) 130px; gap: 20px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid #182027; font-size: 13.5px;">
-        <span style="color: #D7E0E6; letter-spacing: 0.06em;">CDC AUDIT KIT</span>
-        <span style="color: #A8B3BD;">Assertions and a lint pass that catch the clock-domain crossings our reviews keep missing.</span>
-        <span style="color: #7AAE91; font-size: 12px;">DV · 2 OWNERS</span>
-      </div>
-      <div style="display: grid; grid-template-columns: 150px minmax(0, 1fr) 130px; gap: 20px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid #182027; font-size: 13.5px;">
-        <span style="color: #D7E0E6; letter-spacing: 0.06em;">SKY130 SRAM TILE</span>
-        <span style="color: #A8B3BD;">Small macro pushed through OpenLane to GDS, with the timing and DRC reports published as-is.</span>
-        <span style="color: #7AAE91; font-size: 12px;">PD · 1 OWNER</span>
-      </div>
+      </sc-for>
     </div>
   </section>
 
   <section data-screen-label="CTA" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
     <div style="border: 1px solid #39FF88; padding: 26px 24px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center;">
-      <div style="font-size: 15px; color: #D7E0E6; letter-spacing: 0.06em;">Bringing your own block is also allowed.</div>
-      <a href="join.html" style="border: 1px solid #39FF88; padding: 11px 20px; font-size: 13px; letter-spacing: 0.16em; font-weight: 700;">[ ▸ CLAIM A BLOCK ]</a>
+      <div style="font-size: 15px; color: #D7E0E6; letter-spacing: 0.06em;">{{ cta.heading }}</div>
+      <sc-for list="{{ cta.links }}" as="l">
+        <a href="{{ l.href }}" style="border: 1px solid #39FF88; padding: 11px 20px; font-size: 13px; letter-spacing: 0.16em; font-weight: 700;">{{ l.label }}</a>
+      </sc-for>
     </div>
   </section>
+  </sc-if>
 
   <div style="max-width: 1520px; margin: 74px auto 0; padding: 0 28px;">
     <div style="border-top: 1px solid #163D2A; padding: 26px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; font-size: 12.5px;">
       <div style="display: grid; gap: 8px; align-content: start;">
         <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">WHISTLEBLOWER</div>
-        <div style="color: #A8B3BD; line-height: 1.8; max-width: 30ch;">Student-run ASIC / FPGA hardware verification lab.</div>
+        <div style="color: #A8B3BD; line-height: 1.8; max-width: 30ch;">{{ site.footerBlurb }}</div>
       </div>
       <div style="display: grid; gap: 8px; align-content: start;">
         <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">CONTACT</div>
-        <div><span style="color: #66727D;">MAIL ▸ </span><a href="mailto:lab@whistleblower.dev">lab@whistleblower.dev</a></div>
+        <div><span style="color: #66727D;">MAIL ▸ </span><a href="mailto:{{ site.email }}">{{ site.email }}</a></div>
       </div>
       <div style="display: grid; gap: 8px; align-content: start;">
         <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">INDEX</div>
@@ -257,5 +162,45 @@
 
 </div>
 </x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { data: null, failed: false };
+
+  componentDidMount() {
+    WB.load().then(
+      (data) => { this.setState({ data }); WB.setDescription(WB.page(data, 'projects').seo); },
+      () => this.setState({ failed: true })
+    );
+  }
+
+  renderVals() {
+    const d = this.state.data;
+    const s = (d && d.settings) || {};
+    const site = { footerBlurb: s.footerBlurb || 'Student-run ASIC / FPGA hardware verification lab.', email: s.email || 'lab@whistleblower.dev' };
+    if (!d) return { loading: !this.state.failed, failed: this.state.failed, ready: false, site };
+
+    const page = WB.page(d, 'projects');
+    const cta = page.slot.cta || { links: [] };
+    // Hand-built case-file pages are named project-<design>.html
+    const DESIGNS = ['hft', 'ipdft', 'power', 'pqc', 'secondbrain', 'sentinel', 'swarm', 'tcpip'];
+    const projects = (d.projects || []).filter((p) => p.listed !== false).map((p) => ({
+      code: p.code, stage: p.stage,
+      stageColor: p.stage === 'SPEC' || p.stage === 'PAUSED' ? '#ffb000' : '#39FF88',
+      image: p.cardImage && WB.img(p.cardImage.url, 900),
+      imageAlt: (p.cardImage && p.cardImage.alt) || p.title,
+      title: p.title, tags: p.tags, summary: p.summary,
+      caseFileHref: p.caseFile === 'live' && DESIGNS.indexOf(p.design) !== -1 ? 'project-' + p.design + '.html' : undefined,
+    }));
+    const q = page.slot.queue || {};
+    const queueSlot = { heading: q.heading || 'QUEUE', kicker: q.kicker, paras: q.paras || [] };
+    const queue = (d.queue || []).map((x) => ({ title: x.title, description: x.description, tag: x.tag }));
+
+    return {
+      loading: false, failed: false, ready: true, site, page, cta, projects, queue, queueSlot,
+      countLabel: 'HOVER FOR DETAIL · ' + projects.length + (projects.length === 1 ? ' ENTRY' : ' ENTRIES'),
+    };
+  }
+}
+</script>
 </body>
 </html>
