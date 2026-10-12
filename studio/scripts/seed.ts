@@ -31,8 +31,7 @@ export const siteSettings = {
   tagline: 'ASIC · FPGA · DV',
   footerBlurb: 'Student-run ASIC / FPGA hardware verification lab.',
   intakeOpen: true,
-  email: 'lab@whistleblower.dev',
-  github: 'https://github.com/whistleblower-lab',
+  email: 'whistleblowerlabs@gmail.com',
   location: '[ BUILDING · ROOM ]',
   hours: 'Wed 18:00 — open bench',
   statusPanel: rows([
@@ -101,7 +100,7 @@ export const pages: Record<string, {kicker?: string; title?: string; intro?: str
     sections: [
       {key: 'reports', heading: 'LAB REPORTS'},
       {key: 'papers', heading: 'PEER-REVIEWED'},
-      {key: 'cta', heading: 'Want the raw reports, seeds or waveforms? Ask.', links: [{label: '[ ▸ REQUEST ARTEFACTS ]', href: 'mailto:lab@whistleblower.dev'}]},
+      {key: 'cta', heading: 'Want the raw reports, seeds or waveforms? Ask.', links: [{label: '[ ▸ REQUEST ARTEFACTS ]', href: 'mailto:whistleblowerlabs@gmail.com'}]},
     ],
   },
   news: {
@@ -154,7 +153,7 @@ export const pages: Record<string, {kicker?: string; title?: string; intro?: str
         key: 'collaborate',
         heading: 'NOT A STUDENT?',
         body: 'We take collaborators, tool donations and sponsored blocks. A licence seat or a spare board changes what a whole intake can do.',
-        links: [{label: '[ ▸ TALK TO US ]', href: 'mailto:lab@whistleblower.dev'}],
+        links: [{label: '[ ▸ TALK TO US ]', href: 'mailto:whistleblowerlabs@gmail.com'}],
       },
     ],
   },

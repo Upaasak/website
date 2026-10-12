@@ -149,7 +149,7 @@ class Component extends DCLogic {
   renderVals() {
     const d = this.state.data;
     const s = (d && d.settings) || {};
-    const site = { footerBlurb: s.footerBlurb || 'Student-run ASIC / FPGA hardware verification lab.', email: s.email || 'lab@whistleblower.dev' };
+    const site = { footerBlurb: s.footerBlurb || 'Student-run ASIC / FPGA hardware verification lab.', email: s.email || 'whistleblowerlabs@gmail.com' };
     if (!d) return { loading: !this.state.failed, failed: this.state.failed, ready: false, site };
 
     const page = WB.page(d, 'research');

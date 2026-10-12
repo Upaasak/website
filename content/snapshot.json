@@ -220,9 +220,9 @@
   {
    "_createdAt": "2026-10-12T18:10:06Z",
    "_id": "page-join",
-   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_rev": "IG4Z2d4uQTGJQB5lvrSYpG",
    "_type": "pageCopy",
-   "_updatedAt": "2026-10-12T18:10:06Z",
+   "_updatedAt": "2026-10-12T18:40:28Z",
    "intro": "Undergraduates and postgraduates, any department. You need curiosity and a term of time; you do not need a tapeout, a licence or prior lab experience. That is what the lab is for.\n\nSix slots this intake. One block each, one mentor each, one signoff at the end.",
    "kicker": "▚▚ 07 / OPEN POSITIONS ▞▞",
    "page": "join",
@@ -377,7 +377,7 @@
      "links": [
       {
        "_key": "k0",
-       "href": "mailto:lab@whistleblower.dev",
+       "href": "mailto:whistleblowerlabs@gmail.com",
        "label": "[ ▸ TALK TO US ]"
       }
      ]
@@ -481,9 +481,9 @@
   {
    "_createdAt": "2026-10-12T18:10:06Z",
    "_id": "page-publications",
-   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_rev": "IG4Z2d4uQTGJQB5lvrSYpG",
    "_type": "pageCopy",
-   "_updatedAt": "2026-10-12T18:10:06Z",
+   "_updatedAt": "2026-10-12T18:40:28Z",
    "intro": "Our first paper is out. Alongside it we publish every signoff report, constraint file and failed run from the blocks we finish — published as written, not cleaned up afterwards.",
    "kicker": "▚▚ 05 / PUBLICATIONS ▞▞",
    "page": "publications",
@@ -516,7 +516,7 @@
      "links": [
       {
        "_key": "k0",
-       "href": "mailto:lab@whistleblower.dev",
+       "href": "mailto:whistleblowerlabs@gmail.com",
        "label": "[ ▸ REQUEST ARTEFACTS ]"
       }
      ]
@@ -1226,12 +1226,11 @@
  "settings": {
   "_createdAt": "2026-10-12T18:10:06Z",
   "_id": "siteSettings",
-  "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+  "_rev": "IG4Z2d4uQTGJQB5lvrSYpG",
   "_type": "siteSettings",
-  "_updatedAt": "2026-10-12T18:10:06Z",
-  "email": "lab@whistleblower.dev",
+  "_updatedAt": "2026-10-12T18:40:28Z",
+  "email": "whistleblowerlabs@gmail.com",
   "footerBlurb": "Student-run ASIC / FPGA hardware verification lab.",
-  "github": "https://github.com/whistleblower-lab",
   "hours": "Wed 18:00 — open bench",
   "intakeOpen": true,
   "labName": "WHISTLEBLOWER",
