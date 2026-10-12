@@ -30,6 +30,7 @@
     .wb-nav { padding: 10px 16px !important; row-gap: 10px !important; }
     .wb-nav-links { gap: 6px 14px !important; }
   }
+  [data-screen-label="Live replay RASO IMM"] :fullscreen iframe, :fullscreen > iframe { height: 100vh !important; }
   /* Round 2: shared layout, legibility and interaction fixes */
   html, body { overflow-x: clip; }
   body { overflow-wrap: break-word; }
@@ -293,6 +294,20 @@
         </div>
       </div>
     </div>
+
+    <div data-screen-label="Live replay RASO IMM" style="margin-top: 16px; background: #05070A; border: 2px solid #FFB000;">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; padding: 8px 14px; border-bottom: 1px solid #2A5A8E; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.1em;">
+        <span style="color: #FFB000;">REPLAY · RASO IMM CONSOLE <span style="color: #9FB6CF;">· NINE RECORDED TRAJECTORIES</span></span>
+        <span style="display: flex; gap: 14px; align-items: center;">
+          <button type="button" sc-camel-on-click="{{ goFullscreen }}" style="font: inherit; letter-spacing: inherit; color: #F2E6C4; background: none; border: 1px solid #2A5A8E; padding: 4px 8px; cursor: pointer;" style-hover="border-color: #FFB000; color: #FFB000;">[ FULLSCREEN ]</button>
+          <a href="{{ trackerUrl }}" target="_blank" rel="noopener" style="color: #F2E6C4;">OPEN IN NEW TAB ▸</a>
+        </span>
+      </div>
+      <div ref="{{ embedRef }}" style="position: relative; background: #06080D;">
+        <iframe sc-camel-src="{{ embedSrc }}" title="RASO IMM Console: replay of a recorded IMM radar tracker run" loading="lazy" sandbox="allow-scripts allow-same-origin" referrerpolicy="strict-origin-when-cross-origin" style="display: block; width: 100%; height: {{ embedHeight }}; border: 0; background: #06080D;"></iframe>
+      </div>
+      <div style="padding: 8px 14px; border-top: 1px solid #2A5A8E; font-size: 11px; letter-spacing: 0.06em; color: #9FB6CF;">Step through nine recorded trajectories (birds, a car, three F1 laps, an airplane, a missile, a pedestrian) and compare the IMM filter&#39;s estimate and one-step prediction against ground truth, with live tracking error, mode probabilities and RF classification. A replay of stored filter output, not a live tracker.</div>
+    </div>
   </section>
 
   <section data-screen-label="Character select" style="max-width: 1520px; margin: 0 auto; padding: 64px 28px 0;">
@@ -391,6 +406,17 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;blinkHud&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Arcade&quot;},&quot;scanlines&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Arcade&quot;},&quot;showConventional&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;}}">
 class Component extends DCLogic {
+  embedRef = React.createRef();
+  TRACKER = 'https://widthmissmatch.github.io/Tracker/';
+  // Phones get the console's compact layout (stage + playback, no internal page scroll).
+  narrow = window.matchMedia('(max-width: 760px)').matches;
+
+  goFullscreen = () => {
+    const el = this.embedRef.current;
+    if (el && el.requestFullscreen) el.requestFullscreen().catch(() => window.open(this.TRACKER, '_blank', 'noopener'));
+    else window.open(this.TRACKER, '_blank', 'noopener');
+  };
+
   renderVals() {
     const done = { tag: 'CLEAR', bg: '#10294A', border: '#FFB000', accent: '#FFB000' };
     const live = { tag: 'PLAY', bg: '#10294A', border: '#2A5A8E', accent: '#F2E6C4' };
@@ -407,6 +433,11 @@ class Component extends DCLogic {
       ['Executive presentation', 'Material needs refresh', live]
     ].map((m, i) => Object.assign({ n: i + 1, name: m[0], note: m[1] }, m[2]));
     return {
+      embedRef: this.embedRef,
+      goFullscreen: this.goFullscreen,
+      trackerUrl: this.TRACKER,
+      embedSrc: this.TRACKER + (this.narrow ? '?embed=1&seg=3&panels=0' : '?embed=1&seg=3'),
+      embedHeight: this.narrow ? '70vh' : 'max(640px, min(860px, 85vh))',
       milestones: ms,
       blinkHud: this.props.blinkHud ?? true,
       showConventional: this.props.showConventional ?? true,
