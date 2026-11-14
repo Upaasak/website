@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html><head><style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./cms.js"></script>
+<script src="./support.js"></script><style>x-dc{display:none!important}</style><script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous"></script><script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous"></script>
+<title>Whistleblower Lab — Publications</title>
+<meta name="description" content="Papers, signoff reports, notes and checklists published by Whistleblower, a student-run ASIC / FPGA hardware verification lab.">
+<link rel="preconnect" href="https://7h6avsoz.apicdn.sanity.io" crossorigin="">
+<link rel="icon" href="assets/brand/logo-mark.png">
+<style>html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}</style><link rel="preconnect" href="https://fonts.googleapis.com" data-dc-tpl="1"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" data-dc-tpl="2"><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet" data-dc-tpl="3"><style data-dc-tpl="4">
+  html, body { margin: 0; padding: 0; background: #05070A; }
+  * { box-sizing: border-box; }
+  a { color: #00D9FF; text-decoration: none; }
+  a:hover { color: #05070A; background: #00D9FF; }
+  ::selection { background: #39FF88; color: #05070A; }
+  @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+  .cms-cursor { animation: blink 1s steps(1) infinite; }
+</style></head>
+<body>
+<div id="dc-root"><div class="sc-host" data-sc-name="publications"><div data-dc-tpl="5" style="background: rgb(5, 7, 10); color: rgb(57, 255, 136); font-family: &quot;IBM Plex Mono&quot;, ui-monospace, monospace; min-height: 100vh; overflow-x: hidden;">
+
+  <div data-dc-tpl="6" style="position: sticky; top: 0px; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 10px 28px; background: rgb(5, 7, 10); border-bottom: 1px solid rgb(22, 61, 42); font-size: 12px; letter-spacing: 0.12em;">
+    <div data-dc-tpl="7" style="display: flex; align-items: center; gap: 14px; color: rgb(122, 174, 145);">
+      <a data-dc-tpl="8" href="index.html" style="color: rgb(5, 7, 10); background: rgb(57, 255, 136); padding: 5px 8px; font-weight: 400; font-size: 9px; font-family: Silkscreen, monospace;">WHISTLEBLOWER</a>
+      <span data-dc-tpl="9" style="color: rgb(102, 114, 125);">│</span>
+      <span data-dc-tpl="10">ASIC · FPGA · DV</span>
+    </div>
+    <div data-dc-tpl="11" style="display: flex; align-items: center; gap: 16px;">
+      <a data-dc-tpl="12" href="index.html" style="color: rgb(122, 174, 145);">HOME</a>
+      <a data-dc-tpl="13" href="research.html" style="color: rgb(122, 174, 145);">RESEARCH</a>
+      <a data-dc-tpl="14" href="projects.html" style="color: rgb(122, 174, 145);">PROJECTS</a>
+      <a data-dc-tpl="15" href="people.html" style="color: rgb(122, 174, 145);">PEOPLE</a>
+      <span data-dc-tpl="16" style="color: rgb(215, 224, 230);">PUBS</span>
+      <a data-dc-tpl="17" href="news.html" style="color: rgb(122, 174, 145);">NEWS</a>
+      <a data-dc-tpl="18" href="join.html" style="color: rgb(122, 174, 145);">JOIN</a>
+    </div>
+  </div>
+
+  
+
+  
+
+  
+  <section data-dc-tpl="29" data-screen-label="Pubs header" style="max-width: 1520px; margin: 0px auto; padding: 56px 28px 0px;">
+    <div data-dc-tpl="30" style="font-size: 12px; letter-spacing: 0.3em; color: rgb(0, 217, 255); margin-bottom: 18px;"><span class="sc-interp">▚▚ 05 / PUBLICATIONS ▞▞</span></div>
+    <h1 data-dc-tpl="31" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-weight: 800; margin: 0px 0px 20px; font-size: clamp(32px, 4.6vw, 56px); letter-spacing: 0.02em; color: rgb(215, 224, 230); line-height: 1.05; white-space: pre-line;"><span class="sc-interp">WHAT WE PUBLISH</span></h1>
+    
+      <p data-dc-tpl="33" style="max-width: 68ch; font-size: 14px; line-height: 1.9; color: rgb(168, 179, 189); margin: 0px 0px 12px;"><span class="sc-interp">Our first paper is out. Alongside it we publish every signoff report, constraint file and failed run from the blocks we finish — published as written, not cleaned up afterwards.</span></p>
+    
+  </section>
+
+  
+  <section data-dc-tpl="35" data-screen-label="Reports" style="max-width: 1520px; margin: 0px auto; padding: 46px 28px 0px;">
+    <div data-dc-tpl="36" style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
+      <span data-dc-tpl="37" style="color: rgb(5, 7, 10); background: rgb(57, 255, 136); padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: Silkscreen, monospace;">A</span>
+      <span data-dc-tpl="38" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: rgb(215, 224, 230);"><span class="sc-interp">LAB REPORTS</span></span>
+      <span data-dc-tpl="39" style="flex: 1 1 0%; color: rgb(17, 98, 111); overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
+    </div>
+    <div data-dc-tpl="40" style="display: grid; gap: 0px; border-top: 1px solid rgb(24, 32, 39);">
+      
+      <div data-dc-tpl="42" style="display: grid; grid-template-columns: 92px minmax(0px, 1fr) 150px 90px; gap: 18px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid rgb(24, 32, 39); font-size: 13.5px;">
+        <span data-dc-tpl="43" style="color: rgb(102, 114, 125); font-size: 12px;"><span class="sc-interp">2026-08</span></span>
+        <span data-dc-tpl="44" style="color: rgb(215, 224, 230);"><span class="sc-interp">ipdft_channel_top — interim verification report, revision C</span></span>
+        <span data-dc-tpl="47" style="color: rgb(122, 174, 145); font-size: 12px;"><span class="sc-interp">TECH REPORT · PDF</span></span>
+        <a data-dc-tpl="49" href="project-ipdft.html" rel="noopener" style="font-size: 12px;">OPEN ▸</a>
+      </div>
+      
+      <div data-dc-tpl="42" style="display: grid; grid-template-columns: 92px minmax(0px, 1fr) 150px 90px; gap: 18px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid rgb(24, 32, 39); font-size: 13.5px;">
+        <span data-dc-tpl="43" style="color: rgb(102, 114, 125); font-size: 12px;"><span class="sc-interp">2026-07</span></span>
+        <span data-dc-tpl="44" style="color: rgb(215, 224, 230);"><span class="sc-interp">Fixed-point error budget for a sliding-DFT front end</span></span>
+        <span data-dc-tpl="47" style="color: rgb(122, 174, 145); font-size: 12px;"><span class="sc-interp">NOTE · PDF</span></span>
+        <a data-dc-tpl="49" href="project-ipdft.html" rel="noopener" style="font-size: 12px;">OPEN ▸</a>
+      </div>
+      
+      <div data-dc-tpl="42" style="display: grid; grid-template-columns: 92px minmax(0px, 1fr) 150px 90px; gap: 18px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid rgb(24, 32, 39); font-size: 13.5px;">
+        <span data-dc-tpl="43" style="color: rgb(102, 114, 125); font-size: 12px;"><span class="sc-interp">2026-06</span></span>
+        <span data-dc-tpl="44" style="color: rgb(215, 224, 230);"><span class="sc-interp">Intake curriculum: zero to signed-off block in one term</span></span>
+        <span data-dc-tpl="47" style="color: rgb(122, 174, 145); font-size: 12px;"><span class="sc-interp">CURRICULUM</span></span>
+        <a data-dc-tpl="49" href="join.html" rel="noopener" style="font-size: 12px;">OPEN ▸</a>
+      </div>
+      
+      <div data-dc-tpl="42" style="display: grid; grid-template-columns: 92px minmax(0px, 1fr) 150px 90px; gap: 18px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid rgb(24, 32, 39); font-size: 13.5px;">
+        <span data-dc-tpl="43" style="color: rgb(102, 114, 125); font-size: 12px;"><span class="sc-interp">2026-05</span></span>
+        <span data-dc-tpl="44" style="color: rgb(215, 224, 230);"><span class="sc-interp">Review checklist for RTL and testbench signoff, v2</span></span>
+        <span data-dc-tpl="47" style="color: rgb(122, 174, 145); font-size: 12px;"><span class="sc-interp">CHECKLIST</span></span>
+        <a data-dc-tpl="49" href="research.html" rel="noopener" style="font-size: 12px;">OPEN ▸</a>
+      </div>
+      
+    </div>
+  </section>
+  
+
+  
+  <section data-dc-tpl="51" data-screen-label="Papers" style="max-width: 1520px; margin: 0px auto; padding: 56px 28px 0px;">
+    <div data-dc-tpl="52" style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
+      <span data-dc-tpl="53" style="color: rgb(5, 7, 10); background: rgb(122, 174, 145); padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: Silkscreen, monospace;">B</span>
+      <span data-dc-tpl="54" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: rgb(215, 224, 230);"><span class="sc-interp">PEER-REVIEWED</span></span>
+      <span data-dc-tpl="55" style="flex: 1 1 0%; color: rgb(17, 98, 111); overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
+    </div>
+    <div data-dc-tpl="56" style="display: grid; gap: 0px; border-top: 1px solid rgb(24, 32, 39);">
+      
+      <a data-dc-tpl="58" href="https://www.researchgate.net/publication/413866718_Sub-Microsecond_Deterministic_Neural_Network_Acceleration_for_Real-Time_Power_System_Protection_Using_FPGA_Systolic_Arrays" target="_blank" rel="noopener" style="display: grid; grid-template-columns: 92px minmax(0px, 1fr) 150px 90px; gap: 18px; align-items: baseline; padding: 18px 4px; border-bottom: 1px solid rgb(24, 32, 39); font-size: 13.5px; color: rgb(215, 224, 230);">
+        <span data-dc-tpl="59" style="color: rgb(102, 114, 125); font-size: 12px;"><span class="sc-interp">2026</span></span>
+        <span data-dc-tpl="60"><span class="sc-interp">Sub-Microsecond Deterministic Neural Network Acceleration for Real-Time Power System Protection Using FPGA Systolic Arrays</span></span>
+        <span data-dc-tpl="63" style="color: rgb(122, 174, 145); font-size: 12px;"><span class="sc-interp">PAPER · RESEARCHGATE</span></span>
+        <span data-dc-tpl="64" style="color: rgb(57, 255, 136); font-size: 12px;">READ ▸</span>
+      </a>
+      
+    </div>
+  </section>
+  
+
+  
+  <section data-dc-tpl="66" data-screen-label="CTA" style="max-width: 1520px; margin: 0px auto; padding: 56px 28px 0px;">
+    <div data-dc-tpl="67" style="border: 1px solid rgb(57, 255, 136); padding: 26px 24px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center;">
+      <div data-dc-tpl="68" style="font-size: 15px; color: rgb(215, 224, 230); letter-spacing: 0.06em;"><span class="sc-interp">Want the raw reports, seeds or waveforms? Ask.</span></div>
+      
+      <a data-dc-tpl="70" href="mailto:lab@whistleblower.dev" style="border: 1px solid rgb(57, 255, 136); padding: 11px 20px; font-size: 13px; letter-spacing: 0.16em; font-weight: 700;"><span class="sc-interp">[ ▸ REQUEST ARTEFACTS ]</span></a>
+      
+    </div>
+  </section>
+  
+  
+
+
+  <div data-dc-tpl="71" style="max-width: 1520px; margin: 74px auto 0px; padding: 0px 28px;">
+    <div data-dc-tpl="72" style="border-top: 1px solid rgb(22, 61, 42); padding: 26px 0px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; font-size: 12.5px;">
+      <div data-dc-tpl="73" style="display: grid; gap: 8px; align-content: start;">
+        <div data-dc-tpl="74" style="color: rgb(102, 114, 125); letter-spacing: 0.16em; font-size: 11px;">WHISTLEBLOWER</div>
+        <div data-dc-tpl="75" style="color: rgb(168, 179, 189); line-height: 1.8; max-width: 30ch;"><span class="sc-interp">Student-run ASIC / FPGA hardware verification lab.</span></div>
+      </div>
+      <div data-dc-tpl="76" style="display: grid; gap: 8px; align-content: start;">
+        <div data-dc-tpl="77" style="color: rgb(102, 114, 125); letter-spacing: 0.16em; font-size: 11px;">CONTACT</div>
+        <div data-dc-tpl="78"><span data-dc-tpl="79" style="color: rgb(102, 114, 125);">MAIL ▸ </span><a data-dc-tpl="80" href="mailto:lab@whistleblower.dev"><span class="sc-interp">lab@whistleblower.dev</span></a></div>
+      </div>
+      <div data-dc-tpl="81" style="display: grid; gap: 8px; align-content: start;">
+        <div data-dc-tpl="82" style="color: rgb(102, 114, 125); letter-spacing: 0.16em; font-size: 11px;">INDEX</div>
+        <div data-dc-tpl="83" style="display: flex; flex-wrap: wrap; gap: 6px 14px;">
+          <a data-dc-tpl="84" href="index.html" style="color: rgb(122, 174, 145);">HOME</a>
+          <a data-dc-tpl="85" href="research.html" style="color: rgb(122, 174, 145);">RESEARCH</a>
+          <a data-dc-tpl="86" href="projects.html" style="color: rgb(122, 174, 145);">PROJECTS</a>
+          <a data-dc-tpl="87" href="people.html" style="color: rgb(122, 174, 145);">PEOPLE</a>
+          <a data-dc-tpl="88" href="news.html" style="color: rgb(122, 174, 145);">NEWS</a>
+          <a data-dc-tpl="89" href="join.html" style="color: rgb(122, 174, 145);">JOIN</a>
+        </div>
+      </div>
+    </div>
+    <div data-dc-tpl="90" style="border-top: 1px solid rgb(24, 32, 39); padding: 14px 0px 30px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-size: 11px; letter-spacing: 0.14em; color: rgb(102, 114, 125);">
+      <span data-dc-tpl="91">▓▒░ END OF FILE ░▒▓</span>
+      <span data-dc-tpl="92">WHISTLEBLOWER LAB · MMXXVI</span>
+    </div>
+  </div></div></div></div>
+<script type="text/x-dc" data-dc-script="">
+class Component extends DCLogic {
+  state = { data: null, failed: false };
+
+  componentDidMount() {
+    WB.load().then(
+      (data) => { this.setState({ data }); WB.setDescription(WB.page(data, 'publications').seo); },
+      () => this.setState({ failed: true })
+    );
+  }
+
+  renderVals() {
+    const d = this.state.data;
+    const s = (d && d.settings) || {};
+    const site = { footerBlurb: s.footerBlurb || 'Student-run ASIC / FPGA hardware verification lab.', email: s.email || 'lab@whistleblower.dev' };
+    if (!d) return { loading: !this.state.failed, failed: this.state.failed, ready: false, site };
+
+    const page = WB.page(d, 'publications');
+    // Reports show year-month, papers only the year.
+    const row = (p, dateLen) => {
+      const href = p.pdfUrl || WB.href(p.url);
+      return {
+        date: String(p.date || '').slice(0, dateLen),
+        title: p.title, kind: p.kind,
+        byline: [(p.authors || []).join(', '), p.venue].filter(Boolean).join(' · '),
+        href, target: WB.isExternal(href) ? '_blank' : undefined,
+      };
+    };
+    const pubs = d.publications || [];
+    const reports = pubs.filter((p) => p.category === 'report').map((p) => row(p, 7));
+    const papers = pubs.filter((p) => p.category === 'paper').map((p) => row(p, 4));
+    const cta = page.slot.cta || {};
+
+    return {
+      loading: false, failed: false, ready: true, site, page,
+      reports, papers, hasReports: reports.length > 0, hasPapers: papers.length > 0,
+      reportsHeading: (page.slot.reports && page.slot.reports.heading) || 'LAB REPORTS',
+      papersHeading: (page.slot.papers && page.slot.papers.heading) || 'PEER-REVIEWED',
+      cta: { heading: cta.heading, links: (cta.links || []).filter((l) => l.href) },
+    };
+  }
+}
+</script>
+
+
+</body></html>

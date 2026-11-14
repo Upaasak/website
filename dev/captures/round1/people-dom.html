@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html><head><style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./cms.js"></script>
+<script src="./support.js"></script><style>x-dc{display:none!important}</style><script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous"></script><script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous"></script>
+<title>Whistleblower Lab — People</title>
+<meta name="description" content="Members, advisor and alumni of Whistleblower, a student-run ASIC / FPGA hardware verification lab.">
+<link rel="preconnect" href="https://7h6avsoz.apicdn.sanity.io" crossorigin="">
+<link rel="icon" href="assets/brand/logo-mark.png">
+<style></style><style>html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}</style><link rel="preconnect" href="https://fonts.googleapis.com" data-dc-tpl="1"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" data-dc-tpl="2"><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet" data-dc-tpl="3"><style data-dc-tpl="4">
+  html, body { margin: 0; padding: 0; background: #05070A; }
+  * { box-sizing: border-box; }
+  a { color: #00D9FF; text-decoration: none; }
+  a:hover { color: #05070A; background: #00D9FF; }
+  ::selection { background: #39FF88; color: #05070A; }
+  @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+  .cms-cursor { animation: blink 1s steps(1) infinite; }
+</style></head>
+<body>
+<div id="dc-root"><div class="sc-host" data-sc-name="people"><div data-dc-tpl="5" style="background: rgb(5, 7, 10); color: rgb(57, 255, 136); font-family: &quot;IBM Plex Mono&quot;, ui-monospace, monospace; min-height: 100vh; overflow-x: hidden;">
+
+  <div data-dc-tpl="6" style="position: sticky; top: 0px; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 10px 28px; background: rgb(5, 7, 10); border-bottom: 1px solid rgb(22, 61, 42); font-size: 12px; letter-spacing: 0.12em;">
+    <div data-dc-tpl="7" style="display: flex; align-items: center; gap: 14px; color: rgb(122, 174, 145);">
+      <a data-dc-tpl="8" href="index.html" style="color: rgb(5, 7, 10); background: rgb(57, 255, 136); padding: 5px 8px; font-weight: 400; font-size: 9px; font-family: Silkscreen, monospace;">WHISTLEBLOWER</a>
+      <span data-dc-tpl="9" style="color: rgb(102, 114, 125);">│</span>
+      <span data-dc-tpl="10">ASIC · FPGA · DV</span>
+    </div>
+    <div data-dc-tpl="11" style="display: flex; align-items: center; gap: 16px;">
+      <a data-dc-tpl="12" href="index.html" style="color: rgb(122, 174, 145);">HOME</a>
+      <a data-dc-tpl="13" href="research.html" style="color: rgb(122, 174, 145);">RESEARCH</a>
+      <a data-dc-tpl="14" href="projects.html" style="color: rgb(122, 174, 145);">PROJECTS</a>
+      <span data-dc-tpl="15" style="color: rgb(215, 224, 230);">PEOPLE</span>
+      <a data-dc-tpl="16" href="publications.html" style="color: rgb(122, 174, 145);">PUBS</a>
+      <a data-dc-tpl="17" href="news.html" style="color: rgb(122, 174, 145);">NEWS</a>
+      <a data-dc-tpl="18" href="join.html" style="color: rgb(122, 174, 145);">JOIN</a>
+    </div>
+  </div>
+
+  
+
+  
+
+  
+  <section data-dc-tpl="29" data-screen-label="People header" style="max-width: 1520px; margin: 0px auto; padding: 56px 28px 0px;">
+    <div data-dc-tpl="30" style="font-size: 12px; letter-spacing: 0.3em; color: rgb(0, 217, 255); margin-bottom: 18px;"><span class="sc-interp">▚▚ 04 / PEOPLE ▞▞</span></div>
+    <h1 data-dc-tpl="31" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-weight: 800; margin: 0px 0px 20px; font-size: clamp(32px, 4.6vw, 56px); letter-spacing: 0.02em; color: rgb(215, 224, 230); line-height: 1.05; white-space: pre-line;"><span class="sc-interp">WHO SIGNS OFF</span></h1>
+    
+      <p data-dc-tpl="33" style="max-width: 68ch; font-size: 14px; line-height: 1.9; color: rgb(168, 179, 189); margin: 0px 0px 12px;"><span class="sc-interp">Seven active members and one advisor. No hierarchy beyond who owns which block: every block has exactly one owner and one reviewer, and the two are never the same person.</span></p>
+    
+    
+      <div data-dc-tpl="35" style="margin-top: 22px; border: 1px dashed rgb(255, 176, 0); padding: 12px 14px; font-size: 12px; letter-spacing: 0.1em; color: rgb(255, 176, 0);"><span class="sc-interp">PLACEHOLDER ROSTER — send names, roles and handles and they go straight in.</span></div>
+    
+  </section>
+
+  <section data-dc-tpl="36" data-screen-label="Roster" style="max-width: 1520px; margin: 0px auto; padding: 40px 28px 0px;">
+    <div data-dc-tpl="37" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 16px;">
+
+      
+      <div data-dc-tpl="39" class="scp0" style="border: 1px solid rgb(22, 61, 42);">
+        <div data-dc-tpl="40" style="display: flex; justify-content: space-between; padding: 6px 12px; background: rgb(24, 32, 39); color: rgb(57, 255, 136); font-size: 11.5px; letter-spacing: 0.14em;"><span data-dc-tpl="41"><span class="sc-interp">MBR_01</span></span><span data-dc-tpl="42"><span class="sc-interp">LEAD</span></span></div>
+        
+        <div data-dc-tpl="45" style="padding: 18px 16px; display: grid; gap: 10px;">
+          <div data-dc-tpl="46" style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: rgb(215, 224, 230);"><span class="sc-interp">[ NAME ]</span></div>
+          <div data-dc-tpl="47" style="font-size: 11.5px; letter-spacing: 0.12em; color: rgb(122, 174, 145);"><span class="sc-interp">VERIFICATION LEAD</span></div>
+          <div data-dc-tpl="48" style="font-size: 12.5px; line-height: 1.8; color: rgb(168, 179, 189);"><span class="sc-interp">Owns the review checklist and the intake curriculum. Reviewer of last resort.</span></div>
+          <div data-dc-tpl="49" style="font-size: 11.5px; color: rgb(102, 114, 125); letter-spacing: 0.1em;"><span class="sc-interp">R1 · R6</span></div>
+          
+        </div>
+      </div>
+      
+      <div data-dc-tpl="39" class="scp0" style="border: 1px solid rgb(22, 61, 42);">
+        <div data-dc-tpl="40" style="display: flex; justify-content: space-between; padding: 6px 12px; background: rgb(24, 32, 39); color: rgb(57, 255, 136); font-size: 11.5px; letter-spacing: 0.14em;"><span data-dc-tpl="41"><span class="sc-interp">MBR_02</span></span><span data-dc-tpl="42"><span class="sc-interp">RTL</span></span></div>
+        
+        <div data-dc-tpl="45" style="padding: 18px 16px; display: grid; gap: 10px;">
+          <div data-dc-tpl="46" style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: rgb(215, 224, 230);"><span class="sc-interp">[ NAME ]</span></div>
+          <div data-dc-tpl="47" style="font-size: 11.5px; letter-spacing: 0.12em; color: rgb(122, 174, 145);"><span class="sc-interp">RTL · DSP</span></div>
+          <div data-dc-tpl="48" style="font-size: 12.5px; line-height: 1.8; color: rgb(168, 179, 189);"><span class="sc-interp">Owner of ipdft_channel_top. Fixed-point error budgets, CORDIC, decimation.</span></div>
+          <div data-dc-tpl="49" style="font-size: 11.5px; color: rgb(102, 114, 125); letter-spacing: 0.1em;"><span class="sc-interp">R2 · R3</span></div>
+          
+        </div>
+      </div>
+      
+      <div data-dc-tpl="39" class="scp0" style="border: 1px solid rgb(22, 61, 42);">
+        <div data-dc-tpl="40" style="display: flex; justify-content: space-between; padding: 6px 12px; background: rgb(24, 32, 39); color: rgb(57, 255, 136); font-size: 11.5px; letter-spacing: 0.14em;"><span data-dc-tpl="41"><span class="sc-interp">MBR_03</span></span><span data-dc-tpl="42"><span class="sc-interp">DV</span></span></div>
+        
+        <div data-dc-tpl="45" style="padding: 18px 16px; display: grid; gap: 10px;">
+          <div data-dc-tpl="46" style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: rgb(215, 224, 230);"><span class="sc-interp">[ NAME ]</span></div>
+          <div data-dc-tpl="47" style="font-size: 11.5px; letter-spacing: 0.12em; color: rgb(122, 174, 145);"><span class="sc-interp">DV · UVM</span></div>
+          <div data-dc-tpl="48" style="font-size: 12.5px; line-height: 1.8; color: rgb(168, 179, 189);"><span class="sc-interp">Constrained-random environments and the regression that runs them overnight.</span></div>
+          <div data-dc-tpl="49" style="font-size: 11.5px; color: rgb(102, 114, 125); letter-spacing: 0.1em;"><span class="sc-interp">R1</span></div>
+          
+        </div>
+      </div>
+      
+      <div data-dc-tpl="39" class="scp0" style="border: 1px solid rgb(22, 61, 42);">
+        <div data-dc-tpl="40" style="display: flex; justify-content: space-between; padding: 6px 12px; background: rgb(24, 32, 39); color: rgb(57, 255, 136); font-size: 11.5px; letter-spacing: 0.14em;"><span data-dc-tpl="41"><span class="sc-interp">MBR_04</span></span><span data-dc-tpl="42"><span class="sc-interp">DV</span></span></div>
+        
+        <div data-dc-tpl="45" style="padding: 18px 16px; display: grid; gap: 10px;">
+          <div data-dc-tpl="46" style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: rgb(215, 224, 230);"><span class="sc-interp">[ NAME ]</span></div>
+          <div data-dc-tpl="47" style="font-size: 11.5px; letter-spacing: 0.12em; color: rgb(122, 174, 145);"><span class="sc-interp">DV · FORMAL</span></div>
+          <div data-dc-tpl="48" style="font-size: 12.5px; line-height: 1.8; color: rgb(168, 179, 189);"><span class="sc-interp">Assertions, CDC audits, and the argument about whether formal was worth it.</span></div>
+          <div data-dc-tpl="49" style="font-size: 11.5px; color: rgb(102, 114, 125); letter-spacing: 0.1em;"><span class="sc-interp">R1 · R3</span></div>
+          
+        </div>
+      </div>
+      
+      <div data-dc-tpl="39" class="scp0" style="border: 1px solid rgb(22, 61, 42);">
+        <div data-dc-tpl="40" style="display: flex; justify-content: space-between; padding: 6px 12px; background: rgb(24, 32, 39); color: rgb(57, 255, 136); font-size: 11.5px; letter-spacing: 0.14em;"><span data-dc-tpl="41"><span class="sc-interp">MBR_05</span></span><span data-dc-tpl="42"><span class="sc-interp">PD</span></span></div>
+        
+        <div data-dc-tpl="45" style="padding: 18px 16px; display: grid; gap: 10px;">
+          <div data-dc-tpl="46" style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: rgb(215, 224, 230);"><span class="sc-interp">[ NAME ]</span></div>
+          <div data-dc-tpl="47" style="font-size: 11.5px; letter-spacing: 0.12em; color: rgb(122, 174, 145);"><span class="sc-interp">PHYSICAL DESIGN</span></div>
+          <div data-dc-tpl="48" style="font-size: 12.5px; line-height: 1.8; color: rgb(168, 179, 189);"><span class="sc-interp">OpenLane runs on Sky130, floorplans, and the reports nobody else wants to read.</span></div>
+          <div data-dc-tpl="49" style="font-size: 11.5px; color: rgb(102, 114, 125); letter-spacing: 0.1em;"><span class="sc-interp">R3 · R4</span></div>
+          
+        </div>
+      </div>
+      
+      <div data-dc-tpl="39" class="scp0" style="border: 1px solid rgb(22, 61, 42);">
+        <div data-dc-tpl="40" style="display: flex; justify-content: space-between; padding: 6px 12px; background: rgb(24, 32, 39); color: rgb(57, 255, 136); font-size: 11.5px; letter-spacing: 0.14em;"><span data-dc-tpl="41"><span class="sc-interp">MBR_06</span></span><span data-dc-tpl="42"><span class="sc-interp">FLOW</span></span></div>
+        
+        <div data-dc-tpl="45" style="padding: 18px 16px; display: grid; gap: 10px;">
+          <div data-dc-tpl="46" style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: rgb(215, 224, 230);"><span class="sc-interp">[ NAME ]</span></div>
+          <div data-dc-tpl="47" style="font-size: 11.5px; letter-spacing: 0.12em; color: rgb(122, 174, 145);"><span class="sc-interp">TOOLING · INFRA</span></div>
+          <div data-dc-tpl="48" style="font-size: 12.5px; line-height: 1.8; color: rgb(168, 179, 189);"><span class="sc-interp">Bench scheduling, JTAG server, and every script that keeps the two boards busy.</span></div>
+          <div data-dc-tpl="49" style="font-size: 11.5px; color: rgb(102, 114, 125); letter-spacing: 0.1em;"><span class="sc-interp">R5</span></div>
+          
+        </div>
+      </div>
+      
+      <div data-dc-tpl="39" class="scp0" style="border: 1px solid rgb(22, 61, 42);">
+        <div data-dc-tpl="40" style="display: flex; justify-content: space-between; padding: 6px 12px; background: rgb(24, 32, 39); color: rgb(57, 255, 136); font-size: 11.5px; letter-spacing: 0.14em;"><span data-dc-tpl="41"><span class="sc-interp">MBR_07</span></span><span data-dc-tpl="42"><span class="sc-interp">INTAKE</span></span></div>
+        
+        <div data-dc-tpl="45" style="padding: 18px 16px; display: grid; gap: 10px;">
+          <div data-dc-tpl="46" style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: rgb(215, 224, 230);"><span class="sc-interp">[ NAME ]</span></div>
+          <div data-dc-tpl="47" style="font-size: 11.5px; letter-spacing: 0.12em; color: rgb(122, 174, 145);"><span class="sc-interp">RTL · FIRST TERM</span></div>
+          <div data-dc-tpl="48" style="font-size: 12.5px; line-height: 1.8; color: rgb(168, 179, 189);"><span class="sc-interp">Working through the intake curriculum. Claiming the CIC decimator next term.</span></div>
+          <div data-dc-tpl="49" style="font-size: 11.5px; color: rgb(102, 114, 125); letter-spacing: 0.1em;"><span class="sc-interp">R2 · R6</span></div>
+          
+        </div>
+      </div>
+      
+
+      
+      <div data-dc-tpl="55" style="border: 1px dashed rgb(22, 61, 42); display: grid; align-content: center; justify-items: center; gap: 10px; padding: 26px 16px; min-height: 180px;">
+        <div data-dc-tpl="56" style="font-size: 13px; letter-spacing: 0.16em; color: rgb(122, 174, 145);">SLOT OPEN</div>
+        <a data-dc-tpl="57" href="join.html" style="font-size: 12.5px; letter-spacing: 0.14em;">[ ▸ APPLY ]</a>
+      </div>
+      
+
+    </div>
+  </section>
+
+  <section data-dc-tpl="58" data-screen-label="Advisor" style="max-width: 1520px; margin: 0px auto; padding: 40px 28px 0px;">
+    <div data-dc-tpl="59" style="border: 1px solid rgb(22, 61, 42); display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+      <div data-dc-tpl="60" style="padding: 24px 22px; border-right: 1px solid rgb(24, 32, 39); display: grid; gap: 22px; align-content: start;">
+        
+        <div data-dc-tpl="62">
+          <div data-dc-tpl="63" style="font-size: 11px; letter-spacing: 0.18em; color: rgb(102, 114, 125); margin-bottom: 12px;"><span class="sc-interp">ADVISOR</span></div>
+          <div data-dc-tpl="64" style="font-size: 17px; font-weight: 700; color: rgb(215, 224, 230); letter-spacing: 0.06em; margin-bottom: 10px;"><span class="sc-interp">[ NAME ]</span></div>
+          <p data-dc-tpl="65" style="margin: 0px; font-size: 13px; line-height: 1.85; color: rgb(168, 179, 189); max-width: 52ch;"><span class="sc-interp">Signs the tool requests, argues with the constraint files, and does not write the RTL.</span></p>
+        </div>
+        
+      </div>
+      <div data-dc-tpl="66" style="padding: 24px 22px; display: grid; gap: 10px; align-content: start; font-size: 12.5px;">
+        <div data-dc-tpl="67" style="font-size: 11px; letter-spacing: 0.18em; color: rgb(102, 114, 125);"><span class="sc-interp">ALUMNI</span></div>
+        
+          <div data-dc-tpl="69" style="color: rgb(215, 224, 230);"><span class="sc-interp">[ NAME ] — now DV at [ COMPANY ]</span></div>
+        
+          <div data-dc-tpl="69" style="color: rgb(215, 224, 230);"><span class="sc-interp">[ NAME ] — MSc, [ INSTITUTION ]</span></div>
+        
+        <div data-dc-tpl="70" style="color: rgb(122, 174, 145); line-height: 1.8; padding-top: 4px;"><span class="sc-interp">Alumni still review blocks on request. It is the cheapest mentorship we have.</span></div>
+      </div>
+    </div>
+  </section>
+  
+
+
+  <div data-dc-tpl="71" style="max-width: 1520px; margin: 74px auto 0px; padding: 0px 28px;">
+    <div data-dc-tpl="72" style="border-top: 1px solid rgb(22, 61, 42); padding: 26px 0px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; font-size: 12.5px;">
+      <div data-dc-tpl="73" style="display: grid; gap: 8px; align-content: start;">
+        <div data-dc-tpl="74" style="color: rgb(102, 114, 125); letter-spacing: 0.16em; font-size: 11px;">WHISTLEBLOWER</div>
+        <div data-dc-tpl="75" style="color: rgb(168, 179, 189); line-height: 1.8; max-width: 30ch;"><span class="sc-interp">Student-run ASIC / FPGA hardware verification lab.</span></div>
+      </div>
+      <div data-dc-tpl="76" style="display: grid; gap: 8px; align-content: start;">
+        <div data-dc-tpl="77" style="color: rgb(102, 114, 125); letter-spacing: 0.16em; font-size: 11px;">CONTACT</div>
+        <div data-dc-tpl="78"><span data-dc-tpl="79" style="color: rgb(102, 114, 125);">MAIL ▸ </span><a data-dc-tpl="80" href="mailto:lab@whistleblower.dev"><span class="sc-interp">lab@whistleblower.dev</span></a></div>
+      </div>
+      <div data-dc-tpl="81" style="display: grid; gap: 8px; align-content: start;">
+        <div data-dc-tpl="82" style="color: rgb(102, 114, 125); letter-spacing: 0.16em; font-size: 11px;">INDEX</div>
+        <div data-dc-tpl="83" style="display: flex; flex-wrap: wrap; gap: 6px 14px;">
+          <a data-dc-tpl="84" href="index.html" style="color: rgb(122, 174, 145);">HOME</a>
+          <a data-dc-tpl="85" href="research.html" style="color: rgb(122, 174, 145);">RESEARCH</a>
+          <a data-dc-tpl="86" href="projects.html" style="color: rgb(122, 174, 145);">PROJECTS</a>
+          <a data-dc-tpl="87" href="publications.html" style="color: rgb(122, 174, 145);">PUBS</a>
+          <a data-dc-tpl="88" href="news.html" style="color: rgb(122, 174, 145);">NEWS</a>
+          <a data-dc-tpl="89" href="join.html" style="color: rgb(122, 174, 145);">JOIN</a>
+        </div>
+      </div>
+    </div>
+    <div data-dc-tpl="90" style="border-top: 1px solid rgb(24, 32, 39); padding: 14px 0px 30px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-size: 11px; letter-spacing: 0.14em; color: rgb(102, 114, 125);">
+      <span data-dc-tpl="91">▓▒░ END OF FILE ░▒▓</span>
+      <span data-dc-tpl="92">WHISTLEBLOWER LAB · MMXXVI</span>
+    </div>
+  </div></div></div></div>
+<script type="text/x-dc" data-dc-script="">
+class Component extends DCLogic {
+  state = { data: null, failed: false };
+
+  componentDidMount() {
+    WB.load().then(
+      (data) => { this.setState({ data }); WB.setDescription(WB.page(data, 'people').seo); },
+      () => this.setState({ failed: true })
+    );
+  }
+
+  renderVals() {
+    const d = this.state.data;
+    const s = (d && d.settings) || {};
+    const site = { footerBlurb: s.footerBlurb || 'Student-run ASIC / FPGA hardware verification lab.', email: s.email || 'lab@whistleblower.dev' };
+    if (!d) return { loading: !this.state.failed, failed: this.state.failed, ready: false, site };
+
+    const page = WB.page(d, 'people');
+    const people = d.people || [];
+    const links = (p) => (p.links || []).map((l) => {
+      const href = WB.href(l.href);
+      return { label: l.label, href, target: WB.isExternal(href) ? '_blank' : undefined };
+    }).filter((l) => l.href);
+
+    const members = people.filter((p) => p.status === 'member').map((p, i) => ({
+      code: 'MBR_' + String(i + 1).padStart(2, '0'),
+      tag: p.tag, name: p.name, role: p.role, bio: p.bio,
+      areas: (p.areas || []).filter(Boolean).join(' · '),
+      photo: p.photo && WB.img(p.photo.url, 640), photoAlt: (p.photo && p.photo.alt) || p.name,
+      links: links(p), hasLinks: links(p).length > 0,
+    }));
+    const advisors = people.filter((p) => p.status === 'advisor').map((p) => ({
+      name: p.name, bio: p.bio, role: p.role || 'ADVISOR',
+    }));
+    const alumni = people.filter((p) => p.status === 'alumni').map((p) => [p.name, p.alumniNote].filter(Boolean).join(' — '));
+    const alumniSlot = page.slot.alumni || {};
+
+    return {
+      loading: false, failed: false, ready: true, site,
+      page, notice: page.slot.notice && page.slot.notice.body,
+      members, advisors, alumni,
+      alumniHeading: alumniSlot.heading || 'ALUMNI', alumniNote: alumniSlot.body,
+      intakeOpen: s.intakeOpen !== false,
+    };
+  }
+}
+</script>
+
+
+</body></html>

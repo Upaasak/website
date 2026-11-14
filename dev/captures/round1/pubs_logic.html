@@ -1,0 +1,43 @@
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { data: null, failed: false };
+
+  componentDidMount() {
+    WB.load().then(
+      (data) => { this.setState({ data }); WB.setDescription(WB.page(data, 'publications').seo); },
+      () => this.setState({ failed: true })
+    );
+  }
+
+  renderVals() {
+    const d = this.state.data;
+    const s = (d && d.settings) || {};
+    const site = { footerBlurb: s.footerBlurb || 'Student-run ASIC / FPGA hardware verification lab.', email: s.email || 'lab@whistleblower.dev' };
+    if (!d) return { loading: !this.state.failed, failed: this.state.failed, ready: false, site };
+
+    const page = WB.page(d, 'publications');
+    // Reports show year-month, papers only the year.
+    const row = (p, dateLen) => {
+      const href = p.pdfUrl || WB.href(p.url);
+      return {
+        date: String(p.date || '').slice(0, dateLen),
+        title: p.title, kind: p.kind,
+        byline: [(p.authors || []).join(', '), p.venue].filter(Boolean).join(' · '),
+        href, target: WB.isExternal(href) ? '_blank' : undefined,
+      };
+    };
+    const pubs = d.publications || [];
+    const reports = pubs.filter((p) => p.category === 'report').map((p) => row(p, 7));
+    const papers = pubs.filter((p) => p.category === 'paper').map((p) => row(p, 4));
+    const cta = page.slot.cta || {};
+
+    return {
+      loading: false, failed: false, ready: true, site, page,
+      reports, papers, hasReports: reports.length > 0, hasPapers: papers.length > 0,
+      reportsHeading: (page.slot.reports && page.slot.reports.heading) || 'LAB REPORTS',
+      papersHeading: (page.slot.papers && page.slot.papers.heading) || 'PEER-REVIEWED',
+      cta: { heading: cta.heading, links: (cta.links || []).filter((l) => l.href) },
+    };
+  }
+}
+</script>

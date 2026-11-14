@@ -11,7 +11,38 @@ in the dashboard and appear on the site within about a minute, with no code chan
 | Code | https://github.com/Upaasak/website (`main` auto-deploys to Cloudflare) |
 | Sanity project | ID `7h6avsoz`, dataset `production`, organization "Whistleblower Lab" |
 
-For editors: see [docs/EDITING.md](docs/EDITING.md).
+For editors: see [docs/EDITING.md](docs/EDITING.md). History of changes: [docs/CHANGELOG.md](docs/CHANGELOG.md).
+
+## Repository layout
+
+```
+/                    the website (Cloudflare serves the repo root)
+├─ *.html            one file per page (home = index.html, case files = project-*.html)
+├─ cms.js            loads content from Sanity (falls back to content/snapshot.json)
+├─ support.js        design runtime that renders the pages (generated; do not edit)
+├─ assets/           brand marks, project card images, case-file images
+├─ content/          snapshot.json: offline copy of all CMS content
+├─ studio/           Sanity Studio (dashboard) source            ┐
+├─ docs/             EDITING.md (for editors), CHANGELOG.md       │ not published
+├─ dev/              screenshots, audits, review pages, scripts   │ (.assetsignore)
+└─ README.md                                                      ┘
+```
+
+## Branches and versions
+
+- **`main`** is the live site: every push deploys to Cloudflare in about a minute.
+- **`preview`** holds work that is backed up on GitHub but not live yet. Going live = merge it into `main`.
+- **Tags** (`v0-original`, `v1-cms`, `v2-polish`, …) mark each finished round; see the changelog.
+
+### Rolling back
+
+To put the live site back to an earlier version without losing history:
+
+```sh
+git checkout main
+git revert --no-edit <tag>..HEAD    # undo everything after <tag> as new commits
+git push origin main
+```
 
 ## How it fits together
 

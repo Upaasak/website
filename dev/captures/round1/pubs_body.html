@@ -1,0 +1,74 @@
+  <sc-if value="{{ loading }}">
+    <section data-screen-label="Loading" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0; min-height: 60vh; font-size: 12px; letter-spacing: 0.2em; color: #7AAE91;">
+      <div>▚▚ 05 / PUBLICATIONS ▞▞</div>
+      <div style="margin-top: 22px;">&gt; FETCHING PUBLICATIONS <span class="cms-cursor" style="color: #39FF88;">▌</span></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ failed }}">
+    <section data-screen-label="Error" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0; min-height: 60vh;">
+      <div style="border: 1px dashed #ffb000; padding: 14px 16px; font-size: 12.5px; letter-spacing: 0.1em; line-height: 1.8; color: #ffb000;">ERR · PUBLICATIONS UNAVAILABLE — the content service did not answer. <a href="publications.html">[ ▸ RETRY ]</a></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ ready }}">
+  <section data-screen-label="Pubs header" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
+    <div style="font-size: 12px; letter-spacing: 0.3em; color: #00D9FF; margin-bottom: 18px;">{{ page.kicker }}</div>
+    <h1 style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin: 0 0 20px; font-size: clamp(32px, 4.6vw, 56px); font-weight: 800; letter-spacing: 0.02em; color: #D7E0E6; line-height: 1.05; white-space: pre-line;">{{ page.title }}</h1>
+    <sc-for list="{{ page.paras }}" as="p">
+      <p style="max-width: 68ch; font-size: 14px; line-height: 1.9; color: #A8B3BD; margin: 0 0 12px;">{{ p }}</p>
+    </sc-for>
+  </section>
+
+  <sc-if value="{{ hasReports }}">
+  <section data-screen-label="Reports" style="max-width: 1520px; margin: 0 auto; padding: 46px 28px 0;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
+      <span style="color: #05070A; background: #39FF88; padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: 'Silkscreen', monospace;">A</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">{{ reportsHeading }}</span>
+      <span style="flex: 1; color: #11626F; overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
+    </div>
+    <div style="display: grid; gap: 0; border-top: 1px solid #182027;">
+      <sc-for list="{{ reports }}" as="r">
+      <div style="display: grid; grid-template-columns: 92px minmax(0, 1fr) 150px 90px; gap: 18px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid #182027; font-size: 13.5px;">
+        <span style="color: #66727D; font-size: 12px;">{{ r.date }}</span>
+        <span style="color: #D7E0E6;">{{ r.title }}<sc-if value="{{ r.byline }}"><span style="display: block; margin-top: 4px; color: #66727D; font-size: 12px;">{{ r.byline }}</span></sc-if></span>
+        <span style="color: #7AAE91; font-size: 12px;">{{ r.kind }}</span>
+        <sc-if value="{{ r.href }}"><a href="{{ r.href }}" target="{{ r.target }}" rel="noopener" style="font-size: 12px;">OPEN ▸</a></sc-if>
+      </div>
+      </sc-for>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ hasPapers }}">
+  <section data-screen-label="Papers" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
+      <span style="color: #05070A; background: #7AAE91; padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: 'Silkscreen', monospace;">B</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">{{ papersHeading }}</span>
+      <span style="flex: 1; color: #11626F; overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
+    </div>
+    <div style="display: grid; gap: 0; border-top: 1px solid #182027;">
+      <sc-for list="{{ papers }}" as="r">
+      <a href="{{ r.href }}" target="{{ r.target }}" rel="noopener" style="display: grid; grid-template-columns: 92px minmax(0, 1fr) 150px 90px; gap: 18px; align-items: baseline; padding: 18px 4px; border-bottom: 1px solid #182027; font-size: 13.5px; color: #D7E0E6;">
+        <span style="color: #66727D; font-size: 12px;">{{ r.date }}</span>
+        <span>{{ r.title }}<sc-if value="{{ r.byline }}"><span style="display: block; margin-top: 4px; color: #66727D; font-size: 12px;">{{ r.byline }}</span></sc-if></span>
+        <span style="color: #7AAE91; font-size: 12px;">{{ r.kind }}</span>
+        <span style="color: #39FF88; font-size: 12px;">READ ▸</span>
+      </a>
+      </sc-for>
+    </div>
+  </section>
+  </sc-if>
+
+  <sc-if value="{{ cta.heading }}">
+  <section data-screen-label="CTA" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
+    <div style="border: 1px solid #39FF88; padding: 26px 24px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center;">
+      <div style="font-size: 15px; color: #D7E0E6; letter-spacing: 0.06em;">{{ cta.heading }}</div>
+      <sc-for list="{{ cta.links }}" as="l">
+      <a href="{{ l.href }}" style="border: 1px solid #39FF88; padding: 11px 20px; font-size: 13px; letter-spacing: 0.16em; font-weight: 700;">{{ l.label }}</a>
+      </sc-for>
+    </div>
+  </section>
+  </sc-if>
+  </sc-if>
+

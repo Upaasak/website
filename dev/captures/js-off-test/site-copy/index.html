@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./cms.js"></script>
+<script src="./support.js"></script>
+<title>Whistleblower Lab — Home</title>
+<meta name="description" content="Whistleblower is a student-run lab for ASIC and FPGA hardware verification: we pool tools, boards and mentorship, run real RTL through real flows, and publish everything we learn.">
+<link rel="preconnect" href="https://7h6avsoz.apicdn.sanity.io" crossorigin="">
+<link rel="icon" href="assets/brand/logo-mark.png" />
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; background: #05070A; }
+  * { box-sizing: border-box; }
+  a { color: #00D9FF; text-decoration: none; }
+  a:hover { color: #05070A; background: #00D9FF; }
+  ::selection { background: #39FF88; color: #05070A; }
+  @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+  .cms-cursor { animation: blink 1s steps(1) infinite; }
+</style>
+</helmet>
+<div style="background: #05070A; color: #39FF88; font-family: 'IBM Plex Mono', ui-monospace, monospace; min-height: 100vh; overflow-x: hidden;">
+
+  <div style="position: sticky; top: 0; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 10px 28px; background: #05070A; border-bottom: 1px solid #163D2A; font-size: 12px; letter-spacing: 0.12em;">
+    <div style="display: flex; align-items: center; gap: 14px; color: #7AAE91;">
+      <span style="color: #05070A; background: #39FF88; padding: 5px 8px; font-weight: 400; font-size: 9px; font-family: 'Silkscreen', monospace;">WHISTLEBLOWER</span>
+      <span style="color: #66727D;">│</span>
+      <span>ASIC · FPGA · DV</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <span style="color: #D7E0E6;">HOME</span>
+      <a href="research.html" style="color: #7AAE91;">RESEARCH</a>
+      <a href="projects.html" style="color: #7AAE91;">PROJECTS</a>
+      <a href="people.html" style="color: #7AAE91;">PEOPLE</a>
+      <a href="publications.html" style="color: #7AAE91;">PUBS</a>
+      <a href="news.html" style="color: #7AAE91;">NEWS</a>
+      <a href="join.html" style="color: #7AAE91;">JOIN</a>
+    </div>
+  </div>
+
+  <section data-screen-label="Hero" style="max-width: 1520px; margin: 0 auto; padding: 40px 28px 0;">
+    <div style="border: 1px solid #163D2A;">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 7px 14px; border-bottom: 1px solid #163D2A; font-size: 11.5px; letter-spacing: 0.14em; color: #7AAE91;">
+        <span style="color: #D7E0E6;">{{ hero.kicker }}</span>
+        <span>{{ hero.heading }}</span>
+      </div>
+      <div style="display: flex; justify-content: center; padding: 18px 16px; overflow: hidden;">
+        <img src="assets/brand/logo-mark.png" alt="Whistleblower — five stages of standing up" style="display: block; width: 100%; max-width: 1260px; height: auto;" />
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Intro" style="max-width: 1520px; margin: 0 auto; padding: 44px 28px 0;">
+    <div style="display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr); gap: 48px; align-items: start;">
+      <div>
+        <canvas ref="{{ titleRef }}" style="display: block; width: 100%; max-width: 720px; height: auto; image-rendering: pixelated;"></canvas>
+        <div style="display: flex; align-items: center; gap: 12px; margin: 24px 0 20px; font-size: 15px; letter-spacing: 0.2em; font-weight: 700; color: #D7E0E6;">
+          <span style="color: #39FF88;">▶</span>{{ kicker }}
+          <span style="animation: blink 1s step-end infinite; color: #39FF88;">▌</span>
+        </div>
+        <sc-for list="{{ intro }}" as="p">
+        <p style="max-width: 62ch; font-size: 14px; line-height: 1.9; color: {{ p.color }}; margin: {{ p.margin }};">{{ p.text }}</p>
+        </sc-for>
+        <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+          <sc-for list="{{ ctas }}" as="l"><a href="{{ l.href }}" style="{{ l.style }}">{{ l.label }}</a></sc-for>
+        </div>
+      </div>
+
+      <div style="border: 1px solid #163D2A; font-size: 12px;">
+        <div style="background: #39FF88; color: #05070A; padding: 5px 12px; font-weight: 800; letter-spacing: 0.16em; display: flex; justify-content: space-between;"><span>LAB.STATUS</span><span>░▒▓</span></div>
+        <div style="padding: 16px 14px; display: grid; gap: 11px;">
+          <sc-for list="{{ status }}" as="r">
+          <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #7AAE91;">{{ r.label }}</span><span style="color: #D7E0E6;">{{ r.value }}</span></div>
+          </sc-for>
+          <div style="height: 1px; background: #66727D;"></div>
+          <div style="color: #7AAE91; line-height: 1.8;">{{ statusNote }}</div>
+          <sc-if value="{{ intakeOpen }}">
+          <div style="color: #D7E0E6; display: flex; align-items: center; gap: 9px; font-size: 13px;"><span style="animation: blink 1.1s step-end infinite; color: #39FF88;">█</span>INTAKE OPEN</div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="What we do" style="max-width: 1520px; margin: 0 auto; padding: 74px 28px 0;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 26px;">
+      <span style="color: #05070A; background: #39FF88; padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: 'Silkscreen', monospace;">01</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 19px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">WHAT WE DO</span>
+      <span style="flex: 1; color: #11626F; overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+      <sc-for list="{{ tracks }}" as="t">
+      <div style="border: 1px solid #163D2A; padding: 20px 18px; display: grid; gap: 12px; align-content: start;" style-hover="border-color: #39FF88;">
+        <div style="font-size: 11px; letter-spacing: 0.18em; color: #66727D;">{{ t.label }}</div>
+        <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.1em; color: #D7E0E6;">{{ t.value }}</div>
+        <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">{{ t.detail }}</p>
+      </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-screen-label="Plate" style="max-width: 1520px; margin: 0 auto; padding: 74px 28px 0;">
+    <div style="border: 1px solid #163D2A;">
+      <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 7px 14px; border-bottom: 1px solid #163D2A; font-size: 11.5px; letter-spacing: 0.14em; color: #7AAE91;">
+        <span style="color: #D7E0E6;">{{ warden.kicker }}</span>
+        <span>{{ warden.caption }}</span>
+      </div>
+      <div style="display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);">
+        <div style="display: flex; justify-content: center; align-items: center; min-height: 520px; padding: 20px 16px; border-right: 1px solid #182027; overflow: hidden;">
+          <pre ref="{{ artRef }}" style="margin: 0; color: #39FF88; font-family: 'IBM Plex Mono', ui-monospace, monospace; line-height: 0.5; white-space: pre; font-size: 4px;"></pre>
+        </div>
+        <div style="padding: 32px 30px; display: grid; gap: 18px; align-content: center;">
+          <div style="font-size: 11px; letter-spacing: 0.24em; color: #66727D;">{{ warden.subtitle }}</div>
+          <div style="font-size: clamp(24px, 3vw, 38px); font-weight: 800; letter-spacing: 0.02em; color: #D7E0E6; line-height: 1.1;">{{ warden.heading }}</div>
+          <sc-for list="{{ warden.paras }}" as="p">
+          <p style="margin: 0; font-size: 13.5px; line-height: 1.95; color: {{ p.color }}; max-width: 56ch;">{{ p.text }}</p>
+          </sc-for>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px 24px; font-size: 11px; letter-spacing: 0.14em; color: #66727D; padding-top: 4px;">
+            <sc-for list="{{ warden.mottos }}" as="m"><span style="white-space: nowrap;">{{ m }}</span></sc-for>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; gap: 16px; padding: 7px 14px; border-top: 1px solid #163D2A; font-size: 11px; letter-spacing: 0.12em; color: #66727D;">
+        <span>{{ warden.footerLeft }}</span>
+        <span style="color: #7AAE91;">{{ warden.footerRight }}</span>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="Research teaser" style="max-width: 1520px; margin: 0 auto; padding: 74px 28px 0;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 26px;">
+      <span style="color: #05070A; background: #39FF88; padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: 'Silkscreen', monospace;">02</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 19px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">RESEARCH AREAS</span>
+      <span style="flex: 1; color: #11626F; overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
+      <a href="research.html" style="font-size: 12px; letter-spacing: 0.14em;">ALL ▸</a>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px 40px; font-size: 13px;">
+      <sc-for list="{{ areas }}" as="a">
+      <a href="research.html" style="display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: baseline; padding: 11px 0; border-bottom: 1px solid #182027; color: #D7E0E6;"><span style="color: #66727D;">{{ a.code }}</span><span>{{ a.title }}</span><span style="color: #7AAE91;">▸</span></a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-screen-label="Projects" style="max-width: 1520px; margin: 0 auto; padding: 74px 28px 0;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 26px;">
+      <span style="color: #05070A; background: #39FF88; padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: 'Silkscreen', monospace;">03</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 19px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">PROJECTS</span>
+      <span style="flex: 1; color: #11626F; overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
+      <a href="projects.html" style="font-size: 12px; letter-spacing: 0.14em;">ALL ▸</a>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px;">
+
+      <sc-for list="{{ featured }}" as="f">
+      <a href="{{ f.href }}" style="border: 1px solid #163D2A; display: flex; flex-direction: column; color: #39FF88;" style-hover="border-color: #39FF88;">
+        <div style="position: relative; height: 240px; background: #0B1014; overflow: hidden;">
+          <img src="{{ f.img }}" alt="{{ f.alt }}" style="display: block; width: 100%; height: 100%; object-fit: contain;" />
+          <div style="position: absolute; inset: 0; display: grid; gap: 10px; align-content: end; padding: 18px 16px; background: linear-gradient(to top, rgba(5,7,10,0.97) 0%, rgba(5,7,10,0.9) 60%, rgba(5,7,10,0.7) 100%); opacity: 0; transition: opacity 200ms;" style-hover="opacity: 1;">
+            <div style="font-size: 14.5px; font-weight: 700; letter-spacing: 0.05em; color: #D7E0E6; line-height: 1.35;">{{ f.title }}</div>
+            <div style="font-size: 10.5px; letter-spacing: 0.14em; color: #7AAE91;">{{ f.tags }}</div>
+            <p style="margin: 0; font-size: 12.5px; line-height: 1.8; color: #A8B3BD;">{{ f.summary }}</p>
+            <div style="font-size: 11px; letter-spacing: 0.14em; color: #39FF88;">OPEN ▸</div>
+          </div>
+        </div>
+      </a>
+      </sc-for>
+
+      <a href="projects.html" style="border: 1px dashed #163D2A; display: grid; align-content: center; justify-items: center; gap: 10px; min-height: 240px; padding: 18px 16px; text-align: center; color: #39FF88;" style-hover="border-color: #39FF88; border-style: solid;">
+        <div style="font-size: 13px; letter-spacing: 0.14em; color: #7AAE91;">{{ moreBlocks }}</div>
+        <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.16em; color: #D7E0E6;">[ ▸ ALL PROJECTS ]</div>
+      </a>
+    </div>
+  </section>
+
+  <section data-screen-label="News teaser" style="max-width: 1520px; margin: 0 auto; padding: 74px 28px 0;">
+    <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 26px;">
+      <span style="color: #05070A; background: #39FF88; padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: 'Silkscreen', monospace;">04</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 19px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">LATEST</span>
+      <span style="flex: 1; color: #11626F; overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
+      <a href="news.html" style="font-size: 12px; letter-spacing: 0.14em;">LOG ▸</a>
+    </div>
+    <div style="display: grid; gap: 0; border-top: 1px solid #182027;">
+      <sc-for list="{{ news }}" as="n">
+      <a href="news.html" style="display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; gap: 20px; align-items: baseline; padding: 15px 4px; border-bottom: 1px solid #182027; color: #D7E0E6; font-size: 13.5px;"><span style="color: #66727D; font-size: 12px;">{{ n.date }}</span><span>{{ n.title }}</span><span style="color: #7AAE91;">▸</span></a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-screen-label="Join" style="max-width: 1520px; margin: 0 auto; padding: 74px 28px 0;">
+    <div style="border: 1px solid #39FF88; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+      <div style="padding: 30px 26px; border-right: 1px solid #182027;">
+        <div style="font-size: 12px; letter-spacing: 0.18em; color: #66727D; margin-bottom: 14px;">{{ join.kicker }}</div>
+        <div style="font-size: 26px; font-weight: 700; letter-spacing: 0.06em; color: #D7E0E6; margin-bottom: 16px;">{{ join.heading }}</div>
+        <p style="margin: 0 0 22px; font-size: 14px; line-height: 1.9; color: #A8B3BD; max-width: 50ch;">{{ join.body }}</p>
+        <a href="join.html" style="border: 1px solid #39FF88; padding: 11px 20px; font-size: 13px; letter-spacing: 0.16em; font-weight: 700;">[ ▸ HOW TO APPLY ]</a>
+      </div>
+      <div style="padding: 30px 26px; display: grid; gap: 12px; align-content: start; font-size: 13px;">
+        <div style="font-size: 12px; letter-spacing: 0.18em; color: #66727D;">QUEUE</div>
+        <sc-for list="{{ positions }}" as="q">
+        <div style="display: flex; justify-content: space-between; gap: 16px;"><span style="color: {{ q.roleColor }};">{{ q.role }}</span><span style="color: {{ q.slotsColor }};">{{ q.slots }}</span></div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <div style="max-width: 1520px; margin: 74px auto 0; padding: 0 28px;">
+    <div style="border-top: 1px solid #163D2A; padding: 26px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; font-size: 12.5px;">
+      <div style="display: grid; gap: 8px; align-content: start;">
+        <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">WHISTLEBLOWER</div>
+        <div style="color: #A8B3BD; line-height: 1.8; max-width: 30ch;">{{ site.footerBlurb }}</div>
+      </div>
+      <div style="display: grid; gap: 8px; align-content: start;">
+        <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">CONTACT</div>
+        <div><span style="color: #66727D;">MAIL ▸ </span><a href="mailto:{{ site.email }}">{{ site.email }}</a></div>
+        <sc-if value="{{ site.github }}">
+        <div><span style="color: #66727D;">GHUB ▸ </span><a href="{{ site.github }}" target="_blank" rel="noopener">{{ site.githubLabel }}</a></div>
+        </sc-if>
+      </div>
+      <div style="display: grid; gap: 8px; align-content: start;">
+        <div style="color: #66727D; letter-spacing: 0.16em; font-size: 11px;">INDEX</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 6px 14px;">
+          <a href="research.html" style="color: #7AAE91;">RESEARCH</a>
+          <a href="projects.html" style="color: #7AAE91;">PROJECTS</a>
+          <a href="people.html" style="color: #7AAE91;">PEOPLE</a>
+          <a href="publications.html" style="color: #7AAE91;">PUBS</a>
+          <a href="news.html" style="color: #7AAE91;">NEWS</a>
+          <a href="join.html" style="color: #7AAE91;">JOIN</a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top: 1px solid #182027; padding: 14px 0 30px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-size: 11px; letter-spacing: 0.14em; color: #66727D;">
+      <span>▓▒░ END OF FILE ░▒▓</span>
+      <span>WHISTLEBLOWER LAB · MMXXVI</span>
+    </div>
+  </div>
+
+  <sc-if value="{{ scanlines }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; z-index: 90; pointer-events: none; background-image: repeating-linear-gradient(to bottom, rgba(0,255,65,0.055) 0px, rgba(0,255,65,0.055) 1px, transparent 1px, transparent 3px);"></div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showScanlines&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Effects&quot;}}">
+class Component extends DCLogic {
+  titleRef = React.createRef();
+  P = { bg: '#05070A', dim: '#66727D', mid: '#7AAE91', hot: '#39FF88', hi: '#D7E0E6' };
+
+  artRef = React.createRef();
+
+  state = { data: null };
+
+  componentDidMount() {
+    const go = () => { this.paintTitle(); };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(go).catch(go); else go();
+    this.onResize = () => { this.paintTitle(); this.fitAll(); };
+    window.addEventListener('resize', this.onResize);
+    this.loadAscii('assets/brand/warden-ascii.txt', this.artRef);
+    // Today's content stays on screen until the CMS answers, and if it never does.
+    if (window.WB) WB.load().then(
+      (data) => { this.setState({ data }); WB.setDescription(WB.page(data, 'home').seo); },
+      (err) => console.warn('[cms] home: keeping built-in content', err)
+    );
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); }
+
+  loadAscii(path, ref) {
+    fetch(path).then(r => r.text()).then(txt => {
+      let lines = txt.replace(/\r/g, '').split('\n');
+      while (lines.length && !lines[0].trim()) lines.shift();
+      while (lines.length && !lines[lines.length - 1].trim()) lines.pop();
+      const nb = lines.filter(l => l.trim());
+      const left = nb.length ? Math.min.apply(null, nb.map(l => l.length - l.replace(/^ +/, '').length)) : 0;
+      lines = lines.map(l => l.slice(left).replace(/\s+$/, ''));
+      const el = ref.current; if (!el) return;
+      el.textContent = lines.join('\n');
+      el.dataset.cols = String(Math.max.apply(null, lines.map(l => l.length)));
+      el.dataset.rows = String(lines.length);
+      this.fit(el);
+    }).catch(() => {});
+  }
+
+  fit(el) {
+    const cols = Number(el.dataset.cols), rows = Number(el.dataset.rows);
+    if (!cols) return;
+    const p = el.parentElement;
+    const aw = (p ? p.clientWidth : 900) - 36, ah = (p ? p.clientHeight : 520) - 44;
+    let fs = aw / cols / 0.6;
+    if (rows && ah > 60) fs = Math.min(fs, ah / rows / 0.5);
+    el.style.fontSize = Math.max(1.4, Math.min(15, fs)).toFixed(2) + 'px';
+  }
+
+  fitAll() { if (this.artRef.current) this.fit(this.artRef.current); }
+
+  paintTitle() {
+    const cv = this.titleRef.current; if (!cv) return;
+    const lines = ['WHISTLE', 'BLOWER'];
+    const GW = 63, GH = 7, cw = 11, ch = 22;
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    cv.width = GW * cw * dpr;
+    cv.height = (lines.length * GH + (lines.length - 1)) * ch * dpr;
+    const ctx = cv.getContext('2d');
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const P = this.P;
+    ctx.fillStyle = P.bg; ctx.fillRect(0, 0, GW * cw, cv.height / dpr);
+    const off = document.createElement('canvas');
+    lines.forEach((line, li) => {
+      off.width = GW; off.height = GH * 2;
+      const o = off.getContext('2d');
+      o.clearRect(0, 0, GW, GH * 2);
+      o.fillStyle = '#fff';
+      o.textBaseline = 'middle';
+      o.font = '800 ' + (GH * 2 * 0.92) + 'px "JetBrains Mono", ui-monospace, monospace';
+      const w = o.measureText(line).width || 1;
+      o.save(); o.scale(Math.min(1, GW / w), 1);
+      o.fillText(line, 0, GH); o.restore();
+      const d = o.getImageData(0, 0, GW, GH * 2).data;
+      const on = (x, y) => d[(y * GW + x) * 4 + 3] > 96;
+      const y0 = li * (GH + 1);
+      for (let gy = 0; gy < GH; gy++) for (let gx = 0; gx < GW; gx++) {
+        const a = on(gx, gy * 2), b = on(gx, gy * 2 + 1);
+        if (!a && !b) continue;
+        const px = gx * cw, py = (y0 + gy) * ch;
+        ctx.fillStyle = gy < 2 ? P.hi : P.hot;
+        if (a) ctx.fillRect(px, py, cw - 1, ch / 2 - 1);
+        if (b) ctx.fillRect(px, py + ch / 2, cw - 1, ch / 2 - 1);
+      }
+    });
+  }
+
+  // What the page showed before the CMS: rendered until data arrives, and kept if it never does.
+  static FALLBACK = {
+    kicker: 'ASIC / FPGA HARDWARE VERIFICATION COLLECTIVE',
+    intro: [
+      'A student-run lab for ASIC and FPGA hardware verification. We exist because the tools, the boards and the mentorship are hard to get to alone — so we pool them, run real RTL through real flows, and publish everything we learn.',
+      'No coursework. No spectators. You take a block, you verify it, you sign it off.',
+    ],
+    ctas: [{ label: '[ ▸ SEE THE WORK ]', href: 'projects.html' }, { label: '[ ▸ JOIN THE LAB ]', href: 'join.html' }],
+    hero: { kicker: 'MARK ── FIVE STAGES OF STANDING UP', heading: 'INK · FIVE FRAMES' },
+    status: [['FOUNDED', '2026'], ['MEMBERS', '7 ACTIVE'], ['TARGETS', 'ARTIX-7 · ZYNQ · SKY130'], ['LANGUAGES', 'SV · VHDL · PYTHON'], ['BENCHES', '2 · SHARED']]
+      .map(([label, value]) => ({ label, value })),
+    statusNote: 'Open to collaborators, tool donations and sponsored blocks.',
+    tracks: [
+      { label: 'TRACK A', value: 'VERIFY', detail: "Testbenches, coverage closure, assertions. UVM where it earns its keep, cocotb where it doesn't. Every block ships with a signed-off report." },
+      { label: 'TRACK B', value: 'BUILD', detail: 'RTL for instrumentation and DSP — filters, transforms, CORDIC, control. Synthesised, placed, timed on hardware we can actually put a probe on.' },
+      { label: 'TRACK C', value: 'SHARE', detail: 'Licences, boards and flows are expensive. Ours are pooled, documented and open to any member — plus the notes that make them usable.' },
+    ],
+    warden: {
+      kicker: 'PLATE I ── THE WARDEN', heading: 'THE WARDEN',
+      paras: [
+        'He stands at the end of the pipeline and nothing gets past him unsigned. Not a block, not a bitstream, not a waiver somebody talked themselves into late on a Friday. If it has not been verified, it does not ship, and the person who wrote it is the one who has to say so out loud.',
+        'Timing closure has a price, and it is always paid in something you liked. A stage you were proud of gets retimed. A clever optimisation comes out because it cannot be proven. A constraint file gets read for the fourth time at midnight, and the fourth reading is the one that finds it.',
+        'We keep the plate on the wall because that price is the actual work. Everything else is waiting for a run to finish.',
+      ],
+      subtitle: 'PROTECTOR OF THE PIPELINE', caption: 'ASCII · LUMINANCE RAMP .,:;+*?%S',
+      mottos: ['▚ NO BLOCK SHIPS UNSIGNED', '▚ THE PRICE OF TIMING CLOSURE'],
+      footerLeft: 'NO BLOCK SHIPS UNSIGNED', footerRight: 'GUARDIAN OF THE PIPELINE',
+    },
+    areas: [['R1', 'FUNCTIONAL VERIFICATION'], ['R2', 'DSP FOR INSTRUMENTATION'], ['R3', 'TIMING & PHYSICAL CLOSURE'],
+      ['R4', 'OPEN-SOURCE SILICON'], ['R5', 'BRINGUP & LAB INFRASTRUCTURE'], ['R6', 'VERIFICATION PEDAGOGY']]
+      .map(([code, title]) => ({ code, title })),
+    featured: [
+      { img: 'assets/cards/neuromorphic.jpg', title: 'NEUROMORPHIC SPIKING NETWORK', tags: 'RTL · SNN', summary: 'LIF neuron array with event-driven routing. Spikes, not tensors.' },
+      { img: 'assets/cards/sentinel.jpg', title: 'SENTINEL', tags: 'SPEC', summary: 'Spec in progress.' },
+      { img: 'assets/cards/tcpip.png', title: 'TCP/IP IN FPGA', tags: 'RTL · GbE', summary: 'The whole stack in fabric, no soft core in the data path.' },
+      { img: 'assets/cards/pqc.jpg', title: 'POST-QUANTUM CRYPTO IN FPGA', tags: 'RTL · PQC', summary: 'Lattice arithmetic and NTT butterflies, constant-time by construction.' },
+    ].map((f) => ({ ...f, alt: f.title, href: 'projects.html' })),
+    moreBlocks: '+ 6 MORE BLOCKS IN THE QUEUE',
+    news: [
+      { date: '2026-08-14', title: 'ipdft_channel_top closes timing at 148 MHz on Artix-7' },
+      { date: '2026-07-30', title: 'Second bench online — shared JTAG and scope access for all members' },
+      { date: '2026-07-02', title: 'Autumn intake open: three verification slots, two RTL slots' },
+    ],
+    join: {
+      kicker: 'OPEN POSITIONS', heading: 'JOIN THE LAB',
+      body: 'Undergrads and postgrads, any department. Bring a block you want to verify or pick one from the queue. No prior tapeout required — that is the point.',
+    },
+    positions: [
+      { role: 'DV ENGINEER (SV/UVM)', slots: '3 SLOTS' }, { role: 'RTL DESIGN (DSP)', slots: '2 SLOTS' },
+      { role: 'FLOW / TOOLING', slots: '1 SLOT' }, { role: 'FACULTY ADVISOR', slots: 'FILLED', filled: true },
+    ],
+    site: { footerBlurb: 'Student-run ASIC / FPGA hardware verification lab.', email: 'lab@whistleblower.dev', github: 'https://github.com/whistleblower-lab' },
+    intakeOpen: true,
+  };
+
+  // CMS values over the fallback; anything missing or empty keeps today's content.
+  content() {
+    const F = Component.FALLBACK;
+    const d = this.state.data;
+    if (!d) return F;
+    const s = d.settings || {};
+    const pg = WB.page(d, 'home');
+    const slot = (k) => pg.slot[k] || {};
+    const pick = (v, f) => (v === undefined || v === null || v === '' ? f : v);
+    const list = (v, f) => (Array.isArray(v) && v.length ? v : f);
+    const item = (sec, label) => ((sec.items || []).find((i) => i.label === label) || {}).value;
+    const w = slot('warden');
+    const projectHref = (p) => (p.caseFile === 'live' && p.design ? 'project-' + p.design + '.html' : 'projects.html');
+    const shortTags = (p) => (p.tags && p.tags.includes(' · ') ? p.tags.split(' · ').slice(0, 2).join(' · ') : p.stage || p.tags || '');
+    const featured = (d.projects || []).filter((p) => p.featured).slice(0, 4).map((p) => ({
+      href: projectHref(p), title: p.title, tags: shortTags(p), summary: p.shortSummary || p.summary,
+      img: p.cardImage && p.cardImage.url ? WB.img(p.cardImage.url, 700) : undefined,
+      alt: (p.cardImage && p.cardImage.alt) || p.title,
+    }));
+    return {
+      kicker: pick(pg.kicker, F.kicker),
+      intro: list(pg.paras, F.intro),
+      ctas: list(slot('cta').links, F.ctas),
+      hero: { kicker: pick(slot('hero').kicker, F.hero.kicker), heading: pick(slot('hero').heading, F.hero.heading) },
+      status: list(s.statusPanel, F.status),
+      statusNote: pick(s.statusNote, F.statusNote),
+      tracks: list(s.tracks, F.tracks),
+      warden: {
+        kicker: pick(w.kicker, F.warden.kicker), heading: pick(w.heading, F.warden.heading),
+        paras: list(w.paras, F.warden.paras),
+        subtitle: pick(item(w, 'subtitle'), F.warden.subtitle), caption: pick(item(w, 'caption'), F.warden.caption),
+        mottos: list((w.items || []).filter((i) => i.label === 'motto').map((i) => i.value), F.warden.mottos),
+        footerLeft: pick(item(w, 'footer-left'), F.warden.footerLeft), footerRight: pick(item(w, 'footer-right'), F.warden.footerRight),
+      },
+      areas: list(d.areas, F.areas),
+      featured: list(featured, F.featured),
+      moreBlocks: pick(slot('projects-more').heading, F.moreBlocks),
+      news: list((d.posts || []).slice(0, 3), F.news),
+      join: {
+        kicker: pick(slot('join').kicker, F.join.kicker), heading: pick(slot('join').heading, F.join.heading),
+        body: pick(slot('join').body, F.join.body),
+      },
+      positions: list(d.positions, F.positions),
+      site: { footerBlurb: pick(s.footerBlurb, F.site.footerBlurb), email: pick(s.email, F.site.email), github: s.github },
+      intakeOpen: s.intakeOpen !== false,
+    };
+  }
+
+  renderVals() {
+    const c = this.content();
+    const last = c.intro.length - 1;
+    const wl = c.warden.paras.length - 1;
+    const github = WB.href(c.site.github);
+    return {
+      titleRef: this.titleRef,
+      artRef: this.artRef,
+      scanlines: this.props.showScanlines === true,
+      kicker: c.kicker,
+      intro: c.intro.map((text, i) => ({
+        text,
+        color: i === last && last > 0 ? '#7AAE91' : '#A8B3BD',
+        margin: i === last && last > 0 ? '0 0 28px' : '0 0 16px',
+      })),
+      ctas: c.ctas.filter((l) => WB.href(l.href)).map((l, i) => ({
+        label: l.label, href: WB.href(l.href),
+        style: i === 0
+          ? 'border: 1px solid #39FF88; padding: 11px 20px; font-size: 13px; letter-spacing: 0.16em; font-weight: 700;'
+          : 'border: 1px solid #163D2A; color: #7AAE91; padding: 11px 20px; font-size: 13px; letter-spacing: 0.16em;',
+      })),
+      hero: c.hero,
+      status: c.status,
+      statusNote: c.statusNote,
+      intakeOpen: c.intakeOpen,
+      tracks: c.tracks,
+      warden: {
+        ...c.warden,
+        paras: c.warden.paras.map((text, i) => ({ text, color: i === wl && wl > 1 ? '#7AAE91' : '#A8B3BD' })),
+      },
+      areas: c.areas,
+      featured: c.featured,
+      moreBlocks: c.moreBlocks,
+      news: c.news.map((n) => ({ date: n.date, title: n.title })),
+      join: c.join,
+      positions: c.positions.map((q) => ({
+        role: q.role, slots: q.slots,
+        roleColor: q.filled ? '#7AAE91' : '#D7E0E6',
+        slotsColor: q.filled ? '#66727D' : '#39FF88',
+      })),
+      site: {
+        footerBlurb: c.site.footerBlurb, email: c.site.email, github,
+        githubLabel: github ? github.replace(/^https?:\/\//, '').replace(/\/$/, '') : '',
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>

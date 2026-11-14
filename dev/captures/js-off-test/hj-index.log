@@ -1,0 +1,2 @@
+[33120:40936:1012/235118.400:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:241] No machine level policy manager exists.
+[33120:40936:1012/235120.783:INFO:CONSOLE:76] "Canvas2D: Multiple readback operations using getImageData are faster with the willReadFrequently attribute set to true. See: https://html.spec.whatwg.org/multipage/canvas.html#concept-canvas-will-read-frequently", source:  (76)

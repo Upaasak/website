@@ -1,0 +1,153 @@
+<title>Whistleblower Round 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Layout: one reading column of before/after pairs, set like a lab signoff report on the lab's own dark ground. */
+  :root {
+    color-scheme: dark;
+    --bg: #05070A;
+    --panel: #0B1014;
+    --rule: #1C2A24;
+    --fg: #D7E0E6;
+    --muted: #8D99A4;
+    --accent: #39FF88;
+    --before: #FFB000;
+    --after: #39FF88;
+    --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 16px; line-height: 1.6; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding-inline: 20px; padding-block: 40px 72px; }
+  header { display: grid; gap: 14px; padding-bottom: 28px; border-bottom: 1px solid var(--rule); }
+  .tagline { font-family: var(--mono); font-size: 13px; letter-spacing: 0.08em; color: var(--muted); }
+  h1 { margin: 0; font-family: var(--mono); font-weight: 700; font-size: clamp(30px, 5vw, 46px); line-height: 1.08; letter-spacing: -0.01em; text-wrap: balance; }
+  .lede { margin: 0; max-width: 64ch; color: var(--muted); text-wrap: pretty; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; font-family: var(--mono); font-size: 13px; }
+  .tag { border: 1px solid var(--rule); padding: 3px 9px; color: var(--fg); }
+  .tag b { color: var(--accent); font-weight: 500; }
+  section { display: grid; gap: 18px; padding-block: 40px 8px; }
+  h2 { margin: 0; font-family: var(--mono); font-size: 20px; font-weight: 500; text-wrap: balance; }
+  h2 small { display: block; margin-top: 6px; font-family: var(--sans); font-size: 15px; color: var(--muted); font-weight: 400; }
+  p { margin: 0; max-width: 68ch; text-wrap: pretty; }
+  .pair { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 20px; align-items: start; }
+  .pair.wide { grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); }
+  figure { margin: 0; display: grid; gap: 10px; min-width: 0; }
+  figure img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); background: var(--panel); }
+  figcaption { font-size: 14px; color: var(--muted); }
+  .badge { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; padding: 2px 8px; justify-self: start; }
+  .badge.before { color: var(--bg); background: var(--before); }
+  .badge.after { color: var(--bg); background: var(--after); }
+  .phones { grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 300px)); }
+  .scroller { overflow-x: auto; border: 1px solid var(--rule); }
+  table { border-collapse: collapse; width: 100%; min-width: 560px; font-family: var(--mono); font-size: 14px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  th { color: var(--muted); font-weight: 400; font-size: 12px; letter-spacing: 0.08em; }
+  tr:last-child td { border-bottom: 0; }
+  .up { color: var(--after); }
+  .was { color: var(--muted); }
+  .icons { display: flex; flex-wrap: wrap; gap: 28px; align-items: end; }
+  .icon { display: grid; gap: 8px; justify-items: start; font-size: 14px; color: var(--muted); }
+  .tab { display: flex; align-items: center; gap: 8px; background: #DEE1E6; color: #202124; font-family: var(--sans); font-size: 13px; padding: 7px 14px 7px 10px; border-radius: 8px 8px 0 0; min-width: 0; }
+  .tab img { width: 16px; height: 16px; object-fit: contain; }
+  .weights { display: grid; gap: 0; border: 1px solid var(--rule); }
+  .weight { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; padding: 12px 14px; border-bottom: 1px solid var(--rule); font-family: var(--mono); font-size: 14px; font-variant-numeric: tabular-nums; }
+  .weight:last-child { border-bottom: 0; }
+  .weight span:first-child { font-family: var(--sans); font-size: 15px; }
+  ol { margin: 0; padding-left: 22px; display: grid; gap: 8px; max-width: 70ch; }
+  footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 13px; color: var(--muted); }
+  a { color: var(--accent); }
+  :where(a, button):focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="tagline">WHISTLEBLOWER LAB · SITE REVIEW · 13 OCT 2026</div>
+    <h1>Round 2: before and after</h1>
+    <p class="lede">The live site today next to the round 2 build. Nothing here is live yet; the live site at website.vipul-km.workers.dev still runs the first upload.</p>
+    <div class="tags">
+      <span class="tag">before = <b>live site</b></span>
+      <span class="tag">after = <b>v2.2-mobile</b></span>
+      <span class="tag">rollback: v1-cms, v0-original</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>Scores<small>Lighthouse, phone profile with throttling, measured on a local server, so load times read slow.</small></h2>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>PAGE</th><th>ACCESSIBILITY</th><th>PERFORMANCE</th><th>PAGE WEIGHT</th><th>MAIN CONTENT SHOWN</th></tr></thead>
+        <tbody>
+          <tr><td>Home</td><td><span class="was">79 →</span> <span class="up">100</span></td><td><span class="was">74 →</span> <span class="up">85</span></td><td><span class="was">2.0 MB →</span> <span class="up">0.43 MB</span></td><td><span class="was">6.6 s →</span> 4.1 s</td></tr>
+          <tr><td>People</td><td><span class="was">64 →</span> <span class="up">100</span></td><td><span class="was">84 →</span> <span class="up">93</span></td><td><span class="was">403 KB →</span> <span class="up">196 KB</span></td><td><span class="was">4.4 s →</span> 3.1 s</td></tr>
+          <tr><td>Projects</td><td><span class="was">70 →</span> <span class="up">100</span></td><td><span class="was">75 →</span> 82</td><td><span class="was">894 KB →</span> 791 KB</td><td><span class="was">5.3 s →</span> 4.6 s</td></tr>
+          <tr><td>SENTINEL</td><td><span class="was">70 →</span> <span class="up">100</span></td><td><span class="was">76 →</span> <span class="up">89</span></td><td><span class="was">618 KB →</span> <span class="up">282 KB</span></td><td><span class="was">3.7 s →</span> 3.0 s</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Phone: the menu<small>People page on a 390 px phone.</small></h2>
+    <div class="pair phones">
+      <figure><span class="badge before">BEFORE</span><img src="{{IMG:m-people-before}}" alt="People page on a phone before round 2: the menu shows HOME and RESEARCH and the rest is cut off"><figcaption>Five of the seven menu links (Projects to Join) sit off the right edge and can't be reached.</figcaption></figure>
+      <figure><span class="badge after">AFTER</span><img src="{{IMG:m-people-after}}" alt="People page on a phone after round 2: all seven menu links on two lines, larger paragraph text"><figcaption>All seven links wrap onto two lines with bigger tap areas. Paragraphs are 16 px instead of 14 px.</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>Phone: the home page panel<small>Home on a 390 px phone, scrolled to the intro.</small></h2>
+    <div class="pair phones">
+      <figure><span class="badge before">BEFORE</span><img src="{{IMG:m-home-before}}" alt="Home page on a phone before: the LAB.STATUS panel is squeezed and cut off at the right edge"><figcaption>The intro and the LAB.STATUS panel stay side by side, so the panel is cut off at the right edge.</figcaption></figure>
+      <figure><span class="badge after">AFTER</span><img src="{{IMG:m-home-after}}" alt="Home page on a phone after: intro text full width with the LAB.STATUS panel stacked below"><figcaption>The panel moves below the intro. The same fix went into the Warden plate, Publications rows and the iDFT page.</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>Desktop: unchanged on purpose<small>Home at 1440 px. Every page differs from the live site by under 1 % of pixels.</small></h2>
+    <div class="pair wide">
+      <figure><span class="badge before">BEFORE</span><img src="{{IMG:d-home-before}}" alt="Home page on desktop before round 2" loading="lazy"></figure>
+      <figure><span class="badge after">AFTER</span><img src="{{IMG:d-home-after}}" alt="Home page on desktop after round 2, visually the same" loading="lazy"></figure>
+    </div>
+    <p>The differences are a slightly lighter grey for small labels (it now passes the contrast standard), headings and paragraphs breaking lines more evenly, and the hero drawing served as a lighter WebP.</p>
+  </section>
+
+  <section>
+    <h2>Browser tab icon</h2>
+    <div class="icons">
+      <div class="icon"><span class="badge before">BEFORE</span><span class="tab"><img src="{{IMG:fav-old}}" alt="">Whistleblower Lab</span><span>The full 224 KB drawing, unreadable at 16 px</span></div>
+      <div class="icon"><span class="badge after">AFTER</span><span class="tab"><img src="{{IMG:fav-new}}" alt="">Whistleblower Lab</span><span>The final figure on the lab's dark ground, 14 KB</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What each visit downloads</h2>
+    <div class="weights">
+      <div class="weight"><span>Home hero drawing</span><span><span class="was">224 KB →</span> <span class="up">33–122 KB</span>, by screen size</span></div>
+      <div class="weight"><span>TCP/IP card image</span><span><span class="was">1,000 KB →</span> <span class="up">53 KB</span></span></div>
+      <div class="weight"><span>Tab icon</span><span><span class="was">224 KB →</span> <span class="up">14 KB</span></span></div>
+      <div class="weight"><span>Home project images</span><span>downloaded once instead of twice</span></div>
+      <div class="weight"><span>CMS images on phones</span><span>400 px versions instead of 900 px</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>SENTINEL: the RASO IMM Console<small>New. A replay of recorded radar-tracker runs, embedded at the end of section 03.</small></h2>
+    <figure><span class="badge after">DESKTOP</span><img src="{{IMG:d-sentinel}}" alt="SENTINEL page on desktop with the RASO IMM Console embedded in an amber frame, showing the trajectory list, 3D tracking view and readouts" loading="lazy"><figcaption>Full three-column console inside the page's amber frame, with Fullscreen and Open in new tab.</figcaption></figure>
+    <div class="pair phones">
+      <figure><span class="badge after">PHONE</span><img src="{{IMG:m-sentinel}}" alt="SENTINEL page on a phone with the compact console: 3D view, playback controls and trajectory chips" loading="lazy"><figcaption>Phones get the compact view: the 3D stage and playback controls.</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <h2>Waiting on you</h2>
+    <ol>
+      <li>The menu on phones now takes two lines (about 100 px). Keep it, or switch to a compact menu button in round 3?</li>
+      <li>Hover over links and project cards on the local preview: keep the short colour fade?</li>
+      <li>Put round 2 live now, or ship it together with round 3?</li>
+    </ol>
+  </section>
+
+  <footer>Versions: v0-original · v1-cms · v2-polish · v2.1-tracker · v2.2-mobile. Any of them can be restored.</footer>
+</div>

@@ -1,0 +1,80 @@
+  <sc-if value="{{ loading }}">
+    <section data-screen-label="Loading" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0; min-height: 60vh; font-size: 12px; letter-spacing: 0.2em; color: #7AAE91;">
+      <div>▚▚ 04 / PEOPLE ▞▞</div>
+      <div style="margin-top: 22px;">&gt; FETCHING ROSTER <span class="cms-cursor" style="color: #39FF88;">▌</span></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ failed }}">
+    <section data-screen-label="Error" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0; min-height: 60vh;">
+      <div style="border: 1px dashed #ffb000; padding: 14px 16px; font-size: 12.5px; letter-spacing: 0.1em; line-height: 1.8; color: #ffb000;">ERR · ROSTER UNAVAILABLE — the content service did not answer. <a href="people.html">[ ▸ RETRY ]</a></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ ready }}">
+  <section data-screen-label="People header" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
+    <div style="font-size: 12px; letter-spacing: 0.3em; color: #00D9FF; margin-bottom: 18px;">{{ page.kicker }}</div>
+    <h1 style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin: 0 0 20px; font-size: clamp(32px, 4.6vw, 56px); font-weight: 800; letter-spacing: 0.02em; color: #D7E0E6; line-height: 1.05; white-space: pre-line;">{{ page.title }}</h1>
+    <sc-for list="{{ page.paras }}" as="p">
+      <p style="max-width: 68ch; font-size: 14px; line-height: 1.9; color: #A8B3BD; margin: 0 0 12px;">{{ p }}</p>
+    </sc-for>
+    <sc-if value="{{ notice }}">
+      <div style="margin-top: 22px; border: 1px dashed #ffb000; padding: 12px 14px; font-size: 12px; letter-spacing: 0.1em; color: #ffb000;">{{ notice }}</div>
+    </sc-if>
+  </section>
+
+  <section data-screen-label="Roster" style="max-width: 1520px; margin: 0 auto; padding: 40px 28px 0;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 16px;">
+
+      <sc-for list="{{ members }}" as="m">
+      <div style="border: 1px solid #163D2A;" style-hover="border-color: #39FF88;">
+        <div style="display: flex; justify-content: space-between; padding: 6px 12px; background: #182027; color: #39FF88; font-size: 11.5px; letter-spacing: 0.14em;"><span>{{ m.code }}</span><span>{{ m.tag }}</span></div>
+        <sc-if value="{{ m.photo }}">
+          <img src="{{ m.photo }}" alt="{{ m.photoAlt }}" loading="lazy" style="display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-bottom: 1px solid #163D2A; filter: grayscale(0.35) contrast(1.05);" />
+        </sc-if>
+        <div style="padding: 18px 16px; display: grid; gap: 10px;">
+          <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #D7E0E6;">{{ m.name }}</div>
+          <div style="font-size: 11.5px; letter-spacing: 0.12em; color: #7AAE91;">{{ m.role }}</div>
+          <div style="font-size: 12.5px; line-height: 1.8; color: #A8B3BD;">{{ m.bio }}</div>
+          <div style="font-size: 11.5px; color: #66727D; letter-spacing: 0.1em;">{{ m.areas }}</div>
+          <sc-if value="{{ m.hasLinks }}">
+            <div style="display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 11.5px; letter-spacing: 0.1em;">
+              <sc-for list="{{ m.links }}" as="l"><a href="{{ l.href }}" target="{{ l.target }}" rel="noopener">{{ l.label }} ▸</a></sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+      </sc-for>
+
+      <sc-if value="{{ intakeOpen }}">
+      <div style="border: 1px dashed #163D2A; display: grid; align-content: center; justify-items: center; gap: 10px; padding: 26px 16px; min-height: 180px;">
+        <div style="font-size: 13px; letter-spacing: 0.16em; color: #7AAE91;">SLOT OPEN</div>
+        <a href="join.html" style="font-size: 12.5px; letter-spacing: 0.14em;">[ ▸ APPLY ]</a>
+      </div>
+      </sc-if>
+
+    </div>
+  </section>
+
+  <section data-screen-label="Advisor" style="max-width: 1520px; margin: 0 auto; padding: 40px 28px 0;">
+    <div style="border: 1px solid #163D2A; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+      <div style="padding: 24px 22px; border-right: 1px solid #182027; display: grid; gap: 22px; align-content: start;">
+        <sc-for list="{{ advisors }}" as="a">
+        <div>
+          <div style="font-size: 11px; letter-spacing: 0.18em; color: #66727D; margin-bottom: 12px;">{{ a.role }}</div>
+          <div style="font-size: 17px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.06em; margin-bottom: 10px;">{{ a.name }}</div>
+          <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD; max-width: 52ch;">{{ a.bio }}</p>
+        </div>
+        </sc-for>
+      </div>
+      <div style="padding: 24px 22px; display: grid; gap: 10px; align-content: start; font-size: 12.5px;">
+        <div style="font-size: 11px; letter-spacing: 0.18em; color: #66727D;">{{ alumniHeading }}</div>
+        <sc-for list="{{ alumni }}" as="x">
+          <div style="color: #D7E0E6;">{{ x }}</div>
+        </sc-for>
+        <div style="color: #7AAE91; line-height: 1.8; padding-top: 4px;">{{ alumniNote }}</div>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+

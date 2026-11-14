@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html><head><style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./cms.js"></script>
+<script src="./support.js"></script><style>x-dc{display:none!important}</style><script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z" crossorigin="anonymous"></script><script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1" crossorigin="anonymous"></script>
+<title>Whistleblower Lab — Projects</title>
+<meta name="description" content="Every block Whistleblower is building or verifying, from spec to signoff, plus the queue of unclaimed blocks.">
+<link rel="preconnect" href="https://7h6avsoz.apicdn.sanity.io" crossorigin="">
+<link rel="icon" href="assets/brand/logo-mark.png">
+<style></style><style>html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}</style><link rel="preconnect" href="https://fonts.googleapis.com" data-dc-tpl="1"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" data-dc-tpl="2"><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet" data-dc-tpl="3"><style data-dc-tpl="4">
+  html, body { margin: 0; padding: 0; background: #05070A; }
+  * { box-sizing: border-box; }
+  a { color: #00D9FF; text-decoration: none; }
+  a:hover { color: #05070A; background: #00D9FF; }
+  ::selection { background: #39FF88; color: #05070A; }
+  @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+  .cms-cursor { animation: blink 1s steps(1) infinite; }
+</style></head>
+<body>
+<div id="dc-root"><div class="sc-host" data-sc-name="projects"><div data-dc-tpl="5" style="background: rgb(5, 7, 10); color: rgb(57, 255, 136); font-family: &quot;IBM Plex Mono&quot;, ui-monospace, monospace; min-height: 100vh; overflow-x: hidden;">
+
+  <div data-dc-tpl="6" style="position: sticky; top: 0px; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 10px 28px; background: rgb(5, 7, 10); border-bottom: 1px solid rgb(22, 61, 42); font-size: 12px; letter-spacing: 0.12em;">
+    <div data-dc-tpl="7" style="display: flex; align-items: center; gap: 14px; color: rgb(122, 174, 145);">
+      <a data-dc-tpl="8" href="index.html" style="color: rgb(5, 7, 10); background: rgb(57, 255, 136); padding: 5px 8px; font-weight: 400; font-size: 9px; font-family: Silkscreen, monospace;">WHISTLEBLOWER</a>
+      <span data-dc-tpl="9" style="color: rgb(102, 114, 125);">│</span>
+      <span data-dc-tpl="10">ASIC · FPGA · DV</span>
+    </div>
+    <div data-dc-tpl="11" style="display: flex; align-items: center; gap: 16px;">
+      <a data-dc-tpl="12" href="index.html" style="color: rgb(122, 174, 145);">HOME</a>
+      <a data-dc-tpl="13" href="research.html" style="color: rgb(122, 174, 145);">RESEARCH</a>
+      <span data-dc-tpl="14" style="color: rgb(215, 224, 230);">PROJECTS</span>
+      <a data-dc-tpl="15" href="people.html" style="color: rgb(122, 174, 145);">PEOPLE</a>
+      <a data-dc-tpl="16" href="publications.html" style="color: rgb(122, 174, 145);">PUBS</a>
+      <a data-dc-tpl="17" href="news.html" style="color: rgb(122, 174, 145);">NEWS</a>
+      <a data-dc-tpl="18" href="join.html" style="color: rgb(122, 174, 145);">JOIN</a>
+    </div>
+  </div>
+
+  
+
+  
+
+  
+  <section data-dc-tpl="29" data-screen-label="Projects header" style="max-width: 1520px; margin: 0px auto; padding: 56px 28px 0px;">
+    <div data-dc-tpl="30" style="font-size: 12px; letter-spacing: 0.3em; color: rgb(0, 217, 255); margin-bottom: 18px;"><span class="sc-interp">▚▚ 03 / PROJECTS ▞▞</span></div>
+    <h1 data-dc-tpl="31" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-weight: 800; margin: 0px 0px 20px; font-size: clamp(32px, 4.6vw, 56px); letter-spacing: 0.02em; color: rgb(215, 224, 230); line-height: 1.05; white-space: pre-line;"><span class="sc-interp">BLOCKS IN FLIGHT</span></h1>
+    
+      <p data-dc-tpl="33" style="max-width: 68ch; font-size: 14px; line-height: 1.9; color: rgb(168, 179, 189); margin: 0px;"><span class="sc-interp">One entry per block, from proposal to signoff. Nothing is listed here until there is RTL and a testbench in the repository — proposals sit in the queue below until somebody owns them.</span></p>
+    
+  </section>
+
+  <section data-dc-tpl="34" data-screen-label="Active" style="max-width: 1520px; margin: 0px auto; padding: 46px 28px 0px;">
+    <div data-dc-tpl="35" style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
+      <span data-dc-tpl="36" style="color: rgb(5, 7, 10); background: rgb(57, 255, 136); padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: Silkscreen, monospace;">A</span>
+      <span data-dc-tpl="37" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: rgb(215, 224, 230);">PROJECTS</span>
+      <span data-dc-tpl="38" style="flex: 1 1 0%; color: rgb(17, 98, 111); overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
+      <span data-dc-tpl="39" style="font-size: 12px; color: rgb(102, 114, 125);"><span class="sc-interp">HOVER FOR DETAIL · 10 ENTRIES</span></span>
+    </div>
+    <div data-dc-tpl="40" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 18px;">
+
+      
+      <div data-dc-tpl="42" class="scp0" style="border: 1px solid rgb(22, 61, 42); display: flex; flex-direction: column;">
+        <div data-dc-tpl="43" style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: rgb(24, 32, 39); color: rgb(57, 255, 136); font-size: 11.5px; letter-spacing: 0.14em;"><span data-dc-tpl="44"><span class="sc-interp">PRJ_01</span></span><span data-dc-tpl="45" style="color: rgb(57, 255, 136);"><span class="sc-interp">RTL</span></span></div>
+        <div data-dc-tpl="46" style="position: relative; height: 300px; background: rgb(5, 7, 10); overflow: hidden;">
+          
+            <img data-dc-tpl="48" src="https://cdn.sanity.io/images/7h6avsoz/production/16b069a187f9fcdcd6f47336c955d1cbcaa8b028-695x1024.jpg?w=900&amp;auto=format&amp;fit=max" alt="NEUROMORPHIC SPIKING NETWORK" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: contain;">
+          
+          <div data-dc-tpl="49" class="scp1" style="position: absolute; inset: 0px; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5, 7, 10, 0.97) 0%, rgba(5, 7, 10, 0.92) 55%, rgba(5, 7, 10, 0.72) 100%); opacity: 0; transition: opacity 200ms;">
+            <div data-dc-tpl="50" style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: rgb(215, 224, 230); line-height: 1.3;"><span class="sc-interp">NEUROMORPHIC SPIKING NETWORK</span></div>
+            <div data-dc-tpl="51" style="font-size: 11px; letter-spacing: 0.14em; color: rgb(122, 174, 145);"><span class="sc-interp">RTL · SNN · EVENT-DRIVEN</span></div>
+            <p data-dc-tpl="52" style="margin: 0px; font-size: 13px; line-height: 1.85; color: rgb(168, 179, 189);"><span class="sc-interp">A digital array of leaky integrate-and-fire neurons with event-driven routing between them. Spikes instead of tensors, so there are no multipliers in the datapath and the whole power argument rests on how sparse the traffic really is.</span></p>
+            
+            
+              <div data-dc-tpl="56" style="font-size: 11.5px; letter-spacing: 0.12em; color: rgb(102, 114, 125);">CASE FILE PENDING</div>
+            
+          </div>
+        </div>
+      </div>
+      
+      <div data-dc-tpl="42" class="scp0" style="border: 1px solid rgb(22, 61, 42); display: flex; flex-direction: column;">
+        <div data-dc-tpl="43" style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: rgb(24, 32, 39); color: rgb(57, 255, 136); font-size: 11.5px; letter-spacing: 0.14em;"><span data-dc-tpl="44"><span class="sc-interp">PRJ_02</span></span><span data-dc-tpl="45" style="color: rgb(255, 176, 0);"><span class="sc-interp">SPEC</span></span></div>
+        <div data-dc-tpl="46" style="position: relative; height: 300px; background: rgb(5, 7, 10); overflow: hidden;">
+          
+            <img data-dc-tpl="48" src="https://cdn.sanity.io/images/7h6avsoz/production/7063bb0c43b80d86d7a7de6ad3ebb3800de1a719-320x477.jpg?w=900&amp;auto=format&amp;fit=max" alt="SENTINEL" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: contain;">
+          
+          <div data-dc-tpl="49" class="scp1" style="position: absolute; inset: 0px; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5, 7, 10, 0.97) 0%, rgba(5, 7, 10, 0.92) 55%, rgba(5, 7, 10, 0.72) 100%); opacity: 0; transition: opacity 200ms;">
+            <div data-dc-tpl="50" style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: rgb(215, 224, 230); line-height: 1.3;"><span class="sc-interp">SENTINEL</span></div>
+            <div data-dc-tpl="51" style="font-size: 11px; letter-spacing: 0.14em; color: rgb(122, 174, 145);"><span class="sc-interp">SPEC IN PROGRESS</span></div>
+            <p data-dc-tpl="52" style="margin: 0px; font-size: 13px; line-height: 1.85; color: rgb(168, 179, 189);"><span class="sc-interp">Software-defined autonomous mission vehicle. FPGA-native deterministic edge compute, formal safety, 3-tier HIL digital twin.</span></p>
+            
+              <a data-dc-tpl="54" href="project-sentinel.html" style="font-size: 11.5px; letter-spacing: 0.12em; align-self: start;">[ ▸ OPEN CASE FILE ]</a>
+            
+            
+          </div>
+        </div>
+      </div>
+      
+      <div data-dc-tpl="42" class="scp0" style="border: 1px solid rgb(22, 61, 42); display: flex; flex-direction: column;">
+        <div data-dc-tpl="43" style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: rgb(24, 32, 39); color: rgb(57, 255, 136); font-size: 11.5px; letter-spacing: 0.14em;"><span data-dc-tpl="44"><span class="sc-interp">PRJ_03</span></span><span data-dc-tpl="45" style="color: rgb(57, 255, 136);"><span class="sc-interp">RTL</span></span></div>
+        <div data-dc-tpl="46" style="position: relative; height: 300px; background: rgb(5, 7, 10); overflow: hidden;">
+          
+            <img data-dc-tpl="48" src="https://cdn.sanity.io/images/7h6avsoz/production/a7dc9f28b54f2d9b621c4c90fa394710465de96b-1748x900.png?w=900&amp;auto=format&amp;fit=max" alt="TCP/IP IN FPGA" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: contain;">
+          
+          <div data-dc-tpl="49" class="scp1" style="position: absolute; inset: 0px; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5, 7, 10, 0.97) 0%, rgba(5, 7, 10, 0.92) 55%, rgba(5, 7, 10, 0.72) 100%); opacity: 0; transition: opacity 200ms;">
+            <div data-dc-tpl="50" style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: rgb(215, 224, 230); line-height: 1.3;"><span class="sc-interp">TCP/IP IN FPGA</span></div>
+            <div data-dc-tpl="51" style="font-size: 11px; letter-spacing: 0.14em; color: rgb(122, 174, 145);"><span class="sc-interp">RTL · GbE · NO SOFT CORE</span></div>
+            <p data-dc-tpl="52" style="margin: 0px; font-size: 13px; line-height: 1.85; color: rgb(168, 179, 189);"><span class="sc-interp">The stack in fabric: MAC interface, ARP, IPv4 and a TCP state machine with retransmission, all in hardware with no soft core in the data path. It either holds line rate on a gigabit PHY or it does not count.</span></p>
+            
+              <a data-dc-tpl="54" href="project-tcpip.html" style="font-size: 11.5px; letter-spacing: 0.12em; align-self: start;">[ ▸ OPEN CASE FILE ]</a>
+            
+            
+          </div>
+        </div>
+      </div>
+      
+      <div data-dc-tpl="42" class="scp0" style="border: 1px solid rgb(22, 61, 42); display: flex; flex-direction: column;">
+        <div data-dc-tpl="43" style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: rgb(24, 32, 39); color: rgb(57, 255, 136); font-size: 11.5px; letter-spacing: 0.14em;"><span data-dc-tpl="44"><span class="sc-interp">PRJ_04</span></span><span data-dc-tpl="45" style="color: rgb(255, 176, 0);"><span class="sc-interp">SPEC</span></span></div>
+        <div data-dc-tpl="46" style="position: relative; height: 300px; background: rgb(5, 7, 10); overflow: hidden;">
+          
+            <img data-dc-tpl="48" src="https://cdn.sanity.io/images/7h6avsoz/production/4c53399a8e1ca898f4ec04250945cfc620d33cb4-1308x736.jpg?w=900&amp;auto=format&amp;fit=max" alt="SYSTOLIC ARRAY NEURAL NETWORK" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: contain;">
+          
+          <div data-dc-tpl="49" class="scp1" style="position: absolute; inset: 0px; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5, 7, 10, 0.97) 0%, rgba(5, 7, 10, 0.92) 55%, rgba(5, 7, 10, 0.72) 100%); opacity: 0; transition: opacity 200ms;">
+            <div data-dc-tpl="50" style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: rgb(215, 224, 230); line-height: 1.3;"><span class="sc-interp">SYSTOLIC ARRAY NEURAL NETWORK</span></div>
+            <div data-dc-tpl="51" style="font-size: 11px; letter-spacing: 0.14em; color: rgb(122, 174, 145);"><span class="sc-interp">RTL · INT8 · GEMM</span></div>
+            <p data-dc-tpl="52" style="margin: 0px; font-size: 13px; line-height: 1.85; color: rgb(168, 179, 189);"><span class="sc-interp">A weight-stationary grid of int8 MAC cells with tiled GEMM scheduling and a double-buffered activation store. The interesting engineering is the memory schedule; the multipliers are the easy part.</span></p>
+            
+            
+              <div data-dc-tpl="56" style="font-size: 11.5px; letter-spacing: 0.12em; color: rgb(102, 114, 125);">CASE FILE PENDING</div>
+            
+          </div>
+        </div>
+      </div>
+      
+      <div data-dc-tpl="42" class="scp0" style="border: 1px solid rgb(22, 61, 42); display: flex; flex-direction: column;">
+        <div data-dc-tpl="43" style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: rgb(24, 32, 39); color: rgb(57, 255, 136); font-size: 11.5px; letter-spacing: 0.14em;"><span data-dc-tpl="44"><span class="sc-interp">PRJ_05</span></span><span data-dc-tpl="45" style="color: rgb(255, 176, 0);"><span class="sc-interp">SPEC</span></span></div>
+        <div data-dc-tpl="46" style="position: relative; height: 300px; background: rgb(5, 7, 10); overflow: hidden;">
+          
+            <img data-dc-tpl="48" src="https://cdn.sanity.io/images/7h6avsoz/production/1d71548c3057176a3b1c4d69df9e4878820fd476-640x640.jpg?w=900&amp;auto=format&amp;fit=max" alt="POST-QUANTUM CRYPTO IN FPGA" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: contain;">
+          
+          <div data-dc-tpl="49" class="scp1" style="position: absolute; inset: 0px; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5, 7, 10, 0.97) 0%, rgba(5, 7, 10, 0.92) 55%, rgba(5, 7, 10, 0.72) 100%); opacity: 0; transition: opacity 200ms;">
+            <div data-dc-tpl="50" style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: rgb(215, 224, 230); line-height: 1.3;"><span class="sc-interp">POST-QUANTUM CRYPTO IN FPGA</span></div>
+            <div data-dc-tpl="51" style="font-size: 11px; letter-spacing: 0.14em; color: rgb(122, 174, 145);"><span class="sc-interp">RTL · PQC · LATTICE</span></div>
+            <p data-dc-tpl="52" style="margin: 0px; font-size: 13px; line-height: 1.85; color: rgb(168, 179, 189);"><span class="sc-interp">Hardware for the algorithms that outlive RSA: lattice arithmetic, NTT butterflies, constant-time control and a sampler that does not leak through timing. The threat model is a machine that does not exist yet, which makes the constant-time argument the whole project.</span></p>
+            
+              <a data-dc-tpl="54" href="project-pqc.html" style="font-size: 11.5px; letter-spacing: 0.12em; align-self: start;">[ ▸ OPEN CASE FILE ]</a>
+            
+            
+          </div>
+        </div>
+      </div>
+      
+      <div data-dc-tpl="42" class="scp0" style="border: 1px solid rgb(22, 61, 42); display: flex; flex-direction: column;">
+        <div data-dc-tpl="43" style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: rgb(24, 32, 39); color: rgb(57, 255, 136); font-size: 11.5px; letter-spacing: 0.14em;"><span data-dc-tpl="44"><span class="sc-interp">PRJ_06</span></span><span data-dc-tpl="45" style="color: rgb(57, 255, 136);"><span class="sc-interp">IN VERIFICATION</span></span></div>
+        <div data-dc-tpl="46" style="position: relative; height: 300px; background: rgb(5, 7, 10); overflow: hidden;">
+          
+            <img data-dc-tpl="48" src="https://cdn.sanity.io/images/7h6avsoz/production/99c91dfe6154e91d016e272888b716bad0a30cdd-736x727.jpg?w=900&amp;auto=format&amp;fit=max" alt="POWER SYSTEM PROTOCOLS" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: contain;">
+          
+          <div data-dc-tpl="49" class="scp1" style="position: absolute; inset: 0px; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5, 7, 10, 0.97) 0%, rgba(5, 7, 10, 0.92) 55%, rgba(5, 7, 10, 0.72) 100%); opacity: 0; transition: opacity 200ms;">
+            <div data-dc-tpl="50" style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: rgb(215, 224, 230); line-height: 1.3;"><span class="sc-interp">POWER SYSTEM PROTOCOLS</span></div>
+            <div data-dc-tpl="51" style="font-size: 11px; letter-spacing: 0.14em; color: rgb(122, 174, 145);"><span class="sc-interp">VERILOG · ARTIX-7 · CORDIC · 6 CH</span></div>
+            <p data-dc-tpl="52" style="margin: 0px; font-size: 13px; line-height: 1.85; color: rgb(168, 179, 189);"><span class="sc-interp">Instrumentation for the grid: a six-channel interpolated-DFT front end with CORDIC magnitude and phase and ROCOF differentiation, wrapped in the reporting protocols a substation actually expects. No vendor IP anywhere in the chain.</span></p>
+            
+              <a data-dc-tpl="54" href="project-power.html" style="font-size: 11.5px; letter-spacing: 0.12em; align-self: start;">[ ▸ OPEN CASE FILE ]</a>
+            
+            
+          </div>
+        </div>
+      </div>
+      
+      <div data-dc-tpl="42" class="scp0" style="border: 1px solid rgb(22, 61, 42); display: flex; flex-direction: column;">
+        <div data-dc-tpl="43" style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: rgb(24, 32, 39); color: rgb(57, 255, 136); font-size: 11.5px; letter-spacing: 0.14em;"><span data-dc-tpl="44"><span class="sc-interp">PRJ_07</span></span><span data-dc-tpl="45" style="color: rgb(255, 176, 0);"><span class="sc-interp">SPEC</span></span></div>
+        <div data-dc-tpl="46" style="position: relative; height: 300px; background: rgb(5, 7, 10); overflow: hidden;">
+          
+            <img data-dc-tpl="48" src="https://cdn.sanity.io/images/7h6avsoz/production/dee4adf169284067dccbef0f29dac0ccc9775138-726x785.jpg?w=900&amp;auto=format&amp;fit=max" alt="SECOND BRAIN ALGORITHM" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: contain;">
+          
+          <div data-dc-tpl="49" class="scp1" style="position: absolute; inset: 0px; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5, 7, 10, 0.97) 0%, rgba(5, 7, 10, 0.92) 55%, rgba(5, 7, 10, 0.72) 100%); opacity: 0; transition: opacity 200ms;">
+            <div data-dc-tpl="50" style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: rgb(215, 224, 230); line-height: 1.3;"><span class="sc-interp">SECOND BRAIN ALGORITHM</span></div>
+            <div data-dc-tpl="51" style="font-size: 11px; letter-spacing: 0.14em; color: rgb(122, 174, 145);"><span class="sc-interp">SPEC IN PROGRESS</span></div>
+            <p data-dc-tpl="52" style="margin: 0px; font-size: 13px; line-height: 1.85; color: rgb(168, 179, 189);"><span class="sc-interp">[ Send me a paragraph on the second brain algorithm and it goes here verbatim. ]</span></p>
+            
+              <a data-dc-tpl="54" href="project-secondbrain.html" style="font-size: 11.5px; letter-spacing: 0.12em; align-self: start;">[ ▸ OPEN CASE FILE ]</a>
+            
+            
+          </div>
+        </div>
+      </div>
+      
+      <div data-dc-tpl="42" class="scp0" style="border: 1px solid rgb(22, 61, 42); display: flex; flex-direction: column;">
+        <div data-dc-tpl="43" style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: rgb(24, 32, 39); color: rgb(57, 255, 136); font-size: 11.5px; letter-spacing: 0.14em;"><span data-dc-tpl="44"><span class="sc-interp">PRJ_08</span></span><span data-dc-tpl="45" style="color: rgb(255, 176, 0);"><span class="sc-interp">SPEC</span></span></div>
+        <div data-dc-tpl="46" style="position: relative; height: 300px; background: rgb(5, 7, 10); overflow: hidden;">
+          
+            <img data-dc-tpl="48" src="https://cdn.sanity.io/images/7h6avsoz/production/c6dcfad0b25a494b701d60769d5329ade248dae2-735x986.jpg?w=900&amp;auto=format&amp;fit=max" alt="BITSTREAM LLM" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: contain;">
+          
+          <div data-dc-tpl="49" class="scp1" style="position: absolute; inset: 0px; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5, 7, 10, 0.97) 0%, rgba(5, 7, 10, 0.92) 55%, rgba(5, 7, 10, 0.72) 100%); opacity: 0; transition: opacity 200ms;">
+            <div data-dc-tpl="50" style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: rgb(215, 224, 230); line-height: 1.3;"><span class="sc-interp">BITSTREAM LLM</span></div>
+            <div data-dc-tpl="51" style="font-size: 11px; letter-spacing: 0.14em; color: rgb(122, 174, 145);"><span class="sc-interp">SPEC IN PROGRESS</span></div>
+            <p data-dc-tpl="52" style="margin: 0px; font-size: 13px; line-height: 1.85; color: rgb(168, 179, 189);"><span class="sc-interp">[ Send me a paragraph on the bitstream LLM and it goes here verbatim. ]</span></p>
+            
+            
+              <div data-dc-tpl="56" style="font-size: 11.5px; letter-spacing: 0.12em; color: rgb(102, 114, 125);">CASE FILE PENDING</div>
+            
+          </div>
+        </div>
+      </div>
+      
+      <div data-dc-tpl="42" class="scp0" style="border: 1px solid rgb(22, 61, 42); display: flex; flex-direction: column;">
+        <div data-dc-tpl="43" style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: rgb(24, 32, 39); color: rgb(57, 255, 136); font-size: 11.5px; letter-spacing: 0.14em;"><span data-dc-tpl="44"><span class="sc-interp">PRJ_09</span></span><span data-dc-tpl="45" style="color: rgb(255, 176, 0);"><span class="sc-interp">SPEC</span></span></div>
+        <div data-dc-tpl="46" style="position: relative; height: 300px; background: rgb(5, 7, 10); overflow: hidden;">
+          
+            <img data-dc-tpl="48" src="https://cdn.sanity.io/images/7h6avsoz/production/e3d5ef5be1367bd67c4731d55109be46bfa2994a-536x389.jpg?w=900&amp;auto=format&amp;fit=max" alt="DRONE CONTROL" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: contain;">
+          
+          <div data-dc-tpl="49" class="scp1" style="position: absolute; inset: 0px; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5, 7, 10, 0.97) 0%, rgba(5, 7, 10, 0.92) 55%, rgba(5, 7, 10, 0.72) 100%); opacity: 0; transition: opacity 200ms;">
+            <div data-dc-tpl="50" style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: rgb(215, 224, 230); line-height: 1.3;"><span class="sc-interp">DRONE CONTROL</span></div>
+            <div data-dc-tpl="51" style="font-size: 11px; letter-spacing: 0.14em; color: rgb(122, 174, 145);"><span class="sc-interp">RTL · CONTROL · SENSOR FUSION</span></div>
+            <p data-dc-tpl="52" style="margin: 0px; font-size: 13px; line-height: 1.85; color: rgb(168, 179, 189);"><span class="sc-interp">Attitude control in fabric instead of firmware: IMU fusion, a fixed-point rate loop and PWM generation with deterministic latency from sample to actuator. The argument for hardware here is jitter, not throughput.</span></p>
+            
+              <a data-dc-tpl="54" href="project-swarm.html" style="font-size: 11.5px; letter-spacing: 0.12em; align-self: start;">[ ▸ OPEN CASE FILE ]</a>
+            
+            
+          </div>
+        </div>
+      </div>
+      
+      <div data-dc-tpl="42" class="scp0" style="border: 1px solid rgb(22, 61, 42); display: flex; flex-direction: column;">
+        <div data-dc-tpl="43" style="display: flex; justify-content: space-between; align-items: center; padding: 6px 12px; background: rgb(24, 32, 39); color: rgb(57, 255, 136); font-size: 11.5px; letter-spacing: 0.14em;"><span data-dc-tpl="44"><span class="sc-interp">PRJ_10</span></span><span data-dc-tpl="45" style="color: rgb(255, 176, 0);"><span class="sc-interp">SPEC</span></span></div>
+        <div data-dc-tpl="46" style="position: relative; height: 300px; background: rgb(5, 7, 10); overflow: hidden;">
+          
+            <img data-dc-tpl="48" src="https://cdn.sanity.io/images/7h6avsoz/production/7b87f92ee8f735e4b1733ae15a5b45e6337a5e05-736x736.jpg?w=900&amp;auto=format&amp;fit=max" alt="HFT FPGA ALGORITHMS" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: contain;">
+          
+          <div data-dc-tpl="49" class="scp1" style="position: absolute; inset: 0px; display: grid; gap: 12px; align-content: end; padding: 22px 20px; background: linear-gradient(to top, rgba(5, 7, 10, 0.97) 0%, rgba(5, 7, 10, 0.92) 55%, rgba(5, 7, 10, 0.72) 100%); opacity: 0; transition: opacity 200ms;">
+            <div data-dc-tpl="50" style="font-size: 17px; font-weight: 700; letter-spacing: 0.05em; color: rgb(215, 224, 230); line-height: 1.3;"><span class="sc-interp">HFT FPGA ALGORITHMS</span></div>
+            <div data-dc-tpl="51" style="font-size: 11px; letter-spacing: 0.14em; color: rgb(122, 174, 145);"><span class="sc-interp">RTL · LOW LATENCY · FEED PARSING</span></div>
+            <p data-dc-tpl="52" style="margin: 0px; font-size: 13px; line-height: 1.85; color: rgb(168, 179, 189);"><span class="sc-interp">Tick-to-trade in hardware: market-data feed parsing on the wire, an order book maintained in fabric and a decision path measured in nanoseconds. Every stage has to justify the cycle it costs.</span></p>
+            
+              <a data-dc-tpl="54" href="project-hft.html" style="font-size: 11.5px; letter-spacing: 0.12em; align-self: start;">[ ▸ OPEN CASE FILE ]</a>
+            
+            
+          </div>
+        </div>
+      </div>
+      
+
+    </div>
+  </section>
+
+  <section data-dc-tpl="57" data-screen-label="Queue" style="max-width: 1520px; margin: 0px auto; padding: 56px 28px 0px;">
+    <div data-dc-tpl="58" style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
+      <span data-dc-tpl="59" style="color: rgb(5, 7, 10); background: rgb(122, 174, 145); padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: Silkscreen, monospace;">B</span>
+      <span data-dc-tpl="60" style="font-family: &quot;IBM Plex Mono&quot;, monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: rgb(215, 224, 230);"><span class="sc-interp">QUEUE</span></span>
+      <span data-dc-tpl="61" style="flex: 1 1 0%; color: rgb(17, 98, 111); overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
+      <span data-dc-tpl="62" style="font-size: 12px; color: rgb(102, 114, 125);"><span class="sc-interp">UNCLAIMED</span></span>
+    </div>
+    
+      <p data-dc-tpl="64" style="max-width: 68ch; font-size: 13.5px; line-height: 1.9; color: rgb(122, 174, 145); margin: 0px 0px 22px;"><span class="sc-interp">Proposed blocks with a written spec and no owner. Claim one when you join — you get the spec, a mentor and bench time.</span></p>
+    
+    <div data-dc-tpl="65" style="display: grid; gap: 0px; border-top: 1px solid rgb(24, 32, 39);">
+      
+      <div data-dc-tpl="67" style="display: grid; grid-template-columns: 150px minmax(0px, 1fr) 130px; gap: 20px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid rgb(24, 32, 39); font-size: 13.5px;">
+        <span data-dc-tpl="68" style="color: rgb(215, 224, 230); letter-spacing: 0.06em;"><span class="sc-interp">AXI4-LITE CSR</span></span>
+        <span data-dc-tpl="69" style="color: rgb(168, 179, 189);"><span class="sc-interp">Register block generator plus a UVM agent that proves the generated map matches the spec.</span></span>
+        <span data-dc-tpl="70" style="color: rgb(122, 174, 145); font-size: 12px;"><span class="sc-interp">DV · 1 OWNER</span></span>
+      </div>
+      
+      <div data-dc-tpl="67" style="display: grid; grid-template-columns: 150px minmax(0px, 1fr) 130px; gap: 20px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid rgb(24, 32, 39); font-size: 13.5px;">
+        <span data-dc-tpl="68" style="color: rgb(215, 224, 230); letter-spacing: 0.06em;"><span class="sc-interp">CIC DECIMATOR</span></span>
+        <span data-dc-tpl="69" style="color: rgb(168, 179, 189);"><span class="sc-interp">Configurable-rate CIC with compensation FIR. Fixed-point error budget written before the RTL.</span></span>
+        <span data-dc-tpl="70" style="color: rgb(122, 174, 145); font-size: 12px;"><span class="sc-interp">RTL · 1 OWNER</span></span>
+      </div>
+      
+      <div data-dc-tpl="67" style="display: grid; grid-template-columns: 150px minmax(0px, 1fr) 130px; gap: 20px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid rgb(24, 32, 39); font-size: 13.5px;">
+        <span data-dc-tpl="68" style="color: rgb(215, 224, 230); letter-spacing: 0.06em;"><span class="sc-interp">CDC AUDIT KIT</span></span>
+        <span data-dc-tpl="69" style="color: rgb(168, 179, 189);"><span class="sc-interp">Assertions and a lint pass that catch the clock-domain crossings our reviews keep missing.</span></span>
+        <span data-dc-tpl="70" style="color: rgb(122, 174, 145); font-size: 12px;"><span class="sc-interp">DV · 2 OWNERS</span></span>
+      </div>
+      
+      <div data-dc-tpl="67" style="display: grid; grid-template-columns: 150px minmax(0px, 1fr) 130px; gap: 20px; align-items: baseline; padding: 16px 4px; border-bottom: 1px solid rgb(24, 32, 39); font-size: 13.5px;">
+        <span data-dc-tpl="68" style="color: rgb(215, 224, 230); letter-spacing: 0.06em;"><span class="sc-interp">SKY130 SRAM TILE</span></span>
+        <span data-dc-tpl="69" style="color: rgb(168, 179, 189);"><span class="sc-interp">Small macro pushed through OpenLane to GDS, with the timing and DRC reports published as-is.</span></span>
+        <span data-dc-tpl="70" style="color: rgb(122, 174, 145); font-size: 12px;"><span class="sc-interp">PD · 1 OWNER</span></span>
+      </div>
+      
+    </div>
+  </section>
+
+  <section data-dc-tpl="71" data-screen-label="CTA" style="max-width: 1520px; margin: 0px auto; padding: 56px 28px 0px;">
+    <div data-dc-tpl="72" style="border: 1px solid rgb(57, 255, 136); padding: 26px 24px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; align-items: center;">
+      <div data-dc-tpl="73" style="font-size: 15px; color: rgb(215, 224, 230); letter-spacing: 0.06em;"><span class="sc-interp">Bringing your own block is also allowed.</span></div>
+      
+        <a data-dc-tpl="75" href="join.html" style="border: 1px solid rgb(57, 255, 136); padding: 11px 20px; font-size: 13px; letter-spacing: 0.16em; font-weight: 700;"><span class="sc-interp">[ ▸ CLAIM A BLOCK ]</span></a>
+      
+    </div>
+  </section>
+  
+
+  <div data-dc-tpl="76" style="max-width: 1520px; margin: 74px auto 0px; padding: 0px 28px;">
+    <div data-dc-tpl="77" style="border-top: 1px solid rgb(22, 61, 42); padding: 26px 0px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; font-size: 12.5px;">
+      <div data-dc-tpl="78" style="display: grid; gap: 8px; align-content: start;">
+        <div data-dc-tpl="79" style="color: rgb(102, 114, 125); letter-spacing: 0.16em; font-size: 11px;">WHISTLEBLOWER</div>
+        <div data-dc-tpl="80" style="color: rgb(168, 179, 189); line-height: 1.8; max-width: 30ch;"><span class="sc-interp">Student-run ASIC / FPGA hardware verification lab.</span></div>
+      </div>
+      <div data-dc-tpl="81" style="display: grid; gap: 8px; align-content: start;">
+        <div data-dc-tpl="82" style="color: rgb(102, 114, 125); letter-spacing: 0.16em; font-size: 11px;">CONTACT</div>
+        <div data-dc-tpl="83"><span data-dc-tpl="84" style="color: rgb(102, 114, 125);">MAIL ▸ </span><a data-dc-tpl="85" href="mailto:lab@whistleblower.dev"><span class="sc-interp">lab@whistleblower.dev</span></a></div>
+      </div>
+      <div data-dc-tpl="86" style="display: grid; gap: 8px; align-content: start;">
+        <div data-dc-tpl="87" style="color: rgb(102, 114, 125); letter-spacing: 0.16em; font-size: 11px;">INDEX</div>
+        <div data-dc-tpl="88" style="display: flex; flex-wrap: wrap; gap: 6px 14px;">
+          <a data-dc-tpl="89" href="index.html" style="color: rgb(122, 174, 145);">HOME</a>
+          <a data-dc-tpl="90" href="research.html" style="color: rgb(122, 174, 145);">RESEARCH</a>
+          <a data-dc-tpl="91" href="people.html" style="color: rgb(122, 174, 145);">PEOPLE</a>
+          <a data-dc-tpl="92" href="publications.html" style="color: rgb(122, 174, 145);">PUBS</a>
+          <a data-dc-tpl="93" href="news.html" style="color: rgb(122, 174, 145);">NEWS</a>
+          <a data-dc-tpl="94" href="join.html" style="color: rgb(122, 174, 145);">JOIN</a>
+        </div>
+      </div>
+    </div>
+    <div data-dc-tpl="95" style="border-top: 1px solid rgb(24, 32, 39); padding: 14px 0px 30px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-size: 11px; letter-spacing: 0.14em; color: rgb(102, 114, 125);">
+      <span data-dc-tpl="96">▓▒░ END OF FILE ░▒▓</span>
+      <span data-dc-tpl="97">WHISTLEBLOWER LAB · MMXXVI</span>
+    </div>
+  </div></div></div></div>
+<script type="text/x-dc" data-dc-script="">
+class Component extends DCLogic {
+  state = { data: null, failed: false };
+
+  componentDidMount() {
+    WB.load().then(
+      (data) => { this.setState({ data }); WB.setDescription(WB.page(data, 'projects').seo); },
+      () => this.setState({ failed: true })
+    );
+  }
+
+  renderVals() {
+    const d = this.state.data;
+    const s = (d && d.settings) || {};
+    const site = { footerBlurb: s.footerBlurb || 'Student-run ASIC / FPGA hardware verification lab.', email: s.email || 'lab@whistleblower.dev' };
+    if (!d) return { loading: !this.state.failed, failed: this.state.failed, ready: false, site };
+
+    const page = WB.page(d, 'projects');
+    const cta = page.slot.cta || { links: [] };
+    // Hand-built case-file pages are named project-<design>.html
+    const DESIGNS = ['hft', 'ipdft', 'power', 'pqc', 'secondbrain', 'sentinel', 'swarm', 'tcpip'];
+    const projects = (d.projects || []).filter((p) => p.listed !== false).map((p) => ({
+      code: p.code, stage: p.stage,
+      stageColor: p.stage === 'SPEC' || p.stage === 'PAUSED' ? '#ffb000' : '#39FF88',
+      image: p.cardImage && WB.img(p.cardImage.url, 900),
+      imageAlt: (p.cardImage && p.cardImage.alt) || p.title,
+      title: p.title, tags: p.tags, summary: p.summary,
+      caseFileHref: p.caseFile === 'live' && DESIGNS.indexOf(p.design) !== -1 ? 'project-' + p.design + '.html' : undefined,
+    }));
+    const q = page.slot.queue || {};
+    const queueSlot = { heading: q.heading || 'QUEUE', kicker: q.kicker, paras: q.paras || [] };
+    const queue = (d.queue || []).map((x) => ({ title: x.title, description: x.description, tag: x.tag }));
+
+    return {
+      loading: false, failed: false, ready: true, site, page, cta, projects, queue, queueSlot,
+      countLabel: 'HOVER FOR DETAIL · ' + projects.length + (projects.length === 1 ? ' ENTRY' : ' ENTRIES'),
+    };
+  }
+}
+</script>
+
+
+</body></html>
