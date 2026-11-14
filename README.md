@@ -106,6 +106,7 @@ npx sanity login       # first time on a machine
 | Deploy dashboard changes (schemas, sidebar) | `npm run deploy` |
 | Refresh the fallback snapshot | `npm run snapshot`, then commit and push `content/snapshot.json` |
 | Re-run the original import (only creates missing documents) | `npm run migrate` |
+| Load a project page's content from `content/projects/<slug>.json` (skips pages already filled) | `npm run seed-projects` (`-- --force <slug>` to overwrite) |
 | Allow a new site address (e.g. custom domain) | `npx sanity cors add https://example.org --no-credentials` |
 | Invite an editor | sanity.io/manage → project → Members → Invite (role: Editor) |
 

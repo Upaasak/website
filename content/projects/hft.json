@@ -1,0 +1,179 @@
+{
+  "seoDescription": "Tick-to-trade in FPGA fabric: market-data feed parsing on the wire, an in-fabric order book and a decision path measured in nanoseconds.",
+  "sections": [
+    {
+      "key": "ticker",
+      "items": [
+        {"label": "ITCH", "value": "ADD BUY @100000", "accent": "#00FF7F"},
+        {"label": "ITCH", "value": "ADD SELL @100010", "accent": "#FF1744"},
+        {"label": "BBO", "value": "SPREAD 10", "accent": "#00BFFF"},
+        {"label": "STRAT", "value": "BUY 100 @100001", "accent": "#00FF7F"},
+        {"label": "RISK", "value": "PASS", "accent": "#00FF7F"},
+        {"label": "OUCH", "value": "4F 42 00 01 86 A1 00 00 00 64 00 00 00 01 0D 0A", "accent": "#FFFFFF"},
+        {"label": "LAT", "value": "78 CYC", "accent": "#00BFFF"},
+        {"label": "PARSE", "value": "6 CYC · 12×", "accent": "#00FF7F"},
+        {"label": "WNS", "value": "+1.828 ns", "accent": "#00BFFF"},
+        {"label": "IMPL_2P0", "value": "−0.245 ns", "accent": "#FF1744"},
+        {"label": "AAPL", "value": "400 PKTS · 0 GAPS", "accent": "#FFFFFF"},
+        {"label": "FILL", "value": "NET POS +100", "accent": "#00FF7F"}
+      ]
+    },
+    {
+      "key": "header",
+      "kicker": "PRJ_10 · CASE FILE · ZCU106",
+      "heading": "TICK → TRADE",
+      "body": "When an exchange sends a price update, whoever answers first gets the trade. This pipeline makes the whole decision in an FPGA: an ITCH market message comes in one side and a finished OUCH order leaves the other, a fixed handful of clock cycles later. PS is control-plane only.",
+      "items": [
+        {"value": "78", "label": "CYC TICK-TO-TRADE", "accent": "#00FF7F"},
+        {"value": "≈6", "label": "CYC OF COMPUTE", "accent": "#00FF7F"},
+        {"value": "12/13", "label": "DEMOS MEET TIMING", "accent": "#00BFFF"}
+      ],
+      "images": [{"src": "assets/projects/hft/eat-the-rich.jpg", "alt": "Monopoly's Rich Uncle Pennybags holding an EAT THE RICH sign", "caption": "// the market maker earns the spread. The fastest one eats first."}]
+    },
+    {
+      "key": "tagline",
+      "heading": "A 100%-FABRIC HFT PIPELINE"
+    },
+    {
+      "key": "pipeline",
+      "kicker": "01",
+      "heading": "THE PIPELINE",
+      "body": "every block bit-exact vs a Python golden model, then mutation-tested so a broken design is proven to fail · GHDL 4.1.0 + Vivado xsim 2025.1",
+      "items": [
+        {"label": "itch_parser", "detail": "fields out of raw ITCH", "value": "GHDL + xsim · bit-exact"},
+        {"label": "event_normalizer", "detail": "clean internal events", "value": "218 records"},
+        {"label": "bbo_book", "detail": "best bid and offer", "value": "413 records"},
+        {"label": "strategy_mm", "detail": "market-maker quote", "value": "18 records"},
+        {"label": "risk_gate", "detail": "hardware limit interlock", "value": "42 cycles", "accent": "#FF1744"},
+        {"label": "ouch_encoder", "detail": "OUCH byte frame", "value": "8 frames"},
+        {"label": "latency_ts", "detail": "in-fabric stopwatch", "value": "9 fires"}
+      ]
+    },
+    {
+      "key": "latency",
+      "kicker": "02",
+      "heading": "WHERE THE CYCLES GO",
+      "body": "The parallel parser takes 8 bytes a cycle, the width of a 10G AXIS bus, and decodes every field of every message type in one cycle by speculating. Smaller, faster, and 12× lower latency. It assumes a 64-bit ingress from a 10G or 25G MAC.",
+      "items": [
+        {"value": "Timed replay with LOBSTER-derived gaps: wire-to-trade median 13 / p99 96 cyc, ≈43 / 320 ns at 300 MHz. latency_ts is last-tick-wins, a lower-bound proxy under bursts."}
+      ]
+    },
+    {
+      "key": "latency-split",
+      "heading": "FIG 1 · 78-CYCLE DECOMPOSITION",
+      "kicker": "serial ingest",
+      "items": [
+        {"label": "~72 · 36 BYTES × 2 CYC INGEST", "value": "72"},
+        {"label": "compute ≈6 ▸", "value": "6"}
+      ]
+    },
+    {
+      "key": "latency-parse",
+      "heading": "FIG 2 · PARSE LATENCY",
+      "kicker": "serial vs parallel · cycles",
+      "items": [
+        {"label": "itch_parser", "value": "72", "detail": "72"},
+        {"label": "itch_parser_par", "value": "6", "detail": "6 · 12×", "accent": "#00FF7F"}
+      ]
+    },
+    {
+      "key": "latency-table",
+      "kicker": "PARSER | INGEST | LATENCY | FMAX (SYN) | LUT | FF",
+      "items": [
+        {"label": "serial", "value": "1 B / 2 cyc | 72 cyc | ~572 MHz | 179 | 536"},
+        {"label": "parallel", "value": "8 B / cyc | 6 cyc | ~1168 MHz | 17 | 167", "accent": "#00FF7F"}
+      ]
+    },
+    {
+      "key": "timing",
+      "kicker": "03",
+      "heading": "TIMING CLOSURE"
+    },
+    {
+      "key": "timing-wns",
+      "heading": "FIG 3 · WNS PER DEMO · xczu7ev-ffvc1156-2-e · VIVADO 2025.1",
+      "kicker": "ns · −0.5 to 3.5",
+      "items": [
+        {"label": "bbo_book", "value": "1.972"},
+        {"label": "bbo_book_impl_2p0", "value": "0.05"},
+        {"label": "event_normalizer", "value": "1.725"},
+        {"label": "hft_tick_to_trade_top", "value": "1.828"},
+        {"label": "hft_tick_to_trade_top_impl_2p0", "value": "-0.245"},
+        {"label": "hft_tick_to_trade_top_impl_3p0", "value": "0.315"},
+        {"label": "itch_parser", "value": "2.251"},
+        {"label": "itch_parser_impl_2p0", "value": "0.302"},
+        {"label": "latency_ts", "value": "3.28"},
+        {"label": "ouch_encoder", "value": "3.287"},
+        {"label": "risk_gate", "value": "2.065"},
+        {"label": "selftest", "value": "0.597"},
+        {"label": "strategy_mm", "value": "1.725"}
+      ]
+    },
+    {
+      "key": "timing-cards",
+      "items": [
+        {"label": "TOP_IMPL_2P0", "value": "▲ VIOLATED", "detail": "Routed. WNS −0.245 ns, TNS −0.525 ns. The aggressive stretch target.", "accent": "#FF1744"},
+        {"label": "TOP_IMPL_3P0", "value": "● RECOVERED", "detail": "Routed. WNS +0.315 ns, TNS 0. 751 LUT, 688 FF, 0 BRAM, 0 DSP.", "accent": "#00FF7F"},
+        {"label": "HFT_TICK_TO_TRADE_TOP", "value": "● BASE", "detail": "WNS +1.828 ns. Its report is marked Synthesized, not Routed. 688 FF, no BRAM or DSP.", "accent": "#00BFFF"}
+      ]
+    },
+    {
+      "key": "trade",
+      "kicker": "04",
+      "heading": "ONE TRADE, END TO END",
+      "items": [
+        {"label": "BOOK · BID", "value": "100000", "accent": "#00FF7F"},
+        {"label": "BOOK · OFFER", "value": "100010", "accent": "#FF1744"},
+        {"label": "SPREAD", "value": "10", "accent": "#00BFFF"},
+        {"label": "INTENT", "value": "BUY 100 @ 100001"},
+        {"label": "RISK", "value": "PASS", "accent": "#00FF7F", "detail": "highlight"}
+      ]
+    },
+    {
+      "key": "trade-frame",
+      "heading": "OUCH-LITE FRAME · 16 BYTES · BIT-EXACT",
+      "items": [
+        {"label": "4F 42", "detail": "'O' 'B'", "accent": "#00FF7F"},
+        {"label": "00 01 86 A1", "detail": "price 100001", "accent": "#00BFFF"},
+        {"label": "00 00 00 64", "detail": "qty 100", "accent": "#FFFFFF"},
+        {"label": "00 00 00 01", "accent": "#A0A0A0"},
+        {"label": "0D 0A", "detail": "CR LF", "accent": "#FF1744"}
+      ]
+    },
+    {
+      "key": "trade-cards",
+      "items": [
+        {"label": "MOLDUDP64 INGRESS", "detail": "400 real AAPL packets, 0 gaps, 199 OUCH out, BBO bit-exact vs golden. GHDL and xsim.", "accent": "#00BFFF"},
+        {"label": "SOUPBINTCP OVER TOE", "detail": "SYN / SYN-ACK / ACK, then the order leaves as a TCP data segment, seq 1001, PSH|ACK. Payload bit-exact.", "accent": "#00BFFF"},
+        {"label": "CLOSED LOOP", "detail": "The exchange sends a fill back over the same session; fill_rx decodes it. net_position = +100.", "accent": "#00FF7F"}
+      ]
+    },
+    {
+      "key": "payoff",
+      "heading": "THE PAYOFF",
+      "body": "Order out, fill in, inventory updated, all over one established TCP session. The loop closes in simulation: market data, decision, SoupBinTCP egress through the TOE, execution report back through fill_rx.",
+      "items": [{"value": "Simulated, not traded. No exchange, no colocation, no money moved."}],
+      "images": [{"src": "assets/cards/hft.jpg", "alt": "Cartoon man in sunglasses hugging stacks of cash", "caption": "// net_position = +100"}]
+    },
+    {
+      "key": "risk",
+      "heading": "05 RISK & HONEST SCOPE",
+      "body": "risk_gate is a hardware interlock. An order that breaks position or size limits is blocked in the circuit, not logged by software downstream.",
+      "items": [
+        {"value": "No exchange feed or colocation. Latency is sim datapath cycles, not live wire-to-trade."},
+        {"value": "No hardware run recorded on the ZCU106; silicon is the target."},
+        {"value": "bbo_book is single-level: no depth, no order-id matching."},
+        {"value": "strategy_mm emits one buy quote when spread ≥ threshold; sell side and inventory band are future work."},
+        {"value": "OUCH-lite fixed 16-byte layout, not venue-exact."}
+      ],
+      "images": [{"src": "assets/projects/hft/broke.jpg", "alt": "Monopoly man with empty hands above the word BROKE?", "caption": "// what the risk gate exists to prevent"}]
+    },
+    {
+      "key": "artefacts",
+      "items": [
+        {"label": "REPO ▸ ", "value": "Upaasak/hft-tick-to-trade", "detail": "· feat/parallel-top · private"},
+        {"value": "source commit ba48246b"}
+      ]
+    }
+  ]
+}

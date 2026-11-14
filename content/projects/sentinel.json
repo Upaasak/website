@@ -1,0 +1,211 @@
+{
+  "seoDescription": "SENTINEL: a software-defined autonomous mission vehicle with FPGA-native deterministic edge compute, formal safety and a HIL digital twin.",
+  "sections": [
+    {
+      "key": "hud",
+      "kicker": "TRL 3",
+      "heading": "HARDWARE GATED",
+      "items": [
+        {"label": "1UP", "value": "SENTINEL", "accent": "#FF5454"},
+        {"label": "HI-SCORE", "value": "53 CORES @ 200 MHZ", "accent": "#FFB000"},
+        {"label": "STAGE", "value": "02 / 10", "accent": "#FFB000"}
+      ]
+    },
+    {
+      "key": "header",
+      "kicker": "PRJ_02 · CASE FILE",
+      "heading": "SENTINEL",
+      "body": "FPGA-native deterministic edge compute for a modular autonomous ground platform. Sensors, fusion, IMM-UKF prediction and vehicle control run on dedicated hardware rather than behind an operating-system scheduler, so the critical path has bounded, scheduler-free latency.\n\nThe weapon and fire-control chain is one isolated mission payload, not the centerpiece. A formal nav→fire isolation proof enforces the platform↔payload boundary.",
+      "items": [
+        {"label": "subtitle", "value": "SOFTWARE-DEFINED AUTONOMOUS MISSION VEHICLE"},
+        {"label": "screen-top-left", "value": "WAVE 02"},
+        {"label": "screen-top-right", "value": "READY"},
+        {"label": "screen-bottom", "value": "PRESS START"}
+      ],
+      "images": [{"src": "assets/cards/sentinel.jpg", "alt": "SENTINEL — pixel interceptor clearing a wave"}]
+    },
+    {
+      "key": "rule",
+      "kicker": "RULE 00 · ABSOLUTE",
+      "body": "Human-on-the-loop for weapon release. Navigation is autonomous; fire authority never is."
+    },
+    {
+      "key": "scoreboard",
+      "kicker": "01",
+      "heading": "SCOREBOARD",
+      "items": [
+        {"label": "RTL", "value": "~53", "detail": "cores with measured Vivado OOC STA at 200 MHz. 9/9 board bitstreams built."},
+        {"label": "SAFETY", "value": "∞", "detail": "ROE fire interlock formally proven unbounded (k-induction, sby + z3)."},
+        {"label": "AUTONOMY", "value": "3/3", "detail": "waypoints on real Nav2 + slam_toolbox, mission BT, obstacle replan."},
+        {"label": "V&V", "value": "10/10", "detail": "automated gates green, each with a proven fail-path."},
+        {"label": "TIME SYNC", "value": "1.441ns", "detail": "PTP / IRIG-B, board-measured."}
+      ]
+    },
+    {
+      "key": "critical-path",
+      "kicker": "02",
+      "heading": "THE CRITICAL PATH",
+      "body": "FPGA-deterministic critical path plus a supervisory SoC. Mission planning, operator UX and non-deterministic inference run on the SoC; detect → track → lead → aim runs on fabric.",
+      "items": [
+        {"label": "CONVENTIONAL", "value": "CPU ▸ GPU ▸ AI ▸ DECISION", "detail": "· variable latency"},
+        {"label": "SENTINEL", "value": "SENSORS ▶ FPGA AI ▶ HW FUSION ▶ *IMM-UKF* ▶ MISSION PLAN ▶ VEHICLE CTRL ▶ DRIVE-BY-WIRE"}
+      ]
+    },
+    {
+      "key": "boss",
+      "kicker": "03",
+      "heading": "BOSS FIGHT · UKF + IMM"
+    },
+    {
+      "key": "ukf",
+      "kicker": "sentinel_ukf",
+      "heading": "INTERIM · SWAP SLOT",
+      "body": "Full UKF predict + update in one entity. 1-D constant-acceleration model, state [p, v, a], H = I, Q16.16 throughout. One shared matmul, time-multiplexed.\n\nPart xczu7ev-ffvc1156-2-e · OOC · dt = 0.1 s · R = 0.01·I",
+      "items": [
+        {"label": "WNS @ 200 MHz", "value": "+0.396 ns"},
+        {"label": "LATENCY / STEP", "value": "843 cycles"},
+        {"label": "GHDL vs TWIN", "value": "20/20 bit-exact"},
+        {"label": "xsim + GHDL", "value": "8/8 adversarial"}
+      ]
+    },
+    {
+      "key": "imm",
+      "kicker": "sentinel_imm_tracker",
+      "heading": "IMM-FAMILY · 2 MODELS",
+      "body": "CV (cruise) and CA (maneuver) fixed-gain filters run on the same stream. The bank picks the model with the smaller EWMA innovation, with hysteresis.\n\nHard switch, not full IMM. Markov mixing + soft blending is the next increment.",
+      "items": [
+        {"label": "xsim + GHDL", "value": "300/300 match"},
+        {"label": "GOLDEN TB", "value": "222 cyc · 0 miss"},
+        {"label": "CA PICKED IN MANEUVER", "value": "100 %"},
+        {"label": "FUNCTIONAL FINDINGS", "value": "None"}
+      ]
+    },
+    {
+      "key": "fig-rmse",
+      "heading": "FIG 1 · POSITION RMSE, CLOSED-LOOP · 61 STEPS / 6 S",
+      "kicker": "LOG SCALE · METRES",
+      "body": "RTL vs bit-exact twin: 0.0000 on every trajectory",
+      "items": [
+        {"label": "CV", "value": "0.054 RTL", "detail": "0.029 float"},
+        {"label": "CT 3G", "value": "108.0", "detail": "6.29"},
+        {"label": "CT 6G", "value": "214.0", "detail": "12.58", "accent": "#FFB000"},
+        {"label": "WEAVE", "value": "32.8", "detail": "1.33"}
+      ]
+    },
+    {
+      "key": "fig-dets",
+      "heading": "FIG 2 · det(S) PER STEP · CT 6G",
+      "kicker": "LOG · RAW Q16.16",
+      "body": "┆ DET_FLOOR = 256 · below it matinv returns Sinv = 0\n\nAfter one measurement P converges toward R. det(S) ≈ 0.02³ lands at ~1 LSB, the singular guard trips, and the gain goes to zero. From step 1 the filter dead-reckons: ct_6g velocity freezes at 40.03 m/s while truth swings to 124 m/s.",
+      "items": [
+        {"label": "STEP 0", "value": "67539"},
+        {"label": "STEP 1", "value": "1"},
+        {"label": "STEP 2", "value": "1"},
+        {"label": "STEP 3..60", "value": "1 · K = 0"}
+      ]
+    },
+    {
+      "key": "fig-gate",
+      "heading": "FIG 3 · ACCEPTANCE GATE · gain_active",
+      "kicker": "2-SIDED BAND",
+      "body": "The band was one-sided until a mutation test showed a wire scoring 1.0. Accuracy is now gated relative to float64 (1.5× margin, 0.1 m floor).",
+      "items": [
+        {"label": "float64 reference", "value": "0.4467", "detail": "PASS", "accent": "#39FF88"},
+        {"label": "interim RTL UKF", "value": "0.0007", "detail": "FAIL", "accent": "#BB3426"},
+        {"label": "passthrough x⁺ = z", "value": "1.0000", "detail": "FAIL", "accent": "#FF5454"}
+      ]
+    },
+    {
+      "key": "verdict",
+      "kicker": "VERDICT · INTERIM UKF",
+      "heading": "Not adequate for the fire-control envelope. 214 m RMSE, 336 m peak at 6 g.",
+      "body": "CV passes for the wrong reason: the filter coasts on an exact model, it is not filtering. H = I flatters it; a position-only sensor would diverge faster."
+    },
+    {
+      "key": "next-level",
+      "kicker": "NEXT LEVEL · IMM-UKF SWAP",
+      "items": [
+        {"label": "Conditioning: wider fraction, square-root / UD covariance, or normalised innovation."},
+        {"label": "Expressiveness: turning models in the IMM bank to close the 12.6 m single-model residual."},
+        {"label": "Range: det(S) overflows Q16.16 once P_ii exceeds ~32 (adversarial finding F1)."}
+      ]
+    },
+    {
+      "key": "replay",
+      "kicker": "REPLAY · RASO IMM CONSOLE",
+      "heading": "· NINE RECORDED TRAJECTORIES",
+      "body": "Step through nine recorded trajectories (birds, a car, three F1 laps, an airplane, a missile, a pedestrian) and compare the IMM filter's estimate and one-step prediction against ground truth, with live tracking error, mode probabilities and RF classification. A replay of stored filter output, not a live tracker.",
+      "links": [{"label": "OPEN IN NEW TAB ▸", "href": "https://widthmissmatch.github.io/Tracker/"}]
+    },
+    {
+      "key": "subsystems",
+      "kicker": "04",
+      "heading": "SELECT A SUBSYSTEM"
+    },
+    {
+      "key": "subsystem-1",
+      "kicker": "P1 · TARGET",
+      "heading": "PHYSICAL PLATFORM",
+      "body": "Mixed, progressive targets: a Stage-1 pendulum first, then a C-UAS drone tracked on the move.",
+      "images": [{"src": "assets/projects/sentinel/drone-target.jpg", "alt": "Pixel drone"}]
+    },
+    {
+      "key": "subsystem-2",
+      "kicker": "P2 · WORLD",
+      "heading": "3-TIER DIGITAL TWIN",
+      "body": "Tier A cocotb↔GHDL HIL, Tier B MATLAB/Simulink physics, Tier C ROS 2 / Gazebo. Enriched physics twin cross-validated.",
+      "images": [{"src": "assets/projects/sentinel/digital-twin.jpg", "alt": "Pixel sky battle — the twinned world"}]
+    },
+    {
+      "key": "subsystem-3",
+      "kicker": "P3 · PAYLOAD",
+      "heading": "ISOLATED EFFECTOR",
+      "body": "Laser designator first, ballistic later. Aim / ROE / interlock chain only; no terminal-effect modelling.",
+      "images": [{"src": "assets/projects/sentinel/effector-payload.jpg", "alt": "Pixel effector loadout"}]
+    },
+    {
+      "key": "subsystem-4",
+      "kicker": "P4 · VERSUS",
+      "heading": "ADVERSARIAL AGENTS",
+      "body": "Pursuit and protection agents trained in the twin, each adapting to the other's strategy before transfer to HIL.",
+      "images": [
+        {"src": "assets/projects/sentinel/agent-a.jpg", "alt": "Pixel agent A"},
+        {"src": "assets/projects/sentinel/agent-b.jpg", "alt": "Pixel agent B"}
+      ]
+    },
+    {
+      "key": "milestones",
+      "kicker": "05",
+      "heading": "LEVEL MAP · 9 MILESTONES",
+      "body": "Physical bench (M5) → rolling chassis (M6) → closed-loop autonomy on the real UGV (M7) are locked until the board lands. Bring-up runbook and bitstreams are staged.",
+      "items": [
+        {"label": "Requirements freeze", "value": "PLAY", "detail": "34 REQs · 22 core-MET"},
+        {"label": "Physical architecture", "value": "PLAY", "detail": "Diagram + DL-002 split"},
+        {"label": "Interface control docs", "value": "PLAY", "detail": "16 boundaries, hazards pinned"},
+        {"label": "Safety & supervision", "value": "CLEAR", "detail": "15 guarantees · 6 proven"},
+        {"label": "Bench integration", "value": "LOCKED", "detail": "Virtual now · board-gated"},
+        {"label": "Rolling chassis", "value": "LOCKED", "detail": "Gazebo twin now · car later"},
+        {"label": "Closed-loop autonomy", "value": "LOCKED", "detail": "Full loop in sim"},
+        {"label": "System test report", "value": "PLAY", "detail": "Evidence exists · matrix open"},
+        {"label": "Executive presentation", "value": "PLAY", "detail": "Material needs refresh"}
+      ]
+    },
+    {
+      "key": "rules",
+      "kicker": "HOUSE RULES · HONEST CLAIMS",
+      "items": [
+        {"label": "No \"pure FPGA end-to-end\" claim. FPGA critical path + supervisory SoC."},
+        {"label": "Vendor perf/W figures are reported, not proven. The claim is bounded latency."},
+        {"label": "Per-core timing MET ≠ system-integration MET. Integration TRL is low."}
+      ]
+    },
+    {
+      "key": "artefacts",
+      "kicker": "ARTEFACTS",
+      "items": [
+        {"label": "RTL", "value": "EV/05_Experiments/rtl · VHDL-2008"},
+        {"label": "RISKS", "value": "EV/10_Program_Execution/Risk-Register.md"}
+      ]
+    }
+  ]
+}

@@ -60,6 +60,20 @@ one-line summary, card image). Tick **Show on home page** to feature it.
 To give it a page: *Case file page* tab → **Published**, then choose a **Page design**. The page uses
 that design's look with your project's content.
 
+**Edit a project page** (e.g. Power System Protocols, SENTINEL). Sidebar → **Project pages (case
+files)** → open the project → **Case file page** tab → **Page content**. The sections are the page
+from top to bottom; each one's **slot** name (`header`, `about`, `security`…) fixes where it sits.
+- *Heading*, *small label* and *body* are the visible text. In body text a blank line starts a new
+  paragraph.
+- *Rows* are the lists, stats, table rows and chart bars. Drag to reorder, **+** to add. Where a row's
+  value is a number (chart bars), the bar length follows it.
+- Some rows use a short code word or symbol in **Value** to pick a colour or side, e.g. `holds` /
+  `partial` / `open` on security cards, `→` / `←` in a message ladder, `*text*` to highlight a block.
+  Reuse the words already there.
+- *Images* show in the order listed; replace one by clicking it → Replace. Keep the alt text filled in.
+- Deleting a section hides that part of the page. **Search & share description** (same tab) is the
+  text Google and link previews show.
+
 ## Writing tips
 
 - **Images:** upload the largest version you have; the site resizes it. Always fill in **Alt text**

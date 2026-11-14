@@ -1,0 +1,174 @@
+{
+  "seoDescription": "Post-quantum cryptography in FPGA: lattice arithmetic, NTT butterflies and constant-time control for the algorithms that outlive RSA.",
+  "sections": [
+    {
+      "key": "header",
+      "kicker": "PRJ_05 · CASE FILE",
+      "heading": "The Post-Quantum Post Office",
+      "body": "A full-stack post-quantum capability: FIPS-203-exact ML-KEM compression RTL and a 31-module ML-DSA datapath in VHDL-2008, C protocol stacks that sign and encrypt IEC 61850 GOOSE/SV frames, and a KAT backbone tying every layer to the NIST reference via liboqs.",
+      "items": [
+        {"label": "FIPS 203 · ML-KEM"},
+        {"label": "FIPS 204 · ML-DSA"},
+        {"label": "ZCU106 · xczu7ev"},
+        {"label": "MATURITY · PROTOTYPE", "accent": "#E63946"}
+      ]
+    },
+    {
+      "key": "tagline",
+      "heading": "POST-QUANTUM CRYPTOGRAPHY & CRYPTO SUITE",
+      "body": "Every key is a letter. ML-KEM seals it in an envelope, ML-DSA stamps the postmark, and somewhere a man in a long coat is keeping copies for the day he owns a quantum computer."
+    },
+    {
+      "key": "postcard",
+      "kicker": "GREETINGS FROM Z₃₃₂₉",
+      "body": "Dear Receiver — enclosed is one shared secret, wrapped in 256 noisy coefficients. Only your private key can find it. Burn after decapsulation.",
+      "heading": "— the Postmaster",
+      "items": [{"label": "TO: the Receiver"}, {"label": "PL fabric, ZCU106"}, {"label": "IEC 61850 process bus"}],
+      "images": [{"src": "assets/cards/pqc.jpg", "alt": "Postman on a bicycle", "caption": "768 · KEM"}]
+    },
+    {
+      "key": "postmark",
+      "body": "GHDL 4.1\n27 AUG 2026\nVHDL-2008"
+    },
+    {
+      "key": "cast",
+      "heading": "The Cast of the Allegory",
+      "kicker": "who carries what, and who is watching"
+    },
+    {
+      "key": "cast-postmaster",
+      "kicker": "THE POSTMASTER · ML-KEM",
+      "heading": "rtl/kyber · 31 files",
+      "body": "KeyGen, Encaps, Decaps over Z₃₃₂₉. NTT/INTT, Barrett and Montgomery reduction, CBD noise sampling, exact-rounding Compress/Decompress.",
+      "items": [{"label": "quote", "value": "He seals the envelope. Opening it without the key is a lattice problem."}],
+      "images": [{"src": "assets/projects/pqc/postmaster.jpg", "alt": "Running postmaster"}]
+    },
+    {
+      "key": "cast-courier",
+      "kicker": "THE COURIER · ML-DSA",
+      "heading": "rtl/dilithium · 31 modules",
+      "body": "ML-DSA datapath over Z₈₃₈₀₄₁₇ with twiddle tables. Leaf arithmetic passes its testbenches; C stack signs GOOSE/SV frames.",
+      "items": [{"label": "quote", "value": "He stamps the postmark, so the receiver knows who really sent it."}],
+      "images": [{"src": "assets/cards/pqc.jpg", "alt": "Postman on a bicycle"}]
+    },
+    {
+      "key": "cast-eve",
+      "kicker": "EVE · HARVEST NOW",
+      "heading": "The threat model",
+      "body": "Records ciphertext today, decrypts it once Shor's algorithm runs at scale. The lab's qubit-shor-fpga project models why this program exists.",
+      "items": [{"label": "quote", "value": "He does not open letters. He files them, and waits."}],
+      "images": [{"src": "assets/projects/pqc/eve-harvester.jpg", "alt": "Man in a long coat"}]
+    },
+    {
+      "key": "cast-dealer",
+      "kicker": "THE DEALER · HONEST LIMITS",
+      "heading": "What is in the coat",
+      "body": "Demo-grade, not secure. Round-3 Kyber, stubbed entropy, Dilithium controllers still stubs. See section 04.",
+      "items": [{"label": "quote", "value": "He shows you everything before you buy."}],
+      "images": [{"src": "assets/projects/pqc/dealer.jpg", "alt": "Shady dealer opening his coat"}]
+    },
+    {
+      "key": "sorting",
+      "heading": "The Sorting Office",
+      "kicker": "rtl/ layout, one room per job",
+      "body": "Toolchain: GHDL 4.1.0 · Vivado 2025.1 · liboqs 0.15.0 · oqs-provider · PQClean · OpenSSL",
+      "items": [
+        {"label": "mod_arith/", "value": "Barrett reduction, Montgomery modmul."},
+        {"label": "ntt/", "value": "NTT / INTT over Z₃₃₂₉ and Z₈₃₈₀₄₁₇."},
+        {"label": "poly/", "value": "LVT 2W2R block-RAM polynomial storage."},
+        {"label": "sampling/", "value": "CBD noise and rejection sampling."},
+        {"label": "codec/", "value": "Compress / Decompress, FIPS-203 exact rounding."},
+        {"label": "integration-sttp/", "value": "Kyber↔STTP bridge, AEAD, key manager."}
+      ]
+    },
+    {
+      "key": "receipts",
+      "heading": "Delivery Receipts",
+      "kicker": "verification run, 27 Aug 2026"
+    },
+    {
+      "key": "fig-compress",
+      "heading": "FIG 1 · COMPRESS_d DEVIATIONS",
+      "kicker": "all 3329 residues",
+      "body": "Pre-fix used M = 5039, +1665. Current uses M = 1290168, +q/2. Checked in exact rationals against round(2^d/q · x) mod 2^d.",
+      "items": [
+        {"label": "d = 10 · pre-fix", "value": "241 wrong · 7.24 %", "detail": "90.5", "accent": "#E63946"},
+        {"label": "d = 10 · current", "value": "0 wrong", "detail": "0.6", "accent": "#0A1F44"},
+        {"label": "d = 4 · pre-fix", "value": "5 wrong · 0.15 %", "detail": "1.9", "accent": "#E63946"},
+        {"label": "d = 4 · current", "value": "0 wrong", "detail": "0.6", "accent": "#0A1F44"}
+      ]
+    },
+    {
+      "key": "fig-golden",
+      "heading": "FIG 2 · KYBER-768 GOLDEN COEFFICIENTS",
+      "kicker": "of 7424",
+      "body": "The RTL is right; the vectors predate the fix. The receipt says the letter arrived late because the clock on the wall was wrong.",
+      "items": [
+        {"label": "KeyGen", "value": "7424 / 7424 · PASS", "detail": "100", "accent": "#0A1F44"},
+        {"label": "Encaps vs stale vectors", "value": "62 off by +1", "detail": "99.16 / 0.84", "accent": "#E63946"},
+        {"label": "Encaps with pre-fix compress swapped in", "value": "7424 / 7424", "detail": "100", "accent": "#00B4D8"}
+      ]
+    },
+    {
+      "key": "ledger",
+      "heading": "TESTBENCH LEDGER",
+      "body": "butterfly_ct hit the harness wall clock, not a failure.",
+      "items": [
+        {"label": "GHDL analyze rtl/kyber (31)", "value": "CLEAN"},
+        {"label": "GHDL analyze rtl/dilithium (31)", "value": "CLEAN"},
+        {"label": "tb_barrett_reduce", "value": "PASS"},
+        {"label": "tb_mod_mult", "value": "PASS"},
+        {"label": "tb_ntt_engine", "value": "PASS"},
+        {"label": "tb_decompose", "value": "PASS"},
+        {"label": "tb_butterfly_ct", "value": "NOT DONE", "accent": "#E63946"}
+      ]
+    },
+    {
+      "key": "fig-cycles",
+      "heading": "FIG 3 · DILITHIUM2 SOFTWARE CYCLES",
+      "kicker": "3 GHz x86 · measured",
+      "body": "Stamping a postmark costs 3.4× more than checking one.",
+      "items": [
+        {"label": "Sign", "value": "534,114", "detail": "100", "accent": "#0A1F44"},
+        {"label": "Verify", "value": "159,406", "detail": "29.8", "accent": "#00B4D8"}
+      ]
+    },
+    {
+      "key": "unverified",
+      "heading": "RETURN TO SENDER · CLAIMED, NOT REPRODUCED",
+      "kicker": "poly_bram_4port after LVT 2W2R rewrite",
+      "body": "No synthesis, place & route or hardware run in this consolidation. No bitstream, no board result.",
+      "items": [
+        {"value": "190k LUT", "detail": "78", "accent": "#5A6A86"},
+        {"value": "49k LUT · 52 BRAM", "detail": "20", "accent": "#00B4D8"}
+      ]
+    },
+    {
+      "key": "unverified-stats",
+      "items": [
+        {"label": "Kyber-768 ZCU106 LUT utilisation", "value": "19.9 %", "detail": "pre-fix RTL lineage, 2026-04"},
+        {"label": "Per-GOOSE-message crypto overhead", "value": "2.30 µs", "detail": "software timing, i7-11700"}
+      ]
+    },
+    {
+      "key": "dealer",
+      "heading": "The Dealer Opens His Coat",
+      "kicker": "\"Demo-grade crypto, not secure crypto. Take a look before you pay.\"",
+      "items": [
+        {"detail": "Kyber encaps hardcodes a zero message and draws noise from an LFSR, not SHAKE. ISSUE-002, open. KATs validate arithmetic, not entropy."},
+        {"detail": "rtl/kyber is CRYSTALS-Kyber Round-3, not FIPS-203. Domain separation, K-PKE wrapper and FO implicit-reject are unimplemented."},
+        {"detail": "rtl/dilithium is not proven end-to-end. dilithium_top instantiates stubs for keygen, sign and verify controllers."},
+        {"detail": "The Encryption_Algos Dilithium scaffold is non-functional by its own header; kept in archive/ for ADR-002."}
+      ],
+      "images": [{"src": "assets/projects/pqc/dealer.jpg", "alt": "Shady dealer opening his coat"}]
+    },
+    {
+      "key": "artefacts",
+      "items": [
+        {"label": "REPOSITORY", "value": "Upaasak/PQC (private)", "detail": "903 entries, ~18 MB, consolidated from 19 locations."},
+        {"label": "READ FIRST", "value": "`RESULTS.md · CONSOLIDATION_LOG.md`\n`verification/golden-vectors/README-STALE.md`"},
+        {"label": "NEXT ROUTE", "value": "mlkem-zcu106-accel: take rtl/kyber from Round-3 to ML-KEM."}
+      ]
+    }
+  ]
+}

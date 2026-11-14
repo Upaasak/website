@@ -24,6 +24,15 @@ export const structure: StructureResolver = (S) =>
               ),
             ),
         ),
+      S.listItem()
+        .title('Project pages (case files)')
+        .id('projectPages')
+        .child(
+          S.documentTypeList('project')
+            .title('Project pages')
+            .filter('_type == "project" && caseFile == "live"')
+            .defaultOrdering([{field: 'order', direction: 'asc'}]),
+        ),
       S.divider(),
       S.documentTypeListItem('post').title('News, events & announcements'),
       S.documentTypeListItem('project').title('Projects'),

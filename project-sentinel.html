@@ -3,8 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./cms.js"></script>
 <script src="./support.js"></script>
 <meta name="description" content="SENTINEL: a software-defined autonomous mission vehicle with FPGA-native deterministic edge compute, formal safety and a HIL digital twin.">
+<link rel="preconnect" href="https://7h6avsoz.apicdn.sanity.io" crossorigin="">
+<link rel="preconnect" href="https://cdn.sanity.io">
 <title>Whistleblower Lab — SENTINEL</title>
 </head>
 <body>
@@ -23,6 +26,7 @@
   a:hover { color: #05070A; background: #00D9FF; }
   ::selection { background: #FFB000; color: #05070A; }
   @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+  .cms-cursor { animation: blink 1s steps(1) infinite; }
   /* Nav: wrap instead of overflowing on narrow screens */
   .wb-nav, .wb-nav-links { flex-wrap: wrap; }
   .wb-nav span, .wb-nav a { white-space: nowrap; }
@@ -69,169 +73,154 @@
     </div>
   </div>
 
+  <sc-if value="{{ loading }}">
+    <section data-screen-label="Loading" style="max-width: 1520px; margin: 0 auto; padding: 36px 28px 0; min-height: 100vh;">
+      <a href="projects.html" style="font-size: 12px; letter-spacing: 0.14em; color: #9FB6CF;">◂ ALL PROJECTS</a>
+      <div style="margin-top: 22px; font-family: 'Silkscreen', monospace; font-size: 12px; letter-spacing: 0.2em; color: #FFB000;">LOADING CASE FILE <span class="cms-cursor" style="color: #F2E6C4;">▌</span></div>
+    </section>
+  </sc-if>
+  <sc-if value="{{ failed }}">
+    <section data-screen-label="Error" style="max-width: 1520px; margin: 0 auto; padding: 36px 28px 0; min-height: 100vh;">
+      <a href="projects.html" style="font-size: 12px; letter-spacing: 0.14em; color: #9FB6CF;">◂ ALL PROJECTS</a>
+      <div style="margin-top: 22px; border: 2px solid #FF5454; background: #05070A; padding: 14px 16px; font-size: 12.5px; letter-spacing: 0.1em; line-height: 1.8; color: #FF5454;">GAME OVER · CASE FILE UNAVAILABLE — the content service did not answer. <a href="project-sentinel.html">[ ▸ CONTINUE? ]</a></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ ready }}">
+  <sc-if value="{{ hud.has }}">
   <div style="display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; padding: 9px 28px; background: #10294A; border-bottom: 2px solid #2A5A8E; font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.08em;">
     <div style="display: flex; gap: 28px; flex-wrap: wrap;">
-      <span><span style="color: #FF5454;">1UP</span>&nbsp; SENTINEL</span>
-      <span><span style="color: #FFB000;">HI-SCORE</span>&nbsp; 53 CORES @ 200 MHZ</span>
-      <span><span style="color: #FFB000;">STAGE</span>&nbsp; 02 / 10</span>
+      <sc-for list="{{ hud.items }}" as="h">
+        <span><span style="color: {{ h.color }};">{{ h.label }}</span>&nbsp; {{ h.value }}</span>
+      </sc-for>
     </div>
     <div style="display: flex; gap: 20px; align-items: center;">
-      <span>TRL <span style="color: #FFB000;">3</span></span>
-      <sc-if value="{{ blinkHud }}" hint-placeholder-val="{{ true }}"><span style="color: #FF5454; animation: blink 1.2s step-end infinite;">HARDWARE GATED</span></sc-if>
+      <span>{{ hud.trlLabel }} <span style="color: #FFB000;">{{ hud.trlValue }}</span></span>
+      <sc-if value="{{ hud.showBadge }}" hint-placeholder-val="{{ true }}"><span style="color: #FF5454; animation: blink 1.2s step-end infinite;">{{ hud.heading }}</span></sc-if>
     </div>
   </div>
+  </sc-if>
 
   <section data-screen-label="Title screen" style="max-width: 1520px; margin: 0 auto; padding: 36px 28px 0;">
     <a href="projects.html" style="font-size: 12px; letter-spacing: 0.14em; color: #9FB6CF;">◂ ALL PROJECTS</a>
+    <sc-if value="{{ header.has }}">
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 44px; align-items: center; margin-top: 22px;">
       <div style="display: grid; gap: 20px; align-content: start;">
-        <div style="font-family: 'Silkscreen', monospace; font-size: 12px; letter-spacing: 0.2em; color: #FFB000;">PRJ_02 · CASE FILE</div>
-        <h1 style="margin: 0; font-family: 'Silkscreen', monospace; font-weight: 700; font-size: clamp(44px, 7vw, 96px); line-height: 0.95; letter-spacing: 0.02em; color: #F2E6C4; text-shadow: 4px 4px 0 #BB3426, 8px 8px 0 #05070A;">SENTINEL</h1>
-        <div style="font-size: 14px; letter-spacing: 0.14em; color: #9FB6CF; font-weight: 600;">SOFTWARE-DEFINED AUTONOMOUS MISSION VEHICLE</div>
-        <p style="margin: 0; max-width: 62ch; font-size: 14px; line-height: 1.9; color: #D5DCE4; text-wrap: pretty;">FPGA-native deterministic edge compute for a modular autonomous ground platform. Sensors, fusion, IMM-UKF prediction and vehicle control run on dedicated hardware rather than behind an operating-system scheduler, so the critical path has bounded, scheduler-free latency.</p>
-        <p style="margin: 0; max-width: 62ch; font-size: 14px; line-height: 1.9; color: #9FB6CF; text-wrap: pretty;">The weapon and fire-control chain is one isolated mission payload, not the centerpiece. A formal nav→fire isolation proof enforces the platform↔payload boundary.</p>
+        <div style="font-family: 'Silkscreen', monospace; font-size: 12px; letter-spacing: 0.2em; color: #FFB000;">{{ header.kicker }}</div>
+        <h1 style="margin: 0; font-family: 'Silkscreen', monospace; font-weight: 700; font-size: clamp(44px, 7vw, 96px); line-height: 0.95; letter-spacing: 0.02em; color: #F2E6C4; text-shadow: 4px 4px 0 #BB3426, 8px 8px 0 #05070A;">{{ header.heading }}</h1>
+        <sc-if value="{{ header.subtitle }}"><div style="font-size: 14px; letter-spacing: 0.14em; color: #9FB6CF; font-weight: 600;">{{ header.subtitle }}</div></sc-if>
+        <sc-for list="{{ header.lines }}" as="p">
+          <p style="margin: 0; max-width: 62ch; font-size: 14px; line-height: 1.9; color: {{ p.color }}; text-wrap: pretty;">{{ p.text }}</p>
+        </sc-for>
+        <sc-if value="{{ rule.has }}">
         <div style="border: 2px solid #FF5454; background: #05070A; padding: 14px 16px; display: grid; gap: 6px; max-width: 62ch;">
-          <div style="font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5454;">RULE 00 · ABSOLUTE</div>
-          <div style="font-size: 13.5px; line-height: 1.75; color: #F2E6C4;">Human-on-the-loop for weapon release. Navigation is autonomous; fire authority never is.</div>
+          <div style="font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5454;">{{ rule.kicker }}</div>
+          <sc-for list="{{ rule.paras }}" as="p">
+            <div style="font-size: 13.5px; line-height: 1.75; color: #F2E6C4;">{{ p }}</div>
+          </sc-for>
         </div>
+        </sc-if>
       </div>
+      <sc-if value="{{ header.hasImg }}">
       <div style="display: flex; justify-content: center;">
         <div style="border: 4px solid #F2E6C4; box-shadow: 8px 8px 0 #05070A; background: #2D68A3; width: 100%; max-width: 400px;">
-          <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: #05070A; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.1em; color: #F2E6C4;"><span>WAVE 02</span><span style="color: #FFB000;">READY</span></div>
-          <img width="320" height="477" fetchpriority="high" src="assets/cards/sentinel.jpg" alt="SENTINEL — pixel interceptor clearing a wave" style="display: block; width: 100%; height: auto; image-rendering: pixelated;" />
-          <div style="padding: 8px 10px; background: #05070A; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.1em; text-align: center;"><span style="animation: blink 1s step-end infinite;">PRESS START</span></div>
+          <div style="display: flex; justify-content: space-between; padding: 6px 10px; background: #05070A; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.1em; color: #F2E6C4;"><span>{{ header.screenTopLeft }}</span><span style="color: #FFB000;">{{ header.screenTopRight }}</span></div>
+          <img sc-camel-src="{{ header.img.src }}" sc-camel-src-set="{{ header.img.srcset }}" sizes="400px" width="{{ header.img.w }}" height="{{ header.img.h }}" fetchpriority="high" alt="{{ header.img.alt }}" style="display: block; width: 100%; height: auto; image-rendering: pixelated;" />
+          <div style="padding: 8px 10px; background: #05070A; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.1em; text-align: center;"><span style="animation: blink 1s step-end infinite;">{{ header.screenBottom }}</span></div>
         </div>
       </div>
+      </sc-if>
     </div>
+    </sc-if>
   </section>
 
+  <sc-if value="{{ scoreboard.has }}">
   <section data-screen-label="Scoreboard" style="max-width: 1520px; margin: 0 auto; padding: 64px 28px 0;">
     <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
-      <span style="color: #05070A; background: #FFB000; padding: 6px 9px; font-size: 9px; font-family: 'Silkscreen', monospace;">01</span>
-      <span style="font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #F2E6C4;">SCOREBOARD</span>
+      <span style="color: #05070A; background: #FFB000; padding: 6px 9px; font-size: 9px; font-family: 'Silkscreen', monospace;">{{ scoreboard.kicker }}</span>
+      <span style="font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #F2E6C4;">{{ scoreboard.heading }}</span>
       <span style="flex: 1; height: 2px; background: repeating-linear-gradient(90deg, #2A5A8E 0 8px, transparent 8px 14px);"></span>
     </div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 14px;">
+      <sc-for list="{{ scoreboard.items }}" as="s">
       <div style="background: #10294A; border: 2px solid #2A5A8E; padding: 18px 16px; display: grid; gap: 10px; align-content: start;">
-        <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">RTL</div>
-        <div style="font-family: 'Silkscreen', monospace; font-size: 30px; color: #F2E6C4;">~53</div>
-        <div style="font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">cores with measured Vivado OOC STA at 200 MHz. 9/9 board bitstreams built.</div>
+        <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">{{ s.label }}</div>
+        <div style="font-family: 'Silkscreen', monospace; font-size: 30px; color: #F2E6C4;">{{ s.value }}</div>
+        <div style="font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">{{ s.detail }}</div>
       </div>
-      <div style="background: #10294A; border: 2px solid #2A5A8E; padding: 18px 16px; display: grid; gap: 10px; align-content: start;">
-        <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">SAFETY</div>
-        <div style="font-family: 'Silkscreen', monospace; font-size: 30px; color: #F2E6C4;">∞</div>
-        <div style="font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">ROE fire interlock formally proven unbounded (k-induction, sby + z3).</div>
-      </div>
-      <div style="background: #10294A; border: 2px solid #2A5A8E; padding: 18px 16px; display: grid; gap: 10px; align-content: start;">
-        <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">AUTONOMY</div>
-        <div style="font-family: 'Silkscreen', monospace; font-size: 30px; color: #F2E6C4;">3/3</div>
-        <div style="font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">waypoints on real Nav2 + slam_toolbox, mission BT, obstacle replan.</div>
-      </div>
-      <div style="background: #10294A; border: 2px solid #2A5A8E; padding: 18px 16px; display: grid; gap: 10px; align-content: start;">
-        <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">V&amp;V</div>
-        <div style="font-family: 'Silkscreen', monospace; font-size: 30px; color: #F2E6C4;">10/10</div>
-        <div style="font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">automated gates green, each with a proven fail-path.</div>
-      </div>
-      <div style="background: #10294A; border: 2px solid #2A5A8E; padding: 18px 16px; display: grid; gap: 10px; align-content: start;">
-        <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">TIME SYNC</div>
-        <div style="font-family: 'Silkscreen', monospace; font-size: 30px; color: #F2E6C4;">1.441ns</div>
-        <div style="font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">PTP / IRIG-B, board-measured.</div>
-      </div>
+      </sc-for>
     </div>
   </section>
+  </sc-if>
 
+  <sc-if value="{{ path.has }}">
   <section data-screen-label="Critical path" style="max-width: 1520px; margin: 0 auto; padding: 64px 28px 0;">
     <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
-      <span style="color: #05070A; background: #FFB000; padding: 6px 9px; font-size: 9px; font-family: 'Silkscreen', monospace;">02</span>
-      <span style="font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #F2E6C4;">THE CRITICAL PATH</span>
+      <span style="color: #05070A; background: #FFB000; padding: 6px 9px; font-size: 9px; font-family: 'Silkscreen', monospace;">{{ path.kicker }}</span>
+      <span style="font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #F2E6C4;">{{ path.heading }}</span>
       <span style="flex: 1; height: 2px; background: repeating-linear-gradient(90deg, #2A5A8E 0 8px, transparent 8px 14px);"></span>
     </div>
-    <sc-if value="{{ showConventional }}" hint-placeholder-val="{{ true }}">
+    <sc-for list="{{ path.others }}" as="r">
       <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; font-size: 12px; letter-spacing: 0.1em; color: #9FB6CF;">
-        <span style="font-family: 'Silkscreen', monospace; font-size: 10px; color: #FF5454; min-width: 120px;">CONVENTIONAL</span>
-        <span style="border: 1px dashed #627B9D; padding: 7px 10px;">CPU</span><span>▸</span>
-        <span style="border: 1px dashed #627B9D; padding: 7px 10px;">GPU</span><span>▸</span>
-        <span style="border: 1px dashed #627B9D; padding: 7px 10px;">AI</span><span>▸</span>
-        <span style="border: 1px dashed #627B9D; padding: 7px 10px;">DECISION</span>
-        <span style="color: #FF5454;">· variable latency</span>
+        <span style="font-family: 'Silkscreen', monospace; font-size: 10px; color: #FF5454; min-width: 120px;">{{ r.label }}</span>
+        <sc-for list="{{ r.blocks }}" as="b"><span style="border: 1px dashed #627B9D; padding: 7px 10px;">{{ b.text }}</span><sc-if value="{{ b.arrow }}"><span>{{ b.arrow }}</span></sc-if></sc-for>
+        <sc-if value="{{ r.detail }}"><span style="color: #FF5454;">{{ r.detail }}</span></sc-if>
       </div>
-    </sc-if>
+    </sc-for>
+    <sc-for list="{{ path.main }}" as="r">
     <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 12px; letter-spacing: 0.1em;">
-      <span style="font-family: 'Silkscreen', monospace; font-size: 10px; color: #FFB000; min-width: 120px;">SENTINEL</span>
-      <span style="background: #2D68A3; border: 2px solid #F2E6C4; padding: 7px 10px; color: #F2E6C4;">SENSORS</span><span style="color: #FFB000;">▶</span>
-      <span style="background: #2D68A3; border: 2px solid #F2E6C4; padding: 7px 10px; color: #F2E6C4;">FPGA AI</span><span style="color: #FFB000;">▶</span>
-      <span style="background: #2D68A3; border: 2px solid #F2E6C4; padding: 7px 10px; color: #F2E6C4;">HW FUSION</span><span style="color: #FFB000;">▶</span>
-      <span style="background: #BB3426; border: 2px solid #F2E6C4; padding: 7px 10px; color: #F2E6C4;">IMM-UKF</span><span style="color: #FFB000;">▶</span>
-      <span style="background: #2D68A3; border: 2px solid #F2E6C4; padding: 7px 10px; color: #F2E6C4;">MISSION PLAN</span><span style="color: #FFB000;">▶</span>
-      <span style="background: #2D68A3; border: 2px solid #F2E6C4; padding: 7px 10px; color: #F2E6C4;">VEHICLE CTRL</span><span style="color: #FFB000;">▶</span>
-      <span style="background: #2D68A3; border: 2px solid #F2E6C4; padding: 7px 10px; color: #F2E6C4;">DRIVE-BY-WIRE</span>
+      <span style="font-family: 'Silkscreen', monospace; font-size: 10px; color: #FFB000; min-width: 120px;">{{ r.label }}</span>
+      <sc-for list="{{ r.blocks }}" as="b"><span style="background: {{ b.bg }}; border: 2px solid #F2E6C4; padding: 7px 10px; color: #F2E6C4;">{{ b.text }}</span><sc-if value="{{ b.arrow }}"><span style="color: #FFB000;">{{ b.arrow }}</span></sc-if></sc-for>
+      <sc-if value="{{ r.detail }}"><span style="color: #FFB000;">{{ r.detail }}</span></sc-if>
     </div>
-    <p style="margin: 18px 0 0; max-width: 78ch; font-size: 13px; line-height: 1.85; color: #9FB6CF;">FPGA-deterministic critical path plus a supervisory SoC. Mission planning, operator UX and non-deterministic inference run on the SoC; detect → track → lead → aim runs on fabric.</p>
+    </sc-for>
+    <sc-for list="{{ path.paras }}" as="p">
+      <p style="margin: 18px 0 0; max-width: 78ch; font-size: 13px; line-height: 1.85; color: #9FB6CF;">{{ p }}</p>
+    </sc-for>
   </section>
+  </sc-if>
 
   <section data-screen-label="Boss fight UKF IMM" style="max-width: 1520px; margin: 0 auto; padding: 64px 28px 0;">
+    <sc-if value="{{ boss.has }}">
     <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
-      <span style="color: #05070A; background: #FFB000; padding: 6px 9px; font-size: 9px; font-family: 'Silkscreen', monospace;">03</span>
-      <span style="font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #F2E6C4;">BOSS FIGHT · UKF + IMM</span>
+      <span style="color: #05070A; background: #FFB000; padding: 6px 9px; font-size: 9px; font-family: 'Silkscreen', monospace;">{{ boss.kicker }}</span>
+      <span style="font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #F2E6C4;">{{ boss.heading }}</span>
       <span style="flex: 1; height: 2px; background: repeating-linear-gradient(90deg, #2A5A8E 0 8px, transparent 8px 14px);"></span>
     </div>
+    </sc-if>
 
+    <sc-if value="{{ hasCores }}">
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 16px; margin-bottom: 16px;">
+      <sc-for list="{{ cores }}" as="c">
       <div style="background: #10294A; border: 2px solid #2A5A8E; padding: 20px 18px; display: grid; gap: 12px; align-content: start;">
-        <div style="display: flex; justify-content: space-between; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em;"><span style="color: #FFB000;">sentinel_ukf</span><span style="color: #9FB6CF;">INTERIM · SWAP SLOT</span></div>
-        <p style="margin: 0; font-size: 13px; line-height: 1.8; color: #D5DCE4;">Full UKF predict + update in one entity. 1-D constant-acceleration model, state [p, v, a], H = I, Q16.16 throughout. One shared matmul, time-multiplexed.</p>
+        <div style="display: flex; justify-content: space-between; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em;"><span style="color: #FFB000;">{{ c.kicker }}</span><span style="color: #9FB6CF;">{{ c.heading }}</span></div>
+        <sc-for list="{{ c.main }}" as="p">
+          <p style="margin: 0; font-size: 13px; line-height: 1.8; color: #D5DCE4;">{{ p }}</p>
+        </sc-for>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #2A5A8E; border: 1px solid #2A5A8E; font-size: 12px;">
-          <div style="background: #0B1E36; padding: 9px 10px; display: grid; gap: 3px;"><span style="color: #9FB6CF; font-size: 10.5px; letter-spacing: 0.1em;">WNS @ 200 MHz</span><span style="color: #F2E6C4; font-weight: 700;">+0.396 ns</span></div>
-          <div style="background: #0B1E36; padding: 9px 10px; display: grid; gap: 3px;"><span style="color: #9FB6CF; font-size: 10.5px; letter-spacing: 0.1em;">LATENCY / STEP</span><span style="color: #F2E6C4; font-weight: 700;">843 cycles</span></div>
-          <div style="background: #0B1E36; padding: 9px 10px; display: grid; gap: 3px;"><span style="color: #9FB6CF; font-size: 10.5px; letter-spacing: 0.1em;">GHDL vs TWIN</span><span style="color: #F2E6C4; font-weight: 700;">20/20 bit-exact</span></div>
-          <div style="background: #0B1E36; padding: 9px 10px; display: grid; gap: 3px;"><span style="color: #9FB6CF; font-size: 10.5px; letter-spacing: 0.1em;">xsim + GHDL</span><span style="color: #F2E6C4; font-weight: 700;">8/8 adversarial</span></div>
+          <sc-for list="{{ c.items }}" as="r">
+          <div style="background: #0B1E36; padding: 9px 10px; display: grid; gap: 3px;"><span style="color: #9FB6CF; font-size: 10.5px; letter-spacing: 0.1em;">{{ r.label }}</span><span style="color: #F2E6C4; font-weight: 700;">{{ r.value }}</span></div>
+          </sc-for>
         </div>
-        <div style="font-size: 11.5px; color: #9FB6CF;">Part xczu7ev-ffvc1156-2-e · OOC · dt = 0.1 s · R = 0.01·I</div>
+        <sc-if value="{{ c.note }}"><div style="font-size: 11.5px; color: #9FB6CF;">{{ c.note }}</div></sc-if>
       </div>
-      <div style="background: #10294A; border: 2px solid #2A5A8E; padding: 20px 18px; display: grid; gap: 12px; align-content: start;">
-        <div style="display: flex; justify-content: space-between; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em;"><span style="color: #FFB000;">sentinel_imm_tracker</span><span style="color: #9FB6CF;">IMM-FAMILY · 2 MODELS</span></div>
-        <p style="margin: 0; font-size: 13px; line-height: 1.8; color: #D5DCE4;">CV (cruise) and CA (maneuver) fixed-gain filters run on the same stream. The bank picks the model with the smaller EWMA innovation, with hysteresis.</p>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: #2A5A8E; border: 1px solid #2A5A8E; font-size: 12px;">
-          <div style="background: #0B1E36; padding: 9px 10px; display: grid; gap: 3px;"><span style="color: #9FB6CF; font-size: 10.5px; letter-spacing: 0.1em;">xsim + GHDL</span><span style="color: #F2E6C4; font-weight: 700;">300/300 match</span></div>
-          <div style="background: #0B1E36; padding: 9px 10px; display: grid; gap: 3px;"><span style="color: #9FB6CF; font-size: 10.5px; letter-spacing: 0.1em;">GOLDEN TB</span><span style="color: #F2E6C4; font-weight: 700;">222 cyc · 0 miss</span></div>
-          <div style="background: #0B1E36; padding: 9px 10px; display: grid; gap: 3px;"><span style="color: #9FB6CF; font-size: 10.5px; letter-spacing: 0.1em;">CA PICKED IN MANEUVER</span><span style="color: #F2E6C4; font-weight: 700;">100 %</span></div>
-          <div style="background: #0B1E36; padding: 9px 10px; display: grid; gap: 3px;"><span style="color: #9FB6CF; font-size: 10.5px; letter-spacing: 0.1em;">FUNCTIONAL FINDINGS</span><span style="color: #F2E6C4; font-weight: 700;">None</span></div>
-        </div>
-        <div style="font-size: 11.5px; color: #9FB6CF;">Hard switch, not full IMM. Markov mixing + soft blending is the next increment.</div>
-      </div>
+      </sc-for>
     </div>
+    </sc-if>
 
+    <sc-if value="{{ rmse.has }}">
     <div style="background: #05070A; border: 2px solid #F2E6C4; margin-bottom: 16px;">
-      <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 8px 14px; border-bottom: 1px solid #2A5A8E; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.1em;"><span style="color: #F2E6C4;">FIG 1 · POSITION RMSE, CLOSED-LOOP · 61 STEPS / 6 S</span><span style="color: #9FB6CF;">LOG SCALE · METRES</span></div>
+      <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 8px 14px; border-bottom: 1px solid #2A5A8E; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.1em;"><span style="color: #F2E6C4;">{{ rmse.heading }}</span><span style="color: #9FB6CF;">{{ rmse.kicker }}</span></div>
       <div style="padding: 18px 14px 12px; display: grid; gap: 16px;">
+        <sc-for list="{{ rmse.rows }}" as="r">
         <div style="display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 12px; align-items: center;">
-          <span style="font-family: 'Silkscreen', monospace; font-size: 11px; color: #F2E6C4;">CV</span>
+          <span style="font-family: 'Silkscreen', monospace; font-size: 11px; color: {{ r.color }};">{{ r.label }}</span>
           <div style="display: grid; gap: 4px;">
-            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 14.6%; height: 14px; background: #BB3426;"></div><span style="font-size: 11.5px; color: #F2E6C4;">0.054 RTL</span></div>
-            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 9.2%; height: 14px; background: #4A90C8;"></div><span style="font-size: 11.5px; color: #9FB6CF;">0.029 float</span></div>
+            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: {{ r.w1 }}; height: 14px; background: #BB3426;"></div><span style="font-size: 11.5px; color: #F2E6C4;">{{ r.value }}</span></div>
+            <sc-if value="{{ r.detail }}"><div style="display: flex; align-items: center; gap: 8px;"><div style="width: {{ r.w2 }}; height: 14px; background: #4A90C8;"></div><span style="font-size: 11.5px; color: #9FB6CF;">{{ r.detail }}</span></div></sc-if>
           </div>
         </div>
-        <div style="display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 12px; align-items: center;">
-          <span style="font-family: 'Silkscreen', monospace; font-size: 11px; color: #F2E6C4;">CT 3G</span>
-          <div style="display: grid; gap: 4px;">
-            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 80.7%; height: 14px; background: #BB3426;"></div><span style="font-size: 11.5px; color: #F2E6C4;">108.0</span></div>
-            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 56%; height: 14px; background: #4A90C8;"></div><span style="font-size: 11.5px; color: #9FB6CF;">6.29</span></div>
-          </div>
-        </div>
-        <div style="display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 12px; align-items: center;">
-          <span style="font-family: 'Silkscreen', monospace; font-size: 11px; color: #FFB000;">CT 6G</span>
-          <div style="display: grid; gap: 4px;">
-            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 86.6%; height: 14px; background: #BB3426;"></div><span style="font-size: 11.5px; color: #F2E6C4;">214.0</span></div>
-            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 62%; height: 14px; background: #4A90C8;"></div><span style="font-size: 11.5px; color: #9FB6CF;">12.58</span></div>
-          </div>
-        </div>
-        <div style="display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 12px; align-items: center;">
-          <span style="font-family: 'Silkscreen', monospace; font-size: 11px; color: #F2E6C4;">WEAVE</span>
-          <div style="display: grid; gap: 4px;">
-            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 70.3%; height: 14px; background: #BB3426;"></div><span style="font-size: 11.5px; color: #F2E6C4;">32.8</span></div>
-            <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 42.5%; height: 14px; background: #4A90C8;"></div><span style="font-size: 11.5px; color: #9FB6CF;">1.33</span></div>
-          </div>
-        </div>
+        </sc-for>
         <div style="display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 12px;">
           <span></span>
           <div style="display: flex; justify-content: space-between; border-top: 1px solid #2A5A8E; padding-top: 6px; font-size: 10.5px; color: #627B9D;"><span>0.01</span><span>0.1</span><span>1</span><span>10</span><span>100</span><span>1000</span></div>
@@ -240,129 +229,133 @@
       <div style="display: flex; gap: 22px; flex-wrap: wrap; padding: 8px 14px; border-top: 1px solid #2A5A8E; font-size: 11px; letter-spacing: 0.08em; color: #9FB6CF;">
         <span><span style="color: #BB3426;">■</span> Interim RTL UKF (Q16.16)</span>
         <span><span style="color: #4A90C8;">■</span> float64 reference UKF</span>
-        <span>RTL vs bit-exact twin: 0.0000 on every trajectory</span>
+        <sc-for list="{{ rmse.paras }}" as="p"><span>{{ p }}</span></sc-for>
       </div>
     </div>
+    </sc-if>
 
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 16px; margin-bottom: 16px;">
+      <sc-if value="{{ dets.has }}">
       <div style="background: #05070A; border: 2px solid #F2E6C4;">
-        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 8px 14px; border-bottom: 1px solid #2A5A8E; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.1em;"><span style="color: #F2E6C4;">FIG 2 · det(S) PER STEP · CT 6G</span><span style="color: #9FB6CF;">LOG · RAW Q16.16</span></div>
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 8px 14px; border-bottom: 1px solid #2A5A8E; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.1em;"><span style="color: #F2E6C4;">{{ dets.heading }}</span><span style="color: #9FB6CF;">{{ dets.kicker }}</span></div>
         <div style="padding: 18px 14px 14px; display: grid; gap: 10px;">
           <div style="position: relative; display: grid; gap: 8px;">
             <div style="position: absolute; top: -6px; bottom: -6px; left: calc(60px + 12px + (100% - 72px) * 0.438); border-left: 2px dashed #FFB000;"></div>
-            <div style="display: grid; grid-template-columns: 60px minmax(0, 1fr); gap: 12px; align-items: center;"><span style="font-size: 11px; color: #9FB6CF;">STEP 0</span><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 88%; height: 14px; background: #4A90C8;"></div><span style="font-size: 11px; color: #F2E6C4;">67539</span></div></div>
-            <div style="display: grid; grid-template-columns: 60px minmax(0, 1fr); gap: 12px; align-items: center;"><span style="font-size: 11px; color: #9FB6CF;">STEP 1</span><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 2%; height: 14px; background: #BB3426;"></div><span style="font-size: 11px; color: #FF5454;">1</span></div></div>
-            <div style="display: grid; grid-template-columns: 60px minmax(0, 1fr); gap: 12px; align-items: center;"><span style="font-size: 11px; color: #9FB6CF;">STEP 2</span><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 2%; height: 14px; background: #BB3426;"></div><span style="font-size: 11px; color: #FF5454;">1</span></div></div>
-            <div style="display: grid; grid-template-columns: 60px minmax(0, 1fr); gap: 12px; align-items: center;"><span style="font-size: 11px; color: #9FB6CF;">STEP 3..60</span><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 2%; height: 14px; background: #BB3426;"></div><span style="font-size: 11px; color: #FF5454;">1 · K = 0</span></div></div>
+            <sc-for list="{{ dets.rows }}" as="r">
+            <div style="display: grid; grid-template-columns: 60px minmax(0, 1fr); gap: 12px; align-items: center;"><span style="font-size: 11px; color: #9FB6CF;">{{ r.label }}</span><div style="display: flex; align-items: center; gap: 8px;"><div style="width: {{ r.w }}; height: 14px; background: {{ r.bar }};"></div><span style="font-size: 11px; color: {{ r.color }};">{{ r.value }}</span></div></div>
+            </sc-for>
           </div>
-          <div style="font-size: 11px; color: #FFB000; letter-spacing: 0.06em;">┆ DET_FLOOR = 256 · below it matinv returns Sinv = 0</div>
-          <p style="margin: 0; font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">After one measurement P converges toward R. det(S) ≈ 0.02³ lands at ~1 LSB, the singular guard trips, and the gain goes to zero. From step 1 the filter dead-reckons: ct_6g velocity freezes at 40.03 m/s while truth swings to 124 m/s.</p>
+          <sc-for list="{{ dets.lines }}" as="p">
+            <sc-if value="{{ p.note }}"><div style="font-size: 11px; color: #FFB000; letter-spacing: 0.06em;">{{ p.text }}</div></sc-if>
+            <sc-if value="{{ p.plain }}"><p style="margin: 0; font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">{{ p.text }}</p></sc-if>
+          </sc-for>
         </div>
       </div>
+      </sc-if>
+      <sc-if value="{{ gate.has }}">
       <div style="background: #05070A; border: 2px solid #F2E6C4;">
-        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 8px 14px; border-bottom: 1px solid #2A5A8E; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.1em;"><span style="color: #F2E6C4;">FIG 3 · ACCEPTANCE GATE · gain_active</span><span style="color: #9FB6CF;">2-SIDED BAND</span></div>
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 8px 14px; border-bottom: 1px solid #2A5A8E; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.1em;"><span style="color: #F2E6C4;">{{ gate.heading }}</span><span style="color: #9FB6CF;">{{ gate.kicker }}</span></div>
         <div style="padding: 22px 14px 14px; display: grid; gap: 14px;">
           <div style="position: relative; height: 34px; background: #10294A; border: 1px solid #2A5A8E;">
             <div style="position: absolute; top: 0; bottom: 0; left: 2%; width: 96%; background: #1F4A2F;"></div>
-            <div style="position: absolute; top: -8px; bottom: -8px; left: 0.07%; border-left: 3px solid #BB3426;"></div>
-            <div style="position: absolute; top: -8px; bottom: -8px; left: 44.67%; border-left: 3px solid #39FF88;"></div>
-            <div style="position: absolute; top: -8px; bottom: -8px; left: calc(100% - 3px); border-left: 3px solid #FF5454;"></div>
+            <sc-for list="{{ gate.rows }}" as="r">
+              <div style="position: absolute; top: -8px; bottom: -8px; left: {{ r.left }}; border-left: 3px solid {{ r.accent }};"></div>
+            </sc-for>
           </div>
           <div style="display: flex; justify-content: space-between; font-size: 10.5px; color: #627B9D;"><span>0</span><span>0.02 ── PASS BAND ── 0.98</span><span>1.0</span></div>
           <div style="display: grid; border-top: 1px solid #2A5A8E;">
-            <div style="display: grid; grid-template-columns: minmax(0, 1fr) 70px 64px; gap: 10px; padding: 9px 2px; border-bottom: 1px solid #182027; font-size: 12px;"><span style="color: #F2E6C4;"><span style="color: #39FF88;">▌</span> float64 reference</span><span style="color: #9FB6CF;">0.4467</span><span style="color: #39FF88;">PASS</span></div>
-            <div style="display: grid; grid-template-columns: minmax(0, 1fr) 70px 64px; gap: 10px; padding: 9px 2px; border-bottom: 1px solid #182027; font-size: 12px;"><span style="color: #F2E6C4;"><span style="color: #BB3426;">▌</span> interim RTL UKF</span><span style="color: #9FB6CF;">0.0007</span><span style="color: #FF5454;">FAIL</span></div>
-            <div style="display: grid; grid-template-columns: minmax(0, 1fr) 70px 64px; gap: 10px; padding: 9px 2px; border-bottom: 1px solid #182027; font-size: 12px;"><span style="color: #F2E6C4;"><span style="color: #FF5454;">▌</span> passthrough x⁺ = z</span><span style="color: #9FB6CF;">1.0000</span><span style="color: #FF5454;">FAIL</span></div>
+            <sc-for list="{{ gate.rows }}" as="r">
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) 70px 64px; gap: 10px; padding: 9px 2px; border-bottom: 1px solid #182027; font-size: 12px;"><span style="color: #F2E6C4;"><span style="color: {{ r.accent }};">▌</span> {{ r.label }}</span><span style="color: #9FB6CF;">{{ r.value }}</span><span style="color: {{ r.statusColor }};">{{ r.detail }}</span></div>
+            </sc-for>
           </div>
-          <p style="margin: 0; font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">The band was one-sided until a mutation test showed a wire scoring 1.0. Accuracy is now gated relative to float64 (1.5× margin, 0.1 m floor).</p>
+          <sc-for list="{{ gate.paras }}" as="p">
+            <p style="margin: 0; font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">{{ p }}</p>
+          </sc-for>
         </div>
       </div>
+      </sc-if>
     </div>
 
+    <sc-if value="{{ hasVerdict }}">
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 0; border: 2px solid #FF5454; background: #05070A;">
+      <sc-if value="{{ verdict.has }}">
       <div style="padding: 20px 18px; border-right: 1px solid #2A5A8E; display: grid; gap: 10px; align-content: start;">
-        <div style="font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5454;">VERDICT · INTERIM UKF</div>
-        <div style="font-size: 14px; font-weight: 700; color: #F2E6C4; line-height: 1.5;">Not adequate for the fire-control envelope. 214 m RMSE, 336 m peak at 6 g.</div>
-        <div style="font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">CV passes for the wrong reason: the filter coasts on an exact model, it is not filtering. H = I flatters it; a position-only sensor would diverge faster.</div>
+        <div style="font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FF5454;">{{ verdict.kicker }}</div>
+        <div style="font-size: 14px; font-weight: 700; color: #F2E6C4; line-height: 1.5;">{{ verdict.heading }}</div>
+        <sc-for list="{{ verdict.paras }}" as="p">
+          <div style="font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">{{ p }}</div>
+        </sc-for>
       </div>
+      </sc-if>
+      <sc-if value="{{ next.has }}">
       <div style="padding: 20px 18px; display: grid; gap: 10px; align-content: start;">
-        <div style="font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FFB000;">NEXT LEVEL · IMM-UKF SWAP</div>
+        <div style="font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FFB000;">{{ next.kicker }}</div>
         <div style="display: grid; gap: 8px; font-size: 12.5px; line-height: 1.75; color: #D5DCE4;">
-          <div><span style="color: #FFB000;">▸ </span>Conditioning: wider fraction, square-root / UD covariance, or normalised innovation.</div>
-          <div><span style="color: #FFB000;">▸ </span>Expressiveness: turning models in the IMM bank to close the 12.6 m single-model residual.</div>
-          <div><span style="color: #FFB000;">▸ </span>Range: det(S) overflows Q16.16 once P_ii exceeds ~32 (adversarial finding F1).</div>
+          <sc-for list="{{ next.items }}" as="r">
+            <div><span style="color: #FFB000;">▸ </span>{{ r.label }}</div>
+          </sc-for>
         </div>
       </div>
+      </sc-if>
     </div>
+    </sc-if>
 
+    <sc-if value="{{ replay.show }}">
     <div data-screen-label="Live replay RASO IMM" style="margin-top: 16px; background: #05070A; border: 2px solid #FFB000;">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; padding: 8px 14px; border-bottom: 1px solid #2A5A8E; font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.1em;">
-        <span style="color: #FFB000;">REPLAY · RASO IMM CONSOLE <span style="color: #9FB6CF;">· NINE RECORDED TRAJECTORIES</span></span>
+        <span style="color: #FFB000;">{{ replay.kicker }} <span style="color: #9FB6CF;">{{ replay.heading }}</span></span>
         <span style="display: flex; gap: 14px; align-items: center;">
           <button type="button" sc-camel-on-click="{{ goFullscreen }}" style="font: inherit; letter-spacing: inherit; color: #F2E6C4; background: none; border: 1px solid #2A5A8E; padding: 4px 8px; cursor: pointer;" style-hover="border-color: #FFB000; color: #FFB000;">[ FULLSCREEN ]</button>
-          <a href="{{ trackerUrl }}" target="_blank" rel="noopener" style="color: #F2E6C4;">OPEN IN NEW TAB ▸</a>
+          <a href="{{ replay.url }}" target="_blank" rel="noopener" style="color: #F2E6C4;">{{ replay.linkLabel }}</a>
         </span>
       </div>
       <div ref="{{ embedRef }}" style="position: relative; background: #06080D;">
-        <iframe sc-camel-src="{{ embedSrc }}" title="RASO IMM Console: replay of a recorded IMM radar tracker run" loading="lazy" sandbox="allow-scripts allow-same-origin" referrerpolicy="strict-origin-when-cross-origin" style="display: block; width: 100%; height: {{ embedHeight }}; border: 0; background: #06080D;"></iframe>
+        <iframe sc-camel-src="{{ replay.src }}" title="RASO IMM Console: replay of a recorded IMM radar tracker run" loading="lazy" sandbox="allow-scripts allow-same-origin" referrerpolicy="strict-origin-when-cross-origin" style="display: block; width: 100%; height: {{ embedHeight }}; border: 0; background: #06080D;"></iframe>
       </div>
-      <div style="padding: 8px 14px; border-top: 1px solid #2A5A8E; font-size: 11px; letter-spacing: 0.06em; color: #9FB6CF;">Step through nine recorded trajectories (birds, a car, three F1 laps, an airplane, a missile, a pedestrian) and compare the IMM filter&#39;s estimate and one-step prediction against ground truth, with live tracking error, mode probabilities and RF classification. A replay of stored filter output, not a live tracker.</div>
+      <sc-for list="{{ replay.paras }}" as="p">
+        <div style="padding: 8px 14px; border-top: 1px solid #2A5A8E; font-size: 11px; letter-spacing: 0.06em; color: #9FB6CF;">{{ p }}</div>
+      </sc-for>
     </div>
+    </sc-if>
   </section>
 
+  <sc-if value="{{ subsystems.show }}">
   <section data-screen-label="Character select" style="max-width: 1520px; margin: 0 auto; padding: 64px 28px 0;">
     <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
-      <span style="color: #05070A; background: #FFB000; padding: 6px 9px; font-size: 9px; font-family: 'Silkscreen', monospace;">04</span>
-      <span style="font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #F2E6C4;">SELECT A SUBSYSTEM</span>
+      <span style="color: #05070A; background: #FFB000; padding: 6px 9px; font-size: 9px; font-family: 'Silkscreen', monospace;">{{ subsystems.kicker }}</span>
+      <span style="font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #F2E6C4;">{{ subsystems.heading }}</span>
       <span style="flex: 1; height: 2px; background: repeating-linear-gradient(90deg, #2A5A8E 0 8px, transparent 8px 14px);"></span>
     </div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px;">
+      <sc-for list="{{ subsystems.cards }}" as="c">
       <div style="background: #10294A; border: 2px solid #2A5A8E; display: flex; flex-direction: column;" style-hover="border-color: #FFB000;">
-        <div style="aspect-ratio: 1 / 1; background: #FFFFFF; overflow: hidden;"><img width="626" height="626" loading="lazy" decoding="async" src="assets/projects/sentinel/drone-target.jpg" alt="Pixel drone" style="display: block; width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated;" /></div>
-        <div style="padding: 16px; display: grid; gap: 8px;">
-          <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">P1 · TARGET</div>
-          <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #F2E6C4;">PHYSICAL PLATFORM</div>
-          <p style="margin: 0; font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">Mixed, progressive targets: a Stage-1 pendulum first, then a C-UAS drone tracked on the move.</p>
-        </div>
-      </div>
-      <div style="background: #10294A; border: 2px solid #2A5A8E; display: flex; flex-direction: column;" style-hover="border-color: #FFB000;">
-        <div style="aspect-ratio: 1 / 1; background: #2D68A3; overflow: hidden;"><img width="320" height="477" loading="lazy" decoding="async" src="assets/projects/sentinel/digital-twin.jpg" alt="Pixel sky battle — the twinned world" style="display: block; width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated;" /></div>
-        <div style="padding: 16px; display: grid; gap: 8px;">
-          <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">P2 · WORLD</div>
-          <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #F2E6C4;">3-TIER DIGITAL TWIN</div>
-          <p style="margin: 0; font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">Tier A cocotb↔GHDL HIL, Tier B MATLAB/Simulink physics, Tier C ROS 2 / Gazebo. Enriched physics twin cross-validated.</p>
-        </div>
-      </div>
-      <div style="background: #10294A; border: 2px solid #2A5A8E; display: flex; flex-direction: column;" style-hover="border-color: #FFB000;">
-        <div style="aspect-ratio: 1 / 1; background: #6B6F7C; overflow: hidden; display: flex; align-items: center;"><img width="350" height="300" loading="lazy" decoding="async" src="assets/projects/sentinel/effector-payload.jpg" alt="Pixel effector loadout" style="display: block; width: 100%; height: auto; image-rendering: pixelated;" /></div>
-        <div style="padding: 16px; display: grid; gap: 8px;">
-          <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">P3 · PAYLOAD</div>
-          <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #F2E6C4;">ISOLATED EFFECTOR</div>
-          <p style="margin: 0; font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">Laser designator first, ballistic later. Aim / ROE / interlock chain only; no terminal-effect modelling.</p>
-        </div>
-      </div>
-      <div style="background: #10294A; border: 2px solid #2A5A8E; display: flex; flex-direction: column;" style-hover="border-color: #FFB000;">
-        <div style="aspect-ratio: 1 / 1; background: #6B6F7C; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr;">
-          <img width="736" height="736" loading="lazy" decoding="async" src="assets/projects/sentinel/agent-a.jpg" alt="Pixel agent A" style="display: block; width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated;" />
-          <img width="736" height="736" loading="lazy" decoding="async" src="assets/projects/sentinel/agent-b.jpg" alt="Pixel agent B" style="display: block; width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated;" />
+        <div style="aspect-ratio: 1 / 1; background: {{ c.bg }}; overflow: hidden; display: {{ c.display }}; grid-template-columns: {{ c.cols }}; align-items: {{ c.align }};">
+          <sc-for list="{{ c.images }}" as="g">
+            <img sc-camel-src="{{ g.src }}" sc-camel-src-set="{{ g.srcset }}" sizes="{{ c.sizes }}" width="{{ g.w }}" height="{{ g.h }}" loading="lazy" decoding="async" alt="{{ g.alt }}" style="display: block; width: 100%; height: {{ c.imgHeight }}; object-fit: cover; image-rendering: pixelated;" />
+          </sc-for>
         </div>
         <div style="padding: 16px; display: grid; gap: 8px;">
-          <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">P4 · VERSUS</div>
-          <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #F2E6C4;">ADVERSARIAL AGENTS</div>
-          <p style="margin: 0; font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">Pursuit and protection agents trained in the twin, each adapting to the other's strategy before transfer to HIL.</p>
+          <div style="font-family: 'Silkscreen', monospace; font-size: 10px; letter-spacing: 0.12em; color: #FFB000;">{{ c.kicker }}</div>
+          <div style="font-size: 15px; font-weight: 700; letter-spacing: 0.06em; color: #F2E6C4;">{{ c.heading }}</div>
+          <sc-for list="{{ c.paras }}" as="p">
+            <p style="margin: 0; font-size: 12.5px; line-height: 1.75; color: #C3CFDB;">{{ p }}</p>
+          </sc-for>
         </div>
       </div>
+      </sc-for>
     </div>
   </section>
+  </sc-if>
 
+  <sc-if value="{{ milestones.has }}">
   <section data-screen-label="Level map" style="max-width: 1520px; margin: 0 auto; padding: 64px 28px 0;">
     <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
-      <span style="color: #05070A; background: #FFB000; padding: 6px 9px; font-size: 9px; font-family: 'Silkscreen', monospace;">05</span>
-      <span style="font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #F2E6C4;">LEVEL MAP · 9 MILESTONES</span>
+      <span style="color: #05070A; background: #FFB000; padding: 6px 9px; font-size: 9px; font-family: 'Silkscreen', monospace;">{{ milestones.kicker }}</span>
+      <span style="font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #F2E6C4;">{{ milestones.heading }}</span>
       <span style="flex: 1; height: 2px; background: repeating-linear-gradient(90deg, #2A5A8E 0 8px, transparent 8px 14px);"></span>
     </div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 10px;">
-      <sc-for list="{{ milestones }}" as="m" hint-placeholder-count="9">
+      <sc-for list="{{ milestones.cards }}" as="m" hint-placeholder-count="9">
         <div style="background: {{ m.bg }}; border: 2px solid {{ m.border }}; padding: 14px 12px; display: grid; gap: 8px; align-content: start; min-height: 120px;">
           <div style="display: flex; justify-content: space-between; font-family: 'Silkscreen', monospace; font-size: 11px; color: {{ m.accent }};"><span>M{{ m.n }}</span><span>{{ m.tag }}</span></div>
           <div style="font-size: 12.5px; font-weight: 700; letter-spacing: 0.04em; color: #F2E6C4; line-height: 1.4;">{{ m.name }}</div>
@@ -370,27 +363,40 @@
         </div>
       </sc-for>
     </div>
-    <p style="margin: 16px 0 0; max-width: 78ch; font-size: 13px; line-height: 1.85; color: #9FB6CF;">Physical bench (M5) → rolling chassis (M6) → closed-loop autonomy on the real UGV (M7) are locked until the board lands. Bring-up runbook and bitstreams are staged.</p>
+    <sc-for list="{{ milestones.paras }}" as="p">
+      <p style="margin: 16px 0 0; max-width: 78ch; font-size: 13px; line-height: 1.85; color: #9FB6CF;">{{ p }}</p>
+    </sc-for>
   </section>
+  </sc-if>
 
+  <sc-if value="{{ hasRules }}">
   <section data-screen-label="Rules" style="max-width: 1520px; margin: 0 auto; padding: 64px 28px 0;">
     <div style="border: 2px solid #F2E6C4; background: #05070A; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));">
+      <sc-if value="{{ rules.has }}">
       <div style="padding: 24px 22px; border-right: 1px solid #2A5A8E; display: grid; gap: 12px; align-content: start;">
-        <div style="font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FFB000;">HOUSE RULES · HONEST CLAIMS</div>
+        <div style="font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FFB000;">{{ rules.kicker }}</div>
         <div style="display: grid; gap: 10px; font-size: 13px; line-height: 1.8; color: #D5DCE4;">
-          <div><span style="color: #FFB000;">▸ </span>No "pure FPGA end-to-end" claim. FPGA critical path + supervisory SoC.</div>
-          <div><span style="color: #FFB000;">▸ </span>Vendor perf/W figures are reported, not proven. The claim is bounded latency.</div>
-          <div><span style="color: #FFB000;">▸ </span>Per-core timing MET ≠ system-integration MET. Integration TRL is low.</div>
+          <sc-for list="{{ rules.items }}" as="r">
+            <div><span style="color: #FFB000;">▸ </span>{{ r.label }}</div>
+          </sc-for>
         </div>
       </div>
+      </sc-if>
+      <sc-if value="{{ artefacts.has }}">
       <div style="padding: 24px 22px; display: grid; gap: 12px; align-content: start; font-size: 13px;">
-        <div style="font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FFB000;">ARTEFACTS</div>
-        <div><span style="color: #9FB6CF;">REPO ▸ </span><a href="https://github.com/Upaasak/sentinel-ev">Upaasak/sentinel-ev</a> <span style="color: #627B9D;">(private)</span></div>
-        <div><span style="color: #9FB6CF;">RTL ▸ </span><span style="color: #D5DCE4;">EV/05_Experiments/rtl · VHDL-2008</span></div>
-        <div><span style="color: #9FB6CF;">RISKS ▸ </span><span style="color: #D5DCE4;">EV/10_Program_Execution/Risk-Register.md</span></div>
+        <div style="font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.12em; color: #FFB000;">{{ artefacts.kicker }}</div>
+        <sc-for list="{{ artefacts.items }}" as="r">
+          <div><span style="color: #9FB6CF;">{{ r.label }} ▸ </span><span style="color: #D5DCE4;">{{ r.value }}</span> <sc-if value="{{ r.detail }}"><span style="color: #627B9D;">{{ r.detail }}</span></sc-if></div>
+        </sc-for>
+        <sc-for list="{{ artefacts.links }}" as="l">
+          <div><a href="{{ l.href }}" target="{{ l.target }}" rel="noopener">{{ l.label }}</a></div>
+        </sc-for>
       </div>
+      </sc-if>
     </div>
   </section>
+  </sc-if>
+  </sc-if>
 
   <div style="max-width: 1520px; margin: 64px auto 0; padding: 0 28px;">
     <div style="border-top: 2px solid #2A5A8E; padding: 18px 0 30px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-family: 'Silkscreen', monospace; font-size: 11px; letter-spacing: 0.1em; color: #9FB6CF;">
@@ -405,44 +411,157 @@
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;blinkHud&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Arcade&quot;},&quot;scanlines&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Arcade&quot;},&quot;showConventional&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;}}">
+// Every word and picture on this page comes from Sanity: Projects → "SENTINEL" → Case file page →
+// Page content. Each section there has a slot name (hud, header, scoreboard, replay, …) that decides
+// where it appears; this code only decides how it looks. Conventions used by some slots:
+//   critical-path rows: blocks separated by ▶ or ▸; *BLOCK* is highlighted red; the last row is SENTINEL's.
+//   ukf / imm: the last paragraph (after a blank line) is the small footnote under the stats.
+//   fig-dets: a paragraph starting with ┆ is shown as the amber threshold note.
+//   milestones: Row value CLEAR, PLAY or LOCKED picks the colour.
+//   replay: the first link is the embedded console's address (https only).
+//   subsystem-1, subsystem-2, …: one card each, in slot-number order.
 class Component extends DCLogic {
+  state = { data: null, failed: false };
   embedRef = React.createRef();
-  TRACKER = 'https://widthmissmatch.github.io/Tracker/';
   // Phones get the console's compact layout (stage + playback, no internal page scroll).
   narrow = window.matchMedia('(max-width: 760px)').matches;
+  trackerUrl = '';
+
+  componentDidMount() {
+    WB.load().then(
+      (data) => { this.setState({ data }); WB.setDescription(WB.project(data, 'sentinel').seo); },
+      () => this.setState({ failed: true })
+    );
+  }
 
   goFullscreen = () => {
     const el = this.embedRef.current;
-    if (el && el.requestFullscreen) el.requestFullscreen().catch(() => window.open(this.TRACKER, '_blank', 'noopener'));
-    else window.open(this.TRACKER, '_blank', 'noopener');
+    const url = this.trackerUrl;
+    if (el && el.requestFullscreen) el.requestFullscreen().catch(() => url && window.open(url, '_blank', 'noopener'));
+    else if (url) window.open(url, '_blank', 'noopener');
   };
 
   renderVals() {
-    const done = { tag: 'CLEAR', bg: '#10294A', border: '#FFB000', accent: '#FFB000' };
-    const live = { tag: 'PLAY', bg: '#10294A', border: '#2A5A8E', accent: '#F2E6C4' };
-    const lock = { tag: 'LOCKED', bg: '#081627', border: '#FF5454', accent: '#FF5454' };
-    const ms = [
-      ['Requirements freeze', '34 REQs · 22 core-MET', live],
-      ['Physical architecture', 'Diagram + DL-002 split', live],
-      ['Interface control docs', '16 boundaries, hazards pinned', live],
-      ['Safety & supervision', '15 guarantees · 6 proven', done],
-      ['Bench integration', 'Virtual now · board-gated', lock],
-      ['Rolling chassis', 'Gazebo twin now · car later', lock],
-      ['Closed-loop autonomy', 'Full loop in sim', lock],
-      ['System test report', 'Evidence exists · matrix open', live],
-      ['Executive presentation', 'Material needs refresh', live]
-    ].map((m, i) => Object.assign({ n: i + 1, name: m[0], note: m[1] }, m[2]));
-    return {
+    const props = {
+      blinkHud: this.props.blinkHud ?? true,
+      scanlines: this.props.scanlines ?? false,
       embedRef: this.embedRef,
       goFullscreen: this.goFullscreen,
-      trackerUrl: this.TRACKER,
-      embedSrc: this.TRACKER + (this.narrow ? '?embed=1&seg=3&panels=0' : '?embed=1&seg=3'),
       embedHeight: this.narrow ? '70vh' : 'max(640px, min(860px, 85vh))',
-      milestones: ms,
-      blinkHud: this.props.blinkHud ?? true,
-      showConventional: this.props.showConventional ?? true,
-      scanlines: this.props.scanlines ?? false
     };
+    const d = this.state.data;
+    if (!d) return Object.assign(props, { loading: !this.state.failed, failed: this.state.failed, ready: false });
+
+    const P = WB.project(d, 'sentinel');
+    const S = P.slot;
+    const row = (s, label) => (s.items.find((r) => r.label.trim().toLowerCase() === label) || {}).value || '';
+    const num = (v) => parseFloat(String(v).replace(',', '.'));
+    const log = (v) => Math.log(v) / Math.LN10;
+
+    const hud = S('hud');
+    hud.items = hud.items.map((r) => ({ label: r.label, value: r.value, color: r.accent || '#FFB000' }));
+    const trl = String(hud.kicker).trim();
+    const cut = trl.lastIndexOf(' ');
+    hud.trlLabel = cut > 0 ? trl.slice(0, cut) : trl;
+    hud.trlValue = cut > 0 ? trl.slice(cut + 1) : '';
+    hud.showBadge = props.blinkHud && Boolean(hud.heading);
+
+    const header = S('header');
+    header.hasImg = Boolean(header.img.src);
+    header.subtitle = row(header, 'subtitle');
+    header.screenTopLeft = row(header, 'screen-top-left');
+    header.screenTopRight = row(header, 'screen-top-right');
+    header.screenBottom = row(header, 'screen-bottom');
+    header.lines = header.paras.map((t, i) => ({ text: t, color: i === 0 ? '#D5DCE4' : '#9FB6CF' }));
+
+    // Critical path rows: the last row is SENTINEL's own path, earlier rows are the comparison.
+    const path = S('critical-path');
+    const blocks = (value, main) => {
+      const parts = String(value).split(/[▶▸]/).map((t) => t.trim()).filter(Boolean);
+      return parts.map((t, j) => {
+        const hi = /^\*.*\*$/.test(t);
+        return { text: hi ? t.slice(1, -1) : t, bg: hi ? '#BB3426' : '#2D68A3', arrow: j < parts.length - 1 ? (main ? '▶' : '▸') : '' };
+      });
+    };
+    const pathRows = path.items.map((r, i) => ({ label: r.label, detail: r.detail, blocks: blocks(r.value, i === path.items.length - 1) }));
+    path.main = pathRows.slice(-1);
+    path.others = (this.props.showConventional ?? true) ? pathRows.slice(0, -1) : [];
+
+    const core = (s) => Object.assign(s, { main: s.paras.length > 1 ? s.paras.slice(0, -1) : s.paras, note: s.paras.length > 1 ? s.paras[s.paras.length - 1] : '' });
+    const cores = [S('ukf'), S('imm')].filter((s) => s.has).map(core);
+
+    // Fig 1 bars on a log axis from 0.01 to 1000 m.
+    const rmse = S('fig-rmse');
+    const logW = (v) => isNaN(v) || v <= 0 ? '0%' : Math.max(0, Math.min(100, (log(v) + 2) / 5 * 100)).toFixed(1) + '%';
+    rmse.rows = rmse.items.map((r) => ({ label: r.label, color: r.accent || '#F2E6C4', value: r.value, detail: r.detail, w1: logW(num(r.value)), w2: logW(num(r.detail)) }));
+
+    // Fig 2 bars on a log axis; values under the 256 floor are drawn red.
+    const dets = S('fig-dets');
+    const top = log(256) / 0.438;
+    dets.rows = dets.items.map((r) => {
+      const v = num(r.value);
+      const low = !isNaN(v) && v < 256;
+      return { label: r.label, value: r.value, w: isNaN(v) || v <= 1 ? '2%' : Math.max(2, Math.min(100, log(v) / top * 100)).toFixed(1) + '%', bar: low ? '#BB3426' : '#4A90C8', color: low ? '#FF5454' : '#F2E6C4' };
+    });
+    dets.lines = dets.paras.map((t) => ({ text: t, note: /^┆/.test(t), plain: !/^┆/.test(t) }));
+
+    // Fig 3 markers sit at the score on a 0–1 band.
+    const gate = S('fig-gate');
+    gate.rows = gate.items.map((r) => {
+      const v = num(r.value);
+      const left = isNaN(v) ? '0%' : v >= 0.99 ? 'calc(100% - 3px)' : (Math.max(0, v) * 100).toFixed(2).replace(/\.?0+$/, '') + '%';
+      return { label: r.label, value: r.value, detail: r.detail, accent: r.accent || '#9FB6CF', left, statusColor: /pass/i.test(r.detail) ? '#39FF88' : '#FF5454' };
+    });
+
+    const verdict = S('verdict'), next = S('next-level');
+
+    // Embedded console: only https addresses are allowed into the iframe.
+    const replay = S('replay');
+    const url = replay.link.href && /^https:\/\//i.test(replay.link.href) ? replay.link.href : '';
+    this.trackerUrl = url;
+    replay.url = url;
+    replay.linkLabel = replay.link.label;
+    replay.src = url ? url + (url.indexOf('?') === -1 ? '?' : '&') + (this.narrow ? 'embed=1&seg=3&panels=0' : 'embed=1&seg=3') : '';
+    replay.show = replay.has && Boolean(url);
+
+    // Subsystem cards: every slot named subsystem-N, in number order.
+    const looks = [
+      { bg: '#FFFFFF', display: 'block', cols: 'none', align: 'normal', imgHeight: '100%' },
+      { bg: '#2D68A3', display: 'block', cols: 'none', align: 'normal', imgHeight: '100%' },
+      { bg: '#6B6F7C', display: 'flex', cols: 'none', align: 'center', imgHeight: 'auto' },
+      { bg: '#6B6F7C', display: 'grid', cols: '1fr 1fr', align: 'normal', imgHeight: '100%' },
+    ];
+    const subsystems = S('subsystems');
+    subsystems.cards = (P.doc.sections || [])
+      .map((s) => s && s.key).filter((k) => /^subsystem-\d+$/.test(k || ''))
+      .sort((a, b) => parseInt(a.split('-')[1], 10) - parseInt(b.split('-')[1], 10))
+      .map((k, i) => {
+        const s = S(k);
+        const look = Object.assign({}, looks[i % 4]);
+        if (s.images.length > 1) Object.assign(look, { display: 'grid', cols: 'repeat(' + s.images.length + ', 1fr)', imgHeight: '100%' });
+        return Object.assign(look, { kicker: s.kicker, heading: s.heading, paras: s.paras, images: s.images, sizes: s.images.length > 1 ? '180px' : '360px' });
+      });
+    subsystems.show = subsystems.has || subsystems.cards.length > 0;
+
+    const looksMs = {
+      clear: { bg: '#10294A', border: '#FFB000', accent: '#FFB000' },
+      play: { bg: '#10294A', border: '#2A5A8E', accent: '#F2E6C4' },
+      locked: { bg: '#081627', border: '#FF5454', accent: '#FF5454' },
+    };
+    const milestones = S('milestones');
+    milestones.cards = milestones.items.map((r, i) => Object.assign(
+      { n: i + 1, name: r.label, note: r.detail, tag: r.value },
+      looksMs[String(r.value).trim().toLowerCase()] || looksMs.play));
+
+    const rules = S('rules'), artefacts = S('artefacts');
+
+    return Object.assign(props, {
+      loading: false, failed: false, ready: true,
+      hud, header, rule: S('rule'), scoreboard: S('scoreboard'), path,
+      boss: S('boss'), cores, hasCores: cores.length > 0, rmse, dets, gate,
+      verdict, next, hasVerdict: verdict.has || next.has, replay,
+      subsystems, milestones, rules, artefacts, hasRules: rules.has || artefacts.has,
+    });
   }
 }
 </script>

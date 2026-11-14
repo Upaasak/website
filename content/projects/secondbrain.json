@@ -1,0 +1,126 @@
+{
+  "seoDescription": "The second brain algorithm: a Whistleblower Lab project case file.",
+  "sections": [
+    {
+      "key": "cover",
+      "kicker": "ISSUE #08 · PRJ_08",
+      "heading": "THE MASTERMIND",
+      "body": "Every other [cyan: sb-proj-*] repository is a code satellite: the RTL, tests and bitstreams of one project. This one holds no code. It holds the [yellow: knowledge]: every project's status, every reusable module, every hard-won bug fix, every architecture decision, each linking out to the code it describes.",
+      "items": [
+        {"label": "subtitle", "value": "SECOND BRAIN · THE HUB OF ALL THINGS"},
+        {"label": "bubble", "value": "It is the hub. The code repos are the spokes."}
+      ],
+      "images": [{"src": "assets/projects/secondbrain/chained-brain.jpg", "alt": "Comic cover: a chained figure whose brain is lifted out by two hands"}]
+    },
+    {
+      "key": "constellation",
+      "heading": "PANEL 1 · THE CONSTELLATION",
+      "kicker": "repo-graph.yaml · generated 2026-07-23",
+      "body": "One manifest knows every repo in the org: 1 control plane, 2 index stores, 22 satellites, each with its branch, release and head SHA. Pulses travel the links it records.",
+      "items": [
+        {"label": "second-brain", "value": "hub"},
+        {"label": "sb-index-corpus-01", "value": "store"},
+        {"label": "sb-index-db", "value": "store"},
+        {"label": "Encryption_Algos", "value": "no-ci"},
+        {"label": "MIM_UART", "value": "ci"},
+        {"label": "hft-tick-to-trade", "value": "ci"},
+        {"label": "ad7606-adc-capture", "value": "ci"},
+        {"label": "c1-anomaly-detector", "value": "ci"},
+        {"label": "chaosengine-gpu", "value": "ci"},
+        {"label": "ctu-canfd-96-node", "value": "ci"},
+        {"label": "ethernet-mac-pl", "value": "ci"},
+        {"label": "fd-qnn-zcu106-kit", "value": "ci"},
+        {"label": "fpga-adas-ids", "value": "ci"},
+        {"label": "gps-synchrophasor", "value": "ci"},
+        {"label": "hls4ml-sweeps", "value": "ci"},
+        {"label": "jetson-swarm", "value": "ci"},
+        {"label": "kociemba-solver", "value": "ci"},
+        {"label": "meghalaya-systolic-qnn", "value": "ci"},
+        {"label": "particle-life-fpga", "value": "no-ci"},
+        {"label": "ptp-irigb-timesync", "value": "ci"},
+        {"label": "qrng", "value": "ci"},
+        {"label": "rv32im-soft-core", "value": "ci"},
+        {"label": "sttp-pmu-adc", "value": "ci"},
+        {"label": "toe-10g-fpga", "value": "ci"},
+        {"label": "zedboard-demos-suite", "value": "ci"}
+      ]
+    },
+    {
+      "key": "records",
+      "items": [
+        {"value": "68", "label": "PROJECTS", "detail": "Status, maturity, tools, metrics, and a link to the code satellite.", "accent": "#00E5FF"},
+        {"value": "111", "label": "MODULES", "detail": "Reusable VHDL entities: ports, status, dependencies.", "accent": "#FFE600"},
+        {"value": "137", "label": "ERRORS", "detail": "GHDL / Vivado failure patterns: symptom, fix, diagnosis.", "accent": "#FF00FF"},
+        {"value": "6", "label": "DECISIONS", "detail": "Architecture Decision Records, dated and reasoned.", "accent": "#39FF14"},
+        {"value": "36", "label": "REFERENCES", "detail": "Tool docs, external references, SOPs.", "accent": "#FFFFFF"}
+      ]
+    },
+    {
+      "key": "errors",
+      "heading": "PANEL 2 · IT REMEMBERS EVERY MISTAKE",
+      "body": "The largest folder is [yellow: errors/]: 137 recorded GHDL and Vivado failure patterns, each with the symptom, the fix and how it was found. This isn't a portfolio; it's an engineering memory whose biggest asset is the catalogue of mistakes already made.",
+      "images": [{"src": "assets/projects/secondbrain/eyes-city.jpg", "alt": "Stippled drawing of a face staring up at a sky full of floating eyes above a city of blocks"}]
+    },
+    {
+      "key": "errors-list",
+      "body": "…and 129 more. Debugging becomes a lookup.",
+      "items": [
+        {"label": "array-reset-defeats-bram-inference"},
+        {"label": "combinational-divider-on-critical-path-collapses-fmax"},
+        {"label": "behavioral-mem-model-uninitialized-shared-state-hangs"},
+        {"label": "c37-118-2-2024-format-word-bits-3-1-swapped"},
+        {"label": "c37-118-2-2024-freq-float-sends-deviation-not-actual"},
+        {"label": "c37-118-2-2024-leap-byte-wrong-value"},
+        {"label": "altera-mf-altsyncram-ghdl-substitution"},
+        {"label": "baremetal-xpar-instance-name-and-sdt-dma-lookup"}
+      ]
+    },
+    {
+      "key": "anatomy",
+      "heading": "PANEL 3 · ANATOMY OF A PROJECT RECORD",
+      "body": "[gray: ---  # frontmatter, projects/*.md]\n[magenta: satellite]:  [cyan: code repo URL]\n[magenta: commit]:     [cyan: exact SHA it was written against]\n[magenta: maturity]:   Prototype\n[magenta: status]:     paused | active\n[magenta: tools]:      [...]\n[magenta: metrics]:\n  - value: ...\n    [green: provenance]: simulated | synthesized | measured\n[gray: ---]",
+      "items": [{"label": "note", "value": "shape as described in EXPLAINER.md, not a copied record"}]
+    },
+    {
+      "key": "principles",
+      "items": [
+        {"label": "PROVENANCE > OPINION", "detail": "The hub doesn't just say \"3 scenarios passing\". It says how that was established. Honesty about where a number came from is a schema field, not a habit.", "accent": "#FF00FF"},
+        {"label": "PINNED TO A COMMIT", "detail": "Each record names its code repo and the exact commit, so knowledge and code can be diffed instead of silently drifting apart.", "accent": "#00E5FF"}
+      ]
+    },
+    {
+      "key": "decisions",
+      "heading": "THE DECISIONS",
+      "items": [
+        {"label": "ADR-001", "value": "Vault structure"},
+        {"label": "ADR-002", "value": "PS / PL crypto boundary"},
+        {"label": "ADR-003", "value": "Agents directory consolidation"},
+        {"label": "ADR-005", "value": "Cloud offload of submodule storage"},
+        {"label": "ADR-006", "value": "Full reproducible cloud mirror"}
+      ]
+    },
+    {
+      "key": "rebuild",
+      "heading": "PANEL 4 · REBUILD FROM NOTHING",
+      "body": "RESUME-ON-NEW-DEVICE.md and bootstrap.sh bring the vault, retrieval engine, tools and multi-GB corpus back on an empty computer: about 30 minutes hands-on plus an unattended download.",
+      "items": [{"label": "note", "value": "ADR-006: restore data, don't regenerate it."}]
+    },
+    {
+      "key": "limits",
+      "heading": "WHAT THE MASTERMIND CAN'T DO",
+      "items": [
+        {"label": "No code, nothing to simulate. Verified only by being well-formed."},
+        {"label": "Generated from the vault; hand edits are overwritten on the next export."},
+        {"label": "Links need private-org access to resolve."},
+        {"label": "repo-graph.yaml is a dated snapshot, not a live view."},
+        {"label": "OKF v0.1 is an early schema, a partial projection of the full vault."}
+      ]
+    },
+    {
+      "key": "links",
+      "items": [
+        {"label": "INDEX", "value": "sb-index-db · sb-index-corpus-01"}
+      ]
+    }
+  ]
+}

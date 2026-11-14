@@ -12,11 +12,10 @@ To see a version: `git checkout <tag>`. To roll the live site back: see "Rolling
 | `v2.2-mobile` | 2026-10-13 | Phones: two-column grids that clipped content now stack. |
 | — | 2026-11-15 | Repository organized: development history moved into `dev/` (kept off the website), docs added. No change to any page. |
 | — | 2026-11-15 | Netlify hosting: `netlify.toml` publishes only the website files (studio, dev, docs stay private) and adds basic security headers. Went live on `main` at https://whistle-blower-labs.netlify.app; Sanity CORS allows it and its branch/preview URLs. |
+| `v3-project-pages` | 2026-11-15 | Round 3: all 8 project case-file pages read their content from Sanity (Sidebar → Project pages), designs unchanged. Content source files in `content/projects/`, loaded with `npm run seed-projects`. SENTINEL embed address is a CMS field. GitHub links removed from project pages. New "Search & share description" per project. Blank-page guard: a case file with no sections borrows them from the snapshot. |
 
-## Next (round 3, planned)
+## Next (planned)
 
-- Wire the 8 project case-file pages to the CMS and remove their GitHub links.
-- Make the SENTINEL embed address a CMS field.
 - Open Graph / link-preview tags.
 - Bring `docs/EDITING.md` fully in line with the dashboard (e.g. it still mentions a GitHub field in Site settings).
 - Optional: menu button for phones.

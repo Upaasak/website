@@ -875,9 +875,9 @@
   {
    "_createdAt": "2026-10-12T18:10:06Z",
    "_id": "project-sentinel",
-   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_rev": "wi4S2bIz0dHA9v7A4XJRgt",
    "_type": "project",
-   "_updatedAt": "2026-10-12T18:10:06Z",
+   "_updatedAt": "2026-11-14T22:14:52Z",
    "cardImage": {
     "alt": "SENTINEL",
     "caption": null,
@@ -889,7 +889,618 @@
    "featured": true,
    "listed": true,
    "order": 2,
-   "sections": null,
+   "sections": [
+    {
+     "_key": "s0-hud",
+     "_type": "pageSection",
+     "heading": "HARDWARE GATED",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "accent": "#FF5454",
+       "label": "1UP",
+       "value": "SENTINEL"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#FFB000",
+       "label": "HI-SCORE",
+       "value": "53 CORES @ 200 MHZ"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "accent": "#FFB000",
+       "label": "STAGE",
+       "value": "02 / 10"
+      }
+     ],
+     "key": "hud",
+     "kicker": "TRL 3",
+     "links": []
+    },
+    {
+     "_key": "s1-header",
+     "_type": "pageSection",
+     "body": "FPGA-native deterministic edge compute for a modular autonomous ground platform. Sensors, fusion, IMM-UKF prediction and vehicle control run on dedicated hardware rather than behind an operating-system scheduler, so the critical path has bounded, scheduler-free latency.\n\nThe weapon and fire-control chain is one isolated mission payload, not the centerpiece. A formal nav→fire isolation proof enforces the platform↔payload boundary.",
+     "heading": "SENTINEL",
+     "images": [
+      {
+       "alt": "SENTINEL — pixel interceptor clearing a wave",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/7063bb0c43b80d86d7a7de6ad3ebb3800de1a719-320x477.jpg"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "subtitle",
+       "value": "SOFTWARE-DEFINED AUTONOMOUS MISSION VEHICLE"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "screen-top-left",
+       "value": "WAVE 02"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "screen-top-right",
+       "value": "READY"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "screen-bottom",
+       "value": "PRESS START"
+      }
+     ],
+     "key": "header",
+     "kicker": "PRJ_02 · CASE FILE",
+     "links": []
+    },
+    {
+     "_key": "s2-rule",
+     "_type": "pageSection",
+     "body": "Human-on-the-loop for weapon release. Navigation is autonomous; fire authority never is.",
+     "images": [],
+     "items": [],
+     "key": "rule",
+     "kicker": "RULE 00 · ABSOLUTE",
+     "links": []
+    },
+    {
+     "_key": "s3-scoreboard",
+     "_type": "pageSection",
+     "heading": "SCOREBOARD",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "cores with measured Vivado OOC STA at 200 MHz. 9/9 board bitstreams built.",
+       "label": "RTL",
+       "value": "~53"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "detail": "ROE fire interlock formally proven unbounded (k-induction, sby + z3).",
+       "label": "SAFETY",
+       "value": "∞"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "detail": "waypoints on real Nav2 + slam_toolbox, mission BT, obstacle replan.",
+       "label": "AUTONOMY",
+       "value": "3/3"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "detail": "automated gates green, each with a proven fail-path.",
+       "label": "V&V",
+       "value": "10/10"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "detail": "PTP / IRIG-B, board-measured.",
+       "label": "TIME SYNC",
+       "value": "1.441ns"
+      }
+     ],
+     "key": "scoreboard",
+     "kicker": "01",
+     "links": []
+    },
+    {
+     "_key": "s4-critical-path",
+     "_type": "pageSection",
+     "body": "FPGA-deterministic critical path plus a supervisory SoC. Mission planning, operator UX and non-deterministic inference run on the SoC; detect → track → lead → aim runs on fabric.",
+     "heading": "THE CRITICAL PATH",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "· variable latency",
+       "label": "CONVENTIONAL",
+       "value": "CPU ▸ GPU ▸ AI ▸ DECISION"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "SENTINEL",
+       "value": "SENSORS ▶ FPGA AI ▶ HW FUSION ▶ *IMM-UKF* ▶ MISSION PLAN ▶ VEHICLE CTRL ▶ DRIVE-BY-WIRE"
+      }
+     ],
+     "key": "critical-path",
+     "kicker": "02",
+     "links": []
+    },
+    {
+     "_key": "s5-boss",
+     "_type": "pageSection",
+     "heading": "BOSS FIGHT · UKF + IMM",
+     "images": [],
+     "items": [],
+     "key": "boss",
+     "kicker": "03",
+     "links": []
+    },
+    {
+     "_key": "s6-ukf",
+     "_type": "pageSection",
+     "body": "Full UKF predict + update in one entity. 1-D constant-acceleration model, state [p, v, a], H = I, Q16.16 throughout. One shared matmul, time-multiplexed.\n\nPart xczu7ev-ffvc1156-2-e · OOC · dt = 0.1 s · R = 0.01·I",
+     "heading": "INTERIM · SWAP SLOT",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "WNS @ 200 MHz",
+       "value": "+0.396 ns"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "LATENCY / STEP",
+       "value": "843 cycles"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "GHDL vs TWIN",
+       "value": "20/20 bit-exact"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "xsim + GHDL",
+       "value": "8/8 adversarial"
+      }
+     ],
+     "key": "ukf",
+     "kicker": "sentinel_ukf",
+     "links": []
+    },
+    {
+     "_key": "s7-imm",
+     "_type": "pageSection",
+     "body": "CV (cruise) and CA (maneuver) fixed-gain filters run on the same stream. The bank picks the model with the smaller EWMA innovation, with hysteresis.\n\nHard switch, not full IMM. Markov mixing + soft blending is the next increment.",
+     "heading": "IMM-FAMILY · 2 MODELS",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "xsim + GHDL",
+       "value": "300/300 match"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "GOLDEN TB",
+       "value": "222 cyc · 0 miss"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "CA PICKED IN MANEUVER",
+       "value": "100 %"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "FUNCTIONAL FINDINGS",
+       "value": "None"
+      }
+     ],
+     "key": "imm",
+     "kicker": "sentinel_imm_tracker",
+     "links": []
+    },
+    {
+     "_key": "s8-fig-rmse",
+     "_type": "pageSection",
+     "body": "RTL vs bit-exact twin: 0.0000 on every trajectory",
+     "heading": "FIG 1 · POSITION RMSE, CLOSED-LOOP · 61 STEPS / 6 S",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "0.029 float",
+       "label": "CV",
+       "value": "0.054 RTL"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "detail": "6.29",
+       "label": "CT 3G",
+       "value": "108.0"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "accent": "#FFB000",
+       "detail": "12.58",
+       "label": "CT 6G",
+       "value": "214.0"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "detail": "1.33",
+       "label": "WEAVE",
+       "value": "32.8"
+      }
+     ],
+     "key": "fig-rmse",
+     "kicker": "LOG SCALE · METRES",
+     "links": []
+    },
+    {
+     "_key": "s9-fig-dets",
+     "_type": "pageSection",
+     "body": "┆ DET_FLOOR = 256 · below it matinv returns Sinv = 0\n\nAfter one measurement P converges toward R. det(S) ≈ 0.02³ lands at ~1 LSB, the singular guard trips, and the gain goes to zero. From step 1 the filter dead-reckons: ct_6g velocity freezes at 40.03 m/s while truth swings to 124 m/s.",
+     "heading": "FIG 2 · det(S) PER STEP · CT 6G",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "STEP 0",
+       "value": "67539"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "STEP 1",
+       "value": "1"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "STEP 2",
+       "value": "1"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "STEP 3..60",
+       "value": "1 · K = 0"
+      }
+     ],
+     "key": "fig-dets",
+     "kicker": "LOG · RAW Q16.16",
+     "links": []
+    },
+    {
+     "_key": "s10-fig-gate",
+     "_type": "pageSection",
+     "body": "The band was one-sided until a mutation test showed a wire scoring 1.0. Accuracy is now gated relative to float64 (1.5× margin, 0.1 m floor).",
+     "heading": "FIG 3 · ACCEPTANCE GATE · gain_active",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "accent": "#39FF88",
+       "detail": "PASS",
+       "label": "float64 reference",
+       "value": "0.4467"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#BB3426",
+       "detail": "FAIL",
+       "label": "interim RTL UKF",
+       "value": "0.0007"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "accent": "#FF5454",
+       "detail": "FAIL",
+       "label": "passthrough x⁺ = z",
+       "value": "1.0000"
+      }
+     ],
+     "key": "fig-gate",
+     "kicker": "2-SIDED BAND",
+     "links": []
+    },
+    {
+     "_key": "s11-verdict",
+     "_type": "pageSection",
+     "body": "CV passes for the wrong reason: the filter coasts on an exact model, it is not filtering. H = I flatters it; a position-only sensor would diverge faster.",
+     "heading": "Not adequate for the fire-control envelope. 214 m RMSE, 336 m peak at 6 g.",
+     "images": [],
+     "items": [],
+     "key": "verdict",
+     "kicker": "VERDICT · INTERIM UKF",
+     "links": []
+    },
+    {
+     "_key": "s12-next-level",
+     "_type": "pageSection",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "Conditioning: wider fraction, square-root / UD covariance, or normalised innovation."
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "Expressiveness: turning models in the IMM bank to close the 12.6 m single-model residual."
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "Range: det(S) overflows Q16.16 once P_ii exceeds ~32 (adversarial finding F1)."
+      }
+     ],
+     "key": "next-level",
+     "kicker": "NEXT LEVEL · IMM-UKF SWAP",
+     "links": []
+    },
+    {
+     "_key": "s13-replay",
+     "_type": "pageSection",
+     "body": "Step through nine recorded trajectories (birds, a car, three F1 laps, an airplane, a missile, a pedestrian) and compare the IMM filter's estimate and one-step prediction against ground truth, with live tracking error, mode probabilities and RF classification. A replay of stored filter output, not a live tracker.",
+     "heading": "· NINE RECORDED TRAJECTORIES",
+     "images": [],
+     "items": [],
+     "key": "replay",
+     "kicker": "REPLAY · RASO IMM CONSOLE",
+     "links": [
+      {
+       "_key": "l0",
+       "_type": "link",
+       "href": "https://widthmissmatch.github.io/Tracker/",
+       "label": "OPEN IN NEW TAB ▸"
+      }
+     ]
+    },
+    {
+     "_key": "s14-subsystems",
+     "_type": "pageSection",
+     "heading": "SELECT A SUBSYSTEM",
+     "images": [],
+     "items": [],
+     "key": "subsystems",
+     "kicker": "04",
+     "links": []
+    },
+    {
+     "_key": "s15-subsystem-1",
+     "_type": "pageSection",
+     "body": "Mixed, progressive targets: a Stage-1 pendulum first, then a C-UAS drone tracked on the move.",
+     "heading": "PHYSICAL PLATFORM",
+     "images": [
+      {
+       "alt": "Pixel drone",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/4da04dc9e8244fbeb596ad196b1adbafce59c36d-626x626.jpg"
+      }
+     ],
+     "items": [],
+     "key": "subsystem-1",
+     "kicker": "P1 · TARGET",
+     "links": []
+    },
+    {
+     "_key": "s16-subsystem-2",
+     "_type": "pageSection",
+     "body": "Tier A cocotb↔GHDL HIL, Tier B MATLAB/Simulink physics, Tier C ROS 2 / Gazebo. Enriched physics twin cross-validated.",
+     "heading": "3-TIER DIGITAL TWIN",
+     "images": [
+      {
+       "alt": "Pixel sky battle — the twinned world",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/c1a44f2f94e8555bee40444a399101f76748316d-320x477.jpg"
+      }
+     ],
+     "items": [],
+     "key": "subsystem-2",
+     "kicker": "P2 · WORLD",
+     "links": []
+    },
+    {
+     "_key": "s17-subsystem-3",
+     "_type": "pageSection",
+     "body": "Laser designator first, ballistic later. Aim / ROE / interlock chain only; no terminal-effect modelling.",
+     "heading": "ISOLATED EFFECTOR",
+     "images": [
+      {
+       "alt": "Pixel effector loadout",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/62cde47bbcde682ea74aa1eb9aa880990eeff84b-350x300.jpg"
+      }
+     ],
+     "items": [],
+     "key": "subsystem-3",
+     "kicker": "P3 · PAYLOAD",
+     "links": []
+    },
+    {
+     "_key": "s18-subsystem-4",
+     "_type": "pageSection",
+     "body": "Pursuit and protection agents trained in the twin, each adapting to the other's strategy before transfer to HIL.",
+     "heading": "ADVERSARIAL AGENTS",
+     "images": [
+      {
+       "alt": "Pixel agent A",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/904b7f0c4b934194cfbd8e0437270a5d9e9b719f-736x736.jpg"
+      },
+      {
+       "alt": "Pixel agent B",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/1fdf9a252d78de5a7da68a1a42619346eefcb0a4-736x736.jpg"
+      }
+     ],
+     "items": [],
+     "key": "subsystem-4",
+     "kicker": "P4 · VERSUS",
+     "links": []
+    },
+    {
+     "_key": "s19-milestones",
+     "_type": "pageSection",
+     "body": "Physical bench (M5) → rolling chassis (M6) → closed-loop autonomy on the real UGV (M7) are locked until the board lands. Bring-up runbook and bitstreams are staged.",
+     "heading": "LEVEL MAP · 9 MILESTONES",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "34 REQs · 22 core-MET",
+       "label": "Requirements freeze",
+       "value": "PLAY"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "detail": "Diagram + DL-002 split",
+       "label": "Physical architecture",
+       "value": "PLAY"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "detail": "16 boundaries, hazards pinned",
+       "label": "Interface control docs",
+       "value": "PLAY"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "detail": "15 guarantees · 6 proven",
+       "label": "Safety & supervision",
+       "value": "CLEAR"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "detail": "Virtual now · board-gated",
+       "label": "Bench integration",
+       "value": "LOCKED"
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "detail": "Gazebo twin now · car later",
+       "label": "Rolling chassis",
+       "value": "LOCKED"
+      },
+      {
+       "_key": "r6",
+       "_type": "keyValue",
+       "detail": "Full loop in sim",
+       "label": "Closed-loop autonomy",
+       "value": "LOCKED"
+      },
+      {
+       "_key": "r7",
+       "_type": "keyValue",
+       "detail": "Evidence exists · matrix open",
+       "label": "System test report",
+       "value": "PLAY"
+      },
+      {
+       "_key": "r8",
+       "_type": "keyValue",
+       "detail": "Material needs refresh",
+       "label": "Executive presentation",
+       "value": "PLAY"
+      }
+     ],
+     "key": "milestones",
+     "kicker": "05",
+     "links": []
+    },
+    {
+     "_key": "s20-rules",
+     "_type": "pageSection",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "No \"pure FPGA end-to-end\" claim. FPGA critical path + supervisory SoC."
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "Vendor perf/W figures are reported, not proven. The claim is bounded latency."
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "Per-core timing MET ≠ system-integration MET. Integration TRL is low."
+      }
+     ],
+     "key": "rules",
+     "kicker": "HOUSE RULES · HONEST CLAIMS",
+     "links": []
+    },
+    {
+     "_key": "s21-artefacts",
+     "_type": "pageSection",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "RTL",
+       "value": "EV/05_Experiments/rtl · VHDL-2008"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "RISKS",
+       "value": "EV/10_Program_Execution/Risk-Register.md"
+      }
+     ],
+     "key": "artefacts",
+     "kicker": "ARTEFACTS",
+     "links": []
+    }
+   ],
+   "seoDescription": "SENTINEL: a software-defined autonomous mission vehicle with FPGA-native deterministic edge compute, formal safety and a HIL digital twin.",
    "shortSummary": "Spec in progress.",
    "slug": "sentinel",
    "stage": "SPEC",
@@ -900,9 +1511,9 @@
   {
    "_createdAt": "2026-10-12T18:10:06Z",
    "_id": "project-tcpip",
-   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_rev": "vz4OSeTs5H7G2lpwEgqdVT",
    "_type": "project",
-   "_updatedAt": "2026-10-12T18:10:06Z",
+   "_updatedAt": "2026-11-14T22:13:37Z",
    "cardImage": {
     "alt": "TCP/IP IN FPGA",
     "caption": null,
@@ -914,7 +1525,392 @@
    "featured": true,
    "listed": true,
    "order": 3,
-   "sections": null,
+   "sections": [
+    {
+     "_key": "s0-header",
+     "_type": "pageSection",
+     "body": "ZCU106 / SFP0 · NO PROCESSOR IN THE DATAPATH",
+     "heading": "PURE-RTL TCP OFFLOAD ENGINE",
+     "images": [
+      {
+       "alt": "Two dithered hands meeting through a PROJECT.EXE window under the letters TCP/IP",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/3c2e95b355124ef85ff0d014bba75e2aa072d1b7-1000x515.webp"
+      }
+     ],
+     "items": [],
+     "key": "header",
+     "kicker": "PRJ_03 // CASE FILE",
+     "links": []
+    },
+    {
+     "_key": "s1-intro",
+     "_type": "pageSection",
+     "body": "A TCP/IP stack implemented entirely in FPGA fabric. MAC, ARP, IPv4, the RFC 9293 state machine, retransmission, RTO estimation, congestion control and reassembly are all RTL.",
+     "heading": "$ cat README.md | head",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "96% of the 964.33 Mbps MSS-1460 ceiling",
+       "label": "SUSTAINED GOODPUT",
+       "value": "930.33 Mbps"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "detail": "of 2,398,934 segments, tshark",
+       "label": "RETRANSMISSIONS",
+       "value": "0"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "detail": "WNS at 125 MHz",
+       "label": "TIMING",
+       "value": "+1.823 ns"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "detail": "inbound connections, handshake 0.4 ms",
+       "label": "SERVER MODE",
+       "value": "40 / 40"
+      }
+     ],
+     "key": "intro",
+     "kicker": "toe@zcu106: ~/pl-tcp-stack",
+     "links": []
+    },
+    {
+     "_key": "s2-stack",
+     "_type": "pageSection",
+     "body": "   application (echo | counter)\n               │\n       toe_tcp_engine     RFC 9293 FSM, cwnd,\n               │          retransmit, reassembly\n       toe_ip_bridge      header + RFC 1071 csum,\n               │          double-buffered\n         eth_ip_core      IPv4 + ARP + MAC\n               │\n     gig_ethernet_pcs_pma  SGMII\n               │\n      GTH Quad 225 ch2 ──▶ SFP0 cage",
+     "heading": "THE STACK",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "The application writes into toe_send_buffer. On a flush the engine asks toe_segmenter for a segment bounded by cwnd, the peer window and free retransmission-table space. The bridge builds the header and computes the checksum while it reads, over a doubled buffer so segment N+1 is prepared while N is on the wire.",
+       "label": "TX PATH"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "detail": "The bridge parses inbound TCP, verifies the checksum and offers it to the engine. A one-deep skid buffer latches it the cycle it is offered, whatever the FSM state. Pure ACKs drain even while the FSM waits on a TX segment.",
+       "label": "RX PATH"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "value": "rtl/ 23 VHDL modules · rtl/eth/ 28 Verilog files · tb/ 49 testbenches · vectors/ 25 golden files"
+      }
+     ],
+     "key": "stack",
+     "kicker": "01 //",
+     "links": []
+    },
+    {
+     "_key": "s3-handshake",
+     "_type": "pageSection",
+     "body": "00:0a:35 is the Xilinx OUI; bc:e9:2f is the host NIC. Two distinct MACs, not loopback. Taking the host link down mid-transfer halted the stream at once, and every source in build_toe.tcl greps clean for zynq_ultra_ps_e, processing_system and PS8.\n\nPassive open now works too: 40 of 40 sequential inbound connections accepted.",
+     "heading": "TWO MACS ON THE WIRE",
+     "images": [
+      {
+       "alt": "Halftone hand shaking a wireframe hand",
+       "caption": "// SYN → SYN-ACK → ACK. Flesh meets fabric.",
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/a9e1e72b309f5eca4a316aba2f938cdf7169b01d-736x907.jpg"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": ", IPv4, length 1514\n192.168.50.60.63676 > 192.168.50.10.8081:\n  Flags [P.], seq 1460:2920, length 1460",
+       "label": "00:0a:35:00:01:02",
+       "value": "bc:e9:2f:a1:8e:f6"
+      }
+     ],
+     "key": "handshake",
+     "kicker": "02 //",
+     "links": []
+    },
+    {
+     "_key": "s4-progress",
+     "_type": "pageSection",
+     "heading": "0.02 → 930 Mbps",
+     "images": [],
+     "items": [],
+     "key": "progress",
+     "kicker": "03 //",
+     "links": []
+    },
+    {
+     "_key": "s5-progress-throughput",
+     "_type": "pageSection",
+     "body": "┆ 964.33 Mbps MSS-1460 goodput ceiling · ~47,000× from first run",
+     "heading": "FIG 1 · THROUGHPUT BY STAGE",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "counter v1",
+       "value": "0.02"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "counter v2",
+       "value": "38.75"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "D20 + C11",
+       "value": "389.61"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "inline checksum",
+       "value": "486.58"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "label": "double buf + D21",
+       "value": "930.33"
+      }
+     ],
+     "key": "progress-throughput",
+     "kicker": "Mbps, linear",
+     "links": []
+    },
+    {
+     "_key": "s6-progress-clocks",
+     "_type": "pageSection",
+     "heading": "FIG 2 · CLOCKS PER SEGMENT",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "accent": "#5A5A5A",
+       "label": "baseline",
+       "value": "3701"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#8A8A8A",
+       "label": "inline csum",
+       "value": "2955"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "accent": "#00FF7F",
+       "label": "double buffer",
+       "value": "1479"
+      }
+     ],
+     "key": "progress-clocks",
+     "kicker": "line rate = 1480",
+     "links": []
+    },
+    {
+     "_key": "s7-progress-changes",
+     "_type": "pageSection",
+     "body": "Identify a variant by md5, never by filename. A bitstream believed to be step 2 was once step 2b; only the WNS gave it away.",
+     "heading": "THE THREE CHANGES",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "Start the checksum at accept time and feed it words as bytes arrive, overlapping the ~740-clock walk with the 1460-clock read.",
+       "label": "Inline checksum."
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "detail": "Fill and send in separate processes over twice the buffer. One clock under line rate.",
+       "label": "Double buffering."
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "detail": "Skid buffer, un-gated RX branch, in-freeze pure-ACK drain. Without it, step 2 reached 569 Mbps and killed the connection at 70–130 MB, every run.",
+       "label": "D21 RX starvation fix."
+      }
+     ],
+     "key": "progress-changes",
+     "links": []
+    },
+    {
+     "_key": "s8-integrity",
+     "_type": "pageSection",
+     "heading": "WHAT THE CAPTURE PROVES",
+     "images": [
+      {
+       "alt": "Two columns of ants, blue and red, marching in parallel",
+       "caption": "// two streams, in order, none lost. One stray is the retransmit that never happened.",
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/5d0742a8ca1692e824d7e2ee0e7855dd833a884f-533x800.png"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "Sustained throughput, 3.489 GB over 30 active s",
+       "value": "930.33 Mbps"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "Retransmissions",
+       "value": "0 / 2,398,934"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "Endurance, counter_soak.py 300",
+       "value": "300 s, no stall"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "accent": "#BDBDBD",
+       "label": "Data integrity (script only, no capture)",
+       "value": "0 in 8.77 B words"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "accent": "#FF5F56",
+       "label": "935.84 Mbps, 5-min soak",
+       "value": "NO CAPTURE"
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "accent": "#FF5F56",
+       "label": "944.31 Mbps, 60 s peak",
+       "value": "ABOVE CEILING"
+      }
+     ],
+     "key": "integrity",
+     "kicker": "04 //",
+     "links": []
+    },
+    {
+     "_key": "s9-caveats",
+     "_type": "pageSection",
+     "body": "Single connection: no session table. RFC compliance measured on the wire is 10 PASS / 2 FAIL. Regression runs 46 pass / 2 fail / 1, both failures pre-existing on baseline RTL.\n\nWIN_LIMIT is a deployment constant at 8192; raising it to 32768 changed nothing, because the board is the sender. Bouncing the host NIC can drop the SGMII carrier; budget one reflash after any link interruption.",
+     "heading": "WHAT THIS IS NOT",
+     "images": [],
+     "items": [],
+     "key": "caveats",
+     "kicker": "05 //",
+     "links": []
+    },
+    {
+     "_key": "s10-caveats-features",
+     "_type": "pageSection",
+     "heading": "$ grep -r feature rtl/",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "accent": "#FF5F56",
+       "label": "SACK (RFC 2018) ........",
+       "value": "none"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#FF5F56",
+       "detail": "  64 KB cap",
+       "label": "window scale (RFC 7323) ",
+       "value": "none"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "accent": "#FF5F56",
+       "label": "timestamps / PAWS ......",
+       "value": "none"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "accent": "#FF5F56",
+       "label": "Nagle (RFC 896) ........",
+       "value": "none"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "accent": "#FF5F56",
+       "label": "delayed ACK ............",
+       "value": "none"
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "label": "keepalive ..............",
+       "value": "timer slot, no policy"
+      },
+      {
+       "_key": "r6",
+       "_type": "keyValue",
+       "accent": "#FF5F56",
+       "label": "IP fragmentation .......",
+       "value": "none"
+      }
+     ],
+     "key": "caveats-features",
+     "links": []
+    },
+    {
+     "_key": "s11-next",
+     "_type": "pageSection",
+     "body": "A 64-bit datapath on 10GBASE-R. Phase 2 of 5: tree and 10G substrate in progress, nothing widened yet. The 1G design closes at +0.225 ns over 237,022 endpoints at 8.000 ns; 156.25 MHz native means finding 1.6 ns.",
+     "heading": "NEXT // pl-tcp-stack-10g",
+     "images": [],
+     "items": [],
+     "key": "next",
+     "kicker": "no hardware for this programme · reference model 63 pass / 1 fail",
+     "links": []
+    },
+    {
+     "_key": "s12-touch",
+     "_type": "pageSection",
+     "heading": "\"Every build: TOE_COUNTER=1 TOE_ILA=1 vivado -mode batch -source build_toe.tcl\"",
+     "images": [
+      {
+       "alt": "Wireframe hand reaching out of a monitor to touch a human finger",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/88dd75f1178110091770c1add16f8fb8c6b02cc7-736x839.jpg"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "HW",
+       "value": "ZCU106 xczu7ev · SFP0 · GTH Quad 225 ch2 · Vivado 2025.1"
+      }
+     ],
+     "key": "touch",
+     "links": []
+    }
+   ],
+   "seoDescription": "TCP/IP in FPGA: MAC, ARP, IPv4 and a TCP state machine with retransmission, all in hardware with no soft core in the data path.",
    "shortSummary": "The whole stack in fabric, no soft core in the data path.",
    "slug": "tcpip",
    "stage": "RTL",
@@ -948,9 +1944,9 @@
   {
    "_createdAt": "2026-10-12T18:10:06Z",
    "_id": "project-pqc",
-   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_rev": "vz4OSeTs5H7G2lpwEgqgdP",
    "_type": "project",
-   "_updatedAt": "2026-10-12T18:10:06Z",
+   "_updatedAt": "2026-11-14T22:14:21Z",
    "cardImage": {
     "alt": "POST-QUANTUM CRYPTO IN FPGA",
     "caption": null,
@@ -962,7 +1958,534 @@
    "featured": true,
    "listed": true,
    "order": 5,
-   "sections": null,
+   "sections": [
+    {
+     "_key": "s0-header",
+     "_type": "pageSection",
+     "body": "A full-stack post-quantum capability: FIPS-203-exact ML-KEM compression RTL and a 31-module ML-DSA datapath in VHDL-2008, C protocol stacks that sign and encrypt IEC 61850 GOOSE/SV frames, and a KAT backbone tying every layer to the NIST reference via liboqs.",
+     "heading": "The Post-Quantum Post Office",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "FIPS 203 · ML-KEM"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "FIPS 204 · ML-DSA"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "ZCU106 · xczu7ev"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "accent": "#E63946",
+       "label": "MATURITY · PROTOTYPE"
+      }
+     ],
+     "key": "header",
+     "kicker": "PRJ_05 · CASE FILE",
+     "links": []
+    },
+    {
+     "_key": "s1-tagline",
+     "_type": "pageSection",
+     "body": "Every key is a letter. ML-KEM seals it in an envelope, ML-DSA stamps the postmark, and somewhere a man in a long coat is keeping copies for the day he owns a quantum computer.",
+     "heading": "POST-QUANTUM CRYPTOGRAPHY & CRYPTO SUITE",
+     "images": [],
+     "items": [],
+     "key": "tagline",
+     "links": []
+    },
+    {
+     "_key": "s2-postcard",
+     "_type": "pageSection",
+     "body": "Dear Receiver — enclosed is one shared secret, wrapped in 256 noisy coefficients. Only your private key can find it. Burn after decapsulation.",
+     "heading": "— the Postmaster",
+     "images": [
+      {
+       "alt": "Postman on a bicycle",
+       "caption": "768 · KEM",
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/1d71548c3057176a3b1c4d69df9e4878820fd476-640x640.jpg"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "TO: the Receiver"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "PL fabric, ZCU106"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "IEC 61850 process bus"
+      }
+     ],
+     "key": "postcard",
+     "kicker": "GREETINGS FROM Z₃₃₂₉",
+     "links": []
+    },
+    {
+     "_key": "s3-postmark",
+     "_type": "pageSection",
+     "body": "GHDL 4.1\n27 AUG 2026\nVHDL-2008",
+     "images": [],
+     "items": [],
+     "key": "postmark",
+     "links": []
+    },
+    {
+     "_key": "s4-cast",
+     "_type": "pageSection",
+     "heading": "The Cast of the Allegory",
+     "images": [],
+     "items": [],
+     "key": "cast",
+     "kicker": "who carries what, and who is watching",
+     "links": []
+    },
+    {
+     "_key": "s5-cast-postmaster",
+     "_type": "pageSection",
+     "body": "KeyGen, Encaps, Decaps over Z₃₃₂₉. NTT/INTT, Barrett and Montgomery reduction, CBD noise sampling, exact-rounding Compress/Decompress.",
+     "heading": "rtl/kyber · 31 files",
+     "images": [
+      {
+       "alt": "Running postmaster",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/ba09d0b4f9f2d996879f3b4560b4e17f7c051557-720x720.jpg"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "quote",
+       "value": "He seals the envelope. Opening it without the key is a lattice problem."
+      }
+     ],
+     "key": "cast-postmaster",
+     "kicker": "THE POSTMASTER · ML-KEM",
+     "links": []
+    },
+    {
+     "_key": "s6-cast-courier",
+     "_type": "pageSection",
+     "body": "ML-DSA datapath over Z₈₃₈₀₄₁₇ with twiddle tables. Leaf arithmetic passes its testbenches; C stack signs GOOSE/SV frames.",
+     "heading": "rtl/dilithium · 31 modules",
+     "images": [
+      {
+       "alt": "Postman on a bicycle",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/1d71548c3057176a3b1c4d69df9e4878820fd476-640x640.jpg"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "quote",
+       "value": "He stamps the postmark, so the receiver knows who really sent it."
+      }
+     ],
+     "key": "cast-courier",
+     "kicker": "THE COURIER · ML-DSA",
+     "links": []
+    },
+    {
+     "_key": "s7-cast-eve",
+     "_type": "pageSection",
+     "body": "Records ciphertext today, decrypts it once Shor's algorithm runs at scale. The lab's qubit-shor-fpga project models why this program exists.",
+     "heading": "The threat model",
+     "images": [
+      {
+       "alt": "Man in a long coat",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/d45b8d881780d88c70dd4b9e150cadf67b06712d-493x750.jpg"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "quote",
+       "value": "He does not open letters. He files them, and waits."
+      }
+     ],
+     "key": "cast-eve",
+     "kicker": "EVE · HARVEST NOW",
+     "links": []
+    },
+    {
+     "_key": "s8-cast-dealer",
+     "_type": "pageSection",
+     "body": "Demo-grade, not secure. Round-3 Kyber, stubbed entropy, Dilithium controllers still stubs. See section 04.",
+     "heading": "What is in the coat",
+     "images": [
+      {
+       "alt": "Shady dealer opening his coat",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/8d454ee1e85da57614b3978bbb11bc4540228909-736x736.jpg"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "quote",
+       "value": "He shows you everything before you buy."
+      }
+     ],
+     "key": "cast-dealer",
+     "kicker": "THE DEALER · HONEST LIMITS",
+     "links": []
+    },
+    {
+     "_key": "s9-sorting",
+     "_type": "pageSection",
+     "body": "Toolchain: GHDL 4.1.0 · Vivado 2025.1 · liboqs 0.15.0 · oqs-provider · PQClean · OpenSSL",
+     "heading": "The Sorting Office",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "mod_arith/",
+       "value": "Barrett reduction, Montgomery modmul."
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "ntt/",
+       "value": "NTT / INTT over Z₃₃₂₉ and Z₈₃₈₀₄₁₇."
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "poly/",
+       "value": "LVT 2W2R block-RAM polynomial storage."
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "sampling/",
+       "value": "CBD noise and rejection sampling."
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "label": "codec/",
+       "value": "Compress / Decompress, FIPS-203 exact rounding."
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "label": "integration-sttp/",
+       "value": "Kyber↔STTP bridge, AEAD, key manager."
+      }
+     ],
+     "key": "sorting",
+     "kicker": "rtl/ layout, one room per job",
+     "links": []
+    },
+    {
+     "_key": "s10-receipts",
+     "_type": "pageSection",
+     "heading": "Delivery Receipts",
+     "images": [],
+     "items": [],
+     "key": "receipts",
+     "kicker": "verification run, 27 Aug 2026",
+     "links": []
+    },
+    {
+     "_key": "s11-fig-compress",
+     "_type": "pageSection",
+     "body": "Pre-fix used M = 5039, +1665. Current uses M = 1290168, +q/2. Checked in exact rationals against round(2^d/q · x) mod 2^d.",
+     "heading": "FIG 1 · COMPRESS_d DEVIATIONS",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "accent": "#E63946",
+       "detail": "90.5",
+       "label": "d = 10 · pre-fix",
+       "value": "241 wrong · 7.24 %"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#0A1F44",
+       "detail": "0.6",
+       "label": "d = 10 · current",
+       "value": "0 wrong"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "accent": "#E63946",
+       "detail": "1.9",
+       "label": "d = 4 · pre-fix",
+       "value": "5 wrong · 0.15 %"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "accent": "#0A1F44",
+       "detail": "0.6",
+       "label": "d = 4 · current",
+       "value": "0 wrong"
+      }
+     ],
+     "key": "fig-compress",
+     "kicker": "all 3329 residues",
+     "links": []
+    },
+    {
+     "_key": "s12-fig-golden",
+     "_type": "pageSection",
+     "body": "The RTL is right; the vectors predate the fix. The receipt says the letter arrived late because the clock on the wall was wrong.",
+     "heading": "FIG 2 · KYBER-768 GOLDEN COEFFICIENTS",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "accent": "#0A1F44",
+       "detail": "100",
+       "label": "KeyGen",
+       "value": "7424 / 7424 · PASS"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#E63946",
+       "detail": "99.16 / 0.84",
+       "label": "Encaps vs stale vectors",
+       "value": "62 off by +1"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "accent": "#00B4D8",
+       "detail": "100",
+       "label": "Encaps with pre-fix compress swapped in",
+       "value": "7424 / 7424"
+      }
+     ],
+     "key": "fig-golden",
+     "kicker": "of 7424",
+     "links": []
+    },
+    {
+     "_key": "s13-ledger",
+     "_type": "pageSection",
+     "body": "butterfly_ct hit the harness wall clock, not a failure.",
+     "heading": "TESTBENCH LEDGER",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "GHDL analyze rtl/kyber (31)",
+       "value": "CLEAN"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "GHDL analyze rtl/dilithium (31)",
+       "value": "CLEAN"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "tb_barrett_reduce",
+       "value": "PASS"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "tb_mod_mult",
+       "value": "PASS"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "label": "tb_ntt_engine",
+       "value": "PASS"
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "label": "tb_decompose",
+       "value": "PASS"
+      },
+      {
+       "_key": "r6",
+       "_type": "keyValue",
+       "accent": "#E63946",
+       "label": "tb_butterfly_ct",
+       "value": "NOT DONE"
+      }
+     ],
+     "key": "ledger",
+     "links": []
+    },
+    {
+     "_key": "s14-fig-cycles",
+     "_type": "pageSection",
+     "body": "Stamping a postmark costs 3.4× more than checking one.",
+     "heading": "FIG 3 · DILITHIUM2 SOFTWARE CYCLES",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "accent": "#0A1F44",
+       "detail": "100",
+       "label": "Sign",
+       "value": "534,114"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#00B4D8",
+       "detail": "29.8",
+       "label": "Verify",
+       "value": "159,406"
+      }
+     ],
+     "key": "fig-cycles",
+     "kicker": "3 GHz x86 · measured",
+     "links": []
+    },
+    {
+     "_key": "s15-unverified",
+     "_type": "pageSection",
+     "body": "No synthesis, place & route or hardware run in this consolidation. No bitstream, no board result.",
+     "heading": "RETURN TO SENDER · CLAIMED, NOT REPRODUCED",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "accent": "#5A6A86",
+       "detail": "78",
+       "value": "190k LUT"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#00B4D8",
+       "detail": "20",
+       "value": "49k LUT · 52 BRAM"
+      }
+     ],
+     "key": "unverified",
+     "kicker": "poly_bram_4port after LVT 2W2R rewrite",
+     "links": []
+    },
+    {
+     "_key": "s16-unverified-stats",
+     "_type": "pageSection",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "pre-fix RTL lineage, 2026-04",
+       "label": "Kyber-768 ZCU106 LUT utilisation",
+       "value": "19.9 %"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "detail": "software timing, i7-11700",
+       "label": "Per-GOOSE-message crypto overhead",
+       "value": "2.30 µs"
+      }
+     ],
+     "key": "unverified-stats",
+     "links": []
+    },
+    {
+     "_key": "s17-dealer",
+     "_type": "pageSection",
+     "heading": "The Dealer Opens His Coat",
+     "images": [
+      {
+       "alt": "Shady dealer opening his coat",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/8d454ee1e85da57614b3978bbb11bc4540228909-736x736.jpg"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "Kyber encaps hardcodes a zero message and draws noise from an LFSR, not SHAKE. ISSUE-002, open. KATs validate arithmetic, not entropy."
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "detail": "rtl/kyber is CRYSTALS-Kyber Round-3, not FIPS-203. Domain separation, K-PKE wrapper and FO implicit-reject are unimplemented."
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "detail": "rtl/dilithium is not proven end-to-end. dilithium_top instantiates stubs for keygen, sign and verify controllers."
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "detail": "The Encryption_Algos Dilithium scaffold is non-functional by its own header; kept in archive/ for ADR-002."
+      }
+     ],
+     "key": "dealer",
+     "kicker": "\"Demo-grade crypto, not secure crypto. Take a look before you pay.\"",
+     "links": []
+    },
+    {
+     "_key": "s18-artefacts",
+     "_type": "pageSection",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "903 entries, ~18 MB, consolidated from 19 locations.",
+       "label": "REPOSITORY",
+       "value": "Upaasak/PQC (private)"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "READ FIRST",
+       "value": "`RESULTS.md · CONSOLIDATION_LOG.md`\n`verification/golden-vectors/README-STALE.md`"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "NEXT ROUTE",
+       "value": "mlkem-zcu106-accel: take rtl/kyber from Round-3 to ML-KEM."
+      }
+     ],
+     "key": "artefacts",
+     "links": []
+    }
+   ],
+   "seoDescription": "Post-quantum cryptography in FPGA: lattice arithmetic, NTT butterflies and constant-time control for the algorithms that outlive RSA.",
    "shortSummary": "Lattice arithmetic and NTT butterflies, constant-time by construction.",
    "slug": "pqc",
    "stage": "SPEC",
@@ -973,9 +2496,9 @@
   {
    "_createdAt": "2026-10-12T18:10:06Z",
    "_id": "project-power",
-   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_rev": "RxcxigbY2pUeqtVOprMFuo",
    "_type": "project",
-   "_updatedAt": "2026-10-12T18:10:06Z",
+   "_updatedAt": "2026-11-14T22:08:41Z",
    "cardImage": {
     "alt": "POWER SYSTEM PROTOCOLS",
     "caption": null,
@@ -987,7 +2510,779 @@
    "featured": false,
    "listed": true,
    "order": 6,
-   "sections": null,
+   "sections": [
+    {
+     "_key": "s0-header",
+     "_type": "pageSection",
+     "body": "Two messengers for the grid. An IEEE C37.118.1 phasor measurement unit that reports six channels at 50 frames a second, and an IEEE 2664-2024 (STTP) publisher that carries the same measurements over TCP with no processor anywhere in the datapath.",
+     "heading": "Power System Protocols",
+     "images": [
+      {
+       "alt": "A pigeon messenger in a red cap carrying a satchel",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/99c91dfe6154e91d016e272888b716bad0a30cdd-736x727.jpg"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "C37.118.1-2011"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "IEEE 2664 STTP"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "ZCU106 xczu7ev"
+      }
+     ],
+     "key": "header",
+     "kicker": "prj_06 · case file",
+     "links": []
+    },
+    {
+     "_key": "s1-about",
+     "_type": "pageSection",
+     "body": "A PMU samples the grid's voltages and currents, turns each cycle into a phasor (magnitude, angle, frequency, rate of change) and stamps it with GPS time. The PMU is the pigeon: it writes the letter. The protocol is how the letter travels.\n\nC37.118 is the classic fixed-frame carrier. STTP is the newer one: it compresses the measurements with TSSC and negotiates a subscription over TCP. Both are built here on the same ZCU106 board.",
+     "heading": "About this sketchbook",
+     "images": [],
+     "items": [],
+     "key": "about",
+     "kicker": "note to self: the IpDFT front-end has its own case file →",
+     "links": [
+      {
+       "_key": "l0",
+       "_type": "link",
+       "href": "project-ipdft.html",
+       "label": "iDFT channel page"
+      }
+     ]
+    },
+    {
+     "_key": "s2-c37",
+     "_type": "pageSection",
+     "body": "A 6-channel, 3-phase PMU in VHDL on the PL fabric. Signal processing runs in hardware; C37.118 framing, config frames and UDP to the PDC run on the ARM PS.",
+     "heading": "IEEE C37.118.1 PMU",
+     "images": [
+      {
+       "alt": "A duck in a red helmet flying fast",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/d25d2c72b7c2d0ae4427ae3ac58a6047b94e2b43-735x809.jpg"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "M + P class tests",
+       "value": "96/96"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "best TVE, clean 50 Hz",
+       "value": "0.07%"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "ADC to phasor",
+       "value": "< 1 ms"
+      }
+     ],
+     "key": "c37",
+     "kicker": "folio one · the fast courier",
+     "links": []
+    },
+    {
+     "_key": "s3-c37-frame",
+     "_type": "pageSection",
+     "body": "SYNC 0xAA · FRAMESIZE 0x004C · STAT 0xC010 · CRC-CCITT over bytes 0–71",
+     "heading": "Fig 1 · the 76-byte data frame",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "header",
+       "label": "SYNC",
+       "value": "1"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "detail": "header",
+       "label": "VER",
+       "value": "1"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "detail": "header",
+       "label": "FRAMESIZE",
+       "value": "2"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "detail": "header",
+       "label": "IDCODE",
+       "value": "2"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "detail": "header",
+       "label": "SOC",
+       "value": "4"
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "detail": "header",
+       "label": "FRACSEC",
+       "value": "2"
+      },
+      {
+       "_key": "r6",
+       "_type": "keyValue",
+       "detail": "header",
+       "label": "STAT",
+       "value": "2"
+      },
+      {
+       "_key": "r7",
+       "_type": "keyValue",
+       "detail": "reserved",
+       "label": "RSV",
+       "value": "2"
+      },
+      {
+       "_key": "r8",
+       "_type": "keyValue",
+       "detail": "magnitude",
+       "label": "MAG 1",
+       "value": "4"
+      },
+      {
+       "_key": "r9",
+       "_type": "keyValue",
+       "detail": "reserved",
+       "label": "pad",
+       "value": "2"
+      },
+      {
+       "_key": "r10",
+       "_type": "keyValue",
+       "detail": "phase",
+       "label": "PH 1",
+       "value": "2"
+      },
+      {
+       "_key": "r11",
+       "_type": "keyValue",
+       "detail": "magnitude",
+       "label": "MAG 2",
+       "value": "4"
+      },
+      {
+       "_key": "r12",
+       "_type": "keyValue",
+       "detail": "reserved",
+       "label": "pad",
+       "value": "2"
+      },
+      {
+       "_key": "r13",
+       "_type": "keyValue",
+       "detail": "phase",
+       "label": "PH 2",
+       "value": "2"
+      },
+      {
+       "_key": "r14",
+       "_type": "keyValue",
+       "detail": "magnitude",
+       "label": "MAG 3",
+       "value": "4"
+      },
+      {
+       "_key": "r15",
+       "_type": "keyValue",
+       "detail": "reserved",
+       "label": "pad",
+       "value": "2"
+      },
+      {
+       "_key": "r16",
+       "_type": "keyValue",
+       "detail": "phase",
+       "label": "PH 3",
+       "value": "2"
+      },
+      {
+       "_key": "r17",
+       "_type": "keyValue",
+       "detail": "magnitude",
+       "label": "MAG 4",
+       "value": "4"
+      },
+      {
+       "_key": "r18",
+       "_type": "keyValue",
+       "detail": "reserved",
+       "label": "pad",
+       "value": "2"
+      },
+      {
+       "_key": "r19",
+       "_type": "keyValue",
+       "detail": "phase",
+       "label": "PH 4",
+       "value": "2"
+      },
+      {
+       "_key": "r20",
+       "_type": "keyValue",
+       "detail": "magnitude",
+       "label": "MAG 5",
+       "value": "4"
+      },
+      {
+       "_key": "r21",
+       "_type": "keyValue",
+       "detail": "reserved",
+       "label": "pad",
+       "value": "2"
+      },
+      {
+       "_key": "r22",
+       "_type": "keyValue",
+       "detail": "phase",
+       "label": "PH 5",
+       "value": "2"
+      },
+      {
+       "_key": "r23",
+       "_type": "keyValue",
+       "detail": "magnitude",
+       "label": "MAG 6",
+       "value": "4"
+      },
+      {
+       "_key": "r24",
+       "_type": "keyValue",
+       "detail": "reserved",
+       "label": "pad",
+       "value": "2"
+      },
+      {
+       "_key": "r25",
+       "_type": "keyValue",
+       "detail": "phase",
+       "label": "PH 6",
+       "value": "2"
+      },
+      {
+       "_key": "r26",
+       "_type": "keyValue",
+       "detail": "freq",
+       "label": "FREQ",
+       "value": "4"
+      },
+      {
+       "_key": "r27",
+       "_type": "keyValue",
+       "detail": "freq",
+       "label": "ROCOF",
+       "value": "4"
+      },
+      {
+       "_key": "r28",
+       "_type": "keyValue",
+       "detail": "crc",
+       "label": "CRC",
+       "value": "2"
+      },
+      {
+       "_key": "r29",
+       "_type": "keyValue",
+       "detail": "reserved",
+       "label": "RSV",
+       "value": "2"
+      }
+     ],
+     "key": "c37-frame",
+     "links": []
+    },
+    {
+     "_key": "s4-c37-pipeline",
+     "_type": "pageSection",
+     "body": "post-synth: 11,153 LUT (4.84%) · 57 DSP · 6 BRAM @ 100 MHz",
+     "heading": "The PL pipeline",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "512 samples per channel, 6 channels",
+       "label": "Circular buffer"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "detail": "variable ADC rate to exactly 256 samples per cycle",
+       "label": "Resampler"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "detail": "256-point, −32 dB sidelobes",
+       "label": "Hann window"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "detail": "fundamental phasor, Q16.16 accumulator",
+       "label": "256-point DFT"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "detail": "18 iterations, < 0.001° phase error",
+       "label": "CORDIC"
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "detail": "frequency + ROCOF, < 0.025 Hz over 45–55 Hz",
+       "label": "Taylor estimator"
+      },
+      {
+       "_key": "r6",
+       "_type": "keyValue",
+       "detail": "real-time TVE, C37.118 checksum",
+       "label": "TVE + CRC-CCITT"
+      }
+     ],
+     "key": "c37-pipeline",
+     "links": []
+    },
+    {
+     "_key": "s5-c37-tve",
+     "_type": "pageSection",
+     "body": "┆ dashed = IEEE 1% TVE limit. The README lists P-class harmonic max at 1.03% while reporting it as a pass.",
+     "heading": "Fig 2 · worst TVE by test category",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "accent": "#87CEEB",
+       "label": "M · clean",
+       "value": "0.15"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#87CEEB",
+       "label": "M · noisy",
+       "value": "0.58"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "accent": "#87CEEB",
+       "label": "M · harmonic",
+       "value": "1.00"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "accent": "#B5DDF0",
+       "label": "P · clean",
+       "value": "0.15"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "accent": "#B5DDF0",
+       "label": "P · noisy",
+       "value": "0.78"
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "accent": "#E57373",
+       "label": "P · harmonic",
+       "value": "1.03"
+      },
+      {
+       "_key": "r6",
+       "_type": "keyValue",
+       "accent": "#B5DDF0",
+       "label": "P · transient",
+       "value": "0.55"
+      }
+     ],
+     "key": "c37-tve",
+     "links": []
+    },
+    {
+     "_key": "s6-c37-figures",
+     "_type": "pageSection",
+     "images": [
+      {
+       "alt": "Compliance results graph from the c37 repository",
+       "caption": "from the repo: results_graph.png, all 96 tests",
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/b72cf2cb816d5abf55eccf391787e3efb5580dbc-2414x1443.png"
+      },
+      {
+       "alt": "Hann window analysis plots",
+       "caption": "Hann window: −32 dB sidelobes vs −13 dB rectangular",
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/f759c9cd42ec24a0d4e9a1ab730582c295538b59-2400x2400.png"
+      },
+      {
+       "alt": "Frequency damping filter analysis plots",
+       "caption": "frequency damping filter, α = 0.1 / 0.3 / 0.5",
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/e14a3539437eb3dd2671b9c6cc289afebe264be2-2100x3600.png"
+      },
+      {
+       "alt": "Vivado xsim waveform of one PMU measurement cycle",
+       "caption": "xsim waveform, 1-cycle measurement, 2 ms",
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/8e5e96f8b25d8af18b21379fce64a46cfe0afa43-2092x887.png"
+      }
+     ],
+     "items": [],
+     "key": "c37-figures",
+     "links": []
+    },
+    {
+     "_key": "s7-sttp",
+     "_type": "pageSection",
+     "body": "A C37.118-class PMU and an STTP publisher entirely in programmable logic. No processor, no operating system, no software in the datapath: analog in one end, TCP/IP synchrophasor frames out the other. A stock, unmodified GPA cppapi subscriber decodes the stream.",
+     "heading": "IEEE 2664 · STTP",
+     "images": [
+      {
+       "alt": "A blue bird carried by a red balloon among clouds",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/aa04af6155ada679cb58ddc55b37524a1caabe7e-736x736.jpg"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "protocol compliance",
+       "value": "14/14"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "STTP handshake",
+       "value": "532 µs"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "ms median frame",
+       "value": "19.999"
+      }
+     ],
+     "key": "sttp",
+     "kicker": "folio two · the light traveller",
+     "links": []
+    },
+    {
+     "_key": "s8-sttp-fabric",
+     "_type": "pageSection",
+     "body": "PS8 = 0 in the routed report. No black boxes.",
+     "heading": "Fig 3 · inside the fabric, two clocks",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "100 MHz · SI570 → MMCM · WNS +0.201 ns",
+       "value": "ads8588_master → sample_buffer 1500 → dft_5bin + Hann → cordic ×20 → ipdft_estimator → calibration → sttp engine → *TSSC ×9*"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "125 MHz · GT-derived · WNS +0.033 ns over 229,141 endpoints",
+       "value": "sttp_tcp_adapter → toe_tcp_engine → eth_ip_core → PCS/PMA → ~TCP :8080~"
+      }
+     ],
+     "key": "sttp-fabric",
+     "kicker": "sttp_pkt_cdc_fifo · gray-coded",
+     "links": []
+    },
+    {
+     "_key": "s9-sttp-session",
+     "_type": "pageSection",
+     "body": "TCP up at 173 µs · handshake done at 532 µs · then one 0x82 DataPacket every 20 ms",
+     "heading": "Fig 4 · the session, as captured",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "TCP SYN",
+       "value": "→"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "SYN/ACK",
+       "value": "←"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "0x06 DefineOperationalModes",
+       "value": "→"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "0x80 Succeeded",
+       "value": "←"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "label": "0x02 Subscribe",
+       "value": "→"
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "label": "0x83 SignalIndexCache 350 B",
+       "value": "←"
+      },
+      {
+       "_key": "r6",
+       "_type": "keyValue",
+       "label": "0x80 Succeeded",
+       "value": "←"
+      },
+      {
+       "_key": "r7",
+       "_type": "keyValue",
+       "label": "0x86 DataStartTime",
+       "value": "←"
+      },
+      {
+       "_key": "r8",
+       "_type": "keyValue",
+       "label": "0x82 DataPacket, every 20 ms",
+       "value": "←"
+      }
+     ],
+     "key": "sttp-session",
+     "kicker": "stock subscriber | ZCU106, pure PL",
+     "links": []
+    },
+    {
+     "_key": "s10-sttp-tssc",
+     "_type": "pageSection",
+     "body": "vs a 36 B/measurement baseline (an engineering estimate, not a spec constant). Software compresses more because its data barely changes.",
+     "heading": "Fig 5 · TSSC compression ratio",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "accent": "#81C784",
+       "label": "FPGA, live 50 Hz signal",
+       "value": "15.9"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#81C784",
+       "label": "FPGA, reconnect capture",
+       "value": "15.8"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "accent": "#D0D0D0",
+       "label": "Software loopback, near-constant data",
+       "value": "50.2"
+      }
+     ],
+     "key": "sttp-tssc",
+     "links": []
+    },
+    {
+     "_key": "s11-sttp-bench",
+     "_type": "pageSection",
+     "body": "careful: angles are published in radians under VPHA/IPHA, which usually mean degrees — off by 57.3×.",
+     "heading": "Measured on the bench",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "A/B vs reference C++",
+       "value": "4/5 identical"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "Endurance, 300.0 s",
+       "value": "15,064 segments, 0 RST"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "Voltage at 60 V applied",
+       "value": "60.01 / 60.01 / 59.98"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "Current at 1 A applied",
+       "value": "0.998 / 1.000 / 0.999"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "label": "Measurements per frame",
+       "value": "14, IDs 100–113"
+      }
+     ],
+     "key": "sttp-bench",
+     "links": []
+    },
+    {
+     "_key": "s12-security",
+     "_type": "pageSection",
+     "body": "Grid telemetry drives protection decisions, so a forged or delayed phasor is a physical risk. What these two designs defend against, and what they leave open, is written down in the repos rather than implied.",
+     "heading": "Security",
+     "images": [
+      {
+       "alt": "A burglar with bolt cutters inside a red prohibition sign",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/f14fbf3f7dc39a80caba1b4d3a4fa2d4ac366631-735x863.jpg"
+      }
+     ],
+     "items": [],
+     "key": "security",
+     "kicker": "folio three · who else is reading the mail",
+     "links": []
+    },
+    {
+     "_key": "s13-security-cards",
+     "_type": "pageSection",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "STTP path: PS8 = 0, no MicroBlaze, no OS, no lwIP. The attack surface of a kernel and its libraries does not exist.",
+       "label": "No software to exploit",
+       "value": "holds"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "detail": "Frames come from a fabric counter at 19.999 ms median. Nothing in the datapath can be starved or scheduled late.",
+       "label": "Deterministic timing",
+       "value": "holds"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "detail": "SHA-256 recorded for all 80 RTL sources, but 11 of 75 build entries were read from a /tmp path that no longer exists.",
+       "label": "Source provenance",
+       "value": "partial"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "detail": "C37.118 frames carry CRC-CCITT. It catches corruption on the wire, not an attacker who recomputes it.",
+       "label": "CRC is not a signature",
+       "value": "partial"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "detail": "All STTP traffic is cleartext over TCP, verified across all three source trees the build reads.",
+       "label": "No TLS",
+       "value": "open"
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "detail": "The connection string is ignored; all 14 points are served to any subscriber regardless of what it asks for.",
+       "label": "No access filtering",
+       "value": "open"
+      },
+      {
+       "_key": "r6",
+       "_type": "keyValue",
+       "detail": "One subscriber at a time. A second client or a capture tool can steal the session; a stale one blocks reconnect for ~60 s.",
+       "label": "Session can be taken",
+       "value": "open"
+      },
+      {
+       "_key": "r7",
+       "_type": "keyValue",
+       "detail": "The GPS / IRIG-B link passes 9/9 in simulation but was not connected during conformance; DataStartTime was free-running.",
+       "label": "Time source",
+       "value": "partial"
+      },
+      {
+       "_key": "r8",
+       "_type": "keyValue",
+       "detail": "The C37.118 design frames packets and runs UDP on Linux on the ARM, so it inherits that software surface.",
+       "label": "C37 path uses the PS",
+       "value": "partial"
+      }
+     ],
+     "key": "security-cards",
+     "links": []
+    },
+    {
+     "_key": "s14-security-lock",
+     "_type": "pageSection",
+     "body": "Confidentiality and authentication are not in either design today. The lab's post-quantum work signs and encrypts IEC 61850 GOOSE/SV frames with ML-KEM and ML-DSA, and is the intended route for protected substation traffic. See the",
+     "heading": "Where the lock comes from",
+     "images": [],
+     "items": [],
+     "key": "security-lock",
+     "links": [
+      {
+       "_key": "l0",
+       "_type": "link",
+       "href": "project-pqc.html",
+       "label": "Post-Quantum Post Office"
+      }
+     ]
+    },
+    {
+     "_key": "s15-links",
+     "_type": "pageSection",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "Signal sources",
+       "value": "Omicron CMC · RTDS · live grid via VT/CT, into an ADS8588 at 15 kHz"
+      }
+     ],
+     "key": "links",
+     "links": []
+    }
+   ],
+   "seoDescription": "Power system protocols on FPGA: a six-channel interpolated-DFT front end with CORDIC and ROCOF, wrapped in substation reporting protocols.",
    "slug": "power",
    "stage": "IN VERIFICATION",
    "summary": "Instrumentation for the grid: a six-channel interpolated-DFT front end with CORDIC magnitude and phase and ROCOF differentiation, wrapped in the reporting protocols a substation actually expects. No vendor IP anywhere in the chain.",
@@ -997,9 +3292,9 @@
   {
    "_createdAt": "2026-10-12T18:10:06Z",
    "_id": "project-secondbrain",
-   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_rev": "RxcxigbY2pUeqtVOprMSgo",
    "_type": "project",
-   "_updatedAt": "2026-10-12T18:10:06Z",
+   "_updatedAt": "2026-11-14T22:13:50Z",
    "cardImage": {
     "alt": "SECOND BRAIN ALGORITHM",
     "caption": null,
@@ -1011,7 +3306,463 @@
    "featured": false,
    "listed": true,
    "order": 7,
-   "sections": null,
+   "sections": [
+    {
+     "_key": "s0-cover",
+     "_type": "pageSection",
+     "body": "Every other [cyan: sb-proj-*] repository is a code satellite: the RTL, tests and bitstreams of one project. This one holds no code. It holds the [yellow: knowledge]: every project's status, every reusable module, every hard-won bug fix, every architecture decision, each linking out to the code it describes.",
+     "heading": "THE MASTERMIND",
+     "images": [
+      {
+       "alt": "Comic cover: a chained figure whose brain is lifted out by two hands",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/6302ef4dabb74c146dab6dc4b91724d021d39aab-736x981.jpg"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "subtitle",
+       "value": "SECOND BRAIN · THE HUB OF ALL THINGS"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "bubble",
+       "value": "It is the hub. The code repos are the spokes."
+      }
+     ],
+     "key": "cover",
+     "kicker": "ISSUE #08 · PRJ_08",
+     "links": []
+    },
+    {
+     "_key": "s1-constellation",
+     "_type": "pageSection",
+     "body": "One manifest knows every repo in the org: 1 control plane, 2 index stores, 22 satellites, each with its branch, release and head SHA. Pulses travel the links it records.",
+     "heading": "PANEL 1 · THE CONSTELLATION",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "second-brain",
+       "value": "hub"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "sb-index-corpus-01",
+       "value": "store"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "sb-index-db",
+       "value": "store"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "Encryption_Algos",
+       "value": "no-ci"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "label": "MIM_UART",
+       "value": "ci"
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "label": "hft-tick-to-trade",
+       "value": "ci"
+      },
+      {
+       "_key": "r6",
+       "_type": "keyValue",
+       "label": "ad7606-adc-capture",
+       "value": "ci"
+      },
+      {
+       "_key": "r7",
+       "_type": "keyValue",
+       "label": "c1-anomaly-detector",
+       "value": "ci"
+      },
+      {
+       "_key": "r8",
+       "_type": "keyValue",
+       "label": "chaosengine-gpu",
+       "value": "ci"
+      },
+      {
+       "_key": "r9",
+       "_type": "keyValue",
+       "label": "ctu-canfd-96-node",
+       "value": "ci"
+      },
+      {
+       "_key": "r10",
+       "_type": "keyValue",
+       "label": "ethernet-mac-pl",
+       "value": "ci"
+      },
+      {
+       "_key": "r11",
+       "_type": "keyValue",
+       "label": "fd-qnn-zcu106-kit",
+       "value": "ci"
+      },
+      {
+       "_key": "r12",
+       "_type": "keyValue",
+       "label": "fpga-adas-ids",
+       "value": "ci"
+      },
+      {
+       "_key": "r13",
+       "_type": "keyValue",
+       "label": "gps-synchrophasor",
+       "value": "ci"
+      },
+      {
+       "_key": "r14",
+       "_type": "keyValue",
+       "label": "hls4ml-sweeps",
+       "value": "ci"
+      },
+      {
+       "_key": "r15",
+       "_type": "keyValue",
+       "label": "jetson-swarm",
+       "value": "ci"
+      },
+      {
+       "_key": "r16",
+       "_type": "keyValue",
+       "label": "kociemba-solver",
+       "value": "ci"
+      },
+      {
+       "_key": "r17",
+       "_type": "keyValue",
+       "label": "meghalaya-systolic-qnn",
+       "value": "ci"
+      },
+      {
+       "_key": "r18",
+       "_type": "keyValue",
+       "label": "particle-life-fpga",
+       "value": "no-ci"
+      },
+      {
+       "_key": "r19",
+       "_type": "keyValue",
+       "label": "ptp-irigb-timesync",
+       "value": "ci"
+      },
+      {
+       "_key": "r20",
+       "_type": "keyValue",
+       "label": "qrng",
+       "value": "ci"
+      },
+      {
+       "_key": "r21",
+       "_type": "keyValue",
+       "label": "rv32im-soft-core",
+       "value": "ci"
+      },
+      {
+       "_key": "r22",
+       "_type": "keyValue",
+       "label": "sttp-pmu-adc",
+       "value": "ci"
+      },
+      {
+       "_key": "r23",
+       "_type": "keyValue",
+       "label": "toe-10g-fpga",
+       "value": "ci"
+      },
+      {
+       "_key": "r24",
+       "_type": "keyValue",
+       "label": "zedboard-demos-suite",
+       "value": "ci"
+      }
+     ],
+     "key": "constellation",
+     "kicker": "repo-graph.yaml · generated 2026-07-23",
+     "links": []
+    },
+    {
+     "_key": "s2-records",
+     "_type": "pageSection",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "accent": "#00E5FF",
+       "detail": "Status, maturity, tools, metrics, and a link to the code satellite.",
+       "label": "PROJECTS",
+       "value": "68"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#FFE600",
+       "detail": "Reusable VHDL entities: ports, status, dependencies.",
+       "label": "MODULES",
+       "value": "111"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "accent": "#FF00FF",
+       "detail": "GHDL / Vivado failure patterns: symptom, fix, diagnosis.",
+       "label": "ERRORS",
+       "value": "137"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "accent": "#39FF14",
+       "detail": "Architecture Decision Records, dated and reasoned.",
+       "label": "DECISIONS",
+       "value": "6"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "accent": "#FFFFFF",
+       "detail": "Tool docs, external references, SOPs.",
+       "label": "REFERENCES",
+       "value": "36"
+      }
+     ],
+     "key": "records",
+     "links": []
+    },
+    {
+     "_key": "s3-errors",
+     "_type": "pageSection",
+     "body": "The largest folder is [yellow: errors/]: 137 recorded GHDL and Vivado failure patterns, each with the symptom, the fix and how it was found. This isn't a portfolio; it's an engineering memory whose biggest asset is the catalogue of mistakes already made.",
+     "heading": "PANEL 2 · IT REMEMBERS EVERY MISTAKE",
+     "images": [
+      {
+       "alt": "Stippled drawing of a face staring up at a sky full of floating eyes above a city of blocks",
+       "caption": null,
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/21b565d7d3106088e184f2907f63e5ff5b5bf49d-736x1313.jpg"
+      }
+     ],
+     "items": [],
+     "key": "errors",
+     "links": []
+    },
+    {
+     "_key": "s4-errors-list",
+     "_type": "pageSection",
+     "body": "…and 129 more. Debugging becomes a lookup.",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "array-reset-defeats-bram-inference"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "combinational-divider-on-critical-path-collapses-fmax"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "behavioral-mem-model-uninitialized-shared-state-hangs"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "c37-118-2-2024-format-word-bits-3-1-swapped"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "label": "c37-118-2-2024-freq-float-sends-deviation-not-actual"
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "label": "c37-118-2-2024-leap-byte-wrong-value"
+      },
+      {
+       "_key": "r6",
+       "_type": "keyValue",
+       "label": "altera-mf-altsyncram-ghdl-substitution"
+      },
+      {
+       "_key": "r7",
+       "_type": "keyValue",
+       "label": "baremetal-xpar-instance-name-and-sdt-dma-lookup"
+      }
+     ],
+     "key": "errors-list",
+     "links": []
+    },
+    {
+     "_key": "s5-anatomy",
+     "_type": "pageSection",
+     "body": "[gray: ---  # frontmatter, projects/*.md]\n[magenta: satellite]:  [cyan: code repo URL]\n[magenta: commit]:     [cyan: exact SHA it was written against]\n[magenta: maturity]:   Prototype\n[magenta: status]:     paused | active\n[magenta: tools]:      [...]\n[magenta: metrics]:\n  - value: ...\n    [green: provenance]: simulated | synthesized | measured\n[gray: ---]",
+     "heading": "PANEL 3 · ANATOMY OF A PROJECT RECORD",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "note",
+       "value": "shape as described in EXPLAINER.md, not a copied record"
+      }
+     ],
+     "key": "anatomy",
+     "links": []
+    },
+    {
+     "_key": "s6-principles",
+     "_type": "pageSection",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "accent": "#FF00FF",
+       "detail": "The hub doesn't just say \"3 scenarios passing\". It says how that was established. Honesty about where a number came from is a schema field, not a habit.",
+       "label": "PROVENANCE > OPINION"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#00E5FF",
+       "detail": "Each record names its code repo and the exact commit, so knowledge and code can be diffed instead of silently drifting apart.",
+       "label": "PINNED TO A COMMIT"
+      }
+     ],
+     "key": "principles",
+     "links": []
+    },
+    {
+     "_key": "s7-decisions",
+     "_type": "pageSection",
+     "heading": "THE DECISIONS",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "ADR-001",
+       "value": "Vault structure"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "ADR-002",
+       "value": "PS / PL crypto boundary"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "ADR-003",
+       "value": "Agents directory consolidation"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "ADR-005",
+       "value": "Cloud offload of submodule storage"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "label": "ADR-006",
+       "value": "Full reproducible cloud mirror"
+      }
+     ],
+     "key": "decisions",
+     "links": []
+    },
+    {
+     "_key": "s8-rebuild",
+     "_type": "pageSection",
+     "body": "RESUME-ON-NEW-DEVICE.md and bootstrap.sh bring the vault, retrieval engine, tools and multi-GB corpus back on an empty computer: about 30 minutes hands-on plus an unattended download.",
+     "heading": "PANEL 4 · REBUILD FROM NOTHING",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "note",
+       "value": "ADR-006: restore data, don't regenerate it."
+      }
+     ],
+     "key": "rebuild",
+     "links": []
+    },
+    {
+     "_key": "s9-limits",
+     "_type": "pageSection",
+     "heading": "WHAT THE MASTERMIND CAN'T DO",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "No code, nothing to simulate. Verified only by being well-formed."
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "Generated from the vault; hand edits are overwritten on the next export."
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "Links need private-org access to resolve."
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "repo-graph.yaml is a dated snapshot, not a live view."
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "label": "OKF v0.1 is an early schema, a partial projection of the full vault."
+      }
+     ],
+     "key": "limits",
+     "links": []
+    },
+    {
+     "_key": "s10-links",
+     "_type": "pageSection",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "INDEX",
+       "value": "sb-index-db · sb-index-corpus-01"
+      }
+     ],
+     "key": "links",
+     "links": []
+    }
+   ],
+   "seoDescription": "The second brain algorithm: a Whistleblower Lab project case file.",
    "slug": "secondbrain",
    "stage": "SPEC",
    "summary": "[ Send me a paragraph on the second brain algorithm and it goes here verbatim. ]",
@@ -1044,9 +3795,9 @@
   {
    "_createdAt": "2026-10-12T18:10:06Z",
    "_id": "project-swarm",
-   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_rev": "RxcxigbY2pUeqtVOprMRxO",
    "_type": "project",
-   "_updatedAt": "2026-10-12T18:10:06Z",
+   "_updatedAt": "2026-11-14T22:13:39Z",
    "cardImage": {
     "alt": "DRONE CONTROL",
     "caption": null,
@@ -1058,7 +3809,414 @@
    "featured": false,
    "listed": true,
    "order": 9,
-   "sections": null,
+   "sections": [
+    {
+     "_key": "s0-header",
+     "_type": "pageSection",
+     "body": "on the flight of many machines, and how they keep from striking one another",
+     "heading": "Codex of the Swarm",
+     "images": [
+      {
+       "alt": "Leonardo's aerial screw",
+       "caption": "Fig. A — the aerial screw. One rotor lifts one machine; this codex concerns many.",
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/e3d5ef5be1367bd67c4731d55109be46bfa2994a-536x389.jpg"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "mirror",
+       "value": "nessuna macchina vola sola"
+      }
+     ],
+     "key": "header",
+     "kicker": "FOLIO IX · PRJ_09",
+     "links": []
+    },
+    {
+     "_key": "s1-proem",
+     "_type": "pageSection",
+     "body": "A ROS 2 and PX4 SITL multi-drone swarm package. It spans single-drone offboard control through to decentralised formation flight, area-coverage missions, collision avoidance and leader-failure reassignment, all driven from a single YAML config and one ros2 launch invocation. It speaks to PX4 through uXRCE-DDS and px4_msgs, not MAVROS.",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "nights of fault injection",
+       "value": "98"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "launch logs re-parsed",
+       "value": "4,855"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "runs that completed",
+       "value": "2,852"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "tests pass · 6 need ROS 2",
+       "value": "68 / 74"
+      }
+     ],
+     "key": "proem",
+     "kicker": "Every result below is simulated, in Gazebo Harmonic 8.11.0 with PX4 SITL. No real-hardware flight has ever been performed. Where the README and the claims matrix disagree, the matrix is right.",
+     "links": []
+    },
+    {
+     "_key": "s2-formation",
+     "_type": "pageSection",
+     "body": "Three machines rise in a triangle: one leader at the origin, two followers set three paces behind and three to either side. The leader walks its path fifteen metres out and back at five metres' height; the followers keep station in its frame.\n\nShould the leader fall silent, each follower names the lowest-numbered peer still speaking. Every drone reaches the same answer from its own view, and no council is needed.",
+     "heading": "Of Formation and Order",
+     "images": [],
+     "items": [],
+     "key": "formation",
+     "kicker": "LIBER I",
+     "links": []
+    },
+    {
+     "_key": "s3-formation-note",
+     "_type": "pageSection",
+     "body": "INIT → ARM_OFFBOARD → FLY → LAND → DONE. Arming waits for 25 ticks of stable OFFBOARD.",
+     "images": [],
+     "items": [],
+     "key": "formation-note",
+     "links": []
+    },
+    {
+     "_key": "s4-formation-figure",
+     "_type": "pageSection",
+     "body": "Fig. B — spawns from config/formation.yaml. Dashed rings mark MIN_DIST_SOFT, 1.5 m.",
+     "images": [],
+     "items": [],
+     "key": "formation-figure",
+     "links": []
+    },
+    {
+     "_key": "s5-missions",
+     "_type": "pageSection",
+     "body": "Right column: min_dist_seen, all with 0 violations. The forced-collision run's raw log was not preserved.",
+     "heading": "Table of Missions Flown",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "Phase 7, three drones",
+       "label": "Leader / follower triangle",
+       "value": "≥ 1.50 m"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "detail": "polygon vertices around centroid",
+       "label": "Consensus rendezvous",
+       "value": "3.85 m"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "detail": "pentagon, N = 5",
+       "label": "Rendezvous, five drones",
+       "value": "2.36–2.56 m"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "detail": "20 × 20 m lawnmower sectors",
+       "label": "Area coverage",
+       "value": "2.85 m"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "detail": "orbit at 2.5 m radius",
+       "label": "Search & track",
+       "value": "4.09 m"
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "detail": "leader driven through a held peer",
+       "label": "Forced collision",
+       "value": "2.13 m"
+      }
+     ],
+     "key": "missions",
+     "links": []
+    },
+    {
+     "_key": "s6-plate",
+     "_type": "pageSection",
+     "images": [
+      {
+       "alt": "Ink drawing of a swarm of craft descending over a lone figure",
+       "caption": "Plate I — many craft, one sky. The question of Liber II is what happens when their messages arrive late.",
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/8bf345c4ccee1f004ade86439a67d3dfd042bded-736x958.jpg"
+      }
+     ],
+     "items": [],
+     "key": "plate",
+     "links": []
+    },
+    {
+     "_key": "s7-collisions",
+     "_type": "pageSection",
+     "body": "Three layers keep the machines apart: a clamp holding each setpoint 2.5 m from any peer, a quadratic repulsive velocity up to 4 m/s inside 1.5 m, and a full halt below 0.6 m. Across 98 nights, from 18 May to 24 August 2026, ten fault scenarios were injected and every surviving log re-parsed.",
+     "heading": "Of Near Collisions",
+     "images": [],
+     "items": [],
+     "key": "collisions",
+     "kicker": "LIBER II",
+     "links": []
+    },
+    {
+     "_key": "s8-fig-separation",
+     "_type": "pageSection",
+     "heading": "Fig. C — Worst Separation by Scenario",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "baseline",
+       "value": "0.74"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "cpu_2",
+       "value": "1.52"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "cpu_4",
+       "value": "0.56"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "dds_delay_200",
+       "value": "1.20"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "label": "dds_delay_50",
+       "value": "0.35"
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "label": "dds_loss_15",
+       "value": "1.45"
+      },
+      {
+       "_key": "r6",
+       "_type": "keyValue",
+       "label": "dds_loss_5",
+       "value": "0.22"
+      },
+      {
+       "_key": "r7",
+       "_type": "keyValue",
+       "label": "kill_follower",
+       "value": "0.76"
+      },
+      {
+       "_key": "r8",
+       "_type": "keyValue",
+       "label": "kill_leader",
+       "value": "0.91"
+      },
+      {
+       "_key": "r9",
+       "_type": "keyValue",
+       "label": "perception_stale",
+       "value": "1.18"
+      }
+     ],
+     "key": "fig-separation",
+     "kicker": "metres · 0 to 3",
+     "links": []
+    },
+    {
+     "_key": "s9-fig-hard-floor",
+     "_type": "pageSection",
+     "heading": "Fig. D — Runs Below the Hard Floor (1.0 m)",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "baseline",
+       "value": "1"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "cpu_2",
+       "value": "0"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "cpu_4",
+       "value": "1"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "dds_delay_200",
+       "value": "0"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "label": "dds_delay_50",
+       "value": "16"
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "label": "dds_loss_15",
+       "value": "0"
+      },
+      {
+       "_key": "r6",
+       "_type": "keyValue",
+       "label": "dds_loss_5",
+       "value": "17"
+      },
+      {
+       "_key": "r7",
+       "_type": "keyValue",
+       "label": "kill_follower",
+       "value": "1"
+      },
+      {
+       "_key": "r8",
+       "_type": "keyValue",
+       "label": "kill_leader",
+       "value": "1"
+      },
+      {
+       "_key": "r9",
+       "_type": "keyValue",
+       "label": "perception_stale",
+       "value": "0"
+      }
+     ],
+     "key": "fig-hard-floor",
+     "kicker": "37 in all",
+     "links": []
+    },
+    {
+     "_key": "s10-flaw",
+     "_type": "pageSection",
+     "body": "64 of 2,852 completed runs fell below 1.5 m and 37 below 1.0 m; the worst came within 0.22 m. 33 of the 37 hard-floor breaches sit in two scenarios, dds_loss_5 and dds_delay_50.\n\nAll three layers read peer position. Degrade the transport and the clamp clamps against stale data, repulsion pushes from a phantom, and the halt never arms.",
+     "heading": "The Flaw, Honestly Kept",
+     "images": [],
+     "items": [],
+     "key": "flaw",
+     "kicker": "Status: open, never mitigated.",
+     "links": []
+    },
+    {
+     "_key": "s11-held",
+     "_type": "pageSection",
+     "body": "Under CPU stress at two cores, 441 runs recorded 0 violations with a worst separation of 1.52 m. Leader and follower kills recovered through decentralised reassignment.",
+     "heading": "What Held",
+     "images": [],
+     "items": [],
+     "key": "held",
+     "kicker": "2,003 runs died before their completion line and are not counted in the figures.",
+     "links": []
+    },
+    {
+     "_key": "s12-perception",
+     "_type": "pageSection",
+     "heading": "Of Sight and Maps",
+     "images": [
+      {
+       "alt": "Leonardo's ornithopter",
+       "caption": "Fig. E — the ornithopter, a machine that had to see where it flew.",
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/ace25b3241be57b92f54ed328f1fe86e00c330ef-395x275.jpg"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "Camera.",
+       "value": "x500_mono_cam → sensor_msgs/Image, 1280×960 rgb8 at ~25 fps."
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "Red marker.",
+       "value": "HSV blob detection steers the vtrack mission; peers share detections."
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "Depth.",
+       "value": "32FC1 depth alarms when an obstacle is closer than 3 m."
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "Frontiers.",
+       "value": "Greedy auction assigns each drone its nearest unclaimed frontier."
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "accent": "#9A3B26",
+       "label": "RTAB-Map SLAM.",
+       "value": "Pipeline built; the fused-map result was never preserved and is not substantiated."
+      }
+     ],
+     "key": "perception",
+     "kicker": "LIBER III",
+     "links": []
+    },
+    {
+     "_key": "s13-colophon",
+     "_type": "pageSection",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "Instruments",
+       "value": "Ubuntu 24.04 · ROS 2 Jazzy · Gazebo Harmonic 8.11.0 · PX4 main · uXRCE-DDS 3.0.1"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "The Manuscript",
+       "value": "PROJECT_EVIDENCE/ holds the raw logs and the claims matrix."
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "Yet Unwritten",
+       "value": "Real-hardware flight, and a collision layer that survives stale peer data."
+      }
+     ],
+     "key": "colophon",
+     "links": []
+    }
+   ],
+   "seoDescription": "Drone control in fabric: IMU fusion, a fixed-point rate loop and PWM generation with deterministic latency from sample to actuator.",
    "slug": "swarm",
    "stage": "SPEC",
    "summary": "Attitude control in fabric instead of firmware: IMU fusion, a fixed-point rate loop and PWM generation with deterministic latency from sample to actuator. The argument for hardware here is jitter, not throughput.",
@@ -1068,9 +4226,9 @@
   {
    "_createdAt": "2026-10-12T18:10:06Z",
    "_id": "project-hft",
-   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_rev": "wi4S2bIz0dHA9v7A4XJQoh",
    "_type": "project",
-   "_updatedAt": "2026-10-12T18:10:06Z",
+   "_updatedAt": "2026-11-14T22:14:41Z",
    "cardImage": {
     "alt": "HFT FPGA ALGORITHMS",
     "caption": null,
@@ -1082,7 +4240,638 @@
    "featured": false,
    "listed": true,
    "order": 10,
-   "sections": null,
+   "sections": [
+    {
+     "_key": "s0-ticker",
+     "_type": "pageSection",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "accent": "#00FF7F",
+       "label": "ITCH",
+       "value": "ADD BUY @100000"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#FF1744",
+       "label": "ITCH",
+       "value": "ADD SELL @100010"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "accent": "#00BFFF",
+       "label": "BBO",
+       "value": "SPREAD 10"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "accent": "#00FF7F",
+       "label": "STRAT",
+       "value": "BUY 100 @100001"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "accent": "#00FF7F",
+       "label": "RISK",
+       "value": "PASS"
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "accent": "#FFFFFF",
+       "label": "OUCH",
+       "value": "4F 42 00 01 86 A1 00 00 00 64 00 00 00 01 0D 0A"
+      },
+      {
+       "_key": "r6",
+       "_type": "keyValue",
+       "accent": "#00BFFF",
+       "label": "LAT",
+       "value": "78 CYC"
+      },
+      {
+       "_key": "r7",
+       "_type": "keyValue",
+       "accent": "#00FF7F",
+       "label": "PARSE",
+       "value": "6 CYC · 12×"
+      },
+      {
+       "_key": "r8",
+       "_type": "keyValue",
+       "accent": "#00BFFF",
+       "label": "WNS",
+       "value": "+1.828 ns"
+      },
+      {
+       "_key": "r9",
+       "_type": "keyValue",
+       "accent": "#FF1744",
+       "label": "IMPL_2P0",
+       "value": "−0.245 ns"
+      },
+      {
+       "_key": "r10",
+       "_type": "keyValue",
+       "accent": "#FFFFFF",
+       "label": "AAPL",
+       "value": "400 PKTS · 0 GAPS"
+      },
+      {
+       "_key": "r11",
+       "_type": "keyValue",
+       "accent": "#00FF7F",
+       "label": "FILL",
+       "value": "NET POS +100"
+      }
+     ],
+     "key": "ticker",
+     "links": []
+    },
+    {
+     "_key": "s1-header",
+     "_type": "pageSection",
+     "body": "When an exchange sends a price update, whoever answers first gets the trade. This pipeline makes the whole decision in an FPGA: an ITCH market message comes in one side and a finished OUCH order leaves the other, a fixed handful of clock cycles later. PS is control-plane only.",
+     "heading": "TICK → TRADE",
+     "images": [
+      {
+       "alt": "Monopoly's Rich Uncle Pennybags holding an EAT THE RICH sign",
+       "caption": "// the market maker earns the spread. The fastest one eats first.",
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/b6c77be96b62540e5bfd23993773ba381bdf6801-736x413.jpg"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "accent": "#00FF7F",
+       "label": "CYC TICK-TO-TRADE",
+       "value": "78"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#00FF7F",
+       "label": "CYC OF COMPUTE",
+       "value": "≈6"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "accent": "#00BFFF",
+       "label": "DEMOS MEET TIMING",
+       "value": "12/13"
+      }
+     ],
+     "key": "header",
+     "kicker": "PRJ_10 · CASE FILE · ZCU106",
+     "links": []
+    },
+    {
+     "_key": "s2-tagline",
+     "_type": "pageSection",
+     "heading": "A 100%-FABRIC HFT PIPELINE",
+     "images": [],
+     "items": [],
+     "key": "tagline",
+     "links": []
+    },
+    {
+     "_key": "s3-pipeline",
+     "_type": "pageSection",
+     "body": "every block bit-exact vs a Python golden model, then mutation-tested so a broken design is proven to fail · GHDL 4.1.0 + Vivado xsim 2025.1",
+     "heading": "THE PIPELINE",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "fields out of raw ITCH",
+       "label": "itch_parser",
+       "value": "GHDL + xsim · bit-exact"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "detail": "clean internal events",
+       "label": "event_normalizer",
+       "value": "218 records"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "detail": "best bid and offer",
+       "label": "bbo_book",
+       "value": "413 records"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "detail": "market-maker quote",
+       "label": "strategy_mm",
+       "value": "18 records"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "accent": "#FF1744",
+       "detail": "hardware limit interlock",
+       "label": "risk_gate",
+       "value": "42 cycles"
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "detail": "OUCH byte frame",
+       "label": "ouch_encoder",
+       "value": "8 frames"
+      },
+      {
+       "_key": "r6",
+       "_type": "keyValue",
+       "detail": "in-fabric stopwatch",
+       "label": "latency_ts",
+       "value": "9 fires"
+      }
+     ],
+     "key": "pipeline",
+     "kicker": "01",
+     "links": []
+    },
+    {
+     "_key": "s4-latency",
+     "_type": "pageSection",
+     "body": "The parallel parser takes 8 bytes a cycle, the width of a 10G AXIS bus, and decodes every field of every message type in one cycle by speculating. Smaller, faster, and 12× lower latency. It assumes a 64-bit ingress from a 10G or 25G MAC.",
+     "heading": "WHERE THE CYCLES GO",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "value": "Timed replay with LOBSTER-derived gaps: wire-to-trade median 13 / p99 96 cyc, ≈43 / 320 ns at 300 MHz. latency_ts is last-tick-wins, a lower-bound proxy under bursts."
+      }
+     ],
+     "key": "latency",
+     "kicker": "02",
+     "links": []
+    },
+    {
+     "_key": "s5-latency-split",
+     "_type": "pageSection",
+     "heading": "FIG 1 · 78-CYCLE DECOMPOSITION",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "~72 · 36 BYTES × 2 CYC INGEST",
+       "value": "72"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "compute ≈6 ▸",
+       "value": "6"
+      }
+     ],
+     "key": "latency-split",
+     "kicker": "serial ingest",
+     "links": []
+    },
+    {
+     "_key": "s6-latency-parse",
+     "_type": "pageSection",
+     "heading": "FIG 2 · PARSE LATENCY",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "72",
+       "label": "itch_parser",
+       "value": "72"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#00FF7F",
+       "detail": "6 · 12×",
+       "label": "itch_parser_par",
+       "value": "6"
+      }
+     ],
+     "key": "latency-parse",
+     "kicker": "serial vs parallel · cycles",
+     "links": []
+    },
+    {
+     "_key": "s7-latency-table",
+     "_type": "pageSection",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "serial",
+       "value": "1 B / 2 cyc | 72 cyc | ~572 MHz | 179 | 536"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#00FF7F",
+       "label": "parallel",
+       "value": "8 B / cyc | 6 cyc | ~1168 MHz | 17 | 167"
+      }
+     ],
+     "key": "latency-table",
+     "kicker": "PARSER | INGEST | LATENCY | FMAX (SYN) | LUT | FF",
+     "links": []
+    },
+    {
+     "_key": "s8-timing",
+     "_type": "pageSection",
+     "heading": "TIMING CLOSURE",
+     "images": [],
+     "items": [],
+     "key": "timing",
+     "kicker": "03",
+     "links": []
+    },
+    {
+     "_key": "s9-timing-wns",
+     "_type": "pageSection",
+     "heading": "FIG 3 · WNS PER DEMO · xczu7ev-ffvc1156-2-e · VIVADO 2025.1",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "bbo_book",
+       "value": "1.972"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "bbo_book_impl_2p0",
+       "value": "0.05"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "event_normalizer",
+       "value": "1.725"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "hft_tick_to_trade_top",
+       "value": "1.828"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "label": "hft_tick_to_trade_top_impl_2p0",
+       "value": "-0.245"
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "label": "hft_tick_to_trade_top_impl_3p0",
+       "value": "0.315"
+      },
+      {
+       "_key": "r6",
+       "_type": "keyValue",
+       "label": "itch_parser",
+       "value": "2.251"
+      },
+      {
+       "_key": "r7",
+       "_type": "keyValue",
+       "label": "itch_parser_impl_2p0",
+       "value": "0.302"
+      },
+      {
+       "_key": "r8",
+       "_type": "keyValue",
+       "label": "latency_ts",
+       "value": "3.28"
+      },
+      {
+       "_key": "r9",
+       "_type": "keyValue",
+       "label": "ouch_encoder",
+       "value": "3.287"
+      },
+      {
+       "_key": "r10",
+       "_type": "keyValue",
+       "label": "risk_gate",
+       "value": "2.065"
+      },
+      {
+       "_key": "r11",
+       "_type": "keyValue",
+       "label": "selftest",
+       "value": "0.597"
+      },
+      {
+       "_key": "r12",
+       "_type": "keyValue",
+       "label": "strategy_mm",
+       "value": "1.725"
+      }
+     ],
+     "key": "timing-wns",
+     "kicker": "ns · −0.5 to 3.5",
+     "links": []
+    },
+    {
+     "_key": "s10-timing-cards",
+     "_type": "pageSection",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "accent": "#FF1744",
+       "detail": "Routed. WNS −0.245 ns, TNS −0.525 ns. The aggressive stretch target.",
+       "label": "TOP_IMPL_2P0",
+       "value": "▲ VIOLATED"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#00FF7F",
+       "detail": "Routed. WNS +0.315 ns, TNS 0. 751 LUT, 688 FF, 0 BRAM, 0 DSP.",
+       "label": "TOP_IMPL_3P0",
+       "value": "● RECOVERED"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "accent": "#00BFFF",
+       "detail": "WNS +1.828 ns. Its report is marked Synthesized, not Routed. 688 FF, no BRAM or DSP.",
+       "label": "HFT_TICK_TO_TRADE_TOP",
+       "value": "● BASE"
+      }
+     ],
+     "key": "timing-cards",
+     "links": []
+    },
+    {
+     "_key": "s11-trade",
+     "_type": "pageSection",
+     "heading": "ONE TRADE, END TO END",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "accent": "#00FF7F",
+       "label": "BOOK · BID",
+       "value": "100000"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#FF1744",
+       "label": "BOOK · OFFER",
+       "value": "100010"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "accent": "#00BFFF",
+       "label": "SPREAD",
+       "value": "10"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "INTENT",
+       "value": "BUY 100 @ 100001"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "accent": "#00FF7F",
+       "detail": "highlight",
+       "label": "RISK",
+       "value": "PASS"
+      }
+     ],
+     "key": "trade",
+     "kicker": "04",
+     "links": []
+    },
+    {
+     "_key": "s12-trade-frame",
+     "_type": "pageSection",
+     "heading": "OUCH-LITE FRAME · 16 BYTES · BIT-EXACT",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "accent": "#00FF7F",
+       "detail": "'O' 'B'",
+       "label": "4F 42"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#00BFFF",
+       "detail": "price 100001",
+       "label": "00 01 86 A1"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "accent": "#FFFFFF",
+       "detail": "qty 100",
+       "label": "00 00 00 64"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "accent": "#A0A0A0",
+       "label": "00 00 00 01"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "accent": "#FF1744",
+       "detail": "CR LF",
+       "label": "0D 0A"
+      }
+     ],
+     "key": "trade-frame",
+     "links": []
+    },
+    {
+     "_key": "s13-trade-cards",
+     "_type": "pageSection",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "accent": "#00BFFF",
+       "detail": "400 real AAPL packets, 0 gaps, 199 OUCH out, BBO bit-exact vs golden. GHDL and xsim.",
+       "label": "MOLDUDP64 INGRESS"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "accent": "#00BFFF",
+       "detail": "SYN / SYN-ACK / ACK, then the order leaves as a TCP data segment, seq 1001, PSH|ACK. Payload bit-exact.",
+       "label": "SOUPBINTCP OVER TOE"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "accent": "#00FF7F",
+       "detail": "The exchange sends a fill back over the same session; fill_rx decodes it. net_position = +100.",
+       "label": "CLOSED LOOP"
+      }
+     ],
+     "key": "trade-cards",
+     "links": []
+    },
+    {
+     "_key": "s14-payoff",
+     "_type": "pageSection",
+     "body": "Order out, fill in, inventory updated, all over one established TCP session. The loop closes in simulation: market data, decision, SoupBinTCP egress through the TOE, execution report back through fill_rx.",
+     "heading": "THE PAYOFF",
+     "images": [
+      {
+       "alt": "Cartoon man in sunglasses hugging stacks of cash",
+       "caption": "// net_position = +100",
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/7b87f92ee8f735e4b1733ae15a5b45e6337a5e05-736x736.jpg"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "value": "Simulated, not traded. No exchange, no colocation, no money moved."
+      }
+     ],
+     "key": "payoff",
+     "links": []
+    },
+    {
+     "_key": "s15-risk",
+     "_type": "pageSection",
+     "body": "risk_gate is a hardware interlock. An order that breaks position or size limits is blocked in the circuit, not logged by software downstream.",
+     "heading": "05 RISK & HONEST SCOPE",
+     "images": [
+      {
+       "alt": "Monopoly man with empty hands above the word BROKE?",
+       "caption": "// what the risk gate exists to prevent",
+       "url": "https://cdn.sanity.io/images/7h6avsoz/production/1af4def9701d9e917aea804662b7efb401fb0573-250x250.jpg"
+      }
+     ],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "value": "No exchange feed or colocation. Latency is sim datapath cycles, not live wire-to-trade."
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "value": "No hardware run recorded on the ZCU106; silicon is the target."
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "value": "bbo_book is single-level: no depth, no order-id matching."
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "value": "strategy_mm emits one buy quote when spread ≥ threshold; sell side and inventory band are future work."
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "value": "OUCH-lite fixed 16-byte layout, not venue-exact."
+      }
+     ],
+     "key": "risk",
+     "links": []
+    },
+    {
+     "_key": "s16-artefacts",
+     "_type": "pageSection",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "· feat/parallel-top · private",
+       "label": "REPO ▸ ",
+       "value": "Upaasak/hft-tick-to-trade"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "value": "source commit ba48246b"
+      }
+     ],
+     "key": "artefacts",
+     "links": []
+    }
+   ],
+   "seoDescription": "Tick-to-trade in FPGA fabric: market-data feed parsing on the wire, an in-fabric order book and a decision path measured in nanoseconds.",
    "slug": "hft",
    "stage": "SPEC",
    "summary": "Tick-to-trade in hardware: market-data feed parsing on the wire, an order book maintained in fabric and a decision path measured in nanoseconds. Every stage has to justify the cycle it costs.",
@@ -1092,9 +4881,9 @@
   {
    "_createdAt": "2026-10-12T18:10:06Z",
    "_id": "project-ipdft",
-   "_rev": "IG4Z2d4uQTGJQB5lvrRW8w",
+   "_rev": "vz4OSeTs5H7G2lpwEgqaj5",
    "_type": "project",
-   "_updatedAt": "2026-10-12T18:10:06Z",
+   "_updatedAt": "2026-11-14T22:12:45Z",
    "cardImage": null,
    "caseFile": "live",
    "code": "PRJ_11",
@@ -1102,7 +4891,257 @@
    "featured": false,
    "listed": false,
    "order": 11,
-   "sections": null,
+   "sections": [
+    {
+     "_key": "s0-header",
+     "_type": "pageSection",
+     "body": "A six-channel interpolated-DFT front end for grid instrumentation. Each channel windows its input, runs a sliding DFT bin, extracts magnitude and phase with a CORDIC, and differentiates frequency to get ROCOF. One clock domain, fixed point throughout, no vendor IP.\n\nIt exists because a commercial PMU front end costs more than the lab's annual budget, and because it is a good excuse to learn where a fixed-point error budget goes wrong.",
+     "heading": "POWER SYSTEM PROTOCOLS",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "TOP MODULE",
+       "value": "ipdft_channel_top"
+      }
+     ],
+     "key": "header",
+     "kicker": "▚▚ PRJ_06 · CASE FILE ▞▞",
+     "links": []
+    },
+    {
+     "_key": "s1-build-status",
+     "_type": "pageSection",
+     "body": "IN VERIFICATION",
+     "heading": "BUILD.STATUS",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "TARGET",
+       "value": "XC7A100T-1"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "LANGUAGE",
+       "value": "VERILOG-2005"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "CHANNELS",
+       "value": "6"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "label": "FMAX",
+       "value": "148 MHz"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "label": "WNS",
+       "value": "+0.62 ns"
+      }
+     ],
+     "key": "build-status",
+     "links": []
+    },
+    {
+     "_key": "s2-schematic",
+     "_type": "pageSection",
+     "heading": "FIG 1 ── ipdft_channel_top · RTL ELABORATED",
+     "images": [],
+     "items": [],
+     "key": "schematic",
+     "kicker": "6 CHANNELS · CORDIC MAG/PHASE · ROCOF",
+     "links": []
+    },
+    {
+     "_key": "s3-datapath",
+     "_type": "pageSection",
+     "heading": "DATAPATH",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "Hann coefficients in a single BRAM, shared across channels by time multiplexing. Q1.15 in, Q2.30 out, truncation error bounded at 2⁻¹⁴.",
+       "label": "STAGE 1",
+       "value": "WINDOW"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "detail": "Recursive bin update with leakage damping, five bins per channel. Guard bits sized from the worst-case input rather than from optimism.",
+       "label": "STAGE 2",
+       "value": "SLIDING DFT BIN"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "detail": "16-iteration vectoring CORDIC, one shared engine, arctan table in ROM. Gain compensated at the output, not per iteration.",
+       "label": "STAGE 3",
+       "value": "CORDIC MAG / PHASE"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "detail": "Three-point interpolation over neighbouring bins to recover off-bin frequency, then a differentiator for ROCOF with a configurable window.",
+       "label": "STAGE 4",
+       "value": "IPDFT CORRECTION"
+      }
+     ],
+     "key": "datapath",
+     "kicker": "01",
+     "links": []
+    },
+    {
+     "_key": "s4-verification",
+     "_type": "pageSection",
+     "heading": "VERIFICATION",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "detail": "PASS",
+       "label": "Directed sine sweep, 45–65 Hz",
+       "value": "cocotb"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "detail": "PASS",
+       "label": "Off-bin frequency, 0.01 Hz steps",
+       "value": "cocotb"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "detail": "PASS",
+       "label": "Harmonic + noise, constrained random",
+       "value": "SV / UVM"
+      },
+      {
+       "_key": "r3",
+       "_type": "keyValue",
+       "detail": "PASS",
+       "label": "Saturation and overflow assertions",
+       "value": "SVA"
+      },
+      {
+       "_key": "r4",
+       "_type": "keyValue",
+       "detail": "2 FAILS",
+       "label": "ROCOF step response vs. golden model",
+       "value": "python"
+      },
+      {
+       "_key": "r5",
+       "_type": "keyValue",
+       "detail": "OPEN",
+       "label": "Channel-to-channel isolation",
+       "value": "SV / UVM"
+      }
+     ],
+     "key": "verification",
+     "kicker": "02",
+     "links": []
+    },
+    {
+     "_key": "s5-coverage",
+     "_type": "pageSection",
+     "heading": "COVERAGE",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "STATEMENT",
+       "value": "99.1 %"
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "BRANCH",
+       "value": "97.4 %"
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "FUNCTIONAL",
+       "value": "96.4 %"
+      }
+     ],
+     "key": "coverage",
+     "links": []
+    },
+    {
+     "_key": "s6-defect",
+     "_type": "pageSection",
+     "body": "ROCOF overshoots by 4.2 % on a 2 Hz/s step when the differentiator window is 4 samples. Suspected guard-bit truncation in stage 4.",
+     "heading": "OPEN DEFECT · DEF-014",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "OWNER",
+       "value": "unassigned"
+      }
+     ],
+     "key": "defect",
+     "links": []
+    },
+    {
+     "_key": "s7-remaining",
+     "_type": "pageSection",
+     "heading": "WHAT IS LEFT",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "Close DEF-014 and re-run the ROCOF suite."
+      },
+      {
+       "_key": "r1",
+       "_type": "keyValue",
+       "label": "Channel isolation testbench, currently unwritten."
+      },
+      {
+       "_key": "r2",
+       "_type": "keyValue",
+       "label": "Bench capture against a signal generator, not just simulation."
+      }
+     ],
+     "key": "remaining",
+     "links": []
+    },
+    {
+     "_key": "s8-artefacts",
+     "_type": "pageSection",
+     "body": "Reports, seeds and constraint files ship with the repository. Ask if you want the raw waveforms.",
+     "heading": "ARTEFACTS",
+     "images": [],
+     "items": [
+      {
+       "_key": "r0",
+       "_type": "keyValue",
+       "label": "SCHEM",
+       "value": "schematic.pdf — not yet uploaded"
+      }
+     ],
+     "key": "artefacts",
+     "links": []
+    }
+   ],
+   "seoDescription": "ipdft_channel_top: an interpolated-DFT channel with CORDIC magnitude and phase, verified and timing-closed at 148 MHz on Artix-7.",
    "slug": "ipdft",
    "stage": "IN VERIFICATION",
    "summary": "Interpolated-DFT channel with CORDIC magnitude and phase. Closes timing at 148 MHz on Artix-7.",

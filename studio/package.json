@@ -8,7 +8,8 @@
     "build": "sanity build",
     "deploy": "sanity deploy",
     "migrate": "sanity exec scripts/migrate.ts --with-user-token",
-    "snapshot": "sanity exec scripts/snapshot.ts --with-user-token"
+    "snapshot": "sanity exec scripts/snapshot.ts --with-user-token",
+    "seed-projects": "sanity exec scripts/seed-projects.ts --with-user-token --"
   },
   "dependencies": {
     "@sanity/vision": "^6.18.0",

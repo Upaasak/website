@@ -3,8 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./cms.js"></script>
 <script src="./support.js"></script>
 <meta name="description" content="Post-quantum cryptography in FPGA: lattice arithmetic, NTT butterflies and constant-time control for the algorithms that outlive RSA.">
+<link rel="preconnect" href="https://7h6avsoz.apicdn.sanity.io" crossorigin="">
+<link rel="preconnect" href="https://cdn.sanity.io">
 <title>Whistleblower Lab — Post-Quantum Post Office</title>
 </head>
 <body>
@@ -46,6 +49,8 @@
   @media (pointer: coarse) {
     .wb-nav a, .wb-foot-links a { display: inline-block; padding-block: 10px; }
   }
+  @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+  .cms-cursor { animation: blink 1s steps(1) infinite; }
 </style>
 </helmet>
 <div style="background: #0A1F44; color: #F1F1F1; font-family: 'Roboto', system-ui, sans-serif; min-height: 100vh; overflow-x: hidden;">
@@ -69,210 +74,215 @@
 
   <div style="height: 8px; background: repeating-linear-gradient(-45deg, #E63946 0 14px, #F1F1F1 14px 28px, #00B4D8 28px 42px, #F1F1F1 42px 56px);"></div>
 
+  <sc-if value="{{ loading }}">
+    <section data-screen-label="Loading" style="max-width: 1360px; margin: 0 auto; padding: 36px 28px 0; min-height: 100vh;">
+      <a href="projects.html" style="font-family: 'Courier Prime', monospace; font-size: 13px; color: #9FB3D1;">◂ back to all projects</a>
+      <div style="margin-top: 24px; font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.3em; color: #00B4D8;">SORTING THE MAIL <span class="cms-cursor" style="color: #E63946;">▌</span></div>
+    </section>
+  </sc-if>
+  <sc-if value="{{ failed }}">
+    <section data-screen-label="Error" style="max-width: 1360px; margin: 0 auto; padding: 36px 28px 0; min-height: 100vh;">
+      <a href="projects.html" style="font-family: 'Courier Prime', monospace; font-size: 13px; color: #9FB3D1;">◂ back to all projects</a>
+      <div style="margin-top: 24px; border: 2px dashed #E63946; padding: 14px 16px; font-family: 'Courier Prime', monospace; font-size: 14px; color: #F1F1F1;">RETURN TO SENDER — the content service did not answer. <a href="project-pqc.html">try again</a></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ ready }}">
   <section data-screen-label="Hero" style="max-width: 1360px; margin: 0 auto; padding: 36px 28px 0;">
     <a href="projects.html" style="font-family: 'Courier Prime', monospace; font-size: 13px; color: #9FB3D1;">◂ back to all projects</a>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 48px; align-items: center; margin-top: 24px;">
       <div style="display: grid; gap: 20px; align-content: start;">
-        <div style="font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.3em; color: #E63946;">PRJ_05 · CASE FILE</div>
-        <h1 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: clamp(36px, 5.4vw, 72px); line-height: 1.02; letter-spacing: 0.01em; color: #F1F1F1;">The Post-Quantum Post Office</h1>
-        <div style="font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.12em; color: #00B4D8;">POST-QUANTUM CRYPTOGRAPHY &amp; CRYPTO SUITE</div>
-        <p style="margin: 0; max-width: 60ch; font-size: 16px; line-height: 1.75; color: #D8DEE8; text-wrap: pretty;">A full-stack post-quantum capability: FIPS-203-exact ML-KEM compression RTL and a 31-module ML-DSA datapath in VHDL-2008, C protocol stacks that sign and encrypt IEC 61850 GOOSE/SV frames, and a KAT backbone tying every layer to the NIST reference via liboqs.</p>
-        <div style="border-left: 3px solid #E63946; padding: 4px 0 4px 16px; max-width: 60ch; font-family: 'Courier Prime', monospace; font-style: italic; font-size: 15px; line-height: 1.7; color: #F1F1F1;">Every key is a letter. ML-KEM seals it in an envelope, ML-DSA stamps the postmark, and somewhere a man in a long coat is keeping copies for the day he owns a quantum computer.</div>
+        <div style="font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.3em; color: #E63946;">{{ header.kicker }}</div>
+        <h1 style="margin: 0; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: clamp(36px, 5.4vw, 72px); line-height: 1.02; letter-spacing: 0.01em; color: #F1F1F1;">{{ header.heading }}</h1>
+        <sc-if value="{{ tagline.heading }}">
+          <div style="font-family: 'Orbitron', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.12em; color: #00B4D8;">{{ tagline.heading }}</div>
+        </sc-if>
+        <sc-for list="{{ header.paras }}" as="p">
+          <p style="margin: 0; max-width: 60ch; font-size: 16px; line-height: 1.75; color: #D8DEE8; text-wrap: pretty;">{{ p }}</p>
+        </sc-for>
+        <sc-if value="{{ tagline.body }}">
+          <div style="border-left: 3px solid #E63946; padding: 4px 0 4px 16px; max-width: 60ch; font-family: 'Courier Prime', monospace; font-style: italic; font-size: 15px; line-height: 1.7; color: #F1F1F1;">{{ tagline.body }}</div>
+        </sc-if>
         <div style="display: flex; gap: 10px; flex-wrap: wrap; font-family: 'Courier Prime', monospace; font-size: 13px;">
-          <span style="border: 1px solid #3A5A8C; padding: 6px 10px; color: #D8DEE8;">FIPS 203 · ML-KEM</span>
-          <span style="border: 1px solid #3A5A8C; padding: 6px 10px; color: #D8DEE8;">FIPS 204 · ML-DSA</span>
-          <span style="border: 1px solid #3A5A8C; padding: 6px 10px; color: #D8DEE8;">ZCU106 · xczu7ev</span>
-          <span style="border: 1px solid #E63946; padding: 6px 10px; color: #E63946;">MATURITY · PROTOTYPE</span>
+          <sc-for list="{{ chips }}" as="c">
+            <span style="border: 1px solid {{ c.border }}; padding: 6px 10px; color: {{ c.color }};">{{ c.label }}</span>
+          </sc-for>
         </div>
       </div>
 
+      <sc-if value="{{ postcard.has }}">
       <div style="display: flex; justify-content: center; padding: 20px 0;">
         <div style="position: relative; width: 100%; max-width: 520px; background: #F1F1F1; color: #0A1F44; padding: 22px; box-shadow: 10px 10px 0 #E63946; transform: {{ tilt }};">
           <div style="display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 18px;">
             <div style="display: grid; gap: 12px; align-content: start; border-right: 1px solid #B8C0CC; padding-right: 16px;">
-              <div style="font-family: 'Orbitron', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: #E63946;">GREETINGS FROM Z₃₃₂₉</div>
-              <div style="font-family: 'Courier Prime', monospace; font-size: 14px; line-height: 1.65; color: #0A1F44;">Dear Receiver — enclosed is one shared secret, wrapped in 256 noisy coefficients. Only your private key can find it. Burn after decapsulation.</div>
-              <div style="font-family: 'Courier Prime', monospace; font-size: 13px; color: #5A6A86;">— the Postmaster</div>
+              <div style="font-family: 'Orbitron', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; color: #E63946;">{{ postcard.kicker }}</div>
+              <sc-for list="{{ postcard.paras }}" as="p">
+                <div style="font-family: 'Courier Prime', monospace; font-size: 14px; line-height: 1.65; color: #0A1F44;">{{ p }}</div>
+              </sc-for>
+              <div style="font-family: 'Courier Prime', monospace; font-size: 13px; color: #5A6A86;">{{ postcard.heading }}</div>
             </div>
             <div style="display: grid; gap: 14px; align-content: start;">
+              <sc-if value="{{ postcard.hasImg }}">
               <div style="justify-self: end; width: 108px; background: #E63946; padding: 5px; border: 3px dotted #F1F1F1; outline: 1px solid #E63946;">
-                <img width="640" height="640" fetchpriority="high" src="assets/cards/pqc.jpg" alt="Postman on a bicycle" style="display: block; width: 100%; height: auto;" />
-                <div style="font-family: 'Orbitron', sans-serif; font-size: 8px; font-weight: 700; color: #F1F1F1; text-align: center; padding-top: 3px; letter-spacing: 0.1em;">768 · KEM</div>
+                <img sc-camel-src="{{ postcard.img.src }}" sc-camel-src-set="{{ postcard.img.srcset }}" sizes="100px" width="{{ postcard.img.w }}" height="{{ postcard.img.h }}" fetchpriority="high" alt="{{ postcard.img.alt }}" style="display: block; width: 100%; height: auto;" />
+                <div style="font-family: 'Orbitron', sans-serif; font-size: 8px; font-weight: 700; color: #F1F1F1; text-align: center; padding-top: 3px; letter-spacing: 0.1em;">{{ postcard.img.caption }}</div>
               </div>
+              </sc-if>
               <div style="display: grid; gap: 10px; font-family: 'Courier Prime', monospace; font-size: 12.5px; color: #0A1F44;">
-                <div style="border-bottom: 1px solid #0A1F44; padding-bottom: 3px;">TO: the Receiver</div>
-                <div style="border-bottom: 1px solid #0A1F44; padding-bottom: 3px;">PL fabric, ZCU106</div>
-                <div style="border-bottom: 1px solid #0A1F44; padding-bottom: 3px;">IEC 61850 process bus</div>
+                <sc-for list="{{ postcard.items }}" as="a">
+                  <div style="border-bottom: 1px solid #0A1F44; padding-bottom: 3px;">{{ a.label }}</div>
+                </sc-for>
               </div>
             </div>
           </div>
-          <sc-if value="{{ postmarks }}" hint-placeholder-val="{{ true }}">
-            <div style="position: absolute; top: 58px; right: 96px; width: 92px; height: 92px; border: 2px solid #0A1F44; border-radius: 50%; display: grid; place-items: center; text-align: center; transform: rotate(-18deg); opacity: 0.75; font-family: 'Orbitron', sans-serif; font-size: 8px; font-weight: 700; letter-spacing: 0.08em; color: #0A1F44; line-height: 1.5; pointer-events: none;">GHDL 4.1<br />27 AUG 2026<br />VHDL-2008</div>
+          <sc-if value="{{ showPostmark }}" hint-placeholder-val="{{ true }}">
+            <div style="position: absolute; top: 58px; right: 96px; width: 92px; height: 92px; border: 2px solid #0A1F44; border-radius: 50%; display: grid; place-items: center; text-align: center; transform: rotate(-18deg); opacity: 0.75; font-family: 'Orbitron', sans-serif; font-size: 8px; font-weight: 700; letter-spacing: 0.08em; color: #0A1F44; line-height: 1.5; pointer-events: none;"><div style="white-space: pre-line;">{{ postmark.body }}</div></div>
           </sc-if>
         </div>
       </div>
+      </sc-if>
     </div>
   </section>
 
+  <sc-if value="{{ cast.show }}">
   <section data-screen-label="The cast" style="max-width: 1360px; margin: 0 auto; padding: 76px 28px 0;">
     <div style="display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 26px;">
       <span style="font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 700; color: #E63946;">01</span>
-      <h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: 0.06em; color: #F1F1F1;">The Cast of the Allegory</h2>
-      <span style="font-family: 'Courier Prime', monospace; font-size: 14px; color: #9FB3D1;">who carries what, and who is watching</span>
+      <h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: 0.06em; color: #F1F1F1;">{{ cast.heading }}</h2>
+      <span style="font-family: 'Courier Prime', monospace; font-size: 14px; color: #9FB3D1;">{{ cast.kicker }}</span>
     </div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); gap: 22px;">
+      <sc-for list="{{ cast.cards }}" as="c">
       <div style="background: #F1F1F1; color: #0A1F44; display: flex; flex-direction: column;">
-        <div style="aspect-ratio: 1 / 1; background: #E63946; overflow: hidden;"><img width="720" height="720" loading="lazy" decoding="async" src="assets/projects/pqc/postmaster.jpg" alt="Running postmaster" style="display: block; width: 100%; height: 100%; object-fit: cover;" /></div>
+        <sc-if value="{{ c.hasImg }}">
+        <div style="aspect-ratio: 1 / 1; background: {{ c.bg }}; overflow: hidden;"><img sc-camel-src="{{ c.img.src }}" sc-camel-src-set="{{ c.img.srcset }}" sizes="(max-width: 700px) 100vw, 320px" width="{{ c.img.w }}" height="{{ c.img.h }}" loading="lazy" decoding="async" alt="{{ c.img.alt }}" style="display: block; width: 100%; height: 100%; object-fit: {{ c.fit }};" /></div>
+        </sc-if>
         <div style="padding: 18px; display: grid; gap: 8px;">
-          <div style="font-family: 'Orbitron', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: #E63946;">THE POSTMASTER · ML-KEM</div>
-          <div style="font-family: 'Orbitron', sans-serif; font-size: 17px; font-weight: 700;">rtl/kyber · 31 files</div>
-          <p style="margin: 0; font-size: 14px; line-height: 1.65; color: #26375A;">KeyGen, Encaps, Decaps over Z₃₃₂₉. NTT/INTT, Barrett and Montgomery reduction, CBD noise sampling, exact-rounding Compress/Decompress.</p>
-          <div style="font-family: 'Courier Prime', monospace; font-style: italic; font-size: 13px; color: #5A6A86;">He seals the envelope. Opening it without the key is a lattice problem.</div>
+          <div style="font-family: 'Orbitron', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: #E63946;">{{ c.kicker }}</div>
+          <div style="font-family: 'Orbitron', sans-serif; font-size: 17px; font-weight: 700;">{{ c.heading }}</div>
+          <sc-for list="{{ c.paras }}" as="p">
+            <p style="margin: 0; font-size: 14px; line-height: 1.65; color: #26375A;">{{ p }}</p>
+          </sc-for>
+          <sc-for list="{{ c.quotes }}" as="q">
+            <div style="font-family: 'Courier Prime', monospace; font-style: italic; font-size: 13px; color: #5A6A86;">{{ q }}</div>
+          </sc-for>
         </div>
       </div>
-      <div style="background: #F1F1F1; color: #0A1F44; display: flex; flex-direction: column;">
-        <div style="aspect-ratio: 1 / 1; background: #E63946; overflow: hidden;"><img width="640" height="640" loading="lazy" decoding="async" src="assets/cards/pqc.jpg" alt="Postman on a bicycle" style="display: block; width: 100%; height: 100%; object-fit: cover;" /></div>
-        <div style="padding: 18px; display: grid; gap: 8px;">
-          <div style="font-family: 'Orbitron', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: #E63946;">THE COURIER · ML-DSA</div>
-          <div style="font-family: 'Orbitron', sans-serif; font-size: 17px; font-weight: 700;">rtl/dilithium · 31 modules</div>
-          <p style="margin: 0; font-size: 14px; line-height: 1.65; color: #26375A;">ML-DSA datapath over Z₈₃₈₀₄₁₇ with twiddle tables. Leaf arithmetic passes its testbenches; C stack signs GOOSE/SV frames.</p>
-          <div style="font-family: 'Courier Prime', monospace; font-style: italic; font-size: 13px; color: #5A6A86;">He stamps the postmark, so the receiver knows who really sent it.</div>
-        </div>
-      </div>
-      <div style="background: #F1F1F1; color: #0A1F44; display: flex; flex-direction: column;">
-        <div style="aspect-ratio: 1 / 1; background: #FFFFFF; overflow: hidden;"><img width="493" height="750" loading="lazy" decoding="async" src="assets/projects/pqc/eve-harvester.jpg" alt="Man in a long coat" style="display: block; width: 100%; height: 100%; object-fit: contain;" /></div>
-        <div style="padding: 18px; display: grid; gap: 8px;">
-          <div style="font-family: 'Orbitron', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: #E63946;">EVE · HARVEST NOW</div>
-          <div style="font-family: 'Orbitron', sans-serif; font-size: 17px; font-weight: 700;">The threat model</div>
-          <p style="margin: 0; font-size: 14px; line-height: 1.65; color: #26375A;">Records ciphertext today, decrypts it once Shor's algorithm runs at scale. The lab's qubit-shor-fpga project models why this program exists.</p>
-          <div style="font-family: 'Courier Prime', monospace; font-style: italic; font-size: 13px; color: #5A6A86;">He does not open letters. He files them, and waits.</div>
-        </div>
-      </div>
-      <div style="background: #F1F1F1; color: #0A1F44; display: flex; flex-direction: column;">
-        <div style="aspect-ratio: 1 / 1; background: #5B94C4; overflow: hidden;"><img width="736" height="736" loading="lazy" decoding="async" src="assets/projects/pqc/dealer.jpg" alt="Shady dealer opening his coat" style="display: block; width: 100%; height: 100%; object-fit: cover;" /></div>
-        <div style="padding: 18px; display: grid; gap: 8px;">
-          <div style="font-family: 'Orbitron', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; color: #E63946;">THE DEALER · HONEST LIMITS</div>
-          <div style="font-family: 'Orbitron', sans-serif; font-size: 17px; font-weight: 700;">What is in the coat</div>
-          <p style="margin: 0; font-size: 14px; line-height: 1.65; color: #26375A;">Demo-grade, not secure. Round-3 Kyber, stubbed entropy, Dilithium controllers still stubs. See section 04.</p>
-          <div style="font-family: 'Courier Prime', monospace; font-style: italic; font-size: 13px; color: #5A6A86;">He shows you everything before you buy.</div>
-        </div>
-      </div>
+      </sc-for>
     </div>
   </section>
+  </sc-if>
 
+  <sc-if value="{{ sorting.has }}">
   <section data-screen-label="Sorting office" style="max-width: 1360px; margin: 0 auto; padding: 76px 28px 0;">
     <div style="display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 26px;">
       <span style="font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 700; color: #E63946;">02</span>
-      <h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: 0.06em; color: #F1F1F1;">The Sorting Office</h2>
-      <span style="font-family: 'Courier Prime', monospace; font-size: 14px; color: #9FB3D1;">rtl/ layout, one room per job</span>
+      <h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: 0.06em; color: #F1F1F1;">{{ sorting.heading }}</h2>
+      <span style="font-family: 'Courier Prime', monospace; font-size: 14px; color: #9FB3D1;">{{ sorting.kicker }}</span>
     </div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 1px; background: #3A5A8C; border: 1px solid #3A5A8C;">
-      <div style="background: #0F2A58; padding: 18px 16px; display: grid; gap: 8px; align-content: start;"><div style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; color: #00B4D8; letter-spacing: 0.1em;">mod_arith/</div><div style="font-size: 13.5px; line-height: 1.6; color: #D8DEE8;">Barrett reduction, Montgomery modmul.</div></div>
-      <div style="background: #0F2A58; padding: 18px 16px; display: grid; gap: 8px; align-content: start;"><div style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; color: #00B4D8; letter-spacing: 0.1em;">ntt/</div><div style="font-size: 13.5px; line-height: 1.6; color: #D8DEE8;">NTT / INTT over Z₃₃₂₉ and Z₈₃₈₀₄₁₇.</div></div>
-      <div style="background: #0F2A58; padding: 18px 16px; display: grid; gap: 8px; align-content: start;"><div style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; color: #00B4D8; letter-spacing: 0.1em;">poly/</div><div style="font-size: 13.5px; line-height: 1.6; color: #D8DEE8;">LVT 2W2R block-RAM polynomial storage.</div></div>
-      <div style="background: #0F2A58; padding: 18px 16px; display: grid; gap: 8px; align-content: start;"><div style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; color: #00B4D8; letter-spacing: 0.1em;">sampling/</div><div style="font-size: 13.5px; line-height: 1.6; color: #D8DEE8;">CBD noise and rejection sampling.</div></div>
-      <div style="background: #0F2A58; padding: 18px 16px; display: grid; gap: 8px; align-content: start;"><div style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; color: #00B4D8; letter-spacing: 0.1em;">codec/</div><div style="font-size: 13.5px; line-height: 1.6; color: #D8DEE8;">Compress / Decompress, FIPS-203 exact rounding.</div></div>
-      <div style="background: #0F2A58; padding: 18px 16px; display: grid; gap: 8px; align-content: start;"><div style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; color: #00B4D8; letter-spacing: 0.1em;">integration-sttp/</div><div style="font-size: 13.5px; line-height: 1.6; color: #D8DEE8;">Kyber↔STTP bridge, AEAD, key manager.</div></div>
+      <sc-for list="{{ sorting.items }}" as="r">
+        <div style="background: #0F2A58; padding: 18px 16px; display: grid; gap: 8px; align-content: start;"><div style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; color: #00B4D8; letter-spacing: 0.1em;">{{ r.label }}</div><div style="font-size: 13.5px; line-height: 1.6; color: #D8DEE8;">{{ r.value }}</div></div>
+      </sc-for>
     </div>
-    <div style="margin-top: 14px; font-family: 'Courier Prime', monospace; font-size: 13.5px; color: #9FB3D1;">Toolchain: GHDL 4.1.0 · Vivado 2025.1 · liboqs 0.15.0 · oqs-provider · PQClean · OpenSSL</div>
+    <div style="margin-top: 14px; font-family: 'Courier Prime', monospace; font-size: 13.5px; color: #9FB3D1;">{{ sorting.body }}</div>
   </section>
+  </sc-if>
 
   <section data-screen-label="Delivery receipts" style="max-width: 1360px; margin: 0 auto; padding: 76px 28px 0;">
+    <sc-if value="{{ receipts.has }}">
     <div style="display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 26px;">
       <span style="font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 700; color: #E63946;">03</span>
-      <h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: 0.06em; color: #F1F1F1;">Delivery Receipts</h2>
-      <span style="font-family: 'Courier Prime', monospace; font-size: 14px; color: #9FB3D1;">verification run, 27 Aug 2026</span>
+      <h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: 0.06em; color: #F1F1F1;">{{ receipts.heading }}</h2>
+      <span style="font-family: 'Courier Prime', monospace; font-size: 14px; color: #9FB3D1;">{{ receipts.kicker }}</span>
     </div>
+    </sc-if>
 
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); gap: 22px;">
+      <sc-for list="{{ panels }}" as="f">
+      <sc-if value="{{ f.isChart }}">
       <div style="background: #F1F1F1; color: #0A1F44; padding: 22px 20px; display: grid; gap: 16px; align-content: start;">
-        <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;"><span style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em;">FIG 1 · COMPRESS_d DEVIATIONS</span><span style="font-family: 'Courier Prime', monospace; font-size: 12px; color: #5A6A86;">all 3329 residues</span></div>
+        <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;"><span style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em;">{{ f.heading }}</span><span style="font-family: 'Courier Prime', monospace; font-size: 12px; color: #5A6A86;">{{ f.kicker }}</span></div>
         <div style="display: grid; gap: 12px;">
-          <div style="display: grid; gap: 5px;"><div style="display: flex; justify-content: space-between; font-size: 12.5px;"><span>d = 10 · pre-fix</span><b style="color: #E63946;">241 wrong · 7.24 %</b></div><div style="height: 16px; background: #DDE2EA;"><div style="width: 90.5%; height: 100%; background: #E63946;"></div></div></div>
-          <div style="display: grid; gap: 5px;"><div style="display: flex; justify-content: space-between; font-size: 12.5px;"><span>d = 10 · current</span><b style="color: #0A1F44;">0 wrong</b></div><div style="height: 16px; background: #DDE2EA;"><div style="width: 0.6%; height: 100%; background: #0A1F44;"></div></div></div>
-          <div style="display: grid; gap: 5px;"><div style="display: flex; justify-content: space-between; font-size: 12.5px;"><span>d = 4 · pre-fix</span><b style="color: #E63946;">5 wrong · 0.15 %</b></div><div style="height: 16px; background: #DDE2EA;"><div style="width: 1.9%; height: 100%; background: #E63946;"></div></div></div>
-          <div style="display: grid; gap: 5px;"><div style="display: flex; justify-content: space-between; font-size: 12.5px;"><span>d = 4 · current</span><b style="color: #0A1F44;">0 wrong</b></div><div style="height: 16px; background: #DDE2EA;"><div style="width: 0.6%; height: 100%; background: #0A1F44;"></div></div></div>
-          <div style="display: flex; justify-content: space-between; font-size: 11px; color: #5A6A86; border-top: 1px solid #B8C0CC; padding-top: 4px;"><span>0 %</span><span>4 %</span><span>8 %</span></div>
+          <sc-for list="{{ f.bars }}" as="b">
+            <div style="display: grid; gap: 5px;"><div style="display: flex; justify-content: space-between; font-size: 12.5px;"><span>{{ b.label }}</span><b style="color: {{ b.color }};">{{ b.value }}</b></div><div style="height: 16px; background: #DDE2EA; display: flex;"><sc-for list="{{ b.segs }}" as="s"><div style="width: {{ s.w }}; height: 100%; background: {{ s.bg }};"></div></sc-for></div></div>
+          </sc-for>
+          <sc-if value="{{ f.axis }}">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; color: #5A6A86; border-top: 1px solid #B8C0CC; padding-top: 4px;"><span>0 %</span><span>4 %</span><span>8 %</span></div>
+          </sc-if>
         </div>
-        <div style="font-family: 'Courier Prime', monospace; font-size: 13px; line-height: 1.6; color: #26375A;">Pre-fix used M = 5039, +1665. Current uses M = 1290168, +q/2. Checked in exact rationals against round(2^d/q · x) mod 2^d.</div>
+        <div style="font-family: 'Courier Prime', monospace; font-size: 13px; line-height: 1.6; color: #26375A;">{{ f.body }}</div>
       </div>
-
-      <div style="background: #F1F1F1; color: #0A1F44; padding: 22px 20px; display: grid; gap: 16px; align-content: start;">
-        <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;"><span style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em;">FIG 2 · KYBER-768 GOLDEN COEFFICIENTS</span><span style="font-family: 'Courier Prime', monospace; font-size: 12px; color: #5A6A86;">of 7424</span></div>
-        <div style="display: grid; gap: 12px;">
-          <div style="display: grid; gap: 5px;"><div style="display: flex; justify-content: space-between; font-size: 12.5px;"><span>KeyGen</span><b>7424 / 7424 · PASS</b></div><div style="height: 16px; background: #DDE2EA;"><div style="width: 100%; height: 100%; background: #0A1F44;"></div></div></div>
-          <div style="display: grid; gap: 5px;"><div style="display: flex; justify-content: space-between; font-size: 12.5px;"><span>Encaps vs stale vectors</span><b style="color: #E63946;">62 off by +1</b></div><div style="height: 16px; background: #DDE2EA; display: flex;"><div style="width: 99.16%; height: 100%; background: #0A1F44;"></div><div style="width: 0.84%; height: 100%; background: #E63946;"></div></div></div>
-          <div style="display: grid; gap: 5px;"><div style="display: flex; justify-content: space-between; font-size: 12.5px;"><span>Encaps with pre-fix compress swapped in</span><b>7424 / 7424</b></div><div style="height: 16px; background: #DDE2EA;"><div style="width: 100%; height: 100%; background: #00B4D8;"></div></div></div>
-        </div>
-        <div style="font-family: 'Courier Prime', monospace; font-size: 13px; line-height: 1.6; color: #26375A;">The RTL is right; the vectors predate the fix. The receipt says the letter arrived late because the clock on the wall was wrong.</div>
-      </div>
-
+      </sc-if>
+      <sc-if value="{{ f.isLedger }}">
       <div style="background: #F1F1F1; color: #0A1F44; padding: 22px 20px; display: grid; gap: 14px; align-content: start;">
-        <div style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em;">TESTBENCH LEDGER</div>
+        <div style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em;">{{ f.heading }}</div>
         <div style="display: grid; font-size: 13.5px; border-top: 1px solid #B8C0CC;">
-          <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 9px 0; border-bottom: 1px solid #DDE2EA;"><span>GHDL analyze rtl/kyber (31)</span><span style="font-family: 'Courier Prime', monospace; font-weight: 700;">CLEAN</span></div>
-          <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 9px 0; border-bottom: 1px solid #DDE2EA;"><span>GHDL analyze rtl/dilithium (31)</span><span style="font-family: 'Courier Prime', monospace; font-weight: 700;">CLEAN</span></div>
-          <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 9px 0; border-bottom: 1px solid #DDE2EA;"><span>tb_barrett_reduce</span><span style="font-family: 'Courier Prime', monospace; font-weight: 700;">PASS</span></div>
-          <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 9px 0; border-bottom: 1px solid #DDE2EA;"><span>tb_mod_mult</span><span style="font-family: 'Courier Prime', monospace; font-weight: 700;">PASS</span></div>
-          <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 9px 0; border-bottom: 1px solid #DDE2EA;"><span>tb_ntt_engine</span><span style="font-family: 'Courier Prime', monospace; font-weight: 700;">PASS</span></div>
-          <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 9px 0; border-bottom: 1px solid #DDE2EA;"><span>tb_decompose</span><span style="font-family: 'Courier Prime', monospace; font-weight: 700;">PASS</span></div>
-          <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 9px 0; border-bottom: 1px solid #DDE2EA;"><span>tb_butterfly_ct</span><span style="font-family: 'Courier Prime', monospace; font-weight: 700; color: #E63946;">NOT DONE</span></div>
+          <sc-for list="{{ f.rows }}" as="r">
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 9px 0; border-bottom: 1px solid #DDE2EA;"><span>{{ r.label }}</span><span style="font-family: 'Courier Prime', monospace; font-weight: 700; color: {{ r.color }};">{{ r.value }}</span></div>
+          </sc-for>
         </div>
-        <div style="font-family: 'Courier Prime', monospace; font-size: 13px; color: #5A6A86;">butterfly_ct hit the harness wall clock, not a failure.</div>
+        <div style="font-family: 'Courier Prime', monospace; font-size: 13px; color: #5A6A86;">{{ f.body }}</div>
       </div>
-
-      <div style="background: #F1F1F1; color: #0A1F44; padding: 22px 20px; display: grid; gap: 16px; align-content: start;">
-        <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;"><span style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.14em;">FIG 3 · DILITHIUM2 SOFTWARE CYCLES</span><span style="font-family: 'Courier Prime', monospace; font-size: 12px; color: #5A6A86;">3 GHz x86 · measured</span></div>
-        <div style="display: grid; gap: 12px;">
-          <div style="display: grid; gap: 5px;"><div style="display: flex; justify-content: space-between; font-size: 12.5px;"><span>Sign</span><b>534,114</b></div><div style="height: 16px; background: #DDE2EA;"><div style="width: 100%; height: 100%; background: #0A1F44;"></div></div></div>
-          <div style="display: grid; gap: 5px;"><div style="display: flex; justify-content: space-between; font-size: 12.5px;"><span>Verify</span><b>159,406</b></div><div style="height: 16px; background: #DDE2EA;"><div style="width: 29.8%; height: 100%; background: #00B4D8;"></div></div></div>
-        </div>
-        <div style="font-family: 'Courier Prime', monospace; font-size: 13px; line-height: 1.6; color: #26375A;">Stamping a postmark costs 3.4× more than checking one.</div>
-      </div>
+      </sc-if>
+      </sc-for>
     </div>
 
-    <sc-if value="{{ showUnverified }}" hint-placeholder-val="{{ true }}">
+    <sc-if value="{{ unverified.show }}" hint-placeholder-val="{{ true }}">
       <div style="margin-top: 22px; border: 2px dashed #E63946; padding: 20px; display: grid; gap: 14px; position: relative;">
-        <div style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; color: #E63946;">RETURN TO SENDER · CLAIMED, NOT REPRODUCED</div>
+        <div style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; color: #E63946;">{{ unverified.heading }}</div>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 18px;">
+          <sc-if value="{{ unverified.hasBars }}">
           <div style="display: grid; gap: 8px;">
-            <div style="font-size: 13px; color: #D8DEE8;">poly_bram_4port after LVT 2W2R rewrite</div>
+            <div style="font-size: 13px; color: #D8DEE8;">{{ unverified.kicker }}</div>
             <div style="display: grid; gap: 4px;">
-              <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 78%; height: 12px; background: #5A6A86;"></div><span style="font-size: 12px; color: #D8DEE8;">190k LUT</span></div>
-              <div style="display: flex; align-items: center; gap: 8px;"><div style="width: 20%; height: 12px; background: #00B4D8;"></div><span style="font-size: 12px; color: #D8DEE8;">49k LUT · 52 BRAM</span></div>
+              <sc-for list="{{ unverified.bars }}" as="b">
+                <div style="display: flex; align-items: center; gap: 8px;"><div style="width: {{ b.w }}; height: 12px; background: {{ b.bg }};"></div><span style="font-size: 12px; color: #D8DEE8;">{{ b.value }}</span></div>
+              </sc-for>
             </div>
           </div>
-          <div style="display: grid; gap: 6px; align-content: start;"><div style="font-size: 13px; color: #D8DEE8;">Kyber-768 ZCU106 LUT utilisation</div><div style="font-family: 'Orbitron', sans-serif; font-size: 26px; font-weight: 700; color: #F1F1F1;">19.9 %</div><div style="font-family: 'Courier Prime', monospace; font-size: 12.5px; color: #9FB3D1;">pre-fix RTL lineage, 2026-04</div></div>
-          <div style="display: grid; gap: 6px; align-content: start;"><div style="font-size: 13px; color: #D8DEE8;">Per-GOOSE-message crypto overhead</div><div style="font-family: 'Orbitron', sans-serif; font-size: 26px; font-weight: 700; color: #F1F1F1;">2.30 µs</div><div style="font-family: 'Courier Prime', monospace; font-size: 12.5px; color: #9FB3D1;">software timing, i7-11700</div></div>
+          </sc-if>
+          <sc-for list="{{ ustats }}" as="s">
+            <div style="display: grid; gap: 6px; align-content: start;"><div style="font-size: 13px; color: #D8DEE8;">{{ s.label }}</div><div style="font-family: 'Orbitron', sans-serif; font-size: 26px; font-weight: 700; color: #F1F1F1;">{{ s.value }}</div><div style="font-family: 'Courier Prime', monospace; font-size: 12.5px; color: #9FB3D1;">{{ s.detail }}</div></div>
+          </sc-for>
         </div>
-        <div style="font-family: 'Courier Prime', monospace; font-size: 13px; color: #9FB3D1;">No synthesis, place &amp; route or hardware run in this consolidation. No bitstream, no board result.</div>
+        <div style="font-family: 'Courier Prime', monospace; font-size: 13px; color: #9FB3D1;">{{ unverified.body }}</div>
       </div>
     </sc-if>
   </section>
 
+  <sc-if value="{{ dealer.has }}">
   <section data-screen-label="The dealer" style="max-width: 1360px; margin: 0 auto; padding: 76px 28px 0;">
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 0; background: #F1F1F1; color: #0A1F44;">
-      <div style="background: #5B94C4; min-height: 360px; overflow: hidden;"><img width="736" height="736" loading="lazy" decoding="async" src="assets/projects/pqc/dealer.jpg" alt="Shady dealer opening his coat" style="display: block; width: 100%; height: 100%; object-fit: cover;" /></div>
+      <sc-if value="{{ dealer.hasImg }}">
+      <div style="background: #5B94C4; min-height: 360px; overflow: hidden;"><img sc-camel-src="{{ dealer.img.src }}" sc-camel-src-set="{{ dealer.img.srcset }}" sizes="(max-width: 800px) 100vw, 660px" width="{{ dealer.img.w }}" height="{{ dealer.img.h }}" loading="lazy" decoding="async" alt="{{ dealer.img.alt }}" style="display: block; width: 100%; height: 100%; object-fit: cover;" /></div>
+      </sc-if>
       <div style="padding: 30px 28px; display: grid; gap: 16px; align-content: center;">
-        <div style="display: flex; align-items: baseline; gap: 14px;"><span style="font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 700; color: #E63946;">04</span><h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 0.04em;">The Dealer Opens His Coat</h2></div>
-        <div style="font-family: 'Courier Prime', monospace; font-style: italic; font-size: 14px; color: #5A6A86;">"Demo-grade crypto, not secure crypto. Take a look before you pay."</div>
+        <div style="display: flex; align-items: baseline; gap: 14px;"><span style="font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 700; color: #E63946;">04</span><h2 style="margin: 0; font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 0.04em;">{{ dealer.heading }}</h2></div>
+        <div style="font-family: 'Courier Prime', monospace; font-style: italic; font-size: 14px; color: #5A6A86;">{{ dealer.kicker }}</div>
         <div style="display: grid; gap: 12px; font-size: 14px; line-height: 1.65; color: #26375A;">
-          <div style="display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 8px;"><span style="font-family: 'Orbitron', sans-serif; font-weight: 700; color: #E63946;">1</span><span>Kyber encaps hardcodes a zero message and draws noise from an LFSR, not SHAKE. ISSUE-002, open. KATs validate arithmetic, not entropy.</span></div>
-          <div style="display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 8px;"><span style="font-family: 'Orbitron', sans-serif; font-weight: 700; color: #E63946;">2</span><span>rtl/kyber is CRYSTALS-Kyber Round-3, not FIPS-203. Domain separation, K-PKE wrapper and FO implicit-reject are unimplemented.</span></div>
-          <div style="display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 8px;"><span style="font-family: 'Orbitron', sans-serif; font-weight: 700; color: #E63946;">3</span><span>rtl/dilithium is not proven end-to-end. dilithium_top instantiates stubs for keygen, sign and verify controllers.</span></div>
-          <div style="display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 8px;"><span style="font-family: 'Orbitron', sans-serif; font-weight: 700; color: #E63946;">4</span><span>The Encryption_Algos Dilithium scaffold is non-functional by its own header; kept in archive/ for ADR-002.</span></div>
+          <sc-for list="{{ dealer.list }}" as="r">
+            <div style="display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 8px;"><span style="font-family: 'Orbitron', sans-serif; font-weight: 700; color: #E63946;">{{ r.n }}</span><span>{{ r.text }}</span></div>
+          </sc-for>
         </div>
       </div>
     </div>
   </section>
+  </sc-if>
 
+  <sc-if value="{{ artefacts.has }}">
   <section data-screen-label="Artefacts" style="max-width: 1360px; margin: 0 auto; padding: 56px 28px 0;">
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 22px; border-top: 1px solid #3A5A8C; padding-top: 26px; font-size: 14px;">
-      <div style="display: grid; gap: 8px; align-content: start;"><div style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; color: #E63946;">REPOSITORY</div><div><a href="https://github.com/Upaasak/PQC">Upaasak/PQC</a> <span style="color: #9FB3D1;">(private)</span></div><div style="color: #9FB3D1;">903 entries, ~18 MB, consolidated from 19 locations.</div></div>
-      <div style="display: grid; gap: 8px; align-content: start;"><div style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; color: #E63946;">READ FIRST</div><div style="font-family: 'Courier Prime', monospace; color: #D8DEE8;">RESULTS.md · CONSOLIDATION_LOG.md</div><div style="font-family: 'Courier Prime', monospace; color: #D8DEE8;">verification/golden-vectors/README-STALE.md</div></div>
-      <div style="display: grid; gap: 8px; align-content: start;"><div style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; color: #E63946;">NEXT ROUTE</div><div style="color: #D8DEE8;">mlkem-zcu106-accel: take rtl/kyber from Round-3 to ML-KEM.</div></div>
+      <sc-for list="{{ artefacts.cols }}" as="c">
+        <div style="display: grid; gap: 8px; align-content: start;"><div style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; color: #E63946;">{{ c.label }}</div><sc-for list="{{ c.lines }}" as="l"><div style="font-family: {{ l.font }}; color: #D8DEE8;">{{ l.text }}</div></sc-for><sc-if value="{{ c.detail }}"><div style="color: #9FB3D1;">{{ c.detail }}</div></sc-if></div>
+      </sc-for>
+      <sc-for list="{{ artefacts.links }}" as="l">
+        <div style="display: grid; gap: 8px; align-content: start;"><div style="font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; color: #E63946;">{{ l.label }}</div><div><a href="{{ l.href }}" target="{{ l.target }}" rel="noopener">{{ l.href }}</a></div></div>
+      </sc-for>
     </div>
   </section>
+  </sc-if>
+  </sc-if>
 
   <div style="max-width: 1360px; margin: 64px auto 0; padding: 0 28px;">
     <div style="border-top: 1px solid #3A5A8C; padding: 18px 0 30px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-family: 'Courier Prime', monospace; font-size: 13px; color: #9FB3D1;">
@@ -284,12 +294,90 @@
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;tiltPostcard&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Postcard&quot;},&quot;postmarks&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Postcard&quot;},&quot;showUnverified&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Content&quot;}}">
+// Every word and picture on this page comes from Sanity: Projects → "POST-QUANTUM POST OFFICE" →
+// Case file page → Page content. Each section has a slot name (header, postcard, cast-…, fig-…)
+// that decides where it appears; this code only decides how it looks.
 class Component extends DCLogic {
+  state = { data: null, failed: false };
+
+  componentDidMount() {
+    WB.load().then(
+      (data) => { this.setState({ data }); WB.setDescription(WB.project(data, 'pqc').seo); },
+      () => this.setState({ failed: true })
+    );
+  }
+
   renderVals() {
+    const tilt = (this.props.tiltPostcard ?? true) ? 'rotate(-2deg)' : 'none';
+    const d = this.state.data;
+    if (!d) return { loading: !this.state.failed, failed: this.state.failed, ready: false, tilt };
+
+    const P = WB.project(d, 'pqc');
+    const S = P.slot;
+    const RED = '#E63946', NAVY = '#0A1F44';
+    const withImg = (s) => Object.assign(s, { hasImg: Boolean(s.img.src) });
+    const isRed = (c) => String(c).toUpperCase() === RED;
+
+    const header = S('header');
+    const chips = header.items.map((c) => isRed(c.accent)
+      ? { label: c.label || c.value, border: RED, color: RED }
+      : { label: c.label || c.value, border: c.accent || '#3A5A8C', color: '#D8DEE8' });
+
+    const postcard = withImg(S('postcard'));
+    const postmark = S('postmark');
+
+    // Cast cards: every section whose slot starts with "cast-", in the order they appear in Sanity.
+    // Row "quote" = the italic line under the card.
+    const cast = S('cast');
+    const bgs = ['#E63946', '#E63946', '#FFFFFF', '#5B94C4'];
+    cast.cards = (P.doc.sections || []).filter((s) => s && /^cast-/.test(s.key)).map((s, i) => {
+      const c = withImg(S(s.key));
+      return Object.assign(c, {
+        bg: bgs[i % 4], fit: bgs[i % 4] === '#FFFFFF' ? 'contain' : 'cover',
+        quotes: c.items.map((r) => r.value || r.detail).filter(Boolean),
+      });
+    });
+    cast.show = cast.has || cast.cards.length > 0;
+
+    // Bar rows: Detail = bar length in % (several, split by "/", for a stacked bar); Colour = bar colour
+    // (the last segment of a stacked bar; earlier ones are navy). Red bars get a red value.
+    const bars = (s) => s.items.map((r) => {
+      const ws = String(r.detail).split('/').map((x) => parseFloat(x)).filter((x) => !isNaN(x));
+      const col = r.accent || NAVY;
+      return {
+        label: r.label, value: r.value, color: isRed(col) ? RED : NAVY,
+        segs: ws.map((w, i) => ({ w: Math.max(0, Math.min(100, w)) + '%', bg: i === ws.length - 1 ? col : NAVY })),
+      };
+    });
+    const chart = (key, axis) => { const s = S(key); return Object.assign(s, { isChart: s.has, isLedger: false, bars: bars(s), axis }); };
+    const ledger = S('ledger');
+    Object.assign(ledger, { isChart: false, isLedger: ledger.has, rows: ledger.items.map((r) => ({ label: r.label, value: r.value, color: r.accent || 'inherit' })) });
+    const panels = [chart('fig-compress', true), chart('fig-golden', false), ledger, chart('fig-cycles', false)].filter((p) => p.has);
+
+    const unverified = S('unverified');
+    const ustats = S('unverified-stats').items;
+    unverified.bars = unverified.items.map((r) => ({ value: r.value, w: (parseFloat(r.detail) || 0) + '%', bg: r.accent || '#5A6A86' }));
+    unverified.hasBars = unverified.bars.length > 0;
+    unverified.show = (this.props.showUnverified ?? true) && (unverified.has || ustats.length > 0);
+
+    const dealer = withImg(S('dealer'));
+    dealer.list = dealer.items.map((r, i) => ({ n: i + 1, text: r.detail || r.value || r.label }));
+
+    // Artefact columns: Label = heading, Value = lines (a line in `backticks` is set in typewriter type), Detail = dim note.
+    const artefacts = S('artefacts');
+    artefacts.cols = artefacts.items.map((r) => ({
+      label: r.label, detail: r.detail,
+      lines: String(r.value).split('\n').map((t) => t.trim()).filter(Boolean).map((t) => /^`.*`$/.test(t)
+        ? { text: t.slice(1, -1), font: "'Courier Prime', monospace" }
+        : { text: t, font: 'inherit' }),
+    }));
+
     return {
-      tilt: (this.props.tiltPostcard ?? true) ? 'rotate(-2deg)' : 'none',
-      postmarks: this.props.postmarks ?? true,
-      showUnverified: this.props.showUnverified ?? true
+      loading: false, failed: false, ready: true, tilt,
+      header, tagline: S('tagline'), chips, postcard, postmark,
+      showPostmark: (this.props.postmarks ?? true) && Boolean(postmark.body),
+      cast, sorting: S('sorting'), receipts: S('receipts'), panels,
+      unverified, ustats, dealer, artefacts,
     };
   }
 }

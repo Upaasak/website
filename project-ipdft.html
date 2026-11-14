@@ -3,9 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./cms.js"></script>
 <script src="./support.js"></script>
 <title>Whistleblower Lab — iDFT Case File</title>
 <meta name="description" content="ipdft_channel_top: an interpolated-DFT channel with CORDIC magnitude and phase, verified and timing-closed at 148 MHz on Artix-7.">
+<link rel="preconnect" href="https://7h6avsoz.apicdn.sanity.io" crossorigin="">
 <link rel="icon" href="assets/brand/favicon.png" type="image/png" />
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png" />
 </head>
@@ -22,6 +24,7 @@
   a:hover { color: #05070A; background: #00D9FF; }
   ::selection { background: #39FF88; color: #05070A; }
   @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+  .cms-cursor { animation: blink 1s steps(1) infinite; }
   /* Nav: wrap instead of overflowing on narrow screens */
   .wb-nav, .wb-nav-links { flex-wrap: wrap; }
   .wb-nav span, .wb-nav a { white-space: nowrap; }
@@ -68,36 +71,55 @@
     </div>
   </div>
 
+  <sc-if value="{{ loading }}">
+    <section data-screen-label="Loading" style="max-width: 1520px; margin: 0 auto; padding: 40px 28px 0; min-height: 100vh; font-size: 12px; letter-spacing: 0.2em; color: #7AAE91;">
+      <a href="projects.html" style="font-size: 12px; letter-spacing: 0.14em; color: #7AAE91;">◂ ALL PROJECTS</a>
+      <div style="margin-top: 22px;">&gt; OPENING CASE FILE <span class="cms-cursor" style="color: #39FF88;">▌</span></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ failed }}">
+    <section data-screen-label="Error" style="max-width: 1520px; margin: 0 auto; padding: 40px 28px 0; min-height: 100vh;">
+      <div style="border: 1px dashed #ffb000; padding: 14px 16px; font-size: 12.5px; letter-spacing: 0.1em; line-height: 1.8; color: #ffb000;">ERR · CASE FILE UNAVAILABLE — the content service did not answer. <a href="project-ipdft.html">[ ▸ RETRY ]</a></div>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{ ready }}">
   <section data-screen-label="Case header" style="max-width: 1520px; margin: 0 auto; padding: 40px 28px 0;">
     <a href="projects.html" style="font-size: 12px; letter-spacing: 0.14em; color: #7AAE91;">◂ ALL PROJECTS</a>
     <div class="wb-stack" style="display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); gap: 44px; align-items: end; margin-top: 22px;">
       <div>
-        <div style="font-size: 12px; letter-spacing: 0.3em; color: #00D9FF; margin-bottom: 16px;">▚▚ PRJ_06 · CASE FILE ▞▞</div>
-        <h1 style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin: 0 0 12px; font-size: clamp(30px, 4.4vw, 54px); font-weight: 800; letter-spacing: 0.01em; color: #D7E0E6; line-height: 1.06;">POWER SYSTEM PROTOCOLS</h1>
-        <div style="font-size: 12.5px; letter-spacing: 0.16em; color: #7AAE91; margin-bottom: 18px;">TOP MODULE ▸ ipdft_channel_top</div>
-        <p style="max-width: 62ch; font-size: 14px; line-height: 1.9; color: #A8B3BD; margin: 0 0 14px;">A six-channel interpolated-DFT front end for grid instrumentation. Each channel windows its input, runs a sliding DFT bin, extracts magnitude and phase with a CORDIC, and differentiates frequency to get ROCOF. One clock domain, fixed point throughout, no vendor IP.</p>
-        <p style="max-width: 62ch; font-size: 14px; line-height: 1.9; color: #7AAE91; margin: 0;">It exists because a commercial PMU front end costs more than the lab's annual budget, and because it is a good excuse to learn where a fixed-point error budget goes wrong.</p>
+        <sc-if value="{{ header.has }}">
+        <div style="font-size: 12px; letter-spacing: 0.3em; color: #00D9FF; margin-bottom: 16px;">{{ header.kicker }}</div>
+        <h1 style="font-family: 'IBM Plex Mono', monospace; font-weight: 600; margin: 0 0 12px; font-size: clamp(30px, 4.4vw, 54px); font-weight: 800; letter-spacing: 0.01em; color: #D7E0E6; line-height: 1.06;">{{ header.heading }}</h1>
+        <sc-for list="{{ header.items }}" as="r">
+          <div style="font-size: 12.5px; letter-spacing: 0.16em; color: #7AAE91; margin-bottom: 18px;">{{ r.label }} ▸ {{ r.value }}</div>
+        </sc-for>
+        <sc-for list="{{ header.ps }}" as="p">
+          <p style="max-width: 62ch; font-size: 14px; line-height: 1.9; color: {{ p.color }}; margin: 0 0 {{ p.mb }};">{{ p.text }}</p>
+        </sc-for>
+        </sc-if>
       </div>
+      <sc-if value="{{ status.has }}">
       <div style="border: 1px solid #163D2A; font-size: 12px;">
-        <div style="background: #39FF88; color: #05070A; padding: 5px 12px; font-weight: 800; letter-spacing: 0.16em; display: flex; justify-content: space-between;"><span>BUILD.STATUS</span><span>░▒▓</span></div>
+        <div style="background: #39FF88; color: #05070A; padding: 5px 12px; font-weight: 800; letter-spacing: 0.16em; display: flex; justify-content: space-between;"><span>{{ status.heading }}</span><span>░▒▓</span></div>
         <div style="padding: 16px 14px; display: grid; gap: 11px;">
-          <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #7AAE91;">TARGET</span><span style="color: #D7E0E6;">XC7A100T-1</span></div>
-          <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #7AAE91;">LANGUAGE</span><span style="color: #D7E0E6;">VERILOG-2005</span></div>
-          <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #7AAE91;">CHANNELS</span><span style="color: #D7E0E6;">6</span></div>
-          <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #7AAE91;">FMAX</span><span style="color: #D7E0E6;">148 MHz</span></div>
-          <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #7AAE91;">WNS</span><span style="color: #D7E0E6;">+0.62 ns</span></div>
+          <sc-for list="{{ status.items }}" as="r">
+            <div style="display: flex; justify-content: space-between; gap: 12px;"><span style="color: #7AAE91;">{{ r.label }}</span><span style="color: #D7E0E6;">{{ r.value }}</span></div>
+          </sc-for>
           <div style="height: 1px; background: #77838E;"></div>
-          <div style="color: #D7E0E6; display: flex; align-items: center; gap: 9px; font-size: 13px;"><span style="animation: blink 1.1s step-end infinite; color: #39FF88;">█</span>IN VERIFICATION</div>
+          <div style="color: #D7E0E6; display: flex; align-items: center; gap: 9px; font-size: 13px;"><span style="animation: blink 1.1s step-end infinite; color: #39FF88;">█</span>{{ status.body }}</div>
         </div>
       </div>
+      </sc-if>
     </div>
   </section>
 
   <section data-screen-label="Schematic" style="max-width: 1520px; margin: 0 auto; padding: 44px 28px 0;">
     <div style="border: 1px solid #163D2A;">
       <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 7px 14px; border-bottom: 1px solid #163D2A; font-size: 11.5px; letter-spacing: 0.14em; color: #7AAE91;">
-        <span style="color: #D7E0E6;">FIG 1 ── ipdft_channel_top · RTL ELABORATED</span>
-        <span>6 CHANNELS · CORDIC MAG/PHASE · ROCOF</span>
+        <span style="color: #D7E0E6;">{{ schematic.heading }}</span>
+        <span>{{ schematic.kicker }}</span>
       </div>
       <div style="position: relative; padding: 14px 10px; overflow: hidden;">
         <canvas ref="{{ schemRef }}" style="display: block; width: 100%; height: auto;"></canvas>
@@ -111,86 +133,95 @@
     </div>
   </section>
 
+  <sc-if value="{{ datapath.has }}">
   <section data-screen-label="Datapath" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
     <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 24px;">
-      <span style="color: #05070A; background: #39FF88; padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: 'Silkscreen', monospace;">01</span>
-      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">DATAPATH</span>
-      <span style="flex: 1; color: #11626F; overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
+      <span style="color: #05070A; background: #39FF88; padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: 'Silkscreen', monospace;">{{ datapath.kicker }}</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">{{ datapath.heading }}</span>
+      <span style="flex: 1; color: #11626F; overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
     </div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+      <sc-for list="{{ datapath.items }}" as="s">
       <div style="border: 1px solid #163D2A; padding: 20px 18px; display: grid; gap: 11px; align-content: start;">
-        <div style="font-size: 11px; letter-spacing: 0.18em; color: #77838E;">STAGE 1</div>
-        <div style="font-size: 14.5px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.06em;">WINDOW</div>
-        <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">Hann coefficients in a single BRAM, shared across channels by time multiplexing. Q1.15 in, Q2.30 out, truncation error bounded at 2⁻¹⁴.</p>
+        <div style="font-size: 11px; letter-spacing: 0.18em; color: #77838E;">{{ s.label }}</div>
+        <div style="font-size: 14.5px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.06em;">{{ s.value }}</div>
+        <sc-for list="{{ s.paras }}" as="p">
+          <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">{{ p }}</p>
+        </sc-for>
       </div>
-      <div style="border: 1px solid #163D2A; padding: 20px 18px; display: grid; gap: 11px; align-content: start;">
-        <div style="font-size: 11px; letter-spacing: 0.18em; color: #77838E;">STAGE 2</div>
-        <div style="font-size: 14.5px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.06em;">SLIDING DFT BIN</div>
-        <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">Recursive bin update with leakage damping, five bins per channel. Guard bits sized from the worst-case input rather than from optimism.</p>
-      </div>
-      <div style="border: 1px solid #163D2A; padding: 20px 18px; display: grid; gap: 11px; align-content: start;">
-        <div style="font-size: 11px; letter-spacing: 0.18em; color: #77838E;">STAGE 3</div>
-        <div style="font-size: 14.5px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.06em;">CORDIC MAG / PHASE</div>
-        <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">16-iteration vectoring CORDIC, one shared engine, arctan table in ROM. Gain compensated at the output, not per iteration.</p>
-      </div>
-      <div style="border: 1px solid #163D2A; padding: 20px 18px; display: grid; gap: 11px; align-content: start;">
-        <div style="font-size: 11px; letter-spacing: 0.18em; color: #77838E;">STAGE 4</div>
-        <div style="font-size: 14.5px; font-weight: 700; color: #D7E0E6; letter-spacing: 0.06em;">IPDFT CORRECTION</div>
-        <p style="margin: 0; font-size: 13px; line-height: 1.85; color: #A8B3BD;">Three-point interpolation over neighbouring bins to recover off-bin frequency, then a differentiator for ROCOF with a configurable window.</p>
-      </div>
+      </sc-for>
     </div>
   </section>
+  </sc-if>
 
   <section data-screen-label="Verification" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
+    <sc-if value="{{ verification.has }}">
     <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 24px;">
-      <span style="color: #05070A; background: #39FF88; padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: 'Silkscreen', monospace;">02</span>
-      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">VERIFICATION</span>
+      <span style="color: #05070A; background: #39FF88; padding: 6px 9px; font-size: 9px; font-weight: 400; letter-spacing: 0.04em; font-family: 'Silkscreen', monospace;">{{ verification.kicker }}</span>
+      <span style="font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 600; letter-spacing: 0.18em; color: #D7E0E6;">{{ verification.heading }}</span>
       <span style="flex: 1; color: #11626F; overflow: hidden; white-space: nowrap;">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</span>
     </div>
+    </sc-if>
     <div class="wb-stack" style="display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 40px;">
       <div style="display: grid; gap: 0; border-top: 1px solid #182027; align-content: start;">
-        <div style="display: grid; grid-template-columns: minmax(0, 1fr) 120px 96px; gap: 16px; align-items: baseline; padding: 13px 4px; border-bottom: 1px solid #182027; font-size: 13px;"><span style="color: #D7E0E6;">Directed sine sweep, 45–65 Hz</span><span style="color: #7AAE91; font-size: 12px;">cocotb</span><span style="color: #39FF88;">PASS</span></div>
-        <div style="display: grid; grid-template-columns: minmax(0, 1fr) 120px 96px; gap: 16px; align-items: baseline; padding: 13px 4px; border-bottom: 1px solid #182027; font-size: 13px;"><span style="color: #D7E0E6;">Off-bin frequency, 0.01 Hz steps</span><span style="color: #7AAE91; font-size: 12px;">cocotb</span><span style="color: #39FF88;">PASS</span></div>
-        <div style="display: grid; grid-template-columns: minmax(0, 1fr) 120px 96px; gap: 16px; align-items: baseline; padding: 13px 4px; border-bottom: 1px solid #182027; font-size: 13px;"><span style="color: #D7E0E6;">Harmonic + noise, constrained random</span><span style="color: #7AAE91; font-size: 12px;">SV / UVM</span><span style="color: #39FF88;">PASS</span></div>
-        <div style="display: grid; grid-template-columns: minmax(0, 1fr) 120px 96px; gap: 16px; align-items: baseline; padding: 13px 4px; border-bottom: 1px solid #182027; font-size: 13px;"><span style="color: #D7E0E6;">Saturation and overflow assertions</span><span style="color: #7AAE91; font-size: 12px;">SVA</span><span style="color: #39FF88;">PASS</span></div>
-        <div style="display: grid; grid-template-columns: minmax(0, 1fr) 120px 96px; gap: 16px; align-items: baseline; padding: 13px 4px; border-bottom: 1px solid #182027; font-size: 13px;"><span style="color: #D7E0E6;">ROCOF step response vs. golden model</span><span style="color: #7AAE91; font-size: 12px;">python</span><span style="color: #ffb000;">2 FAILS</span></div>
-        <div style="display: grid; grid-template-columns: minmax(0, 1fr) 120px 96px; gap: 16px; align-items: baseline; padding: 13px 4px; border-bottom: 1px solid #182027; font-size: 13px;"><span style="color: #D7E0E6;">Channel-to-channel isolation</span><span style="color: #7AAE91; font-size: 12px;">SV / UVM</span><span style="color: #77838E;">OPEN</span></div>
+        <sc-for list="{{ tests }}" as="t">
+          <div style="display: grid; grid-template-columns: minmax(0, 1fr) 120px 96px; gap: 16px; align-items: baseline; padding: 13px 4px; border-bottom: 1px solid #182027; font-size: 13px;"><span style="color: #D7E0E6;">{{ t.label }}</span><span style="color: #7AAE91; font-size: 12px;">{{ t.value }}</span><span style="color: {{ t.color }};">{{ t.result }}</span></div>
+        </sc-for>
       </div>
       <div style="display: grid; gap: 14px; align-content: start;">
+        <sc-if value="{{ coverage.has }}">
         <div style="border: 1px solid #163D2A; padding: 18px 16px; display: grid; gap: 10px; font-size: 12.5px;">
-          <div style="color: #77838E; letter-spacing: 0.16em; font-size: 11px;">COVERAGE</div>
-          <div style="display: flex; justify-content: space-between;"><span style="color: #7AAE91;">STATEMENT</span><span style="color: #D7E0E6;">99.1 %</span></div>
-          <div style="display: flex; justify-content: space-between;"><span style="color: #7AAE91;">BRANCH</span><span style="color: #D7E0E6;">97.4 %</span></div>
-          <div style="display: flex; justify-content: space-between;"><span style="color: #7AAE91;">FUNCTIONAL</span><span style="color: #D7E0E6;">96.4 %</span></div>
+          <div style="color: #77838E; letter-spacing: 0.16em; font-size: 11px;">{{ coverage.heading }}</div>
+          <sc-for list="{{ coverage.items }}" as="r">
+            <div style="display: flex; justify-content: space-between;"><span style="color: #7AAE91;">{{ r.label }}</span><span style="color: #D7E0E6;">{{ r.value }}</span></div>
+          </sc-for>
           <div style="color: #39FF88; font-size: 13px; letter-spacing: -0.02em; overflow: hidden; white-space: nowrap;">███████████████░░░░░</div>
         </div>
+        </sc-if>
+        <sc-if value="{{ defect.has }}">
         <div style="border: 1px solid #ffb000; padding: 18px 16px; display: grid; gap: 9px; font-size: 12.5px;">
-          <div style="color: #ffb000; letter-spacing: 0.16em; font-size: 11px;">OPEN DEFECT · DEF-014</div>
-          <div style="color: #D7E0E6; line-height: 1.8;">ROCOF overshoots by 4.2 % on a 2 Hz/s step when the differentiator window is 4 samples. Suspected guard-bit truncation in stage 4.</div>
-          <div style="color: #7AAE91;">OWNER ▸ unassigned</div>
+          <div style="color: #ffb000; letter-spacing: 0.16em; font-size: 11px;">{{ defect.heading }}</div>
+          <sc-for list="{{ defect.paras }}" as="p">
+            <div style="color: #D7E0E6; line-height: 1.8;">{{ p }}</div>
+          </sc-for>
+          <sc-for list="{{ defect.items }}" as="r">
+            <div style="color: #7AAE91;">{{ r.label }} ▸ {{ r.value }}</div>
+          </sc-for>
         </div>
+        </sc-if>
       </div>
     </div>
   </section>
 
   <section data-screen-label="Signoff" style="max-width: 1520px; margin: 0 auto; padding: 56px 28px 0;">
     <div style="border: 1px solid #39FF88; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+      <sc-if value="{{ remaining.has }}">
       <div style="padding: 26px 24px; border-right: 1px solid #182027;">
-        <div style="font-size: 12px; letter-spacing: 0.18em; color: #77838E; margin-bottom: 14px;">WHAT IS LEFT</div>
+        <div style="font-size: 12px; letter-spacing: 0.18em; color: #77838E; margin-bottom: 14px;">{{ remaining.heading }}</div>
         <div style="display: grid; gap: 10px; font-size: 13.5px; color: #A8B3BD; line-height: 1.8;">
-          <div><span style="color: #39FF88;">▸ </span>Close DEF-014 and re-run the ROCOF suite.</div>
-          <div><span style="color: #39FF88;">▸ </span>Channel isolation testbench, currently unwritten.</div>
-          <div><span style="color: #39FF88;">▸ </span>Bench capture against a signal generator, not just simulation.</div>
+          <sc-for list="{{ remaining.items }}" as="r">
+            <div><span style="color: #39FF88;">▸ </span>{{ r.label }}</div>
+          </sc-for>
         </div>
       </div>
+      </sc-if>
+      <sc-if value="{{ artefacts.has }}">
       <div style="padding: 26px 24px; display: grid; gap: 12px; align-content: start; font-size: 13px;">
-        <div style="font-size: 12px; letter-spacing: 0.18em; color: #77838E;">ARTEFACTS</div>
-        <div><span style="color: #77838E;">SCHEM ▸ </span><span style="color: #A8B3BD;">schematic.pdf — not yet uploaded</span></div>
-        <div><span style="color: #77838E;">REPO ▸ </span><a href="join.html">github.com/whistleblower-lab/ipdft</a></div>
-        <div style="color: #7AAE91; line-height: 1.8; padding-top: 6px;">Reports, seeds and constraint files ship with the repository. Ask if you want the raw waveforms.</div>
+        <div style="font-size: 12px; letter-spacing: 0.18em; color: #77838E;">{{ artefacts.heading }}</div>
+        <sc-for list="{{ artefacts.items }}" as="r">
+          <div><span style="color: #77838E;">{{ r.label }} ▸ </span><span style="color: #A8B3BD;">{{ r.value }}</span></div>
+        </sc-for>
+        <sc-for list="{{ artefacts.links }}" as="l">
+          <div><span style="color: #77838E;">LINK ▸ </span><a href="{{ l.href }}" target="{{ l.target }}" rel="noopener">{{ l.label }}</a></div>
+        </sc-for>
+        <sc-for list="{{ artefacts.paras }}" as="p">
+          <div style="color: #7AAE91; line-height: 1.8; padding-top: 6px;">{{ p }}</div>
+        </sc-for>
       </div>
+      </sc-if>
     </div>
   </section>
+  </sc-if>
 
   <div style="max-width: 1520px; margin: 74px auto 0; padding: 0 28px;">
     <div style="border-top: 1px solid #163D2A; padding: 26px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; font-size: 12.5px;">
@@ -231,10 +262,25 @@ class Component extends DCLogic {
     mono:  { bg: '#0a0a0a', dim: '#3a3a3a', mid: '#8f8f8f', hot: '#ffffff', hi: '#ffffff' }
   };
 
+  state = { data: null, failed: false };
+
+  // Text comes from Sanity: Projects → the iDFT project → Case file page → Page content.
+  // Each section's slot name (header, build-status, schematic, …) decides where it appears.
+  // The schematic drawing itself is code.
   componentDidMount() {
     this.build();
+    // The canvas only exists once content has loaded, so size it then (and again when fonts are ready).
     const go = () => { this.sizeSchem(); this.loop(); };
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(go).catch(go); else go();
+    WB.load().then(
+      (data) => {
+        this.setState({ data }, () => {
+          go();
+          if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => this.sizeSchem()).catch(() => {});
+        });
+        WB.setDescription(WB.project(data, 'ipdft').seo);
+      },
+      () => this.setState({ failed: true })
+    );
     this.onResize = () => this.sizeSchem();
     window.addEventListener('resize', this.onResize);
   }
@@ -400,7 +446,30 @@ class Component extends DCLogic {
     tick();
   }
 
-  renderVals() { return { schemRef: this.schemRef }; }
+  renderVals() {
+    const schemRef = this.schemRef;
+    const d = this.state.data;
+    if (!d) return { loading: !this.state.failed, failed: this.state.failed, ready: false, schemRef };
+
+    const S = WB.project(d, 'ipdft').slot;
+    const header = S('header');
+    // First paragraph bright, the rest dimmer, as in the original design.
+    header.ps = header.paras.map((t, i, a) => ({ text: t, color: i === 0 ? '#A8B3BD' : '#7AAE91', mb: i === a.length - 1 ? '0' : '14px' }));
+
+    // Test rows: label = test, value = tool, detail = result. PASS is green, anything with FAIL amber, the rest grey.
+    const verification = S('verification');
+    const tests = verification.items.map((r) => {
+      const res = String(r.detail || '').trim();
+      return { label: r.label, value: r.value, result: res, color: r.accent || (/^pass/i.test(res) ? '#39FF88' : /fail/i.test(res) ? '#ffb000' : '#77838E') };
+    });
+
+    return {
+      loading: false, failed: false, ready: true, schemRef,
+      header, status: S('build-status'), schematic: S('schematic'), datapath: S('datapath'),
+      verification, tests, coverage: S('coverage'), defect: S('defect'),
+      remaining: S('remaining'), artefacts: S('artefacts'),
+    };
+  }
 }
 </script>
 </body>

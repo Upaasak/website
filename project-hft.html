@@ -3,8 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./cms.js"></script>
 <script src="./support.js"></script>
 <meta name="description" content="Tick-to-trade in FPGA fabric: market-data feed parsing on the wire, an in-fabric order book and a decision path measured in nanoseconds.">
+<link rel="preconnect" href="https://7h6avsoz.apicdn.sanity.io" crossorigin="">
+<link rel="preconnect" href="https://cdn.sanity.io">
 <title>Whistleblower Lab — HFT Tick-to-Trade</title>
 </head>
 <body>
@@ -24,6 +27,8 @@
   ::selection { background: #00FF7F; color: #000000; }
   @keyframes tick { from { transform: translateX(0) } to { transform: translateX(-50%) } }
   @keyframes blinkhft { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0.2 } }
+  @keyframes blink { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0 } }
+  .cms-cursor { animation: blink 1s steps(1) infinite; }
   /* Nav: wrap instead of overflowing on narrow screens */
   .wb-nav, .wb-nav-links { flex-wrap: wrap; }
   .wb-nav span, .wb-nav a { white-space: nowrap; }
@@ -72,33 +77,51 @@
     </div>
   </div>
 
+  
   <div style="position: relative; z-index: 2; background: #000000; border-bottom: 1px solid #00FF7F; overflow: hidden; height: 34px; display: flex; align-items: center;">{{ ticker }}</div>
 
   <main style="position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 28px;">
     <div style="padding-top: 24px;"><a href="projects.html" style="font-family: 'Share Tech Mono', monospace; font-size: 14px;">&lt; ALL PROJECTS</a></div>
 
+    <sc-if value="{{ loading }}">
+      <div data-screen-label="Loading" style="min-height: 100vh; padding-top: 28px; font-family: 'Share Tech Mono', monospace; font-size: 14px; letter-spacing: 0.2em; color: #00FF7F;">&gt; CONNECTING TO FEED <span class="cms-cursor">▌</span></div>
+    </sc-if>
+    <sc-if value="{{ failed }}">
+      <div data-screen-label="Error" style="min-height: 100vh; padding-top: 28px; font-family: 'Share Tech Mono', monospace; font-size: 14px; letter-spacing: 0.1em; color: #FF1744;">▲ FEED DOWN — the content service did not answer. <a href="project-hft.html">[ RECONNECT ]</a></div>
+    </sc-if>
+
+    <sc-if value="{{ ready }}">
+    <sc-if value="{{ header.has }}">
     <section data-screen-label="Hero" style="padding-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 40px; align-items: center;">
       <div style="display: grid; gap: 18px;">
-        <div style="font-family: 'Share Tech Mono', monospace; font-size: 14px; letter-spacing: 0.2em; color: #00FF7F;">PRJ_10 · CASE FILE · ZCU106</div>
-        <h1 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: clamp(64px, 9vw, 132px); line-height: 0.86; letter-spacing: 0.01em;">TICK <span style="color: #00FF7F;">→</span> TRADE</h1>
-        <div style="font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 0.06em; color: #00BFFF;">A 100%-FABRIC HFT PIPELINE</div>
-        <p style="margin: 0; max-width: 58ch; font-size: 16.5px; line-height: 1.75; color: #E0E0E0; text-wrap: pretty;">When an exchange sends a price update, whoever answers first gets the trade. This pipeline makes the whole decision in an FPGA: an ITCH market message comes in one side and a finished OUCH order leaves the other, a fixed handful of clock cycles later. PS is control-plane only.</p>
+        <div style="font-family: 'Share Tech Mono', monospace; font-size: 14px; letter-spacing: 0.2em; color: #00FF7F;">{{ header.kicker }}</div>
+        <h1 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: clamp(64px, 9vw, 132px); line-height: 0.86; letter-spacing: 0.01em;">{{ h1.a }}<sc-if value="{{ h1.arrow }}"><span style="color: #00FF7F;">→</span></sc-if>{{ h1.b }}</h1>
+        <sc-if value="{{ tagline.has }}">
+        <div style="font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 0.06em; color: #00BFFF;">{{ tagline.heading }}</div>
+        </sc-if>
+        <sc-for list="{{ header.paras }}" as="p">
+          <p style="margin: 0; max-width: 58ch; font-size: 16.5px; line-height: 1.75; color: #E0E0E0; text-wrap: pretty;">{{ p }}</p>
+        </sc-for>
         <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: #2A2A2A; border: 1px solid #2A2A2A;">
-          <div style="background: #111111; padding: 14px 12px; display: grid; gap: 2px;"><span style="font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: #00FF7F; line-height: 1;">78</span><span style="font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #A0A0A0;">CYC TICK-TO-TRADE</span></div>
-          <div style="background: #111111; padding: 14px 12px; display: grid; gap: 2px;"><span style="font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: #00FF7F; line-height: 1;">≈6</span><span style="font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #A0A0A0;">CYC OF COMPUTE</span></div>
-          <div style="background: #111111; padding: 14px 12px; display: grid; gap: 2px;"><span style="font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: #00BFFF; line-height: 1;">12/13</span><span style="font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #A0A0A0;">DEMOS MEET TIMING</span></div>
+          <sc-for list="{{ header.stats }}" as="s">
+            <div style="background: #111111; padding: 14px 12px; display: grid; gap: 2px;"><span style="font-family: 'Bebas Neue', sans-serif; font-size: 40px; color: {{ s.color }}; line-height: 1;">{{ s.value }}</span><span style="font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #A0A0A0;">{{ s.label }}</span></div>
+          </sc-for>
         </div>
       </div>
+      <sc-if value="{{ header.hasImg }}">
       <figure style="margin: 0; display: grid; gap: 8px;">
-        <div style="border: 2px solid #00FF7F; box-shadow: 0 0 40px rgba(0,255,127,0.18); overflow: hidden;"><img width="736" height="413" fetchpriority="high" src="assets/projects/hft/eat-the-rich.jpg" alt="Monopoly's Rich Uncle Pennybags holding an EAT THE RICH sign" style="display: block; width: 100%; height: auto;" /></div>
-        <figcaption style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #A0A0A0;">// the market maker earns the spread. The fastest one eats first.</figcaption>
+        <div style="border: 2px solid #00FF7F; box-shadow: 0 0 40px rgba(0,255,127,0.18); overflow: hidden;"><img sc-camel-src="{{ header.img.src }}" sc-camel-src-set="{{ header.img.srcset }}" sizes="(max-width: 980px) 100vw, 600px" width="{{ header.img.w }}" height="{{ header.img.h }}" fetchpriority="high" alt="{{ header.img.alt }}" style="display: block; width: 100%; height: auto;" /></div>
+        <figcaption style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #A0A0A0;">{{ header.img.caption }}</figcaption>
       </figure>
+      </sc-if>
     </section>
+    </sc-if>
 
+    <sc-if value="{{ pipeline.has }}">
     <section data-screen-label="Pipeline" style="padding-top: 72px; display: grid; gap: 22px;">
-      <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px; letter-spacing: 0.02em;"><span style="color: #00FF7F;">01</span> THE PIPELINE</h2>
+      <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px; letter-spacing: 0.02em;"><span style="color: #00FF7F;">{{ pipeline.kicker }}</span> {{ pipeline.heading }}</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 10px;">
-        <sc-for list="{{ stages }}" as="s" hint-placeholder-count="7">
+        <sc-for list="{{ pipeline.stages }}" as="s" hint-placeholder-count="7">
           <div style="background: #141414; border: 1px solid {{ s.border }}; padding: 14px 12px; display: grid; gap: 8px; align-content: start;" style-hover="box-shadow: 0 0 0 1px #00FF7F, 0 0 22px rgba(0,255,127,0.35);">
             <div style="display: flex; justify-content: space-between; font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #A0A0A0;"><span>{{ s.n }}</span><span style="color: #00FF7F;">PASS</span></div>
             <div style="font-family: 'Share Tech Mono', monospace; font-size: 14.5px; color: {{ s.color }};">{{ s.name }}</div>
@@ -107,50 +130,67 @@
           </div>
         </sc-for>
       </div>
-      <div style="font-family: 'Share Tech Mono', monospace; font-size: 13.5px; color: #A0A0A0;">every block bit-exact vs a Python golden model, then mutation-tested so a broken design is proven to fail · GHDL 4.1.0 + Vivado xsim 2025.1</div>
+      <div style="font-family: 'Share Tech Mono', monospace; font-size: 13.5px; color: #A0A0A0;">{{ pipeline.body }}</div>
     </section>
+    </sc-if>
 
+    <sc-if value="{{ latency.has }}">
     <section data-screen-label="Latency" style="padding-top: 72px; display: grid; gap: 22px;">
-      <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px;"><span style="color: #00FF7F;">02</span> WHERE THE CYCLES GO</h2>
+      <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px;"><span style="color: #00FF7F;">{{ latency.kicker }}</span> {{ latency.heading }}</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 26px; align-items: start;">
         <div style="display: grid; gap: 20px;">
+          <sc-if value="{{ split.has }}">
           <figure style="margin: 0; background: #111111; border: 1px solid #2A2A2A; padding: 18px; display: grid; gap: 14px;">
-            <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-family: 'Share Tech Mono', monospace; font-size: 13px;"><span style="white-space: nowrap;">FIG 1 · 78-CYCLE DECOMPOSITION</span><span style="color: #A0A0A0; white-space: nowrap;">serial ingest</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-family: 'Share Tech Mono', monospace; font-size: 13px;"><span style="white-space: nowrap;">{{ split.heading }}</span><span style="color: #A0A0A0; white-space: nowrap;">{{ split.kicker }}</span></div>
             <div style="display: flex; height: 38px; border: 1px solid #333333;">
-              <div style="width: 92.3%; background: repeating-linear-gradient(90deg, #1E4A6B 0 6px, #173A55 6px 12px); display: flex; align-items: center; padding-left: 10px; font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #FFFFFF;">~72 · 36 BYTES × 2 CYC INGEST</div>
-              <div style="width: 7.7%; background: #00FF7F;"></div>
+              <div style="width: {{ split.ingestW }}; background: repeating-linear-gradient(90deg, #1E4A6B 0 6px, #173A55 6px 12px); display: flex; align-items: center; padding-left: 10px; font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #FFFFFF;">{{ split.ingestLabel }}</div>
+              <div style="width: {{ split.computeW }}; background: #00FF7F;"></div>
             </div>
-            <div style="position: relative; height: 16px; font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #A0A0A0;"><span style="position: absolute; left: 0;">0</span><span style="position: absolute; right: 7.7%; padding-right: 6px; color: #00FF7F; white-space: nowrap;">compute ≈6 ▸</span><span style="position: absolute; right: 0;">78</span></div>
+            <div style="position: relative; height: 16px; font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #A0A0A0;"><span style="position: absolute; left: 0;">0</span><span style="position: absolute; right: {{ split.computeW }}; padding-right: 6px; color: #00FF7F; white-space: nowrap;">{{ split.computeLabel }}</span><span style="position: absolute; right: 0;">{{ split.total }}</span></div>
           </figure>
+          </sc-if>
+          <sc-if value="{{ parse.has }}">
           <figure style="margin: 0; background: #111111; border: 1px solid #2A2A2A; padding: 18px; display: grid; gap: 12px;">
-            <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-family: 'Share Tech Mono', monospace; font-size: 13px;"><span style="white-space: nowrap;">FIG 2 · PARSE LATENCY</span><span style="color: #A0A0A0; white-space: nowrap;">serial vs parallel · cycles</span></div>
+            <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-family: 'Share Tech Mono', monospace; font-size: 13px;"><span style="white-space: nowrap;">{{ parse.heading }}</span><span style="color: #A0A0A0; white-space: nowrap;">{{ parse.kicker }}</span></div>
             <div style="display: grid; gap: 8px;">
-              <div style="display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 10px; align-items: center;"><span style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #CFCFCF;">itch_parser</span><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 88%; height: 16px; background: #555555;"></div><span style="font-family: 'Share Tech Mono', monospace; font-size: 13px; white-space: nowrap; flex-shrink: 0;">72</span></div></div>
-              <div style="display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 10px; align-items: center;"><span style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #00FF7F;">itch_parser_par</span><div style="display: flex; align-items: center; gap: 8px;"><div style="width: 7.3%; height: 16px; background: #00FF7F; box-shadow: 0 0 12px #00FF7F;"></div><span style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #00FF7F; white-space: nowrap; flex-shrink: 0;">6 · 12×</span></div></div>
+              <sc-for list="{{ parse.bars }}" as="b">
+                <div style="display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 10px; align-items: center;"><span style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: {{ b.nameColor }};">{{ b.name }}</span><div style="display: flex; align-items: center; gap: 8px;"><div style="width: {{ b.w }}; height: 16px; background: {{ b.bg }}; box-shadow: {{ b.glow }};"></div><span style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: {{ b.textColor }}; white-space: nowrap; flex-shrink: 0;">{{ b.text }}</span></div></div>
+              </sc-for>
             </div>
           </figure>
+          </sc-if>
         </div>
         <div style="display: grid; gap: 16px;">
+          <sc-if value="{{ table.has }}">
           <div style="overflow-x: auto;">
             <div style="min-width: 440px; display: grid; font-size: 14px;">
-              <div style="display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr 0.7fr 0.7fr; gap: 8px; padding: 8px 0; border-bottom: 1px solid #00FF7F; font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #A0A0A0;"><span>PARSER</span><span>INGEST</span><span>LATENCY</span><span>FMAX (SYN)</span><span>LUT</span><span>FF</span></div>
-              <div style="display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr 0.7fr 0.7fr; gap: 8px; padding: 10px 0; border-bottom: 1px solid #2A2A2A;"><span style="font-family: 'Share Tech Mono', monospace;">serial</span><span>1 B / 2 cyc</span><span>72 cyc</span><span>~572 MHz</span><span>179</span><span>536</span></div>
-              <div style="display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr 0.7fr 0.7fr; gap: 8px; padding: 10px 0; border-bottom: 1px solid #2A2A2A; color: #00FF7F;"><span style="font-family: 'Share Tech Mono', monospace;">parallel</span><span>8 B / cyc</span><span>6 cyc</span><span>~1168 MHz</span><span>17</span><span>167</span></div>
+              <div style="display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr 0.7fr 0.7fr; gap: 8px; padding: 8px 0; border-bottom: 1px solid #00FF7F; font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #A0A0A0;"><sc-for list="{{ table.head }}" as="h"><span>{{ h }}</span></sc-for></div>
+              <sc-for list="{{ table.rows }}" as="r">
+                <div style="display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr 0.7fr 0.7fr; gap: 8px; padding: 10px 0; border-bottom: 1px solid #2A2A2A; color: {{ r.color }};"><sc-for list="{{ r.cells }}" as="c"><span style="font-family: {{ c.font }};">{{ c.text }}</span></sc-for></div>
+              </sc-for>
             </div>
           </div>
-          <p style="margin: 0; font-size: 15px; line-height: 1.7; color: #E0E0E0;">The parallel parser takes 8 bytes a cycle, the width of a 10G AXIS bus, and decodes every field of every message type in one cycle by speculating. Smaller, faster, and 12× lower latency. It assumes a 64-bit ingress from a 10G or 25G MAC.</p>
-          <div style="border-left: 3px solid #00BFFF; padding: 4px 0 4px 14px; font-family: 'Share Tech Mono', monospace; font-size: 14px; line-height: 1.6; color: #CFCFCF;">Timed replay with LOBSTER-derived gaps: wire-to-trade median 13 / p99 96 cyc, ≈43 / 320 ns at 300 MHz. latency_ts is last-tick-wins, a lower-bound proxy under bursts.</div>
+          </sc-if>
+          <sc-for list="{{ latency.paras }}" as="p">
+            <p style="margin: 0; font-size: 15px; line-height: 1.7; color: #E0E0E0;">{{ p }}</p>
+          </sc-for>
+          <sc-for list="{{ latency.items }}" as="n">
+            <div style="border-left: 3px solid #00BFFF; padding: 4px 0 4px 14px; font-family: 'Share Tech Mono', monospace; font-size: 14px; line-height: 1.6; color: #CFCFCF;">{{ n.value }}</div>
+          </sc-for>
         </div>
       </div>
     </section>
+    </sc-if>
 
+    <sc-if value="{{ timing.has }}">
     <section data-screen-label="Timing closure" style="padding-top: 72px; display: grid; gap: 22px;">
-      <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px;"><span style="color: #00FF7F;">03</span> TIMING CLOSURE</h2>
+      <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px;"><span style="color: #00FF7F;">{{ timing.kicker }}</span> {{ timing.heading }}</h2>
+      <sc-if value="{{ wns.has }}">
       <figure style="margin: 0; background: #111111; border: 1px solid #2A2A2A; padding: 20px 18px 14px; display: grid; gap: 12px;">
-        <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-family: 'Share Tech Mono', monospace; font-size: 13px;"><span>FIG 3 · WNS PER DEMO · xczu7ev-ffvc1156-2-e · VIVADO 2025.1</span><span style="color: #A0A0A0; white-space: nowrap;">ns · −0.5 to 3.5</span></div>
+        <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; font-family: 'Share Tech Mono', monospace; font-size: 13px;"><span>{{ wns.heading }}</span><span style="color: #A0A0A0; white-space: nowrap;">{{ wns.kicker }}</span></div>
         <div style="position: relative; display: grid; gap: 7px;">
           <div style="position: absolute; top: -6px; bottom: -6px; left: calc(230px + 12px + (100% - 242px) * 0.125); border-left: 1px solid #FFFFFF;"></div>
-          <sc-for list="{{ timing }}" as="t" hint-placeholder-count="13">
+          <sc-for list="{{ wns.bars }}" as="t" hint-placeholder-count="13">
             <div style="display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 12px; align-items: center;">
               <span style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: {{ t.label }}; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ t.name }}</span>
               <div style="position: relative; height: 18px;">
@@ -162,86 +202,104 @@
         </div>
         <div style="display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 12px;"><span></span><div style="position: relative; height: 16px; border-top: 1px solid #333333; font-family: 'Share Tech Mono', monospace; font-size: 11.5px; color: #A0A0A0;"><span style="position: absolute; left: 0; top: 3px;">−0.5</span><span style="position: absolute; left: 12.5%; top: 3px; transform: translateX(-50%);">0</span><span style="position: absolute; left: 37.5%; top: 3px; transform: translateX(-50%);">1</span><span style="position: absolute; left: 62.5%; top: 3px; transform: translateX(-50%);">2</span><span style="position: absolute; left: 87.5%; top: 3px; transform: translateX(-50%);">3</span></div></div>
       </figure>
+      </sc-if>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 14px;">
-        <div style="background: #111111; border: 1px solid #FF1744; padding: 16px; display: grid; gap: 6px;"><div style="font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #FF1744; animation: blinkhft 1.4s step-end infinite;">▲ VIOLATED</div><div style="font-family: 'Bebas Neue', sans-serif; font-size: 26px;">TOP_IMPL_2P0</div><div style="font-size: 14px; color: #CFCFCF;">Routed. WNS −0.245 ns, TNS −0.525 ns. The aggressive stretch target.</div></div>
-        <div style="background: #111111; border: 1px solid #00FF7F; padding: 16px; display: grid; gap: 6px;"><div style="font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #00FF7F;">● RECOVERED</div><div style="font-family: 'Bebas Neue', sans-serif; font-size: 26px;">TOP_IMPL_3P0</div><div style="font-size: 14px; color: #CFCFCF;">Routed. WNS +0.315 ns, TNS 0. 751 LUT, 688 FF, 0 BRAM, 0 DSP.</div></div>
-        <div style="background: #111111; border: 1px solid #00BFFF; padding: 16px; display: grid; gap: 6px;"><div style="font-family: 'Share Tech Mono', monospace; font-size: 12px; color: #00BFFF;">● BASE</div><div style="font-family: 'Bebas Neue', sans-serif; font-size: 26px;">HFT_TICK_TO_TRADE_TOP</div><div style="font-size: 14px; color: #CFCFCF;">WNS +1.828 ns. Its report is marked Synthesized, not Routed. 688 FF, no BRAM or DSP.</div></div>
+        <sc-for list="{{ tcards }}" as="c">
+          <div style="background: #111111; border: 1px solid {{ c.accent }}; padding: 16px; display: grid; gap: 6px;"><div style="font-family: 'Share Tech Mono', monospace; font-size: 12px; color: {{ c.accent }}; animation: {{ c.anim }};">{{ c.value }}</div><div style="font-family: 'Bebas Neue', sans-serif; font-size: 26px;">{{ c.label }}</div><div style="font-size: 14px; color: #CFCFCF;">{{ c.detail }}</div></div>
+        </sc-for>
       </div>
     </section>
+    </sc-if>
 
+    <sc-if value="{{ trade.has }}">
     <section data-screen-label="Worked trade" style="padding-top: 72px; display: grid; gap: 22px;">
-      <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px;"><span style="color: #00FF7F;">04</span> ONE TRADE, END TO END</h2>
+      <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px;"><span style="color: #00FF7F;">{{ trade.kicker }}</span> {{ trade.heading }}</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 10px; font-family: 'Share Tech Mono', monospace;">
-        <div style="background: #111111; border: 1px solid #2A2A2A; padding: 14px; display: grid; gap: 4px;"><span style="font-size: 12px; color: #A0A0A0;">BOOK · BID</span><span style="font-size: 22px; color: #00FF7F;">100000</span></div>
-        <div style="background: #111111; border: 1px solid #2A2A2A; padding: 14px; display: grid; gap: 4px;"><span style="font-size: 12px; color: #A0A0A0;">BOOK · OFFER</span><span style="font-size: 22px; color: #FF1744;">100010</span></div>
-        <div style="background: #111111; border: 1px solid #2A2A2A; padding: 14px; display: grid; gap: 4px;"><span style="font-size: 12px; color: #A0A0A0;">SPREAD</span><span style="font-size: 22px; color: #00BFFF;">10</span></div>
-        <div style="background: #111111; border: 1px solid #2A2A2A; padding: 14px; display: grid; gap: 4px;"><span style="font-size: 12px; color: #A0A0A0;">INTENT</span><span style="font-size: 22px;">BUY 100 @ 100001</span></div>
-        <div style="background: #111111; border: 1px solid #00FF7F; padding: 14px; display: grid; gap: 4px;"><span style="font-size: 12px; color: #A0A0A0;">RISK</span><span style="font-size: 22px; color: #00FF7F;">PASS</span></div>
+        <sc-for list="{{ trade.cells }}" as="c">
+          <div style="background: #111111; border: 1px solid {{ c.border }}; padding: 14px; display: grid; gap: 4px;"><span style="font-size: 12px; color: #A0A0A0;">{{ c.label }}</span><span style="font-size: 22px; color: {{ c.color }};">{{ c.value }}</span></div>
+        </sc-for>
       </div>
+      <sc-if value="{{ frame.has }}">
       <div style="background: #000000; border: 1px solid #00FF7F; padding: 18px; display: grid; gap: 12px;">
-        <div style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #A0A0A0;">OUCH-LITE FRAME · 16 BYTES · BIT-EXACT</div>
+        <div style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #A0A0A0;">{{ frame.heading }}</div>
         <div style="display: grid; grid-template-columns: repeat(16, minmax(0, 1fr)); gap: 4px;">
-          <sc-for list="{{ ouch }}" as="b" hint-placeholder-count="16">
+          <sc-for list="{{ frame.bytes }}" as="b" hint-placeholder-count="16">
             <div style="display: grid; gap: 3px; text-align: center;">
               <div style="font-family: 'Share Tech Mono', monospace; font-size: clamp(11px, 1.4vw, 17px); padding: 8px 0; border: 1px solid {{ b.c }}; color: {{ b.c }}; background: #0A0A0A;">{{ b.hex }}</div>
             </div>
           </sc-for>
         </div>
         <div style="display: flex; gap: 16px; flex-wrap: wrap; font-family: 'Share Tech Mono', monospace; font-size: 12px;">
-          <span style="color: #00FF7F;">■ 4F 42 · 'O' 'B'</span>
-          <span style="color: #00BFFF;">■ 00 01 86 A1 · price 100001</span>
-          <span style="color: #FFFFFF;">■ 00 00 00 64 · qty 100</span>
-          <span style="color: #A0A0A0;">■ 00 00 00 01</span>
-          <span style="color: #FF1744;">■ 0D 0A · CR LF</span>
+          <sc-for list="{{ frame.legend }}" as="g">
+            <span style="color: {{ g.c }};">{{ g.text }}</span>
+          </sc-for>
         </div>
       </div>
+      </sc-if>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 14px;">
-        <div style="background: #111111; border: 1px solid #2A2A2A; padding: 16px; display: grid; gap: 6px;"><div style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #00BFFF;">MOLDUDP64 INGRESS</div><div style="font-size: 14px; line-height: 1.6; color: #CFCFCF;">400 real AAPL packets, 0 gaps, 199 OUCH out, BBO bit-exact vs golden. GHDL and xsim.</div></div>
-        <div style="background: #111111; border: 1px solid #2A2A2A; padding: 16px; display: grid; gap: 6px;"><div style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #00BFFF;">SOUPBINTCP OVER TOE</div><div style="font-size: 14px; line-height: 1.6; color: #CFCFCF;">SYN / SYN-ACK / ACK, then the order leaves as a TCP data segment, seq 1001, PSH|ACK. Payload bit-exact.</div></div>
-        <div style="background: #111111; border: 1px solid #2A2A2A; padding: 16px; display: grid; gap: 6px;"><div style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: #00FF7F;">CLOSED LOOP</div><div style="font-size: 14px; line-height: 1.6; color: #CFCFCF;">The exchange sends a fill back over the same session; fill_rx decodes it. net_position = +100.</div></div>
+        <sc-for list="{{ ecards }}" as="c">
+          <div style="background: #111111; border: 1px solid #2A2A2A; padding: 16px; display: grid; gap: 6px;"><div style="font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: {{ c.color }};">{{ c.label }}</div><div style="font-size: 14px; line-height: 1.6; color: #CFCFCF;">{{ c.detail }}</div></div>
+        </sc-for>
       </div>
     </section>
+    </sc-if>
 
+    <sc-if value="{{ payoff.has }}">
     <section data-screen-label="Payoff" style="padding-top: 72px;">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 30px; align-items: center; border: 1px solid #00FF7F; background: #07120C; padding: 26px;">
+        <sc-if value="{{ payoff.hasImg }}">
         <figure style="margin: 0; display: grid; gap: 8px; justify-items: center;">
-          <img width="736" height="736" loading="lazy" decoding="async" src="assets/cards/hft.jpg" alt="Cartoon man in sunglasses hugging stacks of cash" style="display: block; width: min(100%, 380px); height: auto; border: 2px solid #00FF7F; box-shadow: 0 0 36px rgba(0,255,127,0.22);" />
-          <figcaption style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #00FF7F;">// net_position = +100</figcaption>
+          <img sc-camel-src="{{ payoff.img.src }}" sc-camel-src-set="{{ payoff.img.srcset }}" sizes="380px" width="{{ payoff.img.w }}" height="{{ payoff.img.h }}" loading="lazy" decoding="async" alt="{{ payoff.img.alt }}" style="display: block; width: min(100%, 380px); height: auto; border: 2px solid #00FF7F; box-shadow: 0 0 36px rgba(0,255,127,0.22);" />
+          <figcaption style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #00FF7F;">{{ payoff.img.caption }}</figcaption>
         </figure>
+        </sc-if>
         <div style="display: grid; gap: 14px;">
-          <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px; color: #00FF7F;">THE PAYOFF</h2>
-          <p style="margin: 0; font-size: 15.5px; line-height: 1.7; color: #E0E0E0;">Order out, fill in, inventory updated, all over one established TCP session. The loop closes in simulation: market data, decision, SoupBinTCP egress through the TOE, execution report back through fill_rx.</p>
-          <div style="font-family: 'Share Tech Mono', monospace; font-size: 14px; line-height: 1.6; color: #CFCFCF; border-left: 3px solid #00FF7F; padding-left: 14px;">Simulated, not traded. No exchange, no colocation, no money moved.</div>
+          <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px; color: #00FF7F;">{{ payoff.heading }}</h2>
+          <sc-for list="{{ payoff.paras }}" as="p">
+            <p style="margin: 0; font-size: 15.5px; line-height: 1.7; color: #E0E0E0;">{{ p }}</p>
+          </sc-for>
+          <sc-for list="{{ payoff.items }}" as="n">
+            <div style="font-family: 'Share Tech Mono', monospace; font-size: 14px; line-height: 1.6; color: #CFCFCF; border-left: 3px solid #00FF7F; padding-left: 14px;">{{ n.value }}</div>
+          </sc-for>
         </div>
       </div>
     </section>
+    </sc-if>
 
+    <sc-if value="{{ risk.has }}">
     <section data-screen-label="Risk" style="padding-top: 72px;">
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 30px; align-items: center; border: 1px solid #FF1744; background: #120709; padding: 26px;">
+        <sc-if value="{{ risk.hasImg }}">
         <figure style="margin: 0; display: grid; gap: 8px; justify-items: center;">
-          <img width="250" height="250" loading="lazy" decoding="async" src="assets/projects/hft/broke.jpg" alt="Monopoly man with empty hands above the word BROKE?" style="display: block; width: min(100%, 260px); height: auto; filter: grayscale(1) contrast(1.1);" />
-          <figcaption style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #FF1744;">// what the risk gate exists to prevent</figcaption>
+          <img sc-camel-src="{{ risk.img.src }}" sc-camel-src-set="{{ risk.img.srcset }}" sizes="260px" width="{{ risk.img.w }}" height="{{ risk.img.h }}" loading="lazy" decoding="async" alt="{{ risk.img.alt }}" style="display: block; width: min(100%, 260px); height: auto; filter: grayscale(1) contrast(1.1);" />
+          <figcaption style="font-family: 'Share Tech Mono', monospace; font-size: 13px; color: #FF1744;">{{ risk.img.caption }}</figcaption>
         </figure>
+        </sc-if>
         <div style="display: grid; gap: 14px;">
-          <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px; color: #FF1744;">05 RISK &amp; HONEST SCOPE</h2>
-          <p style="margin: 0; font-size: 15.5px; line-height: 1.7; color: #E0E0E0;">risk_gate is a hardware interlock. An order that breaks position or size limits is blocked in the circuit, not logged by software downstream.</p>
+          <h2 style="margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 46px; color: #FF1744;">{{ risk.heading }}</h2>
+          <sc-for list="{{ risk.paras }}" as="p">
+            <p style="margin: 0; font-size: 15.5px; line-height: 1.7; color: #E0E0E0;">{{ p }}</p>
+          </sc-for>
           <div style="display: grid; gap: 8px; font-size: 14.5px; line-height: 1.55; color: #E0E0E0;">
-            <div><span style="color: #FF1744; font-family: 'Share Tech Mono', monospace;">▲ </span>No exchange feed or colocation. Latency is sim datapath cycles, not live wire-to-trade.</div>
-            <div><span style="color: #FF1744; font-family: 'Share Tech Mono', monospace;">▲ </span>No hardware run recorded on the ZCU106; silicon is the target.</div>
-            <div><span style="color: #FF1744; font-family: 'Share Tech Mono', monospace;">▲ </span>bbo_book is single-level: no depth, no order-id matching.</div>
-            <div><span style="color: #FF1744; font-family: 'Share Tech Mono', monospace;">▲ </span>strategy_mm emits one buy quote when spread ≥ threshold; sell side and inventory band are future work.</div>
-            <div><span style="color: #FF1744; font-family: 'Share Tech Mono', monospace;">▲ </span>OUCH-lite fixed 16-byte layout, not venue-exact.</div>
+            <sc-for list="{{ risk.items }}" as="r">
+              <div><span style="color: #FF1744; font-family: 'Share Tech Mono', monospace;">▲ </span>{{ r.value }}</div>
+            </sc-for>
           </div>
         </div>
       </div>
     </section>
+    </sc-if>
 
+    <sc-if value="{{ artefacts.has }}">
     <section data-screen-label="Artefacts" style="padding-top: 48px;">
       <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; border-top: 1px solid #2A2A2A; padding-top: 18px; font-size: 14.5px;">
-        <span><span style="font-family: 'Share Tech Mono', monospace; color: #A0A0A0;">REPO ▸ </span><a href="https://github.com/Upaasak/hft-tick-to-trade">Upaasak/hft-tick-to-trade</a> <span style="color: #A0A0A0;">· feat/parallel-top · private</span></span>
-        <span style="font-family: 'Share Tech Mono', monospace; color: #A0A0A0;">source commit ba48246b</span>
+        <sc-for list="{{ artefacts.rows }}" as="r">
+          <sc-if value="{{ r.labelled }}"><span><span style="font-family: 'Share Tech Mono', monospace; color: #A0A0A0;">{{ r.label }}</span>{{ r.value }} <span style="color: #A0A0A0;">{{ r.detail }}</span></span></sc-if><sc-if value="{{ r.plain }}"><span style="font-family: 'Share Tech Mono', monospace; color: #A0A0A0;">{{ r.value }}</span></sc-if>
+        </sc-for>
       </div>
     </section>
+    </sc-if>
+    </sc-if>
   </main>
 
   <footer style="position: relative; z-index: 1; max-width: 1280px; margin: 40px auto 0; padding: 16px 28px 30px; border-top: 1px solid #00FF7F; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-family: 'Share Tech Mono', monospace; font-size: 14px; color: #A0A0A0;">
@@ -251,55 +309,130 @@
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;showTicker&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Market feed&quot;},&quot;tickerSeconds&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:40,&quot;min&quot;:10,&quot;max&quot;:90,&quot;step&quot;:5,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Market feed&quot;},&quot;circuitGrid&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Background&quot;}}">
+// Every word and picture on this page comes from Sanity: Projects → "HFT TICK-TO-TRADE" →
+// Case file page → Page content. Each section there has a slot name (ticker, header, pipeline, …)
+// that decides where it appears; this code only decides how it looks.
 class Component extends DCLogic {
+  state = { data: null, failed: false };
+
+  componentDidMount() {
+    WB.load().then(
+      (data) => { this.setState({ data }); WB.setDescription(WB.project(data, 'hft').seo); },
+      () => this.setState({ failed: true })
+    );
+  }
+
   renderVals() {
-    const items = [
-      ['ITCH', 'ADD BUY @100000', '#00FF7F'], ['ITCH', 'ADD SELL @100010', '#FF1744'], ['BBO', 'SPREAD 10', '#00BFFF'],
-      ['STRAT', 'BUY 100 @100001', '#00FF7F'], ['RISK', 'PASS', '#00FF7F'], ['OUCH', '4F 42 00 01 86 A1 00 00 00 64 00 00 00 01 0D 0A', '#FFFFFF'],
-      ['LAT', '78 CYC', '#00BFFF'], ['PARSE', '6 CYC · 12×', '#00FF7F'], ['WNS', '+1.828 ns', '#00BFFF'], ['IMPL_2P0', '−0.245 ns', '#FF1744'],
-      ['AAPL', '400 PKTS · 0 GAPS', '#FFFFFF'], ['FILL', 'NET POS +100', '#00FF7F']
-    ];
-    const one = items.map((it, i) => React.createElement('span', { key: i, style: { display: 'inline-flex', gap: '8px', padding: '0 22px', borderRight: '1px solid #222' } },
-      React.createElement('span', { style: { color: '#777' } }, it[0]),
-      React.createElement('span', { style: { color: it[2] } }, it[1])));
+    const circuit = this.props.circuitGrid ?? true;
+    const d = this.state.data;
+    if (!d) return { loading: !this.state.failed, failed: this.state.failed, ready: false, circuit, ticker: null };
+
+    const S = WB.project(d, 'hft').slot;
+    const num = (v) => parseFloat(String(v).replace('−', '-').replace(',', '.'));
+    const withImg = (s) => Object.assign(s, { hasImg: Boolean(s.img.src) });
+
+    // Ticker tape: Rows = tag (label), message (value), colour (accent). Shown twice for a seamless loop.
+    const tape = S('ticker').items;
+    const one = tape.map((it, i) => React.createElement('span', { key: i, style: { display: 'inline-flex', gap: '8px', padding: '0 22px', borderRight: '1px solid #222' } },
+      React.createElement('span', { style: { color: '#777' } }, it.label),
+      React.createElement('span', { style: { color: it.accent || '#FFFFFF' } }, it.value)));
     const speed = this.props.tickerSeconds ?? 40;
-    const ticker = (this.props.showTicker ?? true) ? React.createElement('div', {
+    const ticker = (this.props.showTicker ?? true) && tape.length ? React.createElement('div', {
       style: { display: 'inline-flex', whiteSpace: 'nowrap', fontFamily: "'Share Tech Mono', monospace", fontSize: '13px', animation: 'tick ' + speed + 's linear infinite' }
     }, one, one.map((e, i) => React.cloneElement(e, { key: 'b' + i }))) : null;
 
-    const stages = [
-      ['itch_parser', 'fields out of raw ITCH', 'GHDL + xsim · bit-exact'],
-      ['event_normalizer', 'clean internal events', '218 records'],
-      ['bbo_book', 'best bid and offer', '413 records'],
-      ['strategy_mm', 'market-maker quote', '18 records'],
-      ['risk_gate', 'hardware limit interlock', '42 cycles'],
-      ['ouch_encoder', 'OUCH byte frame', '8 frames'],
-      ['latency_ts', 'in-fabric stopwatch', '9 fires']
-    ].map((s, i) => ({ n: '0' + (i + 1), name: s[0], role: s[1], cov: s[2], color: i === 4 ? '#FF1744' : '#FFFFFF', border: i === 4 ? '#5A1A24' : '#2A2A2A' }));
+    const header = withImg(S('header'));
+    header.stats = header.items.map((r) => ({ value: r.value, label: r.label, color: r.accent || '#00FF7F' }));
+    const cut = header.heading.indexOf('→');
+    const h1 = cut === -1 ? { a: header.heading, arrow: false, b: '' } : { a: header.heading.slice(0, cut), arrow: true, b: header.heading.slice(cut + 1) };
 
-    const raw = [
-      ['bbo_book', 1.972], ['bbo_book_impl_2p0', 0.05], ['event_normalizer', 1.725], ['hft_tick_to_trade_top', 1.828],
-      ['hft_tick_to_trade_top_impl_2p0', -0.245], ['hft_tick_to_trade_top_impl_3p0', 0.315], ['itch_parser', 2.251],
-      ['itch_parser_impl_2p0', 0.302], ['latency_ts', 3.28], ['ouch_encoder', 3.287], ['risk_gate', 2.065],
-      ['selftest', 0.597], ['strategy_mm', 1.725]
-    ];
-    const pct = v => (v / 4 * 100);
-    const timing = raw.map(r => {
-      const v = r[1], neg = v < 0;
+    // Pipeline stages: name (label), role (detail), coverage (value); an accent colour marks a special stage.
+    const pipeline = S('pipeline');
+    pipeline.stages = pipeline.items.map((r, i) => ({
+      n: String(i + 1).padStart(2, '0'), name: r.label, role: r.detail, cov: r.value,
+      color: r.accent || '#FFFFFF', border: r.accent ? '#5A1A24' : '#2A2A2A',
+    }));
+
+    // Fig 1: first Row = ingest (label shown inside the bar), second = compute; values are cycles.
+    const split = S('latency-split');
+    const [ing, cmp] = [split.items[0] || {}, split.items[1] || {}];
+    const total = (num(ing.value) || 0) + (num(cmp.value) || 0);
+    Object.assign(split, {
+      ingestLabel: ing.label, computeLabel: cmp.label, total: total || '',
+      ingestW: total ? (num(ing.value) / total * 100).toFixed(1) + '%' : '0%',
+      computeW: total ? (num(cmp.value) / total * 100).toFixed(1) + '%' : '0%',
+    });
+
+    // Fig 2: bars scaled so the largest value fills 88% of the track; an accent highlights a row.
+    const parse = S('latency-parse');
+    const pmax = Math.max(...parse.items.map((r) => num(r.value) || 0), 1);
+    parse.bars = parse.items.map((r) => {
+      const v = num(r.value) || 0;
+      return {
+        name: r.label, text: r.detail || r.value, w: (v / pmax * 88).toFixed(1) + '%',
+        bg: r.accent || '#555555', glow: r.accent ? '0 0 12px ' + r.accent : 'none',
+        nameColor: r.accent || '#CFCFCF', textColor: r.accent || 'inherit',
+      };
+    });
+
+    // Table: column titles in the kicker separated by "|"; each Row = first cell (label) + "|"-separated cells (value).
+    const table = S('latency-table');
+    const mono = "'Share Tech Mono', monospace";
+    table.head = String(table.kicker).split('|').map((t) => t.trim());
+    table.rows = table.items.map((r) => ({
+      color: r.accent || 'inherit',
+      cells: [r.label].concat(String(r.value).split('|')).map((t, i) => ({ text: String(t).trim(), font: i === 0 ? mono : 'inherit' })),
+    }));
+
+    // Fig 3: WNS in ns per demo (value), axis −0.5 … 3.5.
+    const wns = S('timing-wns');
+    const pct = (v) => v / 4 * 100;
+    wns.bars = wns.items.map((r) => {
+      const v = num(r.value) || 0, neg = v < 0;
       const left = neg ? 12.5 - pct(-v) : 12.5, width = Math.max(0.4, pct(Math.abs(v)));
       return {
-        name: r[0], wns: (v > 0 ? '+' : '') + v.toFixed(3),
+        name: r.label, wns: (v > 0 ? '+' : '') + v.toFixed(3),
         left: left.toFixed(2) + '%', width: width.toFixed(2) + '%',
         tagLeft: (neg ? 12.5 : 12.5 + width).toFixed(2) + '%',
         color: neg ? '#FF1744' : (v < 0.4 ? '#00BFFF' : '#00FF7F'),
         glow: neg ? 'rgba(255,23,68,0.6)' : 'rgba(0,255,127,0.25)',
-        label: neg ? '#FF1744' : '#CFCFCF'
+        label: neg ? '#FF1744' : '#CFCFCF',
       };
     });
-    const hex = ['4F', '42', '00', '01', '86', 'A1', '00', '00', '00', '64', '00', '00', '00', '01', '0D', '0A'];
-    const cols = ['#00FF7F', '#00FF7F', '#00BFFF', '#00BFFF', '#00BFFF', '#00BFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#A0A0A0', '#A0A0A0', '#A0A0A0', '#A0A0A0', '#FF1744', '#FF1744'];
-    const ouch = hex.map((h, i) => ({ hex: h, c: cols[i] }));
-    return { ticker, stages, timing, ouch, circuit: this.props.circuitGrid ?? true };
+
+    // Status cards: a status starting with ▲ blinks.
+    const tcards = S('timing-cards').items.map((r) => ({
+      label: r.label, value: r.value, detail: r.detail, accent: r.accent || '#00BFFF',
+      anim: /^▲/.test(String(r.value).trim()) ? 'blinkhft 1.4s step-end infinite' : 'none',
+    }));
+
+    // Trade cells: detail "highlight" draws the border in the accent colour.
+    const trade = S('trade');
+    trade.cells = trade.items.map((r) => ({
+      label: r.label, value: r.value, color: r.accent || 'inherit',
+      border: /highlight/i.test(r.detail) && r.accent ? r.accent : '#2A2A2A',
+    }));
+
+    // OUCH frame: each Row is a group of hex bytes (label) with a meaning (detail) and colour (accent).
+    const frame = S('trade-frame');
+    frame.bytes = [];
+    frame.legend = frame.items.map((r) => {
+      const c = r.accent || '#FFFFFF';
+      String(r.label).split(/\s+/).filter(Boolean).forEach((h) => frame.bytes.push({ hex: h, c }));
+      return { c, text: '■ ' + r.label + (r.detail ? ' · ' + r.detail : '') };
+    });
+
+    const ecards = S('trade-cards').items.map((r) => ({ label: r.label, detail: r.detail || r.value, color: r.accent || '#00BFFF' }));
+
+    const artefacts = S('artefacts');
+    artefacts.rows = artefacts.items.map((r) => ({ label: r.label, value: r.value, detail: r.detail, labelled: Boolean(r.label), plain: !r.label }));
+
+    return {
+      loading: false, failed: false, ready: true, circuit, ticker,
+      header, h1, tagline: S('tagline'), pipeline, latency: S('latency'), split, parse, table,
+      timing: S('timing'), wns, tcards, trade, frame, ecards,
+      payoff: withImg(S('payoff')), risk: withImg(S('risk')), artefacts,
+    };
   }
 }
 </script>

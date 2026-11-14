@@ -1,0 +1,130 @@
+{
+  "seoDescription": "TCP/IP in FPGA: MAC, ARP, IPv4 and a TCP state machine with retransmission, all in hardware with no soft core in the data path.",
+  "sections": [
+    {
+      "key": "header",
+      "kicker": "PRJ_03 // CASE FILE",
+      "heading": "PURE-RTL TCP OFFLOAD ENGINE",
+      "body": "ZCU106 / SFP0 · NO PROCESSOR IN THE DATAPATH",
+      "images": [{"src": "assets/cards/tcpip.webp", "alt": "Two dithered hands meeting through a PROJECT.EXE window under the letters TCP/IP"}]
+    },
+    {
+      "key": "intro",
+      "kicker": "toe@zcu106: ~/pl-tcp-stack",
+      "heading": "$ cat README.md | head",
+      "body": "A TCP/IP stack implemented entirely in FPGA fabric. MAC, ARP, IPv4, the RFC 9293 state machine, retransmission, RTO estimation, congestion control and reassembly are all RTL.",
+      "items": [
+        {"label": "SUSTAINED GOODPUT", "value": "930.33 Mbps", "detail": "96% of the 964.33 Mbps MSS-1460 ceiling"},
+        {"label": "RETRANSMISSIONS", "value": "0", "detail": "of 2,398,934 segments, tshark"},
+        {"label": "TIMING", "value": "+1.823 ns", "detail": "WNS at 125 MHz"},
+        {"label": "SERVER MODE", "value": "40 / 40", "detail": "inbound connections, handshake 0.4 ms"}
+      ]
+    },
+    {
+      "key": "stack",
+      "kicker": "01 //",
+      "heading": "THE STACK",
+      "body": "   application (echo | counter)\n               │\n       toe_tcp_engine     RFC 9293 FSM, cwnd,\n               │          retransmit, reassembly\n       toe_ip_bridge      header + RFC 1071 csum,\n               │          double-buffered\n         eth_ip_core      IPv4 + ARP + MAC\n               │\n     gig_ethernet_pcs_pma  SGMII\n               │\n      GTH Quad 225 ch2 ──▶ SFP0 cage",
+      "items": [
+        {"label": "TX PATH", "detail": "The application writes into toe_send_buffer. On a flush the engine asks toe_segmenter for a segment bounded by cwnd, the peer window and free retransmission-table space. The bridge builds the header and computes the checksum while it reads, over a doubled buffer so segment N+1 is prepared while N is on the wire."},
+        {"label": "RX PATH", "detail": "The bridge parses inbound TCP, verifies the checksum and offers it to the engine. A one-deep skid buffer latches it the cycle it is offered, whatever the FSM state. Pure ACKs drain even while the FSM waits on a TX segment."},
+        {"value": "rtl/ 23 VHDL modules · rtl/eth/ 28 Verilog files · tb/ 49 testbenches · vectors/ 25 golden files"}
+      ]
+    },
+    {
+      "key": "handshake",
+      "kicker": "02 //",
+      "heading": "TWO MACS ON THE WIRE",
+      "body": "00:0a:35 is the Xilinx OUI; bc:e9:2f is the host NIC. Two distinct MACs, not loopback. Taking the host link down mid-transfer halted the stream at once, and every source in build_toe.tcl greps clean for zynq_ultra_ps_e, processing_system and PS8.\n\nPassive open now works too: 40 of 40 sequential inbound connections accepted.",
+      "items": [
+        {"label": "00:0a:35:00:01:02", "value": "bc:e9:2f:a1:8e:f6", "detail": ", IPv4, length 1514\n192.168.50.60.63676 > 192.168.50.10.8081:\n  Flags [P.], seq 1460:2920, length 1460"}
+      ],
+      "images": [{"src": "assets/projects/tcpip/handshake.jpg", "alt": "Halftone hand shaking a wireframe hand", "caption": "// SYN → SYN-ACK → ACK. Flesh meets fabric."}]
+    },
+    {
+      "key": "progress",
+      "kicker": "03 //",
+      "heading": "0.02 → 930 Mbps"
+    },
+    {
+      "key": "progress-throughput",
+      "heading": "FIG 1 · THROUGHPUT BY STAGE",
+      "kicker": "Mbps, linear",
+      "body": "┆ 964.33 Mbps MSS-1460 goodput ceiling · ~47,000× from first run",
+      "items": [
+        {"label": "counter v1", "value": "0.02"},
+        {"label": "counter v2", "value": "38.75"},
+        {"label": "D20 + C11", "value": "389.61"},
+        {"label": "inline checksum", "value": "486.58"},
+        {"label": "double buf + D21", "value": "930.33"}
+      ]
+    },
+    {
+      "key": "progress-clocks",
+      "heading": "FIG 2 · CLOCKS PER SEGMENT",
+      "kicker": "line rate = 1480",
+      "items": [
+        {"label": "baseline", "value": "3701", "accent": "#5A5A5A"},
+        {"label": "inline csum", "value": "2955", "accent": "#8A8A8A"},
+        {"label": "double buffer", "value": "1479", "accent": "#00FF7F"}
+      ]
+    },
+    {
+      "key": "progress-changes",
+      "heading": "THE THREE CHANGES",
+      "body": "Identify a variant by md5, never by filename. A bitstream believed to be step 2 was once step 2b; only the WNS gave it away.",
+      "items": [
+        {"label": "Inline checksum.", "detail": "Start the checksum at accept time and feed it words as bytes arrive, overlapping the ~740-clock walk with the 1460-clock read."},
+        {"label": "Double buffering.", "detail": "Fill and send in separate processes over twice the buffer. One clock under line rate."},
+        {"label": "D21 RX starvation fix.", "detail": "Skid buffer, un-gated RX branch, in-freeze pure-ACK drain. Without it, step 2 reached 569 Mbps and killed the connection at 70–130 MB, every run."}
+      ]
+    },
+    {
+      "key": "integrity",
+      "kicker": "04 //",
+      "heading": "WHAT THE CAPTURE PROVES",
+      "items": [
+        {"label": "Sustained throughput, 3.489 GB over 30 active s", "value": "930.33 Mbps"},
+        {"label": "Retransmissions", "value": "0 / 2,398,934"},
+        {"label": "Endurance, counter_soak.py 300", "value": "300 s, no stall"},
+        {"label": "Data integrity (script only, no capture)", "value": "0 in 8.77 B words", "accent": "#BDBDBD"},
+        {"label": "935.84 Mbps, 5-min soak", "value": "NO CAPTURE", "accent": "#FF5F56"},
+        {"label": "944.31 Mbps, 60 s peak", "value": "ABOVE CEILING", "accent": "#FF5F56"}
+      ],
+      "images": [{"src": "assets/projects/tcpip/ant-streams.png", "alt": "Two columns of ants, blue and red, marching in parallel", "caption": "// two streams, in order, none lost. One stray is the retransmit that never happened."}]
+    },
+    {
+      "key": "caveats",
+      "kicker": "05 //",
+      "heading": "WHAT THIS IS NOT",
+      "body": "Single connection: no session table. RFC compliance measured on the wire is 10 PASS / 2 FAIL. Regression runs 46 pass / 2 fail / 1, both failures pre-existing on baseline RTL.\n\nWIN_LIMIT is a deployment constant at 8192; raising it to 32768 changed nothing, because the board is the sender. Bouncing the host NIC can drop the SGMII carrier; budget one reflash after any link interruption."
+    },
+    {
+      "key": "caveats-features",
+      "heading": "$ grep -r feature rtl/",
+      "items": [
+        {"label": "SACK (RFC 2018) ........", "value": "none", "accent": "#FF5F56"},
+        {"label": "window scale (RFC 7323) ", "value": "none", "detail": "  64 KB cap", "accent": "#FF5F56"},
+        {"label": "timestamps / PAWS ......", "value": "none", "accent": "#FF5F56"},
+        {"label": "Nagle (RFC 896) ........", "value": "none", "accent": "#FF5F56"},
+        {"label": "delayed ACK ............", "value": "none", "accent": "#FF5F56"},
+        {"label": "keepalive ..............", "value": "timer slot, no policy"},
+        {"label": "IP fragmentation .......", "value": "none", "accent": "#FF5F56"}
+      ]
+    },
+    {
+      "key": "next",
+      "heading": "NEXT // pl-tcp-stack-10g",
+      "body": "A 64-bit datapath on 10GBASE-R. Phase 2 of 5: tree and 10G substrate in progress, nothing widened yet. The 1G design closes at +0.225 ns over 237,022 endpoints at 8.000 ns; 156.25 MHz native means finding 1.6 ns.",
+      "kicker": "no hardware for this programme · reference model 63 pass / 1 fail"
+    },
+    {
+      "key": "touch",
+      "heading": "\"Every build: TOE_COUNTER=1 TOE_ILA=1 vivado -mode batch -source build_toe.tcl\"",
+      "items": [
+        {"label": "HW", "value": "ZCU106 xczu7ev · SFP0 · GTH Quad 225 ch2 · Vivado 2025.1"}
+      ],
+      "images": [{"src": "assets/projects/tcpip/wireframe-touch.jpg", "alt": "Wireframe hand reaching out of a monitor to touch a human finger"}]
+    }
+  ]
+}

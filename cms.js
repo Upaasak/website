@@ -61,12 +61,32 @@
     try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({at: Date.now(), data: data})); } catch (e) { /* storage blocked */ }
   }
 
+  // A published case-file page with no sections would render blank. That happens for about a
+  // minute after content is first loaded (the CDN still serves the older copy), so borrow
+  // that project's sections from the snapshot. To hide a page, set it back to "No page yet".
+  function fillEmptyCaseFiles(data) {
+    var empty = ((data && data.projects) || []).filter(function (p) {
+      return p.caseFile === 'live' && !(p.sections && p.sections.length);
+    });
+    if (!empty.length) return data;
+    return getJson('content/snapshot.json').then(function (snap) {
+      var bySlug = {};
+      (snap.projects || []).forEach(function (p) { bySlug[p.slug] = p; });
+      empty.forEach(function (p) {
+        var s = bySlug[p.slug];
+        if (s && s.sections && s.sections.length) p.sections = s.sections;
+      });
+      return data;
+    }, function () { return data; });
+  }
+
   var pending = null;
   function load() {
     if (pending) return pending;
     var cached = readCache();
     if (cached) return (pending = Promise.resolve(cached));
     pending = fromSanity()
+      .then(fillEmptyCaseFiles)
       .then(function (data) { writeCache(data); return data; })
       .catch(function (err) {
         console.warn('[cms] Sanity unavailable, using snapshot:', err.message);
@@ -129,9 +149,51 @@
     return (widths || [400, 700, 1000]).map(function (w) { return imgUrl(url, w) + ' ' + w + 'w'; }).join(', ');
   }
 
+  // ---- project case-file pages --------------------------------------------
+
+  // Intrinsic size from a Sanity asset URL (".../hash-736x727.jpg"), so <img> can reserve space.
+  function dims(url) {
+    var m = /-(\d+)x(\d+)\.[a-z]+$/i.exec(String(url || ''));
+    return m ? {w: +m[1], h: +m[2]} : {w: undefined, h: undefined};
+  }
+
+  function linkOf(l) {
+    var u = href(l && l.href);
+    return {label: (l && l.label) || '', href: u, target: isExternal(u) ? '_blank' : undefined};
+  }
+
+  // One case-file section, shaped for templates. Never undefined, so a slot an editor deleted
+  // renders as empty instead of breaking the page; `has` tells the template whether to show it.
+  var EMPTY = {key: '', has: false, kicker: '', heading: '', body: '', paras: [], items: [], images: [], img: {}, links: [], link: {}};
+  function shapeSlot(s, width) {
+    var images = (s.images || []).filter(function (i) { return i && i.url; }).map(function (i) {
+      var d = dims(i.url);
+      return {src: imgUrl(i.url, width), srcset: imgSet(i.url), alt: i.alt || '', caption: i.caption || '', w: d.w, h: d.h};
+    });
+    var links = (s.links || []).map(linkOf).filter(function (l) { return l.href; });
+    var items = (s.items || []).map(function (r) {
+      return {label: r.label || '', value: r.value || '', detail: r.detail || '', accent: r.accent || '', paras: paras(r.detail)};
+    });
+    return {
+      key: s.key, has: true, kicker: s.kicker || '', heading: s.heading || '', body: s.body || '', paras: paras(s.body),
+      items: items, images: images, img: images[0] || {}, links: links, link: links[0] || {},
+    };
+  }
+
+  // A project's document plus its case-file sections. `slot(key)` always returns an object.
+  function project(data, slug, imgWidth) {
+    var doc = ((data && data.projects) || []).filter(function (p) { return p.slug === slug; })[0] || {};
+    var bySlot = {};
+    (doc.sections || []).forEach(function (s) { if (s && s.key) bySlot[s.key] = shapeSlot(s, imgWidth || 1000); });
+    return {
+      doc: doc, found: Boolean(doc.slug), seo: doc.seoDescription || doc.summary,
+      slot: function (key) { return bySlot[key] || Object.assign({}, EMPTY, {key: key}); },
+    };
+  }
+
   window.WB = {
     load: load, paras: paras, href: href, isExternal: isExternal, img: imgUrl, imgSet: imgSet, page: page,
-    setDescription: setDescription, config: CONFIG, query: QUERY,
+    project: project, dims: dims, setDescription: setDescription, config: CONFIG, query: QUERY,
   };
 
   // Start fetching straight away, in parallel with the page runtime booting;

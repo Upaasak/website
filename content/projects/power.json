@@ -1,0 +1,200 @@
+{
+  "seoDescription": "Power system protocols on FPGA: a six-channel interpolated-DFT front end with CORDIC and ROCOF, wrapped in substation reporting protocols.",
+  "sections": [
+    {
+      "key": "header",
+      "kicker": "prj_06 · case file",
+      "heading": "Power System Protocols",
+      "body": "Two messengers for the grid. An IEEE C37.118.1 phasor measurement unit that reports six channels at 50 frames a second, and an IEEE 2664-2024 (STTP) publisher that carries the same measurements over TCP with no processor anywhere in the datapath.",
+      "items": [{"label": "C37.118.1-2011"}, {"label": "IEEE 2664 STTP"}, {"label": "ZCU106 xczu7ev"}],
+      "images": [{"src": "assets/cards/power.jpg", "alt": "A pigeon messenger in a red cap carrying a satchel"}]
+    },
+    {
+      "key": "about",
+      "heading": "About this sketchbook",
+      "body": "A PMU samples the grid's voltages and currents, turns each cycle into a phasor (magnitude, angle, frequency, rate of change) and stamps it with GPS time. The PMU is the pigeon: it writes the letter. The protocol is how the letter travels.\n\nC37.118 is the classic fixed-frame carrier. STTP is the newer one: it compresses the measurements with TSSC and negotiates a subscription over TCP. Both are built here on the same ZCU106 board.",
+      "kicker": "note to self: the IpDFT front-end has its own case file →",
+      "links": [{"label": "iDFT channel page", "href": "project-ipdft.html"}]
+    },
+    {
+      "key": "c37",
+      "kicker": "folio one · the fast courier",
+      "heading": "IEEE C37.118.1 PMU",
+      "body": "A 6-channel, 3-phase PMU in VHDL on the PL fabric. Signal processing runs in hardware; C37.118 framing, config frames and UDP to the PDC run on the ARM PS.",
+      "items": [
+        {"value": "96/96", "label": "M + P class tests"},
+        {"value": "0.07%", "label": "best TVE, clean 50 Hz"},
+        {"value": "< 1 ms", "label": "ADC to phasor"}
+      ],
+      "images": [{"src": "assets/projects/power/duck-c37.jpg", "alt": "A duck in a red helmet flying fast"}]
+    },
+    {
+      "key": "c37-frame",
+      "heading": "Fig 1 · the 76-byte data frame",
+      "body": "SYNC 0xAA · FRAMESIZE 0x004C · STAT 0xC010 · CRC-CCITT over bytes 0–71",
+      "items": [
+        {"label": "SYNC", "value": "1", "detail": "header"},
+        {"label": "VER", "value": "1", "detail": "header"},
+        {"label": "FRAMESIZE", "value": "2", "detail": "header"},
+        {"label": "IDCODE", "value": "2", "detail": "header"},
+        {"label": "SOC", "value": "4", "detail": "header"},
+        {"label": "FRACSEC", "value": "2", "detail": "header"},
+        {"label": "STAT", "value": "2", "detail": "header"},
+        {"label": "RSV", "value": "2", "detail": "reserved"},
+        {"label": "MAG 1", "value": "4", "detail": "magnitude"},
+        {"label": "pad", "value": "2", "detail": "reserved"},
+        {"label": "PH 1", "value": "2", "detail": "phase"},
+        {"label": "MAG 2", "value": "4", "detail": "magnitude"},
+        {"label": "pad", "value": "2", "detail": "reserved"},
+        {"label": "PH 2", "value": "2", "detail": "phase"},
+        {"label": "MAG 3", "value": "4", "detail": "magnitude"},
+        {"label": "pad", "value": "2", "detail": "reserved"},
+        {"label": "PH 3", "value": "2", "detail": "phase"},
+        {"label": "MAG 4", "value": "4", "detail": "magnitude"},
+        {"label": "pad", "value": "2", "detail": "reserved"},
+        {"label": "PH 4", "value": "2", "detail": "phase"},
+        {"label": "MAG 5", "value": "4", "detail": "magnitude"},
+        {"label": "pad", "value": "2", "detail": "reserved"},
+        {"label": "PH 5", "value": "2", "detail": "phase"},
+        {"label": "MAG 6", "value": "4", "detail": "magnitude"},
+        {"label": "pad", "value": "2", "detail": "reserved"},
+        {"label": "PH 6", "value": "2", "detail": "phase"},
+        {"label": "FREQ", "value": "4", "detail": "freq"},
+        {"label": "ROCOF", "value": "4", "detail": "freq"},
+        {"label": "CRC", "value": "2", "detail": "crc"},
+        {"label": "RSV", "value": "2", "detail": "reserved"}
+      ]
+    },
+    {
+      "key": "c37-pipeline",
+      "heading": "The PL pipeline",
+      "body": "post-synth: 11,153 LUT (4.84%) · 57 DSP · 6 BRAM @ 100 MHz",
+      "items": [
+        {"label": "Circular buffer", "detail": "512 samples per channel, 6 channels"},
+        {"label": "Resampler", "detail": "variable ADC rate to exactly 256 samples per cycle"},
+        {"label": "Hann window", "detail": "256-point, −32 dB sidelobes"},
+        {"label": "256-point DFT", "detail": "fundamental phasor, Q16.16 accumulator"},
+        {"label": "CORDIC", "detail": "18 iterations, < 0.001° phase error"},
+        {"label": "Taylor estimator", "detail": "frequency + ROCOF, < 0.025 Hz over 45–55 Hz"},
+        {"label": "TVE + CRC-CCITT", "detail": "real-time TVE, C37.118 checksum"}
+      ]
+    },
+    {
+      "key": "c37-tve",
+      "heading": "Fig 2 · worst TVE by test category",
+      "body": "┆ dashed = IEEE 1% TVE limit. The README lists P-class harmonic max at 1.03% while reporting it as a pass.",
+      "items": [
+        {"label": "M · clean", "value": "0.15", "accent": "#87CEEB"},
+        {"label": "M · noisy", "value": "0.58", "accent": "#87CEEB"},
+        {"label": "M · harmonic", "value": "1.00", "accent": "#87CEEB"},
+        {"label": "P · clean", "value": "0.15", "accent": "#B5DDF0"},
+        {"label": "P · noisy", "value": "0.78", "accent": "#B5DDF0"},
+        {"label": "P · harmonic", "value": "1.03", "accent": "#E57373"},
+        {"label": "P · transient", "value": "0.55", "accent": "#B5DDF0"}
+      ]
+    },
+    {
+      "key": "c37-figures",
+      "images": [
+        {"src": "assets/projects/power/c37-results-graph.png", "alt": "Compliance results graph from the c37 repository", "caption": "from the repo: results_graph.png, all 96 tests"},
+        {"src": "assets/projects/power/c37-hann-window.png", "alt": "Hann window analysis plots", "caption": "Hann window: −32 dB sidelobes vs −13 dB rectangular"},
+        {"src": "assets/projects/power/c37-freq-damping.png", "alt": "Frequency damping filter analysis plots", "caption": "frequency damping filter, α = 0.1 / 0.3 / 0.5"},
+        {"src": "assets/projects/power/c37-waveform.png", "alt": "Vivado xsim waveform of one PMU measurement cycle", "caption": "xsim waveform, 1-cycle measurement, 2 ms"}
+      ]
+    },
+    {
+      "key": "sttp",
+      "kicker": "folio two · the light traveller",
+      "heading": "IEEE 2664 · STTP",
+      "body": "A C37.118-class PMU and an STTP publisher entirely in programmable logic. No processor, no operating system, no software in the datapath: analog in one end, TCP/IP synchrophasor frames out the other. A stock, unmodified GPA cppapi subscriber decodes the stream.",
+      "items": [
+        {"value": "14/14", "label": "protocol compliance"},
+        {"value": "532 µs", "label": "STTP handshake"},
+        {"value": "19.999", "label": "ms median frame"}
+      ],
+      "images": [{"src": "assets/projects/power/balloon-bird-sttp.jpg", "alt": "A blue bird carried by a red balloon among clouds"}]
+    },
+    {
+      "key": "sttp-fabric",
+      "heading": "Fig 3 · inside the fabric, two clocks",
+      "kicker": "sttp_pkt_cdc_fifo · gray-coded",
+      "body": "PS8 = 0 in the routed report. No black boxes.",
+      "items": [
+        {"label": "100 MHz · SI570 → MMCM · WNS +0.201 ns", "value": "ads8588_master → sample_buffer 1500 → dft_5bin + Hann → cordic ×20 → ipdft_estimator → calibration → sttp engine → *TSSC ×9*"},
+        {"label": "125 MHz · GT-derived · WNS +0.033 ns over 229,141 endpoints", "value": "sttp_tcp_adapter → toe_tcp_engine → eth_ip_core → PCS/PMA → ~TCP :8080~"}
+      ]
+    },
+    {
+      "key": "sttp-session",
+      "heading": "Fig 4 · the session, as captured",
+      "kicker": "stock subscriber | ZCU106, pure PL",
+      "body": "TCP up at 173 µs · handshake done at 532 µs · then one 0x82 DataPacket every 20 ms",
+      "items": [
+        {"label": "TCP SYN", "value": "→"},
+        {"label": "SYN/ACK", "value": "←"},
+        {"label": "0x06 DefineOperationalModes", "value": "→"},
+        {"label": "0x80 Succeeded", "value": "←"},
+        {"label": "0x02 Subscribe", "value": "→"},
+        {"label": "0x83 SignalIndexCache 350 B", "value": "←"},
+        {"label": "0x80 Succeeded", "value": "←"},
+        {"label": "0x86 DataStartTime", "value": "←"},
+        {"label": "0x82 DataPacket, every 20 ms", "value": "←"}
+      ]
+    },
+    {
+      "key": "sttp-tssc",
+      "heading": "Fig 5 · TSSC compression ratio",
+      "body": "vs a 36 B/measurement baseline (an engineering estimate, not a spec constant). Software compresses more because its data barely changes.",
+      "items": [
+        {"label": "FPGA, live 50 Hz signal", "value": "15.9", "accent": "#81C784"},
+        {"label": "FPGA, reconnect capture", "value": "15.8", "accent": "#81C784"},
+        {"label": "Software loopback, near-constant data", "value": "50.2", "accent": "#D0D0D0"}
+      ]
+    },
+    {
+      "key": "sttp-bench",
+      "heading": "Measured on the bench",
+      "body": "careful: angles are published in radians under VPHA/IPHA, which usually mean degrees — off by 57.3×.",
+      "items": [
+        {"label": "A/B vs reference C++", "value": "4/5 identical"},
+        {"label": "Endurance, 300.0 s", "value": "15,064 segments, 0 RST"},
+        {"label": "Voltage at 60 V applied", "value": "60.01 / 60.01 / 59.98"},
+        {"label": "Current at 1 A applied", "value": "0.998 / 1.000 / 0.999"},
+        {"label": "Measurements per frame", "value": "14, IDs 100–113"}
+      ]
+    },
+    {
+      "key": "security",
+      "kicker": "folio three · who else is reading the mail",
+      "heading": "Security",
+      "body": "Grid telemetry drives protection decisions, so a forged or delayed phasor is a physical risk. What these two designs defend against, and what they leave open, is written down in the repos rather than implied.",
+      "images": [{"src": "assets/projects/power/security-burglar.jpg", "alt": "A burglar with bolt cutters inside a red prohibition sign"}]
+    },
+    {
+      "key": "security-cards",
+      "items": [
+        {"label": "No software to exploit", "value": "holds", "detail": "STTP path: PS8 = 0, no MicroBlaze, no OS, no lwIP. The attack surface of a kernel and its libraries does not exist."},
+        {"label": "Deterministic timing", "value": "holds", "detail": "Frames come from a fabric counter at 19.999 ms median. Nothing in the datapath can be starved or scheduled late."},
+        {"label": "Source provenance", "value": "partial", "detail": "SHA-256 recorded for all 80 RTL sources, but 11 of 75 build entries were read from a /tmp path that no longer exists."},
+        {"label": "CRC is not a signature", "value": "partial", "detail": "C37.118 frames carry CRC-CCITT. It catches corruption on the wire, not an attacker who recomputes it."},
+        {"label": "No TLS", "value": "open", "detail": "All STTP traffic is cleartext over TCP, verified across all three source trees the build reads."},
+        {"label": "No access filtering", "value": "open", "detail": "The connection string is ignored; all 14 points are served to any subscriber regardless of what it asks for."},
+        {"label": "Session can be taken", "value": "open", "detail": "One subscriber at a time. A second client or a capture tool can steal the session; a stale one blocks reconnect for ~60 s."},
+        {"label": "Time source", "value": "partial", "detail": "The GPS / IRIG-B link passes 9/9 in simulation but was not connected during conformance; DataStartTime was free-running."},
+        {"label": "C37 path uses the PS", "value": "partial", "detail": "The C37.118 design frames packets and runs UDP on Linux on the ARM, so it inherits that software surface."}
+      ]
+    },
+    {
+      "key": "security-lock",
+      "heading": "Where the lock comes from",
+      "body": "Confidentiality and authentication are not in either design today. The lab's post-quantum work signs and encrypts IEC 61850 GOOSE/SV frames with ML-KEM and ML-DSA, and is the intended route for protected substation traffic. See the",
+      "links": [{"label": "Post-Quantum Post Office", "href": "project-pqc.html"}]
+    },
+    {
+      "key": "links",
+      "items": [
+        {"label": "Signal sources", "value": "Omicron CMC · RTDS · live grid via VT/CT, into an ADS8588 at 15 kHz"}
+      ]
+    }
+  ]
+}

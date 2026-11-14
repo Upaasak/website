@@ -1,0 +1,128 @@
+{
+  "seoDescription": "Drone control in fabric: IMU fusion, a fixed-point rate loop and PWM generation with deterministic latency from sample to actuator.",
+  "sections": [
+    {
+      "key": "header",
+      "kicker": "FOLIO IX · PRJ_09",
+      "heading": "Codex of the Swarm",
+      "body": "on the flight of many machines, and how they keep from striking one another",
+      "items": [{"label": "mirror", "value": "nessuna macchina vola sola"}],
+      "images": [{"src": "assets/cards/drone.jpg", "alt": "Leonardo's aerial screw", "caption": "Fig. A — the aerial screw. One rotor lifts one machine; this codex concerns many."}]
+    },
+    {
+      "key": "proem",
+      "body": "A ROS 2 and PX4 SITL multi-drone swarm package. It spans single-drone offboard control through to decentralised formation flight, area-coverage missions, collision avoidance and leader-failure reassignment, all driven from a single YAML config and one ros2 launch invocation. It speaks to PX4 through uXRCE-DDS and px4_msgs, not MAVROS.",
+      "kicker": "Every result below is simulated, in Gazebo Harmonic 8.11.0 with PX4 SITL. No real-hardware flight has ever been performed. Where the README and the claims matrix disagree, the matrix is right.",
+      "items": [
+        {"value": "98", "label": "nights of fault injection"},
+        {"value": "4,855", "label": "launch logs re-parsed"},
+        {"value": "2,852", "label": "runs that completed"},
+        {"value": "68 / 74", "label": "tests pass · 6 need ROS 2"}
+      ]
+    },
+    {
+      "key": "formation",
+      "kicker": "LIBER I",
+      "heading": "Of Formation and Order",
+      "body": "Three machines rise in a triangle: one leader at the origin, two followers set three paces behind and three to either side. The leader walks its path fifteen metres out and back at five metres' height; the followers keep station in its frame.\n\nShould the leader fall silent, each follower names the lowest-numbered peer still speaking. Every drone reaches the same answer from its own view, and no council is needed."
+    },
+    {
+      "key": "formation-note",
+      "body": "INIT → ARM_OFFBOARD → FLY → LAND → DONE. Arming waits for 25 ticks of stable OFFBOARD."
+    },
+    {
+      "key": "formation-figure",
+      "body": "Fig. B — spawns from config/formation.yaml. Dashed rings mark MIN_DIST_SOFT, 1.5 m."
+    },
+    {
+      "key": "missions",
+      "heading": "Table of Missions Flown",
+      "body": "Right column: min_dist_seen, all with 0 violations. The forced-collision run's raw log was not preserved.",
+      "items": [
+        {"label": "Leader / follower triangle", "detail": "Phase 7, three drones", "value": "≥ 1.50 m"},
+        {"label": "Consensus rendezvous", "detail": "polygon vertices around centroid", "value": "3.85 m"},
+        {"label": "Rendezvous, five drones", "detail": "pentagon, N = 5", "value": "2.36–2.56 m"},
+        {"label": "Area coverage", "detail": "20 × 20 m lawnmower sectors", "value": "2.85 m"},
+        {"label": "Search & track", "detail": "orbit at 2.5 m radius", "value": "4.09 m"},
+        {"label": "Forced collision", "detail": "leader driven through a held peer", "value": "2.13 m"}
+      ]
+    },
+    {
+      "key": "plate",
+      "images": [{"src": "assets/projects/swarm/swarm-descent.jpg", "alt": "Ink drawing of a swarm of craft descending over a lone figure", "caption": "Plate I — many craft, one sky. The question of Liber II is what happens when their messages arrive late."}]
+    },
+    {
+      "key": "collisions",
+      "kicker": "LIBER II",
+      "heading": "Of Near Collisions",
+      "body": "Three layers keep the machines apart: a clamp holding each setpoint 2.5 m from any peer, a quadratic repulsive velocity up to 4 m/s inside 1.5 m, and a full halt below 0.6 m. Across 98 nights, from 18 May to 24 August 2026, ten fault scenarios were injected and every surviving log re-parsed."
+    },
+    {
+      "key": "fig-separation",
+      "heading": "Fig. C — Worst Separation by Scenario",
+      "kicker": "metres · 0 to 3",
+      "items": [
+        {"label": "baseline", "value": "0.74"},
+        {"label": "cpu_2", "value": "1.52"},
+        {"label": "cpu_4", "value": "0.56"},
+        {"label": "dds_delay_200", "value": "1.20"},
+        {"label": "dds_delay_50", "value": "0.35"},
+        {"label": "dds_loss_15", "value": "1.45"},
+        {"label": "dds_loss_5", "value": "0.22"},
+        {"label": "kill_follower", "value": "0.76"},
+        {"label": "kill_leader", "value": "0.91"},
+        {"label": "perception_stale", "value": "1.18"}
+      ]
+    },
+    {
+      "key": "fig-hard-floor",
+      "heading": "Fig. D — Runs Below the Hard Floor (1.0 m)",
+      "kicker": "37 in all",
+      "items": [
+        {"label": "baseline", "value": "1"},
+        {"label": "cpu_2", "value": "0"},
+        {"label": "cpu_4", "value": "1"},
+        {"label": "dds_delay_200", "value": "0"},
+        {"label": "dds_delay_50", "value": "16"},
+        {"label": "dds_loss_15", "value": "0"},
+        {"label": "dds_loss_5", "value": "17"},
+        {"label": "kill_follower", "value": "1"},
+        {"label": "kill_leader", "value": "1"},
+        {"label": "perception_stale", "value": "0"}
+      ]
+    },
+    {
+      "key": "flaw",
+      "heading": "The Flaw, Honestly Kept",
+      "body": "64 of 2,852 completed runs fell below 1.5 m and 37 below 1.0 m; the worst came within 0.22 m. 33 of the 37 hard-floor breaches sit in two scenarios, dds_loss_5 and dds_delay_50.\n\nAll three layers read peer position. Degrade the transport and the clamp clamps against stale data, repulsion pushes from a phantom, and the halt never arms.",
+      "kicker": "Status: open, never mitigated."
+    },
+    {
+      "key": "held",
+      "heading": "What Held",
+      "body": "Under CPU stress at two cores, 441 runs recorded 0 violations with a worst separation of 1.52 m. Leader and follower kills recovered through decentralised reassignment.",
+      "kicker": "2,003 runs died before their completion line and are not counted in the figures."
+    },
+    {
+      "key": "perception",
+      "kicker": "LIBER III",
+      "heading": "Of Sight and Maps",
+      "images": [{"src": "assets/projects/swarm/ornithopter.jpg", "alt": "Leonardo's ornithopter", "caption": "Fig. E — the ornithopter, a machine that had to see where it flew."}],
+      "items": [
+        {"label": "Camera.", "value": "x500_mono_cam → sensor_msgs/Image, 1280×960 rgb8 at ~25 fps."},
+        {"label": "Red marker.", "value": "HSV blob detection steers the vtrack mission; peers share detections."},
+        {"label": "Depth.", "value": "32FC1 depth alarms when an obstacle is closer than 3 m."},
+        {"label": "Frontiers.", "value": "Greedy auction assigns each drone its nearest unclaimed frontier."},
+        {"label": "RTAB-Map SLAM.", "value": "Pipeline built; the fused-map result was never preserved and is not substantiated.", "accent": "#9A3B26"}
+      ]
+    },
+    {
+      "key": "colophon",
+      "items": [
+        {"label": "Instruments", "value": "Ubuntu 24.04 · ROS 2 Jazzy · Gazebo Harmonic 8.11.0 · PX4 main · uXRCE-DDS 3.0.1"},
+        {"label": "The Manuscript", "value": "PROJECT_EVIDENCE/ holds the raw logs and the claims matrix."},
+        {"label": "Yet Unwritten", "value": "Real-hardware flight, and a collision layer that survives stale peer data."}
+      ]
+    }
+  ]
+}

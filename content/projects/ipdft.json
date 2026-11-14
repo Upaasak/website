@@ -1,0 +1,83 @@
+{
+  "seoDescription": "ipdft_channel_top: an interpolated-DFT channel with CORDIC magnitude and phase, verified and timing-closed at 148 MHz on Artix-7.",
+  "sections": [
+    {
+      "key": "header",
+      "kicker": "▚▚ PRJ_06 · CASE FILE ▞▞",
+      "heading": "POWER SYSTEM PROTOCOLS",
+      "body": "A six-channel interpolated-DFT front end for grid instrumentation. Each channel windows its input, runs a sliding DFT bin, extracts magnitude and phase with a CORDIC, and differentiates frequency to get ROCOF. One clock domain, fixed point throughout, no vendor IP.\n\nIt exists because a commercial PMU front end costs more than the lab's annual budget, and because it is a good excuse to learn where a fixed-point error budget goes wrong.",
+      "items": [{"label": "TOP MODULE", "value": "ipdft_channel_top"}]
+    },
+    {
+      "key": "build-status",
+      "heading": "BUILD.STATUS",
+      "body": "IN VERIFICATION",
+      "items": [
+        {"label": "TARGET", "value": "XC7A100T-1"},
+        {"label": "LANGUAGE", "value": "VERILOG-2005"},
+        {"label": "CHANNELS", "value": "6"},
+        {"label": "FMAX", "value": "148 MHz"},
+        {"label": "WNS", "value": "+0.62 ns"}
+      ]
+    },
+    {
+      "key": "schematic",
+      "heading": "FIG 1 ── ipdft_channel_top · RTL ELABORATED",
+      "kicker": "6 CHANNELS · CORDIC MAG/PHASE · ROCOF"
+    },
+    {
+      "key": "datapath",
+      "kicker": "01",
+      "heading": "DATAPATH",
+      "items": [
+        {"label": "STAGE 1", "value": "WINDOW", "detail": "Hann coefficients in a single BRAM, shared across channels by time multiplexing. Q1.15 in, Q2.30 out, truncation error bounded at 2⁻¹⁴."},
+        {"label": "STAGE 2", "value": "SLIDING DFT BIN", "detail": "Recursive bin update with leakage damping, five bins per channel. Guard bits sized from the worst-case input rather than from optimism."},
+        {"label": "STAGE 3", "value": "CORDIC MAG / PHASE", "detail": "16-iteration vectoring CORDIC, one shared engine, arctan table in ROM. Gain compensated at the output, not per iteration."},
+        {"label": "STAGE 4", "value": "IPDFT CORRECTION", "detail": "Three-point interpolation over neighbouring bins to recover off-bin frequency, then a differentiator for ROCOF with a configurable window."}
+      ]
+    },
+    {
+      "key": "verification",
+      "kicker": "02",
+      "heading": "VERIFICATION",
+      "items": [
+        {"label": "Directed sine sweep, 45–65 Hz", "value": "cocotb", "detail": "PASS"},
+        {"label": "Off-bin frequency, 0.01 Hz steps", "value": "cocotb", "detail": "PASS"},
+        {"label": "Harmonic + noise, constrained random", "value": "SV / UVM", "detail": "PASS"},
+        {"label": "Saturation and overflow assertions", "value": "SVA", "detail": "PASS"},
+        {"label": "ROCOF step response vs. golden model", "value": "python", "detail": "2 FAILS"},
+        {"label": "Channel-to-channel isolation", "value": "SV / UVM", "detail": "OPEN"}
+      ]
+    },
+    {
+      "key": "coverage",
+      "heading": "COVERAGE",
+      "items": [
+        {"label": "STATEMENT", "value": "99.1 %"},
+        {"label": "BRANCH", "value": "97.4 %"},
+        {"label": "FUNCTIONAL", "value": "96.4 %"}
+      ]
+    },
+    {
+      "key": "defect",
+      "heading": "OPEN DEFECT · DEF-014",
+      "body": "ROCOF overshoots by 4.2 % on a 2 Hz/s step when the differentiator window is 4 samples. Suspected guard-bit truncation in stage 4.",
+      "items": [{"label": "OWNER", "value": "unassigned"}]
+    },
+    {
+      "key": "remaining",
+      "heading": "WHAT IS LEFT",
+      "items": [
+        {"label": "Close DEF-014 and re-run the ROCOF suite."},
+        {"label": "Channel isolation testbench, currently unwritten."},
+        {"label": "Bench capture against a signal generator, not just simulation."}
+      ]
+    },
+    {
+      "key": "artefacts",
+      "heading": "ARTEFACTS",
+      "body": "Reports, seeds and constraint files ship with the repository. Ask if you want the raw waveforms.",
+      "items": [{"label": "SCHEM", "value": "schematic.pdf — not yet uploaded"}]
+    }
+  ]
+}
