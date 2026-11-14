@@ -6,7 +6,7 @@ in the dashboard and appear on the site within about a minute, with no code chan
 
 | What | Where |
 |---|---|
-| Live site | Netlify (address to be added once the site is created); old host: https://website.vipul-km.workers.dev |
+| Live site | https://whistle-blower-labs.netlify.app (Netlify); old host: https://website.vipul-km.workers.dev |
 | Editor dashboard | https://whistleblower-lab.sanity.studio |
 | Code | https://github.com/Upaasak/website (Netlify deploys the production branch automatically) |
 | Sanity project | ID `7h6avsoz`, dataset `production`, organization "Whistleblower Lab" |
