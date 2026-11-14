@@ -1,0 +1,21 @@
+# Netlify deploy settings (read automatically when the repo is connected).
+# Only the website files are copied into _site/ and published; studio/, dev/, docs/ and
+# README stay private in the repo. No install step and no secrets are needed.
+
+[build]
+  base    = ""
+  publish = "_site"
+  command = "rm -rf _site && mkdir _site && cp -r *.html cms.js support.js assets content _site/"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+
+# Images rarely change: cache them for a day in browsers.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

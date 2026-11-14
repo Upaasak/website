@@ -4,3 +4,5 @@ studio/.sanity/
 .env
 .env.*
 !.env.example
+_site/
+.netlify/

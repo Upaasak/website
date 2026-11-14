@@ -11,6 +11,7 @@ To see a version: `git checkout <tag>`. To roll the live site back: see "Rolling
 | `v2.1-tracker` | 2026-10-13 | SENTINEL page: embedded RASO IMM Console replay (widthmissmatch.github.io/Tracker) in the UKF + IMM section. |
 | `v2.2-mobile` | 2026-10-13 | Phones: two-column grids that clipped content now stack. |
 | — | 2026-11-15 | Repository organized: development history moved into `dev/` (kept off the website), docs added. No change to any page. |
+| — | 2026-11-15 | Netlify hosting: `netlify.toml` publishes only the website files (studio, dev, docs stay private) and adds basic security headers. |
 
 ## Next (round 3, planned)
 

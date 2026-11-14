@@ -6,9 +6,9 @@ in the dashboard and appear on the site within about a minute, with no code chan
 
 | What | Where |
 |---|---|
-| Live site | https://website.vipul-km.workers.dev |
+| Live site | Netlify (address to be added once the site is created); old host: https://website.vipul-km.workers.dev |
 | Editor dashboard | https://whistleblower-lab.sanity.studio |
-| Code | https://github.com/Upaasak/website (`main` auto-deploys to Cloudflare) |
+| Code | https://github.com/Upaasak/website (Netlify deploys the production branch automatically) |
 | Sanity project | ID `7h6avsoz`, dataset `production`, organization "Whistleblower Lab" |
 
 For editors: see [docs/EDITING.md](docs/EDITING.md). History of changes: [docs/CHANGELOG.md](docs/CHANGELOG.md).
@@ -16,7 +16,7 @@ For editors: see [docs/EDITING.md](docs/EDITING.md). History of changes: [docs/C
 ## Repository layout
 
 ```
-/                    the website (Cloudflare serves the repo root)
+/                    the website (Netlify copies these files to _site/ and publishes that)
 ├─ *.html            one file per page (home = index.html, case files = project-*.html)
 ├─ cms.js            loads content from Sanity (falls back to content/snapshot.json)
 ├─ support.js        design runtime that renders the pages (generated; do not edit)
@@ -24,13 +24,14 @@ For editors: see [docs/EDITING.md](docs/EDITING.md). History of changes: [docs/C
 ├─ content/          snapshot.json: offline copy of all CMS content
 ├─ studio/           Sanity Studio (dashboard) source            ┐
 ├─ docs/             EDITING.md (for editors), CHANGELOG.md       │ not published
-├─ dev/              screenshots, audits, review pages, scripts   │ (.assetsignore)
-└─ README.md                                                      ┘
+├─ dev/              screenshots, audits, review pages, scripts   │ (not copied by
+└─ README.md                                                      ┘  the build)
+netlify.toml         Netlify build + headers settings
 ```
 
 ## Branches and versions
 
-- **`main`** is the live site: every push deploys to Cloudflare in about a minute.
+- **`main`** is the live site: every push deploys on Netlify in about a minute.
 - **`preview`** holds work that is backed up on GitHub but not live yet. Going live = merge it into `main`.
 - **Tags** (`v0-original`, `v1-cms`, `v2-polish`, …) mark each finished round; see the changelog.
 
@@ -52,7 +53,7 @@ git push origin main
                  ▼
             Sanity content lake ──(public, read-only CDN API)──┐
                                                                ▼
- GitHub main ──► Cloudflare Worker (static files) ──► browser: page + cms.js ──► renders content
+ GitHub main ──► Netlify (static files, _site/) ────► browser: page + cms.js ──► renders content
                                                                ▲
                                     content/snapshot.json ─────┘ (fallback if Sanity is unreachable)
 ```
@@ -72,8 +73,8 @@ git push origin main
   shows anyway. Drafts are never visible through the public API.
 - **No token or secret exists in the website code.** Writes happen only in the Studio, behind Sanity
   login. Scripts in `studio/scripts` use your own CLI login (`--with-user-token`), never a stored key.
-- **CORS** only allows the live site and `localhost:5500/8080/3333` to query from a browser. Add your
-  custom domain when you have one (see below).
+- **CORS** only allows listed site addresses and `localhost:5500/8080/3333` to query from a browser.
+  Add the Netlify address and any custom domain (see below); unlisted sites fall back to the snapshot.
 - All CMS text is rendered as text (never HTML), and links are restricted to `https:`, `mailto:`,
   `tel:` and site-relative paths in `cms.js`.
 
@@ -113,8 +114,18 @@ http://localhost:5500 (port 5500 is allowed in CORS).
 
 ### Deploying the website
 
-Push to `main`. Cloudflare rebuilds and serves the repo root in about a minute. Content changes in
-Sanity need **no** deploy; only code and design changes do.
+Push to `main`. Netlify runs the build in `netlify.toml` (it only copies the website files into
+`_site/`; no install, no secrets) and publishes in about a minute. Content changes in Sanity need
+**no** deploy; only code and design changes do.
+
+First-time Netlify setup:
+
+1. Netlify → **Add new site → Import an existing project → GitHub** → `Upaasak/website`.
+2. Leave build settings empty; `netlify.toml` provides them. Production branch: `main`.
+3. Allow the new address in Sanity so pages load live content:
+   `npx sanity cors add https://<site-name>.netlify.app --no-credentials` (from `studio/`).
+   For branch and deploy-preview URLs also add `https://*--<site-name>.netlify.app`.
+4. Optional: Site settings → Domain management → add a custom domain, then add it to CORS too.
 
 ### Changing what can be edited
 
